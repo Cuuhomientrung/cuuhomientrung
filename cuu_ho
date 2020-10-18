@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../django-dashboard-adminlte"
+		},
+		{
+			"path": "../bangtin_alert.backend"
+		}
+	]
+}
