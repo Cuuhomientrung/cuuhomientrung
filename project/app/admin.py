@@ -54,8 +54,7 @@ class HoDanAdmin(admin.ModelAdmin):
             return (' '.join(obj.note.split()[:10]) + '...')
         else:
             return ''
-        
-        get_note.short_description = 'Ghi chú'
+    get_note.short_description = 'Ghi chú'
 
     def get_need(self, obj):
         if obj.need:
@@ -63,18 +62,24 @@ class HoDanAdmin(admin.ModelAdmin):
         else:
             return ''
         
-        get_need.short_description = 'Nhu cầu'
+    get_need.short_description = 'Nhu cầu'
     
 class TinhAdmin(admin.ModelAdmin):
     list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
 
+    @mark_safe
     def get_cuu_ho_san_sang(self, obj):
         count = CuuHo.objects.filter(tinh=obj, status=1).count()
-        return str(count)
-    get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
+        tag = f'<a href="/app/cuuho/?tinh={obj.pk}&status=1">{count}</a>'
+        return tag 
 
+    get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
+    get_cuu_ho_san_sang.allow_tags = True
+
+    @mark_safe
     def get_ho_dan_can_ung_cuu(self, obj):
         count = HoDan.objects.filter(tinh=obj).exclude(status=3).count()
+        tag = f'<a href="/app/hodan/?tinh={obj.pk}">{count}</a>'
         return str(count)
     get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
 
