@@ -114,8 +114,8 @@ class CuuHo(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Danh sách đội Cứu hộ'
-        verbose_name_plural = 'Danh sách đội Cứu hộ'
+        verbose_name = 'Các đội Cứu hộ'
+        verbose_name_plural = 'Các đội Cứu hộ'
 
   
 class HoDan(models.Model):
@@ -139,8 +139,8 @@ class HoDan(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Danh sách Hộ dân cần ứng cứu'
-        verbose_name_plural = 'Danh sách Hộ dân cần ứng cứu'
+        verbose_name = 'Hộ dân cần ứng cứu'
+        verbose_name_plural = 'Hộ dân cần ứng cứu'
 
 class NguonLuc(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Nguồn lực")
