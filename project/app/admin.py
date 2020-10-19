@@ -43,8 +43,8 @@ class TinhNguyenVienAdmin(admin.ModelAdmin):
 
 
 class HoDanAdmin(admin.ModelAdmin):
-    list_display = ('update_time', 'status', 'name', 'get_need', 'get_note', 'location', 'tinh', 'huyen', 'xa', 'thon', 'phone', 'volunteer', 'cuuho')
-    list_display_links = ('name', )
+    list_display = ('update_time', 'status', 'name', 'phone', 'get_note', 'location', 'tinh', 'huyen', 'xa', 'thon', 'volunteer', 'cuuho')
+    list_display_links = ('name', 'phone')
     list_editable = ('status', 'tinh', 'huyen', 'xa', 'thon', 'volunteer', 'cuuho')
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
     search_fields = ('name', 'phone', 'note')

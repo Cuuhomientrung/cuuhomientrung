@@ -123,7 +123,6 @@ class HoDan(models.Model):
     update_time = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
     location = models.TextField(blank=True, default='', verbose_name='Địa chỉ')
     status = models.IntegerField(choices=HODAN_STATUS, default=0, verbose_name="Tình trạng")
-    need = models.TextField(blank=True, default='', verbose_name="Nhu cầu")
 
     tinh = models.ForeignKey(Tinh, blank=True, null=True, on_delete=models.CASCADE)
     huyen = models.ForeignKey(Huyen, blank=True, null=True, on_delete=models.CASCADE)
