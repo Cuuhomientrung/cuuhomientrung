@@ -43,8 +43,8 @@ class TinhNguyenVienAdmin(admin.ModelAdmin):
  
 
 class HoDanAdmin(admin.ModelAdmin):
-    list_display = ('update_time', 'status', 'name', 'get_need', 'get_note', 'location', 'tinh', 'huyen', 'xa', 'thon', 'phone', 'volunteer', 'cuuho')
-    list_display_links = ('name', )
+    list_display = ('update_time', 'status', 'name', 'phone', 'get_note', 'location', 'tinh', 'huyen', 'xa', 'thon', 'volunteer', 'cuuho')
+    list_display_links = ('name', 'phone')
     list_editable = ('status', 'tinh', 'huyen', 'xa', 'thon', 'volunteer', 'cuuho')
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
     search_fields = ('name', 'phone', 'note')
@@ -56,14 +56,6 @@ class HoDanAdmin(admin.ModelAdmin):
             return ''
     get_note.short_description = 'Ghi chú'
 
-    def get_need(self, obj):
-        if obj.need:
-            return (' '.join(obj.need.split()[:10]) + '...')
-        else:
-            return ''
-        
-    get_need.short_description = 'Nhu cầu'
-    
 class TinhAdmin(admin.ModelAdmin):
     list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
 
