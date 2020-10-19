@@ -2,6 +2,7 @@
 import io
 import xlsxwriter
 from django.http import HttpResponse
+from app.models import CUUHO_STATUS
 
 def write_a_row(worksheet, row, array):
     col = 0
@@ -9,7 +10,12 @@ def write_a_row(worksheet, row, array):
         worksheet.write(row, col, x)
         col += 1
 
-def export_as_excel_action(fields=None, exclude=None, header=True):
+def lookup_in_a_list_of_tuples(arr, key):
+    for x in arr:
+        if x[0] == key:
+            return x[1]
+
+def export_ho_dan_as_excel_action(fields=None, exclude=None, header=True):
     """
     This function returns an export csv action
     'fields' and 'exclude' work like in django ModelForm
@@ -17,17 +23,9 @@ def export_as_excel_action(fields=None, exclude=None, header=True):
     """
     def export_as_excel(modeladmin, request, queryset):
         opts = modeladmin.model._meta
-        field_names = set([field.name for field in opts.fields])
-
-        if fields:
-            fieldset = set(fields)
-            field_names = field_names & fieldset
-
-        elif exclude:
-            excludeset = set(exclude)
-            field_names = field_names - excludeset
-
-        file_name = modeladmin.model._meta.model.__name__
+        field_names = ["name", "status", "location", "tinh", "xa", "huyen", "phone", "cuuho", "update_time", "note"]
+        display_names = ["Tên hộ dân", "Tình trạng", "Vị trí", "Tỉnh", "Xã", "Huyện", "Sdt", "Cứu hộ", "Thời gian cuối cùng cập nhật", "Ghi chú"]
+        file_name = "Danh_sach_ho_dan"
 
         output = io.BytesIO()
 
@@ -35,10 +33,16 @@ def export_as_excel_action(fields=None, exclude=None, header=True):
         worksheet = workbook.add_worksheet()
         row = 0
         if header:
-            write_a_row(worksheet, row, field_names)
+            write_a_row(worksheet, row, display_names)
             row += 1
         for obj in queryset:
-            write_a_row(worksheet, row, [str(getattr(obj, field)) for field in field_names])
+            arr = []
+            for field in field_names:
+                if field == "status":
+                    arr.append(lookup_in_a_list_of_tuples(CUUHO_STATUS, getattr(obj, field)))
+                else:
+                    arr.append(str(getattr(obj, field) or ""))
+            write_a_row(worksheet, row, arr)
             row += 1
 
         workbook.close()
