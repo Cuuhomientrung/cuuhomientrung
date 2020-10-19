@@ -56,4 +56,5 @@ def export_ho_dan_as_excel_action(fields=None, exclude=None, header=True):
 
         return response
 
+    export_as_excel.short_description = "Xuất file excel"
     return export_as_excel
