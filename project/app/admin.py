@@ -58,7 +58,6 @@ class HoDanAdmin(admin.ModelAdmin):
             return ''
     get_note.short_description = 'Ghi chú'
 
-    export_ho_dan_as_excel_action.short_description = "Xuất file excel"
 
 class TinhAdmin(admin.ModelAdmin):
     list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
