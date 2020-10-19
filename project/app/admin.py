@@ -40,7 +40,7 @@ class TinhNguyenVienAdmin(admin.ModelAdmin):
     list_display = ('name', 'location', 'phone')
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
- 
+
 
 class HoDanAdmin(admin.ModelAdmin):
     list_display = ('update_time', 'status', 'name', 'get_need', 'get_note', 'location', 'tinh', 'huyen', 'xa', 'thon', 'phone', 'volunteer', 'cuuho')
@@ -61,9 +61,9 @@ class HoDanAdmin(admin.ModelAdmin):
             return (' '.join(obj.need.split()[:10]) + '...')
         else:
             return ''
-        
+
     get_need.short_description = 'Nhu cầu'
-    
+
 class TinhAdmin(admin.ModelAdmin):
     list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
 
@@ -71,7 +71,7 @@ class TinhAdmin(admin.ModelAdmin):
     def get_cuu_ho_san_sang(self, obj):
         count = CuuHo.objects.filter(tinh=obj, status=1).count()
         tag = f'<a href="/app/cuuho/?tinh={obj.pk}&status=1">{count}</a>'
-        return tag 
+        return tag
 
     get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
     get_cuu_ho_san_sang.allow_tags = True
@@ -81,7 +81,7 @@ class TinhAdmin(admin.ModelAdmin):
         count = HoDan.objects.filter(tinh=obj).exclude(status=3).count()
         tag = f'<a href="/app/hodan/?tinh={obj.pk}">{count}</a>'
         return str(count)
-    get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
+    get_ho_dan_can_ung_cuu.short_description = "Hộ dân cần ứng cứu"
 
 class HuyenAdmin(admin.ModelAdmin):
     list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
@@ -132,4 +132,3 @@ admin.site.register(Tinh, TinhAdmin)
 admin.site.register(Huyen, HuyenAdmin)
 admin.site.register(Xa, XaAdmin)
 admin.site.register(Thon, ThonAdmin)
-
