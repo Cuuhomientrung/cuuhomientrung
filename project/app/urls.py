@@ -16,15 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path, include
 from rest_framework import routers
-# from django_restful_admin import admin as api_admin 
-from app.views import CheckYoutubeLinkView
-# router = routers.DefaultRouter()
-# router.register(r'tasks', TaskViewSet, "task")
 
 urlpatterns = [
-    # path('v1/app/', CheckYoutubeLinkView.as_view()),
-    path('', CheckYoutubeLinkView.as_view()),
-    path('v1/', admin.site.urls),
-    # path('', admin_site.urls),
-    # re_path(r'^v1/api-auth/', include('rest_framework.urls'))
+    path('', admin.site.urls),
 ]

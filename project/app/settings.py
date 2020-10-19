@@ -33,7 +33,6 @@ ALLOWED_HOSTS = ['*'
 # Application definition
 
 INSTALLED_APPS = [
-    # 'app.admin.admin_site',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,11 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
-    'django_celery_beat',
     'rangefilter',
-    'django_admin_listfilter_dropdown'
-    # 'rest_framework',
-    # 'django_restful_admin'
+    'django_admin_listfilter_dropdown',
+    'django.contrib.sites'
 ]
 
 MIDDLEWARE = [
@@ -54,6 +51,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'app.middleware.AutomaticUserLoginMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -77,28 +75,28 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'app.wsgi.application'
-
+SITE_ID = 1
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
 # DATABASES = {
-#         'default':{
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'check_youtube',
-#         'USER': 'administrator',
-#         'PASSWORD': 'bangtin_ainews_2811#',
-#         'HOST': '103.192.236.67',
-#         'PORT': '',
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
+
+DATABASES = {
+        'default':{
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'cuuhomientrung',
+        'USER': 'administrator',
+        'PASSWORD': 'bangtin_ainews_2811#',
+        'HOST': '103.192.236.67',
+        'PORT': '',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -118,13 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
-}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
@@ -152,54 +144,3 @@ MEDIA_URL = '/media/'
 CELERY_BROKER_URL = 'redis://localhost:6379'
 # If time zones are active (USE_TZ = True) define your local
 CELERY_TIMEZONE = 'Asia/Ho_Chi_Minh'
-# app.conf.enable_utc = False # so celery doesn't take utc by default
-
-# CELERY_BEAT_SCHEDULE = {
-
-#     # Track Publisher check publisher channel to get new videos
-#     'track_publisher': {
-#        'task': 'track_publisher',
-#         # There are 4 ways we can handle time, read further
-#         # TODO: raise schedule time to 300 (5 minutes) in production
-#        'schedule': 300,
-#         # If you're using any arguments
-#        'args': (),
-#     },
-
-#     # Track Topic check topic on youtube to get new videos & new publisher
-#     'track_topic': {
-#        'task': 'track_topic',
-#         # There are 4 ways we can handle time, read further
-#         # TODO: raise schedule time to 300 (5 minutes) in production
-#        'schedule': 300,
-#         # If you're using any arguments
-#        'args': (),
-#     },
-
-
-#     # Check VIP Mention check all video to detect new VIP mentions
-#     'check_VIP_mention': {
-#        'task': 'check_VIP_mention',
-#        'schedule': 180,
-#        'args': (),
-#     },
-
-#     # Parse Youtube clip to get its content from speech
-#     'parse_youtube_clip_to_text': {
-#        'task': 'parse_youtube_clip_to_text',
-#        'schedule': 300,
-#        'args': (),
-#     },
-
-#     # Parse Youtube clip to get its content from speech
-#     'check_youtube_live_status': {
-#        'task': 'check_youtube_live_status',
-#        'schedule': 3600,
-#        'args': (),
-#     },
-
-
-
-# }
-
-CELERY_MAX_TASKS_PER_CHILD = 100 # restart worker on this max task to avoid memory leak
