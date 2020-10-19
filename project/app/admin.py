@@ -70,9 +70,9 @@ class TinhAdmin(admin.ModelAdmin):
 
     @mark_safe
     def get_ho_dan_can_ung_cuu(self, obj):
-        count = HoDan.objects.filter(tinh=obj).exclude(status=3).count()
-        tag = f'<a href="/app/hodan/?tinh={obj.pk}&status=3">{count}</a>'
-        return
+        count = HoDan.objects.filter(tinh=obj, status=1).count()
+        tag = f'<a href="/app/hodan/?tinh={obj.pk}&status=1">{count}</a>'
+        return tag
     get_ho_dan_can_ung_cuu.short_description = "Hộ dân cần cứu"
     get_ho_dan_can_ung_cuu.allow_tags = True
 
