@@ -31,7 +31,7 @@ class NguonLucAdmin(admin.ModelAdmin):
     search_fields = ('name', 'phone')
 
 class CuuHoAdmin(admin.ModelAdmin):
-    list_display = ('update_time', 'status', 'name', 'location', 'tinh', 'huyen', 'xa', 'thon', 'phone', 'volunteer')
+    list_display = ('update_time', 'status', 'name', 'phone', 'location', 'tinh', 'huyen', 'xa', 'thon', 'volunteer')
     list_editable = ('tinh', 'huyen', 'xa', 'thon', 'volunteer')
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
