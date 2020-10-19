@@ -2,13 +2,13 @@ import django
 import datetime
 from django.db import models
 
-RESOURCE_STATUS = [ 
+RESOURCE_STATUS = [
     (1, 'Sẵn sàng'),
     (2, 'Không gọi được'),
     (3, 'Đang nghỉ/Hết tài nguyên'),
 ]
 
-TINHNGUYEN_STATUS = [ 
+TINHNGUYEN_STATUS = [
     (1, 'Sẵn sàng'),
     (2, 'Không gọi được'),
     (3, 'Đang nghỉ'),
@@ -34,7 +34,7 @@ class Tinh(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Tỉnh")
     def __str__(self):
         return self.name
-    
+
     class Meta:
         verbose_name = "Tỉnh"
         verbose_name_plural = "Tỉnh"
@@ -93,10 +93,10 @@ class TinhNguyenVien(models.Model):
         verbose_name_plural = 'Danh sách Tình nguyên viên thông tin'
 
 
-class CuuHo(models.Model): 
+class CuuHo(models.Model):
     update_time = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
     name = models.TextField(blank=True, default='', verbose_name="Đội cứu hộ")
-    
+
     status = models.IntegerField(choices=CUUHO_STATUS, default=0, verbose_name="Tình trạng")
 
     tinh = models.ForeignKey(Tinh, blank=True, null=True, on_delete=models.CASCADE)
@@ -117,7 +117,7 @@ class CuuHo(models.Model):
         verbose_name = 'Các đội Cứu hộ'
         verbose_name_plural = 'Các đội Cứu hộ'
 
-  
+
 class HoDan(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Hộ dân")
     update_time = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
@@ -176,4 +176,3 @@ class TinTuc(models.Model):
     class Meta:
         verbose_name_plural = "Tin tức quan trọng "
         verbose_name = "Tin tức quan trọng "
-
