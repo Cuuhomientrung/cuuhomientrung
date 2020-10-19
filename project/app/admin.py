@@ -26,12 +26,12 @@ class TinTucAdmin(admin.ModelAdmin):
     search_fields = ('title',)
 
 class NguonLucAdmin(admin.ModelAdmin):
-    list_display = ('status', 'name', 'location', 'tinh', 'huyen', 'xa', 'thon', 'phone', 'volunteer')
+    list_display = ('status', 'name', 'location', 'tinh', 'huyen', 'xa', 'phone', 'volunteer')
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
 
 class CuuHoAdmin(admin.ModelAdmin):
-    list_display = ('update_time', 'status', 'name', 'phone', 'location', 'tinh', 'huyen', 'xa', 'thon', 'volunteer')
+    list_display = ('update_time', 'status', 'name', 'phone', 'location', 'tinh', 'huyen', 'xa', 'volunteer')
     list_editable = ('tinh', 'huyen', 'xa', 'thon', 'volunteer')
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
@@ -43,15 +43,15 @@ class TinhNguyenVienAdmin(admin.ModelAdmin):
  
 
 class HoDanAdmin(admin.ModelAdmin):
-    list_display = ('update_time', 'status', 'name', 'phone', 'get_note', 'location', 'tinh', 'huyen', 'xa', 'thon', 'volunteer', 'cuuho')
+    list_display = ('update_time', 'status', 'name', 'phone', 'get_note', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
     list_display_links = ('name', 'phone')
-    list_editable = ('status', 'tinh', 'huyen', 'xa', 'thon', 'volunteer', 'cuuho')
+    list_editable = ('status', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
     search_fields = ('name', 'phone', 'note')
 
     def get_note(self, obj):
         if obj.note:
-            return (' '.join(obj.note.split()[:10]) + '...')
+            return (' '.join(obj.note.split()[:15]) + '...')
         else:
             return ''
     get_note.short_description = 'Ghi chú'
@@ -115,7 +115,7 @@ class ThonAdmin(admin.ModelAdmin):
     get_ho_dan_can_ung_cuu.short_description = "Hộ dân cần ứng cứu"
 
 admin.site.register(TinTuc, TinTucAdmin)
-admin.site.register(NguonLuc, NguonLucAdmin)
+# admin.site.register(NguonLuc, NguonLucAdmin)
 admin.site.register(HoDan, HoDanAdmin)
 admin.site.register(CuuHo, CuuHoAdmin)
 admin.site.register(TinhNguyenVien, TinhNguyenVienAdmin)
@@ -123,5 +123,5 @@ admin.site.register(TinhNguyenVien, TinhNguyenVienAdmin)
 admin.site.register(Tinh, TinhAdmin)
 admin.site.register(Huyen, HuyenAdmin)
 admin.site.register(Xa, XaAdmin)
-admin.site.register(Thon, ThonAdmin)
+# admin.site.register(Thon, ThonAdmin)
 
