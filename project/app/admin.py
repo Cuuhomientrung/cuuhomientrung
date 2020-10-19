@@ -32,6 +32,7 @@ class NguonLucAdmin(admin.ModelAdmin):
 
 class CuuHoAdmin(admin.ModelAdmin):
     list_display = ('update_time', 'status', 'name', 'location', 'tinh', 'huyen', 'xa', 'thon', 'phone', 'volunteer')
+    list_editable = ('tinh', 'huyen', 'xa', 'thon', 'volunteer')
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
 
@@ -40,8 +41,9 @@ class TinhNguyenVienAdmin(admin.ModelAdmin):
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
  
+
 class HoDanAdmin(admin.ModelAdmin):
-    list_display = ('update_time', 'status', 'name', 'need', 'get_note', 'location', 'tinh', 'huyen', 'xa', 'thon', 'phone', 'volunteer', 'cuuho')
+    list_display = ('update_time', 'status', 'name', 'get_need', 'get_note', 'location', 'tinh', 'huyen', 'xa', 'thon', 'phone', 'volunteer', 'cuuho')
     list_display_links = ('name', )
     list_editable = ('status', 'tinh', 'huyen', 'xa', 'thon', 'volunteer', 'cuuho')
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
@@ -54,7 +56,66 @@ class HoDanAdmin(admin.ModelAdmin):
             return ''
         
         get_note.short_description = 'Ghi chú'
+
+    def get_need(self, obj):
+        if obj.need:
+            return (' '.join(obj.need.split()[:10]) + '...')
+        else:
+            return ''
+        
+        get_need.short_description = 'Nhu cầu'
     
+class TinhAdmin(admin.ModelAdmin):
+    list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
+
+    def get_cuu_ho_san_sang(self, obj):
+        count = CuuHo.objects.filter(tinh=obj, status=1).count()
+        return str(count)
+    get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
+
+    def get_ho_dan_can_ung_cuu(self, obj):
+        count = HoDan.objects.filter(tinh=obj).exclude(status=3).count()
+        return str(count)
+    get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
+
+class HuyenAdmin(admin.ModelAdmin):
+    list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
+
+    def get_cuu_ho_san_sang(self, obj):
+        count = CuuHo.objects.filter(huyen=obj, status=1).count()
+        return str(count)
+    get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
+
+    def get_ho_dan_can_ung_cuu(self, obj):
+        count = HoDan.objects.filter(huyen=obj).exclude(status=3).count()
+        return str(count)
+    get_ho_dan_can_ung_cuu.short_description = "Hộ dân cần ứng cứu"
+
+class XaAdmin(admin.ModelAdmin):
+    list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
+
+    def get_cuu_ho_san_sang(self, obj):
+        count = CuuHo.objects.filter(xa=obj, status=1).count()
+        return str(count)
+    get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
+
+    def get_ho_dan_can_ung_cuu(self, obj):
+        count = HoDan.objects.filter(xa=obj).exclude(status=3).count()
+        return str(count)
+    get_ho_dan_can_ung_cuu.short_description = "Hộ dân cần ứng cứu"
+
+class ThonAdmin(admin.ModelAdmin):
+    list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
+
+    def get_cuu_ho_san_sang(self, obj):
+        count = CuuHo.objects.filter(thon=obj, status=1).count()
+        return str(count)
+    get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
+
+    def get_ho_dan_can_ung_cuu(self, obj):
+        count = HoDan.objects.filter(thon=obj).exclude(status=3).count()
+        return str(count)
+    get_ho_dan_can_ung_cuu.short_description = "Hộ dân cần ứng cứu"
 
 admin.site.register(TinTuc, TinTucAdmin)
 admin.site.register(NguonLuc, NguonLucAdmin)
@@ -62,8 +123,8 @@ admin.site.register(HoDan, HoDanAdmin)
 admin.site.register(CuuHo, CuuHoAdmin)
 admin.site.register(TinhNguyenVien, TinhNguyenVienAdmin)
 
-admin.site.register(Tinh)
-admin.site.register(Huyen)
-admin.site.register(Xa)
-admin.site.register(Thon)
+admin.site.register(Tinh, TinhAdmin)
+admin.site.register(Huyen, HuyenAdmin)
+admin.site.register(Xa, XaAdmin)
+admin.site.register(Thon, ThonAdmin)
 
