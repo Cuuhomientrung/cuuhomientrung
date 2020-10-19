@@ -36,8 +36,8 @@ class Tinh(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = "Tỉnh"
-        verbose_name_plural = "Tỉnh"
+        verbose_name = "Thống kê Tỉnh"
+        verbose_name_plural = "Thống kê Tỉnh"
 
 
 class Huyen(models.Model):
@@ -46,8 +46,8 @@ class Huyen(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = "Huyện"
-        verbose_name_plural = "Huyện"
+        verbose_name = "Thống kê Huyện"
+        verbose_name_plural = "Thống kê Huyện"
 
 
 
@@ -57,8 +57,8 @@ class Xa(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = "Xã"
-        verbose_name_plural = "Xã"
+        verbose_name = "Thống kê Xã"
+        verbose_name_plural = "Thống kê Xã"
 
 
 class Thon(models.Model):
@@ -89,8 +89,8 @@ class TinhNguyenVien(models.Model):
 
 
     class Meta:
-        verbose_name = 'Danh sách Tình nguyên viên thông tin'
-        verbose_name_plural = 'Danh sách Tình nguyên viên thông tin'
+        verbose_name = 'Tình nguyên viên thông tin'
+        verbose_name_plural = 'Tình nguyên viên thông tin'
 
 
 class CuuHo(models.Model):
