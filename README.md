@@ -1,5 +1,7 @@
 # HỆ THỐNG THÔNG TIN CỨU HỘ MIỀN TRUNG 
 
+https://cuuhomientrung.info  
+
 Website phục vụ công tác cứu hộ, cứu nạn theo mô hình crowdsource (huy động sức lực của cộng đồng để vận hành). Mô hình hoạt động theo nguyên tắc:  
 - Những người ở vùng an toàn tham gia làm Tình nguyện viên thông tin (Tự thêm tên & SĐT của mình vào Danh sách Tình nguyện viên) 
 - Các tình nguyện viên thu thập dữ liệu kêu cứu của người dân, gọi điện xác minh và cập nhật kết quả vào Danh sách Hộ dân cần ứng cứu 
