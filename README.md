@@ -34,3 +34,34 @@ Bằng việc duy trì một nguồn thông tin đầy đủ, được cập nh�
 2. Nếu là senior, bạn có thể ứng cử làm manager cho dự án này để tiếp tục hoàn thiện dự án phục vụ cộng đồng 
 
 CÙNG CHUNG TAY VÌ KHÚC RUỘT MIỀN TRUNG !!!
+
+# HƯỚNG DẪN CÀI ĐẶT 
+
+## Cài đặt 
+1. Cài đặt các thư viện cần thiết (cần cài Python3.6 trở lên và Pip3 trước)
+~~~
+pip3 install -r requirements.txt
+~~~
+
+2. Thay đổi cấu hình database từ postgresql sang sqlite (để chạy được ở local)  
+- trong file project/app/settings.py, comment out config postgresql và thay bằng phần config sqlite 
+- chạy script sau để tạo lại schema 
+~~~
+bash run_migrate.sh
+~~~
+
+3. Tạo tài khoản admin 
+~~~
+bash run_create_admin.sh
+~~~
+
+4. Mặc định đăng nhập site bằng tài khoản admin 
+- trong file project/app/middleware.py, thay đổi username thành username của admin đã tạo ở bước 3
+
+## Vận hành 
+Chạy webserver bằng lệnh sau:
+~~~
+bash run_server.sh
+~~~
+
+Mặc định site sẽ chạy ở localhost:8087

@@ -7,10 +7,8 @@ from django.http import HttpResponseForbidden
 class AutomaticUserLoginMiddleware(MiddlewareMixin):
 
     def process_view(self, request, view_func, view_args, view_kwargs):
-        # if not AutomaticUserLoginMiddleware._is_user_authenticated(request):
-        #     user = auth.authenticate(request)
-        #     if user is None: #         return HttpResponseForbidden() # user = User.objects.get(username='user1')
-        # user = User.objects.get(username='admin')
+
+        # NOTE: Following code is to bypass login page. Change username to default login user you want 
         user = User.objects.get(username='user1')
         request.user = user
         auth.login(request, user)
