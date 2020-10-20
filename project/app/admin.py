@@ -33,6 +33,7 @@ class NguonLucAdmin(admin.ModelAdmin):
 class CuuHoAdmin(admin.ModelAdmin):
     list_display = ('update_time', 'status', 'name', 'phone', 'location', 'tinh', 'huyen', 'xa', 'volunteer')
     list_editable = ('tinh', 'huyen', 'xa', 'volunteer')
+
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
 
@@ -64,6 +65,7 @@ class TinhAdmin(admin.ModelAdmin):
         count = CuuHo.objects.filter(tinh=obj, status=1).count()
         tag = f'<a href="/app/cuuho/?tinh={obj.pk}&status=1">{count}</a>'
         return tag
+
     get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
     get_cuu_ho_san_sang.allow_tags = True
 
