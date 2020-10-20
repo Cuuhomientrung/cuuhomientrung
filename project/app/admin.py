@@ -27,26 +27,26 @@ class TinTucAdmin(admin.ModelAdmin):
 
 class NguonLucAdmin(admin.ModelAdmin):
     list_display = ('status', 'name', 'location', 'tinh', 'huyen', 'xa', 'phone', 'volunteer')
-    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
+    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
 
 class CuuHoAdmin(admin.ModelAdmin):
     list_display = ('update_time', 'status', 'name', 'phone', 'location', 'tinh', 'huyen', 'xa', 'volunteer')
-    list_editable = ('tinh', 'huyen', 'xa', 'thon', 'volunteer')
-    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
+    list_editable = ('status', 'tinh', 'huyen', 'xa', 'volunteer')
+    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
 
 class TinhNguyenVienAdmin(admin.ModelAdmin):
     list_display = ('name', 'location', 'phone')
-    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
+    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
- 
+
 
 class HoDanAdmin(admin.ModelAdmin):
     list_display = ('update_time', 'status', 'name', 'phone', 'get_note', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
     list_display_links = ('name', 'phone')
     list_editable = ('status', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
-    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
+    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
     search_fields = ('name', 'phone', 'note')
 
     def get_note(self, obj):
@@ -63,7 +63,7 @@ class TinhAdmin(admin.ModelAdmin):
     def get_cuu_ho_san_sang(self, obj):
         count = CuuHo.objects.filter(tinh=obj, status=1).count()
         tag = f'<a href="/app/cuuho/?tinh={obj.pk}&status=1">{count}</a>'
-        return tag 
+        return tag
 
     get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
     get_cuu_ho_san_sang.allow_tags = True
@@ -124,4 +124,3 @@ admin.site.register(Tinh, TinhAdmin)
 admin.site.register(Huyen, HuyenAdmin)
 admin.site.register(Xa, XaAdmin)
 # admin.site.register(Thon, ThonAdmin)
-
