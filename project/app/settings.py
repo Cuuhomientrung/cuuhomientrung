@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'app',
     'rangefilter',
     'django_admin_listfilter_dropdown',
-    'django.contrib.sites'
+    'django.contrib.sites',
+    'rest_framework', 
+    'django_restful_admin'
 ]
 
 MIDDLEWARE = [
