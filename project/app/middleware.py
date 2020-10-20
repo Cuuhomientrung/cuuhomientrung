@@ -14,4 +14,4 @@ class AutomaticUserLoginMiddleware(MiddlewareMixin):
         user = User.objects.get(username='user1')
         request.user = user
         auth.login(request, user)
-# 
+#
