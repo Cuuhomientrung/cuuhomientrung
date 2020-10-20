@@ -34,6 +34,7 @@ class NguonLucAdmin(admin.ModelAdmin):
     list_display = ('status', 'name', 'location', 'tinh', 'huyen', 'xa', 'phone', 'volunteer')
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
+    list_editable = ('status',)
 
 
 class CuuHoAdmin(admin.ModelAdmin):
@@ -41,19 +42,23 @@ class CuuHoAdmin(admin.ModelAdmin):
     # list_editable = ('tinh', 'huyen', 'xa', 'volunteer')
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
+    list_editable = ('status',)
 
 
     def get_queryset(self, request):
         queryset = super(CuuHoAdmin, self).get_queryset(request)
-        queryset = queryset.prefetch_related('tinh', 'huyen', 'xa', 'volunteer')
+        queryset = queryset\
+            .prefetch_related('tinh', 'huyen', 'xa', 'volunteer')\
+            .order_by('-status')
         return queryset
 
 
 
 class TinhNguyenVienAdmin(admin.ModelAdmin):
-    list_display = ('name', 'location', 'phone')
+    list_display = ('name', 'location', 'phone', 'status')
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
+    list_editable = ('status',)
 
     def get_queryset(self, request):
         queryset = super(TinhNguyenVienAdmin, self).get_queryset(request)
@@ -64,7 +69,7 @@ class TinhNguyenVienAdmin(admin.ModelAdmin):
 class HoDanAdmin(admin.ModelAdmin):
     list_display = ('update_time', 'status', 'name', 'phone', 'get_note', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
     list_display_links = ('name', 'phone')
-    # list_editable = ('status', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
+    list_editable = ('status',)
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
     search_fields = ('name', 'phone', 'note')
     actions = [export_ho_dan_as_excel_action()]
@@ -73,7 +78,10 @@ class HoDanAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         queryset = super(HoDanAdmin, self).get_queryset(request)
-        queryset = queryset.prefetch_related('tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
+        queryset = queryset\
+            .prefetch_related('tinh', 'huyen', 'xa', 'volunteer', 'cuuho')\
+            .order_by('-status', '-update_time')
+
         return queryset
 
     def get_note(self, obj):
