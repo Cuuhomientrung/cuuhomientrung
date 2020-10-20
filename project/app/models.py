@@ -32,7 +32,7 @@ HODAN_STATUS = [
 ]
 
 class Tinh(models.Model):
-    name = models.TextField(blank=True, default='', verbose_name="Tỉnh")
+    name = models.TextField(blank=False, null=False, default='', verbose_name="Tỉnh")
     def __str__(self):
         return self.name
 
@@ -42,8 +42,8 @@ class Tinh(models.Model):
 
 
 class Huyen(models.Model):
-    name = models.TextField(blank=True, default='', verbose_name="Huyện")
-    tinh = models.ForeignKey(Tinh, blank=True, null=True, on_delete=models.CASCADE)
+    name = models.TextField(blank=False, null=False, default='', verbose_name="Huyện")
+    tinh = models.ForeignKey(Tinh, blank=False, null=False, on_delete=models.CASCADE)
     def __str__(self):
         return self.name
 
@@ -53,8 +53,8 @@ class Huyen(models.Model):
 
 
 class Xa(models.Model):
-    name = models.TextField(blank=True, default='', verbose_name="Xã")
-    huyen = models.ForeignKey(Huyen, blank=True, null=True, on_delete=models.CASCADE)
+    name = models.TextField(blank=False, null=False, default='', verbose_name="Xã")
+    huyen = models.ForeignKey(Huyen, blank=False, null=False, on_delete=models.CASCADE)
     def __str__(self):
         return self.name
 
@@ -64,8 +64,8 @@ class Xa(models.Model):
 
 
 class Thon(models.Model):
-    name = models.TextField(blank=True, default='', verbose_name="Thôn")
-    huyen = models.ForeignKey(Huyen, blank=True, null=True, on_delete=models.CASCADE)
+    name = models.TextField(blank=True, null=True, default='', verbose_name="Thôn")
+    huyen = models.ForeignKey(Huyen, blank=False, null=False, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -76,15 +76,15 @@ class Thon(models.Model):
 
 
 class TinhNguyenVien(models.Model):
-    name = models.TextField(blank=True, default='', verbose_name='Họ và tên')
+    name = models.TextField(blank=False, default='', verbose_name='Họ và tên')
     status = models.IntegerField(choices=TINHNGUYEN_STATUS, default=0, verbose_name="Tình trạng")
     location = models.TextField(blank=True, default='', verbose_name='Địa chỉ')
-    phone = models.TextField(blank=True, default='', verbose_name='Điện thoại liên hệ')
+    phone = models.TextField(blank=False, default='', verbose_name='Điện thoại liên hệ')
     note = models.TextField(blank=True, default='', verbose_name='Ghi chú')
 
-    tinh = models.ForeignKey(Tinh, blank=True, null=True, on_delete=models.CASCADE)
-    huyen = models.ForeignKey(Huyen, blank=True, null=True, on_delete=models.CASCADE)
-    xa = models.ForeignKey(Xa, blank=True, null=True, on_delete=models.CASCADE)
+    tinh = models.ForeignKey(Tinh, blank=False, null=False, on_delete=models.CASCADE)
+    huyen = models.ForeignKey(Huyen, blank=False, null=False, on_delete=models.CASCADE)
+    xa = models.ForeignKey(Xa, blank=False, null=False, on_delete=models.CASCADE)
     thon = models.ForeignKey(Thon, blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -98,7 +98,7 @@ class TinhNguyenVien(models.Model):
 
 class CuuHo(models.Model):
     update_time = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
-    name = models.TextField(blank=True, default='', verbose_name="Đội cứu hộ")
+    name = models.TextField(blank=False, default='', verbose_name="Đội cứu hộ")
 
     status = models.IntegerField(choices=CUUHO_STATUS, default=0, verbose_name="Tình trạng")
     tinh = models.ForeignKey(
@@ -112,7 +112,7 @@ class CuuHo(models.Model):
         show_all=False,
         auto_choose=True,
         sort=True,
-        blank=True, null=True, on_delete=models.CASCADE,
+        blank=False, null=False, on_delete=models.CASCADE,
         related_name="cuuho_reversed"
     )
     xa = ChainedForeignKey(
@@ -122,7 +122,7 @@ class CuuHo(models.Model):
         show_all=False,
         auto_choose=True,
         sort=True,
-        blank=True, null=True, on_delete=models.CASCADE,
+        blank=False, null=False, on_delete=models.CASCADE,
         related_name="cuuho_reversed"
     )
     thon = ChainedForeignKey(
@@ -150,12 +150,12 @@ class CuuHo(models.Model):
 
 
 class HoDan(models.Model):
-    name = models.TextField(blank=True, default='', verbose_name="Hộ dân")
+    name = models.TextField(blank=False, default='', verbose_name="Hộ dân")
     update_time = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
-    location = models.TextField(blank=True, default='', verbose_name='Địa chỉ')
+    location = models.TextField(blank=False, default='', verbose_name='Địa chỉ')
     status = models.IntegerField(choices=HODAN_STATUS, default=0, verbose_name="Tình trạng")
     tinh = models.ForeignKey(
-        Tinh, blank=True, null=True, on_delete=models.CASCADE,
+        Tinh, blank=False, null=False, on_delete=models.CASCADE,
         related_name="hodan_reversed"
     )
     huyen = ChainedForeignKey(
@@ -165,7 +165,7 @@ class HoDan(models.Model):
         show_all=False,
         auto_choose=True,
         sort=True,
-        blank=True, null=True, on_delete=models.CASCADE,
+        blank=False, null=False, on_delete=models.CASCADE,
         related_name="hodan_reversed"
     )
     xa = ChainedForeignKey(
@@ -175,7 +175,7 @@ class HoDan(models.Model):
         show_all=False,
         auto_choose=True,
         sort=True,
-        blank=True, null=True, on_delete=models.CASCADE,
+        blank=False, null=False, on_delete=models.CASCADE,
         related_name="hodan_reversed"
     )
     thon = ChainedForeignKey(
