@@ -43,8 +43,9 @@ INSTALLED_APPS = [
     'rangefilter',
     'django_admin_listfilter_dropdown',
     'django.contrib.sites',
-    'rest_framework', 
-    'django_restful_admin'
+    'rest_framework',
+    'django_restful_admin',
+    'smart_selects',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +80,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'app.wsgi.application'
 SITE_ID = 1
 
-# USE THIS SETTING IF RUNNING ON LOCAL 
+# USE THIS SETTING IF RUNNING ON LOCAL
 
 # DATABASES = {
 #     'default': {
@@ -88,7 +89,7 @@ SITE_ID = 1
 #     }
 # }
 
-# USE THIS SETTING IF RUNNING ON PRODUCTION 
+# USE THIS SETTING IF RUNNING ON PRODUCTION
 DATABASES = {
         'default':{
         'ENGINE': 'django.db.backends.postgresql_psycopg2',

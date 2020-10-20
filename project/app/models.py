@@ -1,6 +1,7 @@
 import django
 import datetime
 from django.db import models
+from smart_selects.db_fields import ChainedForeignKey
 
 RESOURCE_STATUS = [
     (1, 'Sẵn sàng'),
@@ -42,6 +43,7 @@ class Tinh(models.Model):
 
 class Huyen(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Huyện")
+    tinh = models.ForeignKey(Tinh, blank=True, null=True, on_delete=models.CASCADE)
     def __str__(self):
         return self.name
 
@@ -53,6 +55,7 @@ class Huyen(models.Model):
 
 class Xa(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Xã")
+    huyen = models.ForeignKey(Huyen, blank=True, null=True, on_delete=models.CASCADE)
     def __str__(self):
         return self.name
 
@@ -63,6 +66,7 @@ class Xa(models.Model):
 
 class Thon(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Thôn")
+    huyen = models.ForeignKey(Huyen, blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -125,7 +129,15 @@ class HoDan(models.Model):
     status = models.IntegerField(choices=HODAN_STATUS, default=0, verbose_name="Tình trạng")
 
     tinh = models.ForeignKey(Tinh, blank=True, null=True, on_delete=models.CASCADE)
-    huyen = models.ForeignKey(Huyen, blank=True, null=True, on_delete=models.CASCADE)
+    huyen = ChainedForeignKey(
+        Huyen,
+        chained_field="tinh",
+        chained_model_field="tinh",
+        show_all=False,
+        auto_choose=True,
+        sort=True,
+        blank=True, null=True, on_delete=models.CASCADE
+    )
     xa = models.ForeignKey(Xa, blank=True, null=True, on_delete=models.CASCADE)
     thon = models.ForeignKey(Thon, blank=True, null=True, on_delete=models.CASCADE)
 
