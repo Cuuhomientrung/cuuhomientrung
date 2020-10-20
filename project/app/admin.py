@@ -90,7 +90,7 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
     @mark_safe
     def get_cuu_ho_san_sang(self, obj):
         hodan = [item for item in obj.cuuho_reversed.all() if item.status == 1]
-        tag = f'<a href="/app/cuuho/?huyen={obj.pk}&status=1">{len(hodan)}</a>'
+        tag = f'<a href="/app/cuuho/?{self.URL_CUSTOM_TAG}={obj.pk}&status=1">{len(hodan)}</a>'
         return tag
     get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
     get_cuu_ho_san_sang.allow_tags = True
@@ -98,7 +98,7 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
     @mark_safe
     def get_ho_dan_can_ung_cuu(self, obj):
         hodan = [item for item in obj.hodan_reversed.all() if item.status == 1]
-        tag = f'<a href="/app/hodan/?huyen={obj.pk}&status=1">{len(hodan)}</a>'
+        tag = f'<a href="/app/hodan/?{self.URL_CUSTOM_TAG}={obj.pk}&status=1">{len(hodan)}</a>'
         return tag
     get_ho_dan_can_ung_cuu.short_description = "Hộ dân cần ứng cứu"
     get_ho_dan_can_ung_cuu.allow_tags = True
@@ -110,19 +110,19 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
 
 
 class TinhAdmin(HoDanCuuHoStatisticBase):
-    pass
+    URL_CUSTOM_TAG = 'tinh'
 
 
 class HuyenAdmin(HoDanCuuHoStatisticBase):
-    pass
+    URL_CUSTOM_TAG = 'huyen'
 
 
 class XaAdmin(HoDanCuuHoStatisticBase):
-    pass
+    URL_CUSTOM_TAG = 'xa'
 
 
 class ThonAdmin(HoDanCuuHoStatisticBase):
-    pass
+    URL_CUSTOM_TAG = 'thon'
 
 
 admin.site.register(TinTuc, TinTucAdmin)
