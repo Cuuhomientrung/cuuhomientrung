@@ -1,4 +1,5 @@
 import django
+import urllib
 from django.contrib import admin
 from django.db.models import Count, F
 from django.utils.safestring import mark_safe
@@ -116,7 +117,7 @@ class HoDanHistoryAdmin(SimpleHistoryAdmin):
 
 class HoDanAdmin(DynamicRawIDMixin, NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.ModelAdmin):
     dynamic_raw_id_fields = ('tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
-    list_display = ('id', 'update_time', 'status', 'name', 'phone', 'get_note', 'people_number', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
+    list_display = ('id', 'update_time', 'status', 'name', 'phone', 'get_note', 'people_number', 'location', 'get_plus_code', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
     list_display_links = ('id', 'name', 'phone',)
     list_editable = ('status',)
     list_filter = (
@@ -143,6 +144,17 @@ class HoDanAdmin(DynamicRawIDMixin, NumericFilterModelAdmin, MapAdmin, HoDanHist
         else:
             return ''
     get_note.short_description = 'Ghi chú'
+
+    @mark_safe
+    def get_plus_code(self, obj):
+        if obj.plus_code:
+            code = urllib.parse.quote(obj.plus_code)
+            tag = f'<a target="_blank" href="https://www.google.com/maps/search/{code}">{obj.plus_code}</a>'
+            return tag
+        else:
+            return ''
+    get_plus_code.short_description = "Xem bản đồ"
+    get_plus_code.allow_tags = True
 
     class Media:
         css = {
