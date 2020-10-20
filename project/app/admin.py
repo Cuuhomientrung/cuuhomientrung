@@ -1,4 +1,5 @@
 import django
+import urllib
 from django.contrib import admin
 from django.db.models import Count, F
 from django.utils.safestring import mark_safe
@@ -66,7 +67,7 @@ class TinhNguyenVienAdmin(admin.ModelAdmin):
 
 
 class HoDanAdmin(admin.ModelAdmin):
-    list_display = ('update_time', 'status', 'name', 'phone', 'get_note', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
+    list_display = ('update_time', 'status', 'name', 'phone', 'get_note', 'location', 'get_plus_code', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
     list_display_links = ('name', 'phone')
     list_editable = ('status',)
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
@@ -89,6 +90,17 @@ class HoDanAdmin(admin.ModelAdmin):
         else:
             return ''
     get_note.short_description = 'Ghi chú'
+
+    @mark_safe
+    def get_plus_code(self, obj):
+        if obj.plus_code:
+            code = urllib.parse.quote(obj.plus_code)
+            tag = f'<a target="_blank" href="https://www.google.com/maps/search/{code}">{obj.plus_code}</a>'
+            return tag
+        else:
+            return ''
+    get_plus_code.short_description = "Xem bản đồ"
+    get_plus_code.allow_tags = True
 
     class Media:
         css = {

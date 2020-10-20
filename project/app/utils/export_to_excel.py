@@ -28,8 +28,8 @@ def export_ho_dan_as_excel_action(fields=None, exclude=None, header=True):
     """
     def export_as_excel(modeladmin, request, queryset):
         opts = modeladmin.model._meta
-        field_names = ["name", "status", "location", "tinh", "xa", "huyen", "phone", "cuuho", "update_time", "note"]
-        display_names = ["Tên hộ dân", "Tình trạng", "Vị trí", "Tỉnh", "Xã", "Huyện", "Sdt", "Cứu hộ", "Thời gian cuối cùng cập nhật", "Ghi chú"]
+        field_names = ["name", "status", "location", "plus_code", "tinh", "xa", "huyen", "phone", "cuuho", "update_time", "note"]
+        display_names = ["Tên hộ dân", "Tình trạng", "Vị trí", "Plus code", "Tỉnh", "Xã", "Huyện", "Sdt", "Cứu hộ", "Thời gian cuối cùng cập nhật", "Ghi chú"]
         file_name = "Danh_sach_ho_dan"
 
         output = io.BytesIO()
