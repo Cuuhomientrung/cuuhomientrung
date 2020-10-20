@@ -1,0 +1,18 @@
+#changelist .changelist-form-container {
+    max-width: 80%;
+}
+
+.field-tinh select,
+.field-huyen select,
+.field-xa select,
+.field-cuuho select {
+    width: 100px;
+}
+
+.column-get_note,
+.column-location,
+td.field-location,
+td.field-get_note {
+    width: 200px;
+    min-width: 200px;
+}

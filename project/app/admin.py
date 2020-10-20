@@ -39,6 +39,11 @@ class CuuHoAdmin(admin.ModelAdmin):
 
     search_fields = ('name', 'phone')
 
+    class Media:
+        css = {
+            'all': ('/static/css/custom.css',)
+        }
+
 class TinhNguyenVienAdmin(admin.ModelAdmin):
     list_display = ('name', 'location', 'phone')
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
@@ -55,10 +60,15 @@ class HoDanAdmin(admin.ModelAdmin):
 
     def get_note(self, obj):
         if obj.note:
-            return (' '.join(obj.note.split()[:15]) + '...')
+            return (' '.join(obj.note.split()[:80]) + '...')
         else:
             return ''
     get_note.short_description = 'Ghi chú'
+
+    class Media:
+        css = {
+            'all': ('/static/css/custom.css',)
+        }
 
 
 class TinhAdmin(admin.ModelAdmin):
