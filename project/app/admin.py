@@ -12,6 +12,7 @@ from django.conf.locale.vi import formats as vi_formats
 from django.forms import TextInput, Textarea
 from rangefilter.filter import DateRangeFilter, DateTimeRangeFilter
 from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter, ChoiceDropdownFilter
+from django_restful_admin import admin as rest_admin
 
 vi_formats.DATETIME_FORMAT = "d/m/y H:i"
 
@@ -141,3 +142,11 @@ admin.site.register(Tinh, TinhAdmin)
 admin.site.register(Huyen, HuyenAdmin)
 admin.site.register(Xa, XaAdmin)
 # admin.site.register(Thon, ThonAdmin)
+
+rest_admin.site.register(HoDan)
+rest_admin.site.register(CuuHo)
+rest_admin.site.register(TinhNguyenVien)
+
+rest_admin.site.register(Tinh)
+rest_admin.site.register(Huyen)
+rest_admin.site.register(Xa)

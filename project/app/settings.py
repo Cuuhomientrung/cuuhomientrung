@@ -77,8 +77,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'app.wsgi.application'
 SITE_ID = 1
 
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+# USE THIS SETTING IF RUNNING ON LOCAL 
 
 # DATABASES = {
 #     'default': {
@@ -87,6 +86,7 @@ SITE_ID = 1
 #     }
 # }
 
+# USE THIS SETTING IF RUNNING ON PRODUCTION 
 DATABASES = {
         'default':{
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
