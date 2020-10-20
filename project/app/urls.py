@@ -21,4 +21,5 @@ from django_restful_admin import admin as rest_admin
 urlpatterns = [
     path('', admin.site.urls),
     path('api/', rest_admin.site.urls),  
+    path('chaining/', include('smart_selects.urls')),
 ]

@@ -530,7 +530,6 @@ input[type="submit"], button {
         position: static;
         width: auto;
         margin-top: 30px;
-        order: -1; // Move filter list to top of the page on mobile
     }
 
     .object-tools {
