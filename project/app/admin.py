@@ -28,18 +28,19 @@ class TinTucAdmin(admin.ModelAdmin):
 
 class NguonLucAdmin(admin.ModelAdmin):
     list_display = ('status', 'name', 'location', 'tinh', 'huyen', 'xa', 'phone', 'volunteer')
-    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
+    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
 
 class CuuHoAdmin(admin.ModelAdmin):
     list_display = ('update_time', 'status', 'name', 'phone', 'location', 'tinh', 'huyen', 'xa', 'volunteer')
-    list_editable = ('tinh', 'huyen', 'xa', 'volunteer')
+    list_editable = ('tinh', 'huyen', 'xa', 'volunteer')<<<<<<< export_csv
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
+
     search_fields = ('name', 'phone')
 
 class TinhNguyenVienAdmin(admin.ModelAdmin):
     list_display = ('name', 'location', 'phone')
-    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
+    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
 
 
@@ -47,7 +48,7 @@ class HoDanAdmin(admin.ModelAdmin):
     list_display = ('update_time', 'status', 'name', 'phone', 'get_note', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
     list_display_links = ('name', 'phone')
     list_editable = ('status', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
-    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
+    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
     search_fields = ('name', 'phone', 'note')
     actions = [export_ho_dan_as_excel_action()]
 
@@ -73,36 +74,49 @@ class TinhAdmin(admin.ModelAdmin):
 
     @mark_safe
     def get_ho_dan_can_ung_cuu(self, obj):
-        count = HoDan.objects.filter(tinh=obj).exclude(status=3).count()
-        tag = f'<a href="/app/hodan/?tinh={obj.pk}">{count}</a>'
-        return str(count)
-    get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
+        count = HoDan.objects.filter(tinh=obj, status=1).count()
+        tag = f'<a href="/app/hodan/?tinh={obj.pk}&status=1">{count}</a>'
+        return tag
+    get_ho_dan_can_ung_cuu.short_description = "Hộ dân cần cứu"
+    get_ho_dan_can_ung_cuu.allow_tags = True
 
 class HuyenAdmin(admin.ModelAdmin):
     list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
 
+    @mark_safe
     def get_cuu_ho_san_sang(self, obj):
         count = CuuHo.objects.filter(huyen=obj, status=1).count()
-        return str(count)
+        tag = f'<a href="/app/cuuho/?huyen={obj.pk}&status=1">{count}</a>'
+        return tag
     get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
+    get_cuu_ho_san_sang.allow_tags = True
 
+    @mark_safe
     def get_ho_dan_can_ung_cuu(self, obj):
-        count = HoDan.objects.filter(huyen=obj).exclude(status=3).count()
-        return str(count)
+        count = HoDan.objects.filter(huyen=obj, status=1).count()
+        tag = f'<a href="/app/hodan/?huyen={obj.pk}&status=1">{count}</a>'
+        return tag
     get_ho_dan_can_ung_cuu.short_description = "Hộ dân cần ứng cứu"
+    get_ho_dan_can_ung_cuu.allow_tags = True
 
 class XaAdmin(admin.ModelAdmin):
     list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
 
+    @mark_safe
     def get_cuu_ho_san_sang(self, obj):
         count = CuuHo.objects.filter(xa=obj, status=1).count()
-        return str(count)
+        tag = f'<a href="/app/cuuho/?xa={obj.pk}&status=1">{count}</a>'
+        return tag
     get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
+    get_cuu_ho_san_sang.allow_tags = True
 
+    @mark_safe
     def get_ho_dan_can_ung_cuu(self, obj):
-        count = HoDan.objects.filter(xa=obj).exclude(status=3).count()
-        return str(count)
+        count = HoDan.objects.filter(xa=obj, status=1).count()
+        tag = f'<a href="/app/hodan/?xa={obj.pk}&status=1">{count}</a>'
+        return tag
     get_ho_dan_can_ung_cuu.short_description = "Hộ dân cần ứng cứu"
+    get_ho_dan_can_ung_cuu.allow_tags = True
 
 class ThonAdmin(admin.ModelAdmin):
     list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
