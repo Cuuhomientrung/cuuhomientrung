@@ -33,7 +33,7 @@ class NguonLucAdmin(admin.ModelAdmin):
 
 class CuuHoAdmin(admin.ModelAdmin):
     list_display = ('update_time', 'status', 'name', 'phone', 'location', 'tinh', 'huyen', 'xa', 'volunteer')
-    list_editable = ('tinh', 'huyen', 'xa', 'volunteer')<<<<<<< export_csv
+    list_editable = ('tinh', 'huyen', 'xa', 'volunteer')
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
 
     search_fields = ('name', 'phone')

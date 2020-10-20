@@ -2,7 +2,7 @@
 import io
 import xlsxwriter
 from django.http import HttpResponse
-from app.models import CUUHO_STATUS
+from app.models import CUUHO_STATUS, HODAN_STATUS
 
 def write_a_row(worksheet, row, array):
     col = 0
@@ -39,7 +39,7 @@ def export_ho_dan_as_excel_action(fields=None, exclude=None, header=True):
             arr = []
             for field in field_names:
                 if field == "status":
-                    arr.append(lookup_in_a_list_of_tuples(CUUHO_STATUS, getattr(obj, field)))
+                    arr.append(lookup_in_a_list_of_tuples(HODAN_STATUS, getattr(obj, field)))
                 else:
                     arr.append(str(getattr(obj, field) or ""))
             write_a_row(worksheet, row, arr)
