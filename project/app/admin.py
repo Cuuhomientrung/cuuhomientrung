@@ -62,7 +62,7 @@ class HoDanAdmin(admin.ModelAdmin):
 
 
 class TinhAdmin(admin.ModelAdmin):
-    list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
+    list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu', 'get_ho_dan_da_ung_cuu')
 
     @mark_safe
     def get_cuu_ho_san_sang(self, obj):
@@ -81,8 +81,16 @@ class TinhAdmin(admin.ModelAdmin):
     get_ho_dan_can_ung_cuu.short_description = "Hộ dân cần cứu"
     get_ho_dan_can_ung_cuu.allow_tags = True
 
+    @mark_safe
+    def get_ho_dan_da_ung_cuu(self, obj):
+        count = HoDan.objects.filter(tinh=obj, status=3).count()
+        tag = f'<a href="/app/hodan/?tinh={obj.pk}&status=3">{count}</a>'
+        return tag
+    get_ho_dan_da_ung_cuu.short_description = "Hộ dân đã cứu"
+    get_ho_dan_da_ung_cuu.allow_tags = True
+
 class HuyenAdmin(admin.ModelAdmin):
-    list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
+    list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu', 'get_ho_dan_da_ung_cuu')
 
     @mark_safe
     def get_cuu_ho_san_sang(self, obj):
@@ -100,8 +108,16 @@ class HuyenAdmin(admin.ModelAdmin):
     get_ho_dan_can_ung_cuu.short_description = "Hộ dân cần ứng cứu"
     get_ho_dan_can_ung_cuu.allow_tags = True
 
+    @mark_safe
+    def get_ho_dan_da_ung_cuu(self, obj):
+        count = HoDan.objects.filter(huyen=obj, status=3).count()
+        tag = f'<a href="/app/hodan/?huyen={obj.pk}&status=3">{count}</a>'
+        return tag
+    get_ho_dan_da_ung_cuu.short_description = "Hộ dân đã cứu"
+    get_ho_dan_da_ung_cuu.allow_tags = True
+
 class XaAdmin(admin.ModelAdmin):
-    list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
+    list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu', 'get_ho_dan_da_ung_cuu')
 
     @mark_safe
     def get_cuu_ho_san_sang(self, obj):
@@ -118,6 +134,14 @@ class XaAdmin(admin.ModelAdmin):
         return tag
     get_ho_dan_can_ung_cuu.short_description = "Hộ dân cần ứng cứu"
     get_ho_dan_can_ung_cuu.allow_tags = True
+
+    @mark_safe
+    def get_ho_dan_da_ung_cuu(self, obj):
+        count = HoDan.objects.filter(xa=obj, status=3).count()
+        tag = f'<a href="/app/hodan/?xa={obj.pk}&status=3">{count}</a>'
+        return tag
+    get_ho_dan_da_ung_cuu.short_description = "Hộ dân đã cứu"
+    get_ho_dan_da_ung_cuu.allow_tags = True
 
 class ThonAdmin(admin.ModelAdmin):
     list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
