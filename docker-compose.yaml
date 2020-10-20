@@ -1,0 +1,34 @@
+version: "3.5"
+   
+networks:
+  cuuhomientrung-network:
+    name: cuuhomientrung-network
+    driver: bridge
+
+services:
+  cuuhomientrung-db:
+    container_name: cuuhomientrung-db
+    image: postgres
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=cuuhomientrung
+      - POSTGRES_USER=administrator
+      - POSTGRES_PASSWORD=bangtin_ainews_2811
+    ports:
+      - "8088:5432"
+    networks:
+      - cuuhomientrung-network
+
+  cuuhomientrung-web:
+    container_name: cuuhomientrung-web
+    build: .
+    command: python project/manage.py runserver 0.0.0.0:8087
+    volumes:
+      - .:/code
+    ports:
+      - "8087:8087"
+    depends_on:
+      - cuuhomientrung-db
+    networks:
+      - cuuhomientrung-network

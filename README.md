@@ -37,6 +37,9 @@ CÙNG CHUNG TAY VÌ KHÚC RUỘT MIỀN TRUNG !!!
 
 # HƯỚNG DẪN CÀI ĐẶT 
 
+## Cài đặt nhanh dành cho các bạn có docker và ở các nền tảng khác (MacOS..)
+[click here](SETUP-DOCKER.md)
+
 ## Cài đặt 
 1. Cài đặt các thư viện cần thiết (cần cài Python3.6 trở lên và Pip3 trước)
 ~~~

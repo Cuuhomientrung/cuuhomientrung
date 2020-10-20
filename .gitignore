@@ -21,6 +21,7 @@ dist/
 downloads/
 data/
 eggs/
+data/
 .eggs/
 parts/
 sdist/
