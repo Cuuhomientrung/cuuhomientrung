@@ -41,10 +41,12 @@ class CuuHoAdmin(admin.ModelAdmin):
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
 
+
     def get_queryset(self, request):
         queryset = super(CuuHoAdmin, self).get_queryset(request)
         queryset = queryset.prefetch_related('tinh', 'huyen', 'xa', 'volunteer')
         return queryset
+
 
 
 class TinhNguyenVienAdmin(admin.ModelAdmin):
@@ -75,10 +77,16 @@ class HoDanAdmin(admin.ModelAdmin):
 
     def get_note(self, obj):
         if obj.note:
-            return (' '.join(obj.note.split()[:15]) + '...')
+            return (' '.join(obj.note.split()[:80]) + '...')
         else:
             return ''
     get_note.short_description = 'Ghi chú'
+
+    class Media:
+        css = {
+            'all': ('/static/css/custom.css',)
+        }
+
 
 
 class HoDanCuuHoStatisticBase(admin.ModelAdmin):
@@ -86,6 +94,7 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
         abstract = True
 
     list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
+
 
     @mark_safe
     def get_cuu_ho_san_sang(self, obj):
@@ -109,6 +118,7 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
         return queryset
 
 
+
 class TinhAdmin(HoDanCuuHoStatisticBase):
     pass
 
@@ -119,6 +129,7 @@ class HuyenAdmin(HoDanCuuHoStatisticBase):
 
 class XaAdmin(HoDanCuuHoStatisticBase):
     pass
+
 
 
 class ThonAdmin(HoDanCuuHoStatisticBase):

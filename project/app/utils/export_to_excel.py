@@ -3,6 +3,8 @@ import io
 import xlsxwriter
 from django.http import HttpResponse
 from app.models import CUUHO_STATUS, HODAN_STATUS
+from datetime import datetime, timezone
+import pytz
 
 def write_a_row(worksheet, row, array):
     col = 0
@@ -14,6 +16,9 @@ def lookup_in_a_list_of_tuples(arr, key):
     for x in arr:
         if x[0] == key:
             return x[1]
+
+def utc_to_local(utc_dt):
+    return utc_dt.replace(tzinfo=timezone.utc).astimezone(tz=pytz.timezone("Asia/Ho_Chi_Minh"))
 
 def export_ho_dan_as_excel_action(fields=None, exclude=None, header=True):
     """
@@ -40,6 +45,10 @@ def export_ho_dan_as_excel_action(fields=None, exclude=None, header=True):
             for field in field_names:
                 if field == "status":
                     arr.append(lookup_in_a_list_of_tuples(HODAN_STATUS, getattr(obj, field)))
+                elif field == "update_time":
+                    utc_time = getattr(obj, field)
+                    local_datetime = utc_to_local(utc_time)
+                    arr.append(local_datetime.strftime("%d/%m/%Y %H:%M:%S"))
                 else:
                     arr.append(str(getattr(obj, field) or ""))
             write_a_row(worksheet, row, arr)
