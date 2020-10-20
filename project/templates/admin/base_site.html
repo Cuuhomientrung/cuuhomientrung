@@ -1,0 +1,10 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+<p>Các trường hợp cần cứu hộ khẩn cấp, xin gọi theo số hotline: 1800 6132 (miễn phí + live 100%) để đội cứu hộ tới ứng cứu </p>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

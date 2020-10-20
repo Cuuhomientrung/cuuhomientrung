@@ -6,3 +6,5 @@ django-qsstats-magic==1.1.0
 django-timezone-field==4.0
 django-admin-rangefilter==0.6.3
 django-admin-list-filter-dropdown==1.0.3
+Django==3.1.2
+django-restful-admin==1.1.3
