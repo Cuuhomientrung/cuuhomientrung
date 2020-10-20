@@ -23,40 +23,57 @@ admin.site.site_title = 'Hệ thống thông tin Cứu hộ miền Trung'
 admin.index_title = 'Hệ thống thông tin Cứu hộ miền Trung'
 admin.site_url = '/'
 
+
 class TinTucAdmin(admin.ModelAdmin):
     list_display = ('update_time', 'title', 'url')
     search_fields = ('title',)
+
 
 class NguonLucAdmin(admin.ModelAdmin):
     list_display = ('status', 'name', 'location', 'tinh', 'huyen', 'xa', 'phone', 'volunteer')
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
 
+
 class CuuHoAdmin(admin.ModelAdmin):
     list_display = ('update_time', 'status', 'name', 'phone', 'location', 'tinh', 'huyen', 'xa', 'volunteer')
-    list_editable = ('tinh', 'huyen', 'xa', 'volunteer')
+    # list_editable = ('tinh', 'huyen', 'xa', 'volunteer')
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
-
     search_fields = ('name', 'phone')
 
-    class Media:
-        css = {
-            'all': ('/static/css/custom.css',)
-        }
+
+    def get_queryset(self, request):
+        queryset = super(CuuHoAdmin, self).get_queryset(request)
+        queryset = queryset.prefetch_related('tinh', 'huyen', 'xa', 'volunteer')
+        return queryset
+
+
 
 class TinhNguyenVienAdmin(admin.ModelAdmin):
     list_display = ('name', 'location', 'phone')
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
 
+    def get_queryset(self, request):
+        queryset = super(TinhNguyenVienAdmin, self).get_queryset(request)
+        queryset = queryset.prefetch_related('tinh', 'huyen', 'xa')
+        return queryset
+
 
 class HoDanAdmin(admin.ModelAdmin):
     list_display = ('update_time', 'status', 'name', 'phone', 'get_note', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
     list_display_links = ('name', 'phone')
-    list_editable = ('status', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
+    # list_editable = ('status', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
     search_fields = ('name', 'phone', 'note')
     actions = [export_ho_dan_as_excel_action()]
+    # Built-in auto complete selection from Django
+    autocomplete_fields = ['volunteer', 'cuuho']
+
+    def get_queryset(self, request):
+        queryset = super(HoDanAdmin, self).get_queryset(request)
+        queryset = queryset.prefetch_related('tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
+        return queryset
 
     def get_note(self, obj):
         if obj.note:
@@ -71,100 +88,53 @@ class HoDanAdmin(admin.ModelAdmin):
         }
 
 
-class TinhAdmin(admin.ModelAdmin):
-    list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu', 'get_ho_dan_da_ung_cuu')
 
-    @mark_safe
-    def get_cuu_ho_san_sang(self, obj):
-        count = CuuHo.objects.filter(tinh=obj, status=1).count()
-        tag = f'<a href="/app/cuuho/?tinh={obj.pk}&status=1">{count}</a>'
-        return tag
+class HoDanCuuHoStatisticBase(admin.ModelAdmin):
+    class Meta:
+        abstract = True
 
-    get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
-    get_cuu_ho_san_sang.allow_tags = True
-
-    @mark_safe
-    def get_ho_dan_can_ung_cuu(self, obj):
-        count = HoDan.objects.filter(tinh=obj, status=1).count()
-        tag = f'<a href="/app/hodan/?tinh={obj.pk}&status=1">{count}</a>'
-        return tag
-    get_ho_dan_can_ung_cuu.short_description = "Hộ dân cần cứu"
-    get_ho_dan_can_ung_cuu.allow_tags = True
-
-    @mark_safe
-    def get_ho_dan_da_ung_cuu(self, obj):
-        count = HoDan.objects.filter(tinh=obj, status=3).count()
-        tag = f'<a href="/app/hodan/?tinh={obj.pk}&status=3">{count}</a>'
-        return tag
-    get_ho_dan_da_ung_cuu.short_description = "Hộ dân đã cứu"
-    get_ho_dan_da_ung_cuu.allow_tags = True
-
-class HuyenAdmin(admin.ModelAdmin):
-    list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu', 'get_ho_dan_da_ung_cuu')
-
-    @mark_safe
-    def get_cuu_ho_san_sang(self, obj):
-        count = CuuHo.objects.filter(huyen=obj, status=1).count()
-        tag = f'<a href="/app/cuuho/?huyen={obj.pk}&status=1">{count}</a>'
-        return tag
-    get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
-    get_cuu_ho_san_sang.allow_tags = True
-
-    @mark_safe
-    def get_ho_dan_can_ung_cuu(self, obj):
-        count = HoDan.objects.filter(huyen=obj, status=1).count()
-        tag = f'<a href="/app/hodan/?huyen={obj.pk}&status=1">{count}</a>'
-        return tag
-    get_ho_dan_can_ung_cuu.short_description = "Hộ dân cần ứng cứu"
-    get_ho_dan_can_ung_cuu.allow_tags = True
-
-    @mark_safe
-    def get_ho_dan_da_ung_cuu(self, obj):
-        count = HoDan.objects.filter(huyen=obj, status=3).count()
-        tag = f'<a href="/app/hodan/?huyen={obj.pk}&status=3">{count}</a>'
-        return tag
-    get_ho_dan_da_ung_cuu.short_description = "Hộ dân đã cứu"
-    get_ho_dan_da_ung_cuu.allow_tags = True
-
-class XaAdmin(admin.ModelAdmin):
-    list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu', 'get_ho_dan_da_ung_cuu')
-
-    @mark_safe
-    def get_cuu_ho_san_sang(self, obj):
-        count = CuuHo.objects.filter(xa=obj, status=1).count()
-        tag = f'<a href="/app/cuuho/?xa={obj.pk}&status=1">{count}</a>'
-        return tag
-    get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
-    get_cuu_ho_san_sang.allow_tags = True
-
-    @mark_safe
-    def get_ho_dan_can_ung_cuu(self, obj):
-        count = HoDan.objects.filter(xa=obj, status=1).count()
-        tag = f'<a href="/app/hodan/?xa={obj.pk}&status=1">{count}</a>'
-        return tag
-    get_ho_dan_can_ung_cuu.short_description = "Hộ dân cần ứng cứu"
-    get_ho_dan_can_ung_cuu.allow_tags = True
-
-    @mark_safe
-    def get_ho_dan_da_ung_cuu(self, obj):
-        count = HoDan.objects.filter(xa=obj, status=3).count()
-        tag = f'<a href="/app/hodan/?xa={obj.pk}&status=3">{count}</a>'
-        return tag
-    get_ho_dan_da_ung_cuu.short_description = "Hộ dân đã cứu"
-    get_ho_dan_da_ung_cuu.allow_tags = True
-
-class ThonAdmin(admin.ModelAdmin):
     list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
 
-    def get_cuu_ho_san_sang(self, obj):
-        count = CuuHo.objects.filter(thon=obj, status=1).count()
-        return str(count)
-    get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
 
+    @mark_safe
+    def get_cuu_ho_san_sang(self, obj):
+        hodan = [item for item in obj.cuuho_reversed.all() if item.status == 1]
+        tag = f'<a href="/app/cuuho/?huyen={obj.pk}&status=1">{len(hodan)}</a>'
+        return tag
+    get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
+    get_cuu_ho_san_sang.allow_tags = True
+
+    @mark_safe
     def get_ho_dan_can_ung_cuu(self, obj):
-        count = HoDan.objects.filter(thon=obj).exclude(status=3).count()
-        return str(count)
+        hodan = [item for item in obj.hodan_reversed.all() if item.status == 1]
+        tag = f'<a href="/app/hodan/?huyen={obj.pk}&status=1">{len(hodan)}</a>'
+        return tag
     get_ho_dan_can_ung_cuu.short_description = "Hộ dân cần ứng cứu"
+    get_ho_dan_can_ung_cuu.allow_tags = True
+
+    def get_queryset(self, request):
+        queryset = super(HoDanCuuHoStatisticBase, self).get_queryset(request)
+        queryset = queryset.prefetch_related('cuuho_reversed', 'hodan_reversed')
+        return queryset
+
+
+
+class TinhAdmin(HoDanCuuHoStatisticBase):
+    pass
+
+
+class HuyenAdmin(HoDanCuuHoStatisticBase):
+    pass
+
+
+class XaAdmin(HoDanCuuHoStatisticBase):
+    pass
+
+
+
+class ThonAdmin(HoDanCuuHoStatisticBase):
+    pass
+
 
 admin.site.register(TinTuc, TinTucAdmin)
 # admin.site.register(NguonLuc, NguonLucAdmin)

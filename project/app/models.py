@@ -52,7 +52,6 @@ class Huyen(models.Model):
         verbose_name_plural = "Thống kê Huyện"
 
 
-
 class Xa(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Xã")
     huyen = models.ForeignKey(Huyen, blank=True, null=True, on_delete=models.CASCADE)
@@ -102,12 +101,40 @@ class CuuHo(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Đội cứu hộ")
 
     status = models.IntegerField(choices=CUUHO_STATUS, default=0, verbose_name="Tình trạng")
-
-    tinh = models.ForeignKey(Tinh, blank=True, null=True, on_delete=models.CASCADE)
-    huyen = models.ForeignKey(Huyen, blank=True, null=True, on_delete=models.CASCADE)
-    xa = models.ForeignKey(Xa, blank=True, null=True, on_delete=models.CASCADE)
-    thon = models.ForeignKey(Thon, blank=True, null=True, on_delete=models.CASCADE)
-
+    tinh = models.ForeignKey(
+        Tinh, blank=True, null=True, on_delete=models.CASCADE,
+        related_name="cuuho_reversed"
+    )
+    huyen = ChainedForeignKey(
+        Huyen,
+        chained_field="tinh",
+        chained_model_field="tinh",
+        show_all=False,
+        auto_choose=True,
+        sort=True,
+        blank=True, null=True, on_delete=models.CASCADE,
+        related_name="cuuho_reversed"
+    )
+    xa = ChainedForeignKey(
+        Xa,
+        chained_field="huyen",
+        chained_model_field="huyen",
+        show_all=False,
+        auto_choose=True,
+        sort=True,
+        blank=True, null=True, on_delete=models.CASCADE,
+        related_name="cuuho_reversed"
+    )
+    thon = ChainedForeignKey(
+        Thon,
+        chained_field="huyen",
+        chained_model_field="huyen",
+        show_all=False,
+        auto_choose=True,
+        sort=True,
+        blank=True, null=True, on_delete=models.CASCADE,
+        related_name="cuuho_reversed"
+    )
     location = models.TextField(blank=True, default='', verbose_name='Phạm vi cứu hộ')
     phone = models.TextField(blank=True, default='', verbose_name='Điện thoại liên hệ')
     note = models.TextField(blank=True, default='', verbose_name='Ghi chú')
@@ -127,8 +154,10 @@ class HoDan(models.Model):
     update_time = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
     location = models.TextField(blank=True, default='', verbose_name='Địa chỉ')
     status = models.IntegerField(choices=HODAN_STATUS, default=0, verbose_name="Tình trạng")
-
-    tinh = models.ForeignKey(Tinh, blank=True, null=True, on_delete=models.CASCADE)
+    tinh = models.ForeignKey(
+        Tinh, blank=True, null=True, on_delete=models.CASCADE,
+        related_name="hodan_reversed"
+    )
     huyen = ChainedForeignKey(
         Huyen,
         chained_field="tinh",
@@ -136,11 +165,29 @@ class HoDan(models.Model):
         show_all=False,
         auto_choose=True,
         sort=True,
-        blank=True, null=True, on_delete=models.CASCADE
+        blank=True, null=True, on_delete=models.CASCADE,
+        related_name="hodan_reversed"
     )
-    xa = models.ForeignKey(Xa, blank=True, null=True, on_delete=models.CASCADE)
-    thon = models.ForeignKey(Thon, blank=True, null=True, on_delete=models.CASCADE)
-
+    xa = ChainedForeignKey(
+        Xa,
+        chained_field="huyen",
+        chained_model_field="huyen",
+        show_all=False,
+        auto_choose=True,
+        sort=True,
+        blank=True, null=True, on_delete=models.CASCADE,
+        related_name="hodan_reversed"
+    )
+    thon = ChainedForeignKey(
+        Thon,
+        chained_field="huyen",
+        chained_model_field="huyen",
+        show_all=False,
+        auto_choose=True,
+        sort=True,
+        blank=True, null=True, on_delete=models.CASCADE,
+        related_name="hodan_reversed"
+    )
     phone = models.TextField(blank=True, default='', verbose_name='Điện thoại liên hệ')
     note = models.TextField(blank=True, default='', verbose_name='Ghi chú')
     volunteer = models.ForeignKey(TinhNguyenVien, blank=True, null=True, verbose_name="Tình nguyện viên xác minh", on_delete=models.CASCADE)
@@ -152,6 +199,7 @@ class HoDan(models.Model):
     class Meta:
         verbose_name = 'Hộ dân cần ứng cứu'
         verbose_name_plural = 'Hộ dân cần ứng cứu'
+
 
 class NguonLuc(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Nguồn lực")
@@ -175,6 +223,7 @@ class NguonLuc(models.Model):
     class Meta:
         verbose_name_plural = "Nguồn trợ giúp khác"
         verbose_name = "Nguồn trợ giúp khác"
+
 
 class TinTuc(models.Model):
     title = models.TextField(blank=True, default='', verbose_name = "Tin")
