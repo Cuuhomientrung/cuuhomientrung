@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.db import models
 import datetime
 from app.models import TinTuc, NguonLuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa, Thon
+from app.views import HoDanRestFulModelAdmin
 from app.utils.export_to_excel import export_ho_dan_as_excel_action
 from django.conf.locale.vi import formats as vi_formats
 from django.forms import TextInput, Textarea
@@ -147,7 +148,7 @@ admin.site.register(Huyen, HuyenAdmin)
 admin.site.register(Xa, XaAdmin)
 # admin.site.register(Thon, ThonAdmin)
 
-rest_admin.site.register(HoDan)
+rest_admin.site.register(HoDan,view_class=HoDanRestFulModelAdmin)
 rest_admin.site.register(CuuHo)
 rest_admin.site.register(TinhNguyenVien)
 
