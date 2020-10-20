@@ -20,6 +20,7 @@ develop-eggs/
 dist/
 downloads/
 eggs/
+data/
 .eggs/
 parts/
 sdist/
