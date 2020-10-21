@@ -14,12 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, re_path, include
-from rest_framework import routers
+from django.urls import path, include
 from django_restful_admin import admin as rest_admin
 
 urlpatterns = [
     path('', admin.site.urls),
-    path('api/', rest_admin.site.urls),  
+    path('api/', rest_admin.site.urls, name="rest_api"),
     path('chaining/', include('smart_selects.urls')),
 ]
