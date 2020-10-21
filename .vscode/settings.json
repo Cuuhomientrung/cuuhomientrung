@@ -1,8 +1,4 @@
 {
-<<<<<<< HEAD
-    "python.pythonPath": "/usr/bin/python3"
-=======
     "python.pythonPath": "/usr/bin/python3",
     "python.dataScience.searchForJupyter": false
->>>>>>> 267c1bd29086e6c9d78dad030e853edda0662369
 }
