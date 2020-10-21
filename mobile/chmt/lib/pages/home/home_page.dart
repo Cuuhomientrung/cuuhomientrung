@@ -74,7 +74,7 @@ class _HomePage extends State<HomePage> {
         ],
       ),
       drawer: Drawer(
-        child: ListView(
+        child: Column(
           children: [
             DrawerHeader(
               child: Center(
@@ -89,35 +89,50 @@ class _HomePage extends State<HomePage> {
                 ),
               ),
             ),
-            Column(children: [
-              InkWell(
-                onTap: () => changeHomeScreenTo(HomeScreen.houseHold),
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  IconButton(icon: Icon(Icons.home_outlined), onPressed: null),
-                  Text(r'Các hộ cần ứng cứu', style: menuStyle)
-                ]),
-              ),
-              Divider(),
-              InkWell(
-                onTap: () => changeHomeScreenTo(HomeScreen.importantNews),
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  IconButton(icon: Icon(Icons.search), onPressed: null),
-                  Text(r'Tin tức quan trọng', style: menuStyle)
-                ]),
-              ),
-              Divider(),
-              InkWell(
-                onTap: () => changeHomeScreenTo(HomeScreen.rescueTeam),
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  IconButton(
-                      icon: Icon(Icons.bookmark_border), onPressed: null),
-                  Text(r'Các đội cứu hộ', style: menuStyle)
-                ]),
-              ),
-            ]),
+            Expanded(
+              child: Column(
+                  children: [
+                    InkWell(
+                      onTap: () => changeHomeScreenTo(HomeScreen.houseHold),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            IconButton(
+                                icon: Icon(Icons.home_outlined), onPressed: null),
+                            Text(r'Các hộ cần ứng cứu', style: menuStyle)
+                          ]),
+                    ),
+                    Divider(),
+                    InkWell(
+                      onTap: () => changeHomeScreenTo(HomeScreen.importantNews),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            IconButton(icon: Icon(Icons.search), onPressed: null),
+                            Text(r'Tin tức quan trọng', style: menuStyle)
+                          ]),
+                    ),
+                    Divider(),
+                    InkWell(
+                      onTap: () => changeHomeScreenTo(HomeScreen.rescueTeam),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            IconButton(
+                                icon: Icon(Icons.bookmark_border),
+                                onPressed: null),
+                            Text(r'Các đội cứu hộ', style: menuStyle)
+                          ]),
+                    ),
+                  ]),
+            ),
+            Text(
+              r'✍︎ cuuhomientrung.info',
+              style: menuStyle.copyWith(color: Colors.blue),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).padding.bottom,
+            )
           ],
         ),
       ),

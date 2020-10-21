@@ -37,7 +37,7 @@ class HouseHoldViewModel extends BaseViewModel with ChangeNotifier {
   Function(List<District>) get districtChanged => _district.sink.add;
   List<District> get districtList {
    if (selectedProvince == null) {
-     return _district.value;
+     return [];
    } else {
      return _district.value.where((e) => e.parentID == selectedProvince.id).toList();
    }
@@ -47,7 +47,7 @@ class HouseHoldViewModel extends BaseViewModel with ChangeNotifier {
   Function(List<Commune>) get communeChanged => _commune.sink.add;
   List<Commune> get communeList {
     if (selectedDistrict == null) {
-      return _commune.value;
+      return [];
     } else {
       return _commune.value.where((e) => e.parentID == selectedDistrict.id).toList();
     }
