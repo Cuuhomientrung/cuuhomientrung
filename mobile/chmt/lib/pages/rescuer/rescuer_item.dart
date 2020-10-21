@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:chmt/model/status.dart';
 
-class HouseHoldItemView extends StatelessWidget {
-  const HouseHoldItemView({
+class RescuerItemView extends StatelessWidget {
+  const RescuerItemView({
     Key key,
     this.item,
     this.animationController,
@@ -21,7 +21,7 @@ class HouseHoldItemView extends StatelessWidget {
   final VoidCallback statusCallback;
   final VoidCallback phoneCallback;
   final VoidCallback deleteCallback;
-  final HouseHold item;
+  final Rescuer item;
   final AnimationController animationController;
   final Animation<dynamic> animation;
   final String address;
@@ -57,8 +57,8 @@ class HouseHoldItemView extends StatelessWidget {
               child: GestureDetector(
                 onTap: () => statusCallback(),
                 child: StatusView(
-                  status: '${item.status.statusString}',
-                  color: item.status.statusColor,
+                  status: '${item.status.rescuerStatus}',
+                  color: item.status.rescuerColor,
                 ),
               ),
             )
@@ -90,7 +90,7 @@ class HouseHoldItemView extends StatelessWidget {
       SizedBox(height: 5),
       RichText(
         text: TextSpan(
-          text: r'Địa điểm: ',
+          text: r'Phạm vi cứu hộ: ',
           style: subStyle,
           children: <TextSpan>[
             TextSpan(
@@ -116,52 +116,19 @@ class HouseHoldItemView extends StatelessWidget {
       SizedBox(height: 5),
       RichText(
         text: TextSpan(
-          text: r"Ghi chú: ",
+          text: r"Ngày cập nhật: ",
           style: subStyle,
           children: <TextSpan>[
             TextSpan(
-              text: '${item.note}',
+              text: '${DateFormat('dd/MM/yy HH:mm').format(item.updateTime)}',
               style: GoogleFonts.roboto(
-                color: Colors.deepOrangeAccent,
-                fontWeight: FontWeight.w400,
+                color: color,
+                fontWeight: FontWeight.w500,
                 fontSize: 15,
               ),
             ),
           ],
         ),
-      ),
-      SizedBox(height: 5),
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Expanded(
-            child: RichText(
-              text: TextSpan(
-                text: r"Ngày cập nhật: ",
-                style: subStyle,
-                children: <TextSpan>[
-                  TextSpan(
-                    text: '${DateFormat('dd/MM/yy HH:mm').format(item.updateTime)}',
-                    style: GoogleFonts.roboto(
-                      color: color,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(width: 5),
-          InkWell(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-              child: Icon(Icons.delete_forever, color: Colors.red),
-            ),
-            onTap: () => deleteCallback(),
-          )
-        ],
       )
     ];
 
@@ -175,7 +142,7 @@ class HouseHoldItemView extends StatelessWidget {
                 0.0, 50 * (1.0 - animation.value), 0.0),
             child: Padding(
               padding:
-                  const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
+              const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(0xFFFEFEFE),
@@ -193,7 +160,7 @@ class HouseHoldItemView extends StatelessWidget {
                   child: InkWell(
                     highlightColor: Colors.transparent,
                     splashColor:
-                        Color.fromRGBO(129, 199, 245, 1).withAlpha(120),
+                    Color.fromRGBO(129, 199, 245, 1).withAlpha(120),
                     borderRadius: BorderRadius.all(Radius.circular(8.0)),
                     onTap: () {
                       callback();
@@ -225,10 +192,10 @@ class TitleText extends StatelessWidget {
 
   const TitleText(
       {Key key,
-      this.text,
-      this.fontSize = 18,
-      this.color,
-      this.fontWeight = FontWeight.w600})
+        this.text,
+        this.fontSize = 18,
+        this.color,
+        this.fontWeight = FontWeight.w600})
       : super(key: key);
 
   @override

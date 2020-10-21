@@ -7,6 +7,7 @@ class APIPath {
   static String province = r'tinh/';
   static String district = r'huyen/';
   static String commune = r'xa/';
+  static String rescuer = r'cuuho/';
 }
 
 class APIMethod {

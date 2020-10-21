@@ -1,5 +1,7 @@
 import 'package:chmt/pages/household/household_page.dart';
 import 'package:chmt/pages/household/household_vm.dart';
+import 'package:chmt/pages/rescuer/rescuer_page.dart';
+import 'package:chmt/pages/rescuer/rescuer_vm.dart';
 import 'package:chmt/utils/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,8 +22,10 @@ class _HomePage extends State<HomePage> {
   var screen = HomeScreen.houseHold;
 
   HouseHoldPage houseHoldPage;
+  RescuerPage rescuerPage;
 
-  var count = '';
+  var houseHoldCount = '';
+  var rescuerCount = '';
 
   Widget getBody() {
     switch (screen) {
@@ -29,11 +33,23 @@ class _HomePage extends State<HomePage> {
         if (houseHoldPage == null) {
           final viewModel = Provider.of<HouseHoldViewModel>(context);
           viewModel.houseHoldStream.listen((list) {
-            setState(() => count = list.length.toString());
+            setState(() => houseHoldCount = list.length.toString());
           });
           houseHoldPage = HouseHoldPage(viewModel);
         }
         return houseHoldPage;
+
+      case HomeScreen.rescueTeam:
+        if (rescuerPage == null) {
+          final viewModel = Provider.of<RescuerViewModel>(context);
+          viewModel.rescuerStream.listen((list) {
+            setState(() => rescuerCount = list.length.toString());
+          });
+
+          rescuerPage = RescuerPage(viewModel);
+        }
+
+        return rescuerPage;
       default:
         return Container();
     }
@@ -46,18 +62,35 @@ class _HomePage extends State<HomePage> {
     }
   }
 
+  String getTitle() {
+    if (screen == HomeScreen.houseHold) {
+      return houseHoldCount.isNotEmpty ? '$houseHoldCount ' + r'lời kêu cứu' : r'Cứu hộ miền Trung';
+    } else if (screen == HomeScreen.rescueTeam) {
+      return rescuerCount.isNotEmpty ? '$rescuerCount ' + r'đội cứu hộ' : r'Đội cứu hộ';
+    }
+    return r'Cứu hộ miền Trung';
+  }
+
+  void _refresh() {
+    if (screen == HomeScreen.houseHold) {
+      houseHoldPage.viewModel.refreshChanged(true);
+    } else if (screen == HomeScreen.rescueTeam) {
+      rescuerPage.viewModel.refreshChanged(true);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var menuStyle = GoogleFonts.openSans(
       fontSize: 15,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w500,
     );
 
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text(
-          count.isNotEmpty ? '$count ' + r'trường hợp' : r'Cứu hộ miền Trung',
+          getTitle(),
           style: GoogleFonts.openSans(
             fontSize: 17,
             fontWeight: FontWeight.w600,
@@ -68,7 +101,7 @@ class _HomePage extends State<HomePage> {
             icon: Icon(Icons.replay),
             onPressed: () {
               Utility.hideKeyboardOf(context);
-              houseHoldPage.viewModel.refreshChanged(true);
+              _refresh();
             },
           )
         ],
@@ -104,31 +137,34 @@ class _HomePage extends State<HomePage> {
                     ),
                     Divider(),
                     InkWell(
-                      onTap: () => changeHomeScreenTo(HomeScreen.importantNews),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            IconButton(icon: Icon(Icons.search), onPressed: null),
-                            Text(r'Tin tức quan trọng', style: menuStyle)
-                          ]),
-                    ),
-                    Divider(),
-                    InkWell(
                       onTap: () => changeHomeScreenTo(HomeScreen.rescueTeam),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             IconButton(
-                                icon: Icon(Icons.bookmark_border),
+                                icon: Icon(Icons.security),
                                 onPressed: null),
                             Text(r'Các đội cứu hộ', style: menuStyle)
                           ]),
                     ),
+                    Divider(),
+                    InkWell(
+                      onTap: () => changeHomeScreenTo(HomeScreen.importantNews),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            IconButton(icon: Icon(Icons.network_wifi), onPressed: null),
+                            Text(r'Tin tức', style: menuStyle)
+                          ]),
+                    ),
                   ]),
             ),
-            Text(
-              r'✍︎ cuuhomientrung.info',
-              style: menuStyle.copyWith(color: Colors.blue),
+            GestureDetector(
+              onTap: () => Utility.launchURL(context, url: 'https://cuuhomientrung.info/'),
+              child: Text(
+                r'✍︎ cuuhomientrung.info',
+                style: menuStyle.copyWith(color: Colors.blue),
+              ),
             ),
             SizedBox(
               height: MediaQuery.of(context).padding.bottom + 16,

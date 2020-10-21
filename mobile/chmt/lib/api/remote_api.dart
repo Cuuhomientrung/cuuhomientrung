@@ -47,4 +47,14 @@ class RemoteAPI implements API {
       throw e;
     }
   }
+
+  @override
+  Future<BaseResponse> getRescuerList({Map<String, dynamic> params}) async {
+    try {
+      var res = await APIMethod.getData(APIPath.rescuer, params);
+      return BaseResponse(data: res as List);
+    } catch (e) {
+      throw e;
+    }
+  }
 }

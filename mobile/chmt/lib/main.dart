@@ -1,5 +1,6 @@
 import 'package:chmt/pages/home/home_page.dart';
 import 'package:chmt/pages/household/household_vm.dart';
+import 'package:chmt/pages/rescuer/rescuer_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +13,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => HouseHoldViewModel()),
+        ChangeNotifierProvider(create: (_) => RescuerViewModel()),
       ],
       child: MyApp(),
     ),

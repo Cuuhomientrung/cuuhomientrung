@@ -35,6 +35,7 @@ class HouseHoldViewModel extends BaseViewModel with ChangeNotifier {
 
   Stream<List<District>> get districtStream => _district.stream;
   Function(List<District>) get districtChanged => _district.sink.add;
+  List<District> get allDistrict => _district.value;
   List<District> get districtList {
    if (selectedProvince == null) {
      return [];
@@ -45,6 +46,7 @@ class HouseHoldViewModel extends BaseViewModel with ChangeNotifier {
 
   Stream<List<Commune>> get communeStream => _commune.stream;
   Function(List<Commune>) get communeChanged => _commune.sink.add;
+  List<Commune> get allCommune => _commune.value;
   List<Commune> get communeList {
     if (selectedDistrict == null) {
       return [];
@@ -66,9 +68,7 @@ class HouseHoldViewModel extends BaseViewModel with ChangeNotifier {
   Province get selectedProvince => _selectedProvince.value;
 
   HouseHoldViewModel() {
-    provinceStream.listen((event) => getDistrictList());
-    districtStream.listen((event) => getCommuneList());
-    communeStream.listen((event) => getHouseHoldList());
+    listener();
 
     selectedProvinceStream.listen((event) {
       selectedDistrictChanged(null);
@@ -79,6 +79,12 @@ class HouseHoldViewModel extends BaseViewModel with ChangeNotifier {
     selectedDistrictStream.listen((event) {
       selectedCommuneChanged(null);
     });
+  }
+
+  void listener() {
+    provinceStream.listen((event) => getDistrictList());
+    districtStream.listen((event) => getCommuneList());
+    communeStream.listen((event) => getHouseHoldList());
   }
 
   void reset() {

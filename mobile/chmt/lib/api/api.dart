@@ -5,4 +5,5 @@ abstract class API {
   Future<BaseResponse> getProvinceList();
   Future<BaseResponse> getDistrictList();
   Future<BaseResponse> getCommuneList();
+  Future<BaseResponse> getRescuerList({Map<String, dynamic> params});
 }

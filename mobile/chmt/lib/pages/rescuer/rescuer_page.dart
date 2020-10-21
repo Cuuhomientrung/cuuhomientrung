@@ -4,15 +4,14 @@ import 'package:chmt/helper/color_loader.dart';
 import 'package:chmt/helper/search_box.dart';
 import 'package:chmt/helper/tab_header.dart';
 import 'package:chmt/model/model.dart';
+import 'package:chmt/pages/rescuer/rescuer_item.dart';
+import 'package:chmt/pages/rescuer/rescuer_vm.dart';
 import 'package:chmt/utils/utility.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rxdart/rxdart.dart';
-
-import 'house_hold_item.dart';
-import 'household_vm.dart';
 
 enum Address { province, district, commune }
 
@@ -31,29 +30,37 @@ extension Location on Address {
   }
 }
 
-class HouseHoldPage extends StatefulWidget {
-  final HouseHoldViewModel viewModel;
+class RescuerPage extends StatefulWidget {
+  final RescuerViewModel viewModel;
 
-  const HouseHoldPage(this.viewModel);
+  const RescuerPage(this.viewModel);
 
   @override
-  State<StatefulWidget> createState() => _HouseHoldPage();
+  State<StatefulWidget> createState() => _RescuerPage();
 }
 
-class _HouseHoldPage extends State<HouseHoldPage>
+class _RescuerPage extends State<RescuerPage>
     with TickerProviderStateMixin {
   AnimationController animationController;
   ScrollController _scrollController = ScrollController();
   var searchEditingCtl = TextEditingController(text: '');
+
+  Timer timer;
 
   @override
   void initState() {
     _initAnimation();
 
     super.initState();
-    widget.viewModel.getProvinceList();
+    _getData();
+
+    // timer = Timer.periodic(Duration(seconds: 15), (Timer t) => _refresh());
 
     widget.viewModel.refreshStream.listen((e) => _reload());
+  }
+
+  void _getData() async {
+    widget.viewModel.getProvinceList();
   }
 
   void _reload() {
@@ -64,11 +71,11 @@ class _HouseHoldPage extends State<HouseHoldPage>
   void _refresh() {
     _scrollController
         .animateTo(0.0,
-            curve: Curves.easeOut, duration: const Duration(milliseconds: 300))
+        curve: Curves.easeOut, duration: const Duration(milliseconds: 300))
         .then((value) {
       animationController
           .reverse()
-          .then((v) => widget.viewModel.getHouseHoldList());
+          .then((v) => widget.viewModel.getRescuerList());
     });
   }
 
@@ -82,40 +89,22 @@ class _HouseHoldPage extends State<HouseHoldPage>
   @override
   void dispose() {
     super.dispose();
+    timer.cancel();
     animationController.dispose();
   }
 
   void _querySubmitted(String query) {
-    List<HouseHold> result = List<HouseHold>();
+    List<Rescuer> result = List<Rescuer>();
 
     if (query.isEmpty) {
-      result = widget.viewModel.houseHoldList;
+      result = widget.viewModel.rescuerList;
     } else {
-      result = widget.viewModel.houseHoldList.where((e) {
+      result = widget.viewModel.rescuerList.where((e) {
         return e.searchText.contains(removeDiacritics(query).toLowerCase());
       }).toList();
     }
 
-    widget.viewModel.houseHoldChanged(result);
-  }
-
-  void _updateHouseHoldStatus(HouseHold item) async {
-    final status = await statusChange();
-
-    if (status != null) {
-      // TODO: - Change household status
-      Utility.showLoading(context, r'Đang cập nhật');
-      await Future.delayed(Duration(seconds: 3));
-      Navigator.pop(context);
-    }
-  }
-
-  void _deleteHouseHold(HouseHold item) async {
-    // TODO: - Delete household
-    Scaffold.of(context).showSnackBar(SnackBar(
-      content: Text(r'Đang cập nhật'),
-      duration: Duration(milliseconds: 1000),
-    ));
+    widget.viewModel.rescuerChanged(result);
   }
 
   Widget _body() {
@@ -137,12 +126,8 @@ class _HouseHoldPage extends State<HouseHoldPage>
                     return <Widget>[
                       SliverList(
                         delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            return Container(
-                              color: Color(0xFFFEFEFE),
-                              padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
-                              child: _filterBar(),
-                            );
+                              (context, index) {
+                            return SizedBox();
                           },
                           childCount: 1,
                         ),
@@ -166,14 +151,14 @@ class _HouseHoldPage extends State<HouseHoldPage>
                       ),
                     ];
                   },
-                  body: StreamBuilder<List<HouseHold>>(
-                    stream: widget.viewModel.houseHoldStream,
+                  body: StreamBuilder<List<Rescuer>>(
+                    stream: widget.viewModel.rescuerStream,
                     builder: (ctx, snapshot) {
                       if (!snapshot.hasData) {
                         return Center(child: Container(
                           child: ColorLoader(),
-                          width: 40,
-                          height: 40,
+                          width: 50,
+                          height: 50,
                         ));
                       }
 
@@ -191,19 +176,18 @@ class _HouseHoldPage extends State<HouseHoldPage>
                             ),
                           );
                           animationController.forward();
-                          var hh = snapshot.data[index];
-                          var address = widget.viewModel.getAddress(hh);
+                          var rescuer = snapshot.data[index];
+                          var address = widget.viewModel.getRescuerLandmark(rescuer);
 
-                          return HouseHoldItemView(
+                          return RescuerItemView(
                             callback: () {},
                             phoneCallback: () => Utility.launchURL(
                               context,
-                              url: hh.phoneCall,
+                              url: rescuer.phoneCall,
                               errorMessage: r'Số điện thoại không hợp lệ',
                             ),
-                            statusCallback: () => _updateHouseHoldStatus(hh),
-                            deleteCallback: () => _deleteHouseHold(hh),
-                            item: hh,
+                            statusCallback: (){},
+                            item: rescuer,
                             address: address,
                             animation: animation,
                             animationController: animationController,
@@ -302,7 +286,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
             stream: widget.viewModel.statusStream,
             builder: (ctx, snapshot) {
               var text = r"Trạng thái cứu hộ";
-              if (snapshot.hasData) text = snapshot.data.statusString;
+              if (snapshot.hasData) text = snapshot.data.rescuerStatus;
               return Text('$text ');
             },
           ),
@@ -345,7 +329,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
             cursorColor: Color(0xFF01477f),
             textAlign: TextAlign.center,
             decoration:
-                InputDecoration(hintText: r'Chọn ' + '${type.location}'),
+            InputDecoration(hintText: r'Chọn ' + '${type.location}'),
             onChanged: query.sink.add,
           );
 
@@ -357,7 +341,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
                 var q = removeDiacritics(snapshot.data.toLowerCase());
                 address = address
                     .where((e) =>
-                        removeDiacritics(e.name).toLowerCase().contains(q))
+                    removeDiacritics(e.name).toLowerCase().contains(q))
                     .toList();
               }
 
@@ -453,7 +437,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
                           ),
                           child: Center(
                             child: Text(
-                              '${d.statusString}',
+                              '${d.rescuerStatus}',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.openSans(
                                 color: textColor,

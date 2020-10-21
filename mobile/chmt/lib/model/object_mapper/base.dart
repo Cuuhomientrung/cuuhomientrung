@@ -16,4 +16,7 @@ class BaseResponse {
 
   List<Commune> get communeList =>
       data.map((e) => Commune.fromJson(e)).toList();
+
+  List<Rescuer> get rescuerList =>
+      data.map((e) => Rescuer.fromJson(e)).toList();
 }
