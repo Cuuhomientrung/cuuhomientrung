@@ -103,6 +103,7 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
         abstract = True
 
     list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
+    search_fields = ('name', )
 
 
     @mark_safe
@@ -130,6 +131,7 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
 
 class TinhAdmin(HoDanCuuHoStatisticBase):
     URL_CUSTOM_TAG = 'tinh'
+    
 
 
 class HuyenAdmin(HoDanCuuHoStatisticBase):
