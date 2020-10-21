@@ -9,7 +9,12 @@ from django_restful_admin import  RestFulModelAdmin
 from rest_framework.response import Response
 from app.models import HoDan
 
-class HoDanRestFulModelAdmin(RestFulModelAdmin):
+
+class BaseRestfulAdmin(RestFulModelAdmin):
+    permission_classes = ()
+
+
+class HoDanRestFulModelAdmin(BaseRestfulAdmin):
     def list(self, request):
         phone = request.GET.get("phone")
         tinh = request.GET.get("tinh")
@@ -35,7 +40,7 @@ class HoDanRestFulModelAdmin(RestFulModelAdmin):
                 start = datetime.datetime.strptime(fromTime,"%Y-%m-%d-%H-%M-%S")
                 end = datetime.datetime.strptime(toTime,"%Y-%m-%d-%H-%M-%S")
                 filter = filter & Q(update_time__range=(start,end))
-            
+
             queryset = HoDan.objects.filter(filter)
         else:
             #all if no filter

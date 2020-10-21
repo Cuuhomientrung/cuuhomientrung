@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'app.middleware.RestAPICsrfMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'app.middleware.AutomaticUserLoginMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -146,4 +146,4 @@ MEDIA_URL = '/media/'
 
 APPEND_SLASH=False
 
-# CSRF_COOKIE_SECURE=True
+CSRF_COOKIE_SECURE=True
