@@ -11,10 +11,23 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import environ
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
+
+env = environ.Env(
+    DEBUG=(bool, True),
+    DB_NAME=(str, 'cuuhomientrung'),
+    DB_USER=(str, 'administrator'),
+    DB_PASSWORD=(str, 'bangtin_ainews_2811#'),
+    DB_HOSTNAME=(str, '103.192.236.67'),
+    DB_PORT=(int, 5432)
+)
+environ.Env.read_env(
+    os.path.join(BASE_DIR, '..', '.env')
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -23,16 +36,15 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 SECRET_KEY = 'ybcim6=@)la&g9@!asz1rx95=qd&39$tl1j1(1uflb_$mo*w##'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = False
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['*'
-    ]
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_interface',
+    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,6 +58,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_restful_admin',
     'smart_selects',
+    'dynamic_raw_id',
 ]
 
 MIDDLEWARE = [
@@ -65,14 +78,21 @@ ROOT_URLCONF = 'app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
-        'APP_DIRS': True,
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+        ],
+        # 'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.static',
+            ],
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
             ],
         },
     },
@@ -94,11 +114,11 @@ SITE_ID = 1
 DATABASES = {
         'default':{
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'cuuhomientrung',
-        'USER': 'administrator',
-        'PASSWORD': 'bangtin_ainews_2811#',
-        'HOST': '103.192.236.67',
-        'PORT': '',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOSTNAME'),
+        'PORT': env('DB_PORT'),
     }
 }
 
@@ -147,3 +167,5 @@ MEDIA_URL = '/media/'
 APPEND_SLASH=False
 
 CSRF_COOKIE_SECURE=True
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'

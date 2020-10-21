@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import url
 from django_restful_admin import admin as rest_admin
 
 urlpatterns = [
-    path('', admin.site.urls),
+    path('', admin.site.urls, name="admin_home"),
     path('api/', rest_admin.site.urls, name="rest_api"),
     path('chaining/', include('smart_selects.urls')),
+    url(r'^admin/dynamic_raw_id/', include('dynamic_raw_id.urls')),
 ]

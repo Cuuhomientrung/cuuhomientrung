@@ -33,6 +33,7 @@ HODAN_STATUS = [
 
 class Tinh(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Tỉnh")
+
     def __str__(self):
         return self.name
 
@@ -158,33 +159,18 @@ class HoDan(models.Model):
         Tinh, blank=True, null=True, on_delete=models.CASCADE,
         related_name="hodan_reversed"
     )
-    huyen = ChainedForeignKey(
+    huyen = models.ForeignKey(
         Huyen,
-        chained_field="tinh",
-        chained_model_field="tinh",
-        show_all=False,
-        auto_choose=True,
-        sort=True,
         blank=True, null=True, on_delete=models.CASCADE,
         related_name="hodan_reversed"
     )
-    xa = ChainedForeignKey(
+    xa = models.ForeignKey(
         Xa,
-        chained_field="huyen",
-        chained_model_field="huyen",
-        show_all=False,
-        auto_choose=True,
-        sort=True,
         blank=True, null=True, on_delete=models.CASCADE,
         related_name="hodan_reversed"
     )
-    thon = ChainedForeignKey(
+    thon = models.ForeignKey(
         Thon,
-        chained_field="huyen",
-        chained_model_field="huyen",
-        show_all=False,
-        auto_choose=True,
-        sort=True,
         blank=True, null=True, on_delete=models.CASCADE,
         related_name="hodan_reversed"
     )
