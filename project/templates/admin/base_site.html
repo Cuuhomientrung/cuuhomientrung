@@ -61,6 +61,8 @@
                 .find('.dynamic_raw_id-related-lookup')
                 .click();
         });
+        $(".highlight-red").closest('tr').css("background-color", "#f3ecec");
+        $(".highlight-blue").closest('tr').css("background-color", "#ebf2f5");
       })(django.jQuery);
     </script>
 {% endblock %}

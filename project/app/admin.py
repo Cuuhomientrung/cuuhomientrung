@@ -6,9 +6,10 @@ from django.views.decorators.cache import never_cache
 from django.shortcuts import render
 from django.db import models
 import datetime
+import pytz
 from app.models import TinTuc, NguonLuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa, Thon
 from app.views import BaseRestfulAdmin, HoDanRestFulModelAdmin
-from app.utils.export_to_excel import export_ho_dan_as_excel_action
+from app.utils.export_to_excel import export_ho_dan_as_excel_action, utc_to_local
 from django.conf.locale.vi import formats as vi_formats
 from django.forms import TextInput, Textarea
 from rangefilter.filter import DateRangeFilter, DateTimeRangeFilter
@@ -17,6 +18,7 @@ from django_restful_admin import admin as rest_admin
 from rest_framework.permissions import AllowAny, IsAdminUser
 from dynamic_raw_id.admin import DynamicRawIDMixin
 from dynamic_raw_id.filters import DynamicRawIDFilter
+from django.utils.html import format_html
 
 vi_formats.DATETIME_FORMAT = "d/m/y H:i"
 
@@ -73,7 +75,7 @@ class TinhNguyenVienAdmin(admin.ModelAdmin):
 
 class HoDanAdmin(DynamicRawIDMixin, admin.ModelAdmin):
     dynamic_raw_id_fields = ('tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
-    list_display = ('id', 'update_time', 'status', 'name', 'phone', 'get_note', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
+    list_display = ('id', 'get_update_time', 'status', 'name', 'phone', 'get_note', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
     list_display_links = ('id', 'name', 'phone',)
     list_editable = ('status',)
     list_filter = (
@@ -100,6 +102,19 @@ class HoDanAdmin(DynamicRawIDMixin, admin.ModelAdmin):
         else:
             return ''
     get_note.short_description = 'Ghi chú'
+
+    def get_update_time(self, obj):
+        # TODO: ho tro trong vong 3 ngay
+        # se remove code ngay sau do
+        # 23 / 10 / 2020 00:00:00 GMT + 7
+        compare_time = datetime.datetime(2020, 10, 22, 17, 0, 0, tzinfo=datetime.timezone.utc).astimezone(tz=pytz.timezone("Asia/Ho_Chi_Minh"))
+        update_time = utc_to_local(obj.update_time).strftime("%m/%d/%Y %H:%M")
+        if utc_to_local(obj.created_time) >= compare_time:
+            return format_html('<div class="highlight-red"> {} </div>', update_time)
+        else:
+            return format_html('<div class="highlight-blue"> {} </div>', update_time)
+    get_update_time.short_description = 'Cập nhật'
+    get_update_time.allow_tags = True
 
     class Media:
         css = {
