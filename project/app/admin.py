@@ -130,6 +130,7 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
     def get_queryset(self, request):
         queryset = super(HoDanCuuHoStatisticBase, self).get_queryset(request)
         queryset = queryset.prefetch_related('cuuho_reversed', 'hodan_reversed')
+        return queryset
 
 class TinhAdmin(HoDanCuuHoStatisticBase):
     URL_CUSTOM_TAG = 'tinh'
