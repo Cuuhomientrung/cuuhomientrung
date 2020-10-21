@@ -9,8 +9,15 @@ from django_restful_admin import  RestFulModelAdmin
 from rest_framework.response import Response
 from app.models import HoDan
 
-class HoDanRestFulModelAdmin(RestFulModelAdmin):
+
+class BaseRestfulAdmin(RestFulModelAdmin):
+    permission_classes = ()
+
+
+class HoDanRestFulModelAdmin(BaseRestfulAdmin):
+
     def list(self, request):
+        ten = request.GET.get("ten")
         phone = request.GET.get("phone")
         tinh = request.GET.get("tinh")
         huyen = request.GET.get("huyen")
@@ -19,8 +26,14 @@ class HoDanRestFulModelAdmin(RestFulModelAdmin):
         fromTime = request.GET.get("from")
         toTime = request.GET.get("to")
 
-        if  phone  or  tinh or  huyen or status  or fromTime or toTime:
+        if  phone or  tinh or  huyen or status  or fromTime or toTime or ten:
             filter = Q()
+            if ten:
+                operator = request.GET.get("ten_method")
+                if operator == "contain":
+                    filter = filter & Q(name__icontains=ten)
+                else:
+                    filter = filter & Q(name__iexact=ten)
             if phone:
                 filter = filter & Q(phone=phone)
             if tinh:
