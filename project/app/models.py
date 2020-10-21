@@ -1,7 +1,6 @@
-import django
-import datetime
 from django.db import models
 from smart_selects.db_fields import ChainedForeignKey
+from mapbox_location_field.models import LocationField
 
 RESOURCE_STATUS = [
     (1, 'Sẵn sàng'),
@@ -150,6 +149,10 @@ class CuuHo(models.Model):
         verbose_name_plural = 'Các đội Cứu hộ'
 
 
+class CustomLocationField(LocationField):
+    pass
+
+
 class HoDan(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Hộ dân")
     update_time = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
@@ -179,6 +182,7 @@ class HoDan(models.Model):
     note = models.TextField(blank=True, default='', verbose_name='Ghi chú')
     volunteer = models.ForeignKey(TinhNguyenVien, blank=True, null=True, verbose_name="Tình nguyện viên xác minh", on_delete=models.CASCADE)
     cuuho = models.ForeignKey(CuuHo, null=True, blank= True, verbose_name="Đơn vị cứu hộ tiếp cận", on_delete=models.CASCADE)
+    geo_location = CustomLocationField(null=True, blank=True)
 
     def __str__(self):
         return self.name
