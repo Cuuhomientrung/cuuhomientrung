@@ -120,6 +120,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-!/gradle/wrapper/gradle-wrapper.jar
+Pipfile
+Pipfile.lock
+project/static/
+.env
 
-# End of https://www.toptal.com/developers/gitignore/api/macos,androidstudio,flutter,xcode,cocoapods
+!/gradle/wrapper/gradle-wrapper.jar
