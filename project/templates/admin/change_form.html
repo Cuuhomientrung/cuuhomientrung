@@ -56,7 +56,7 @@ var csrftoken = getCookie('csrftoken');
 
 function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
-    return (/^(HEAD|OPTIONS|TRACE)$/.test(method));
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
 django.jQuery.ajaxSetup({
     complete: function(xhr, status) {
