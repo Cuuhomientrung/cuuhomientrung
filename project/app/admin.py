@@ -133,9 +133,9 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
         if self.URL_CUSTOM_TAG == 'xa':
             tag = f'<a href="https://vietnamhometown.com/?commune_id={obj.pk}">Link</a>'
         if self.URL_CUSTOM_TAG == 'huyen':
-            tag = f'<a href="https://vietnamhometown.com">Link</a>'
+            tag = 'Chưa hỗ trợ'
         if self.URL_CUSTOM_TAG == 'tinh':
-            tag = f'<a href="https://vietnamhometown.com">Link</a>'
+            tag = 'Chưa hỗ trợ'
         return tag
     get_ho_dan_can_ung_cuu_google_map.short_description = "Google Maps"
     get_ho_dan_can_ung_cuu_google_map.allow_tags = True
