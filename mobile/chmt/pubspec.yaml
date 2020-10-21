@@ -39,6 +39,7 @@ dependencies:
   diacritic: ^0.1.1
   url_launcher: ^5.7.5
   getflutter: ^1.0.8
+  loading_indicator: ^1.2.0
 
 dev_dependencies:
   flutter_test:

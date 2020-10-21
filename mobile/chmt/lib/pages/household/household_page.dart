@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:chmt/helper/color_loader.dart';
 import 'package:chmt/helper/search_box.dart';
 import 'package:chmt/helper/tab_header.dart';
 import 'package:chmt/model/model.dart';
@@ -103,6 +104,25 @@ class _HouseHoldPage extends State<HouseHoldPage>
     widget.viewModel.houseHoldChanged(result);
   }
 
+  void _updateHouseHoldStatus(HouseHold item) async {
+    final status = await statusChange();
+
+    if (status != null) {
+      // TODO: - Change household status
+      Utility.showLoading(context, r'Đang cập nhật');
+      await Future.delayed(Duration(seconds: 3));
+      Navigator.pop(context);
+    }
+  }
+
+  void _deleteHouseHold(HouseHold item) async {
+    // TODO: - Delete household
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text(r'Đang cập nhật'),
+      duration: Duration(milliseconds: 1000),
+    ));
+  }
+
   Widget _body() {
     return Stack(
       children: <Widget>[
@@ -155,7 +175,11 @@ class _HouseHoldPage extends State<HouseHoldPage>
                     stream: widget.viewModel.houseHoldStream,
                     builder: (ctx, snapshot) {
                       if (!snapshot.hasData) {
-                        return Center(child: CircularProgressIndicator());
+                        return Center(child: Container(
+                          child: ColorLoader(),
+                          width: 50,
+                          height: 50,
+                        ));
                       }
 
                       return ListView.builder(
@@ -177,11 +201,13 @@ class _HouseHoldPage extends State<HouseHoldPage>
 
                           return HouseHoldItemView(
                             callback: () {},
-                            phoneCall: () => Utility.launchURL(
+                            phoneCallback: () => Utility.launchURL(
                               context,
                               url: hh.phoneCall,
                               errorMessage: r'Số điện thoại không hợp lệ',
                             ),
+                            statusCallback: () => _updateHouseHoldStatus(hh),
+                            deleteCallback: () => _deleteHouseHold(hh),
                             item: hh,
                             address: address,
                             animation: animation,
@@ -400,10 +426,10 @@ class _HouseHoldPage extends State<HouseHoldPage>
     }
   }
 
-  void _selectStatus() async {
+  Future<int> statusChange() async {
     List<int> list = [0, 1, 2, 3, 4];
 
-    final status = await showDialog<int>(
+    return await showDialog<int>(
         context: context,
         builder: (ctx) {
           var textColor = Color(0xFF01477f);
@@ -450,6 +476,10 @@ class _HouseHoldPage extends State<HouseHoldPage>
             }).toList(),
           );
         });
+  }
+
+  void _selectStatus() async {
+    final status = await statusChange();
 
     if (status != null) {
       widget.viewModel.statusChanged(status);

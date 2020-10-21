@@ -131,7 +131,7 @@ class _HomePage extends State<HomePage> {
               style: menuStyle.copyWith(color: Colors.blue),
             ),
             SizedBox(
-              height: MediaQuery.of(context).padding.bottom,
+              height: MediaQuery.of(context).padding.bottom + 16,
             )
           ],
         ),

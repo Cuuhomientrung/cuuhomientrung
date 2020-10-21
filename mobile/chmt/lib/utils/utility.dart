@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:simple_logger/simple_logger.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -71,5 +72,42 @@ class Utility {
     } else {
       if (needShowDialog) showErrorDialog(context, message: errorMessage);
     }
+  }
+
+  static showLoading(BuildContext context, String msg,
+      {Indicator type = Indicator.ballClipRotateMultiple,
+        Color color = Colors.white}) =>
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) => _createLoading(context, msg, type, color),
+      );
+  static _createLoading(BuildContext context, String msg, Indicator type, Color color) {
+    Size size = MediaQuery.of(context).size;
+    return Center(
+      child: Container(
+        width: size.width * 0.7,
+        height: size.height * 0.7,
+        child: Stack(
+          children: <Widget>[
+            Align(
+              alignment: Alignment.center,
+              child: LoadingIndicator(indicatorType: type, color: color),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                msg ?? '',
+                style: GoogleFonts.roboto(
+                  color: Colors.white,
+                  fontSize: 17,
+                  decoration: TextDecoration.none,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -10,13 +10,17 @@ class HouseHoldItemView extends StatelessWidget {
     this.item,
     this.animationController,
     this.animation,
-    this.phoneCall,
+    this.phoneCallback,
     this.callback,
+    this.statusCallback,
+    this.deleteCallback,
     this.address = '',
   }) : super(key: key);
 
   final VoidCallback callback;
-  final VoidCallback phoneCall;
+  final VoidCallback statusCallback;
+  final VoidCallback phoneCallback;
+  final VoidCallback deleteCallback;
   final HouseHold item;
   final AnimationController animationController;
   final Animation<dynamic> animation;
@@ -50,9 +54,12 @@ class HouseHoldItemView extends StatelessWidget {
             SizedBox(width: 5),
             Padding(
               padding: EdgeInsets.only(top: 2.5),
-              child: StatusView(
-                status: '${item.status.statusString}',
-                color: item.status.statusColor,
+              child: GestureDetector(
+                onTap: () => statusCallback(),
+                child: StatusView(
+                  status: '${item.status.statusString}',
+                  color: item.status.statusColor,
+                ),
               ),
             )
           ],
@@ -62,7 +69,7 @@ class HouseHoldItemView extends StatelessWidget {
       Divider(height: 1),
       SizedBox(height: 10),
       GestureDetector(
-        onTap: () => phoneCall(),
+        onTap: () => phoneCallback(),
         child: RichText(
           text: TextSpan(
             text: r"Điện thoại: ",
@@ -124,22 +131,38 @@ class HouseHoldItemView extends StatelessWidget {
         ),
       ),
       SizedBox(height: 5),
-      RichText(
-        text: TextSpan(
-          text: r"Ngày cập nhật: ",
-          style: subStyle,
-          children: <TextSpan>[
-            TextSpan(
-              text: '${DateFormat('dd/MM/yy HH:mm').format(item.updateTime)}',
-              style: GoogleFonts.roboto(
-                color: color,
-                fontWeight: FontWeight.w500,
-                fontSize: 15,
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Expanded(
+            child: RichText(
+              text: TextSpan(
+                text: r"Ngày cập nhật: ",
+                style: subStyle,
+                children: <TextSpan>[
+                  TextSpan(
+                    text: '${DateFormat('dd/MM/yy HH:mm').format(item.updateTime)}',
+                    style: GoogleFonts.roboto(
+                      color: color,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
+          ),
+          SizedBox(width: 5),
+          InkWell(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(Icons.delete_forever, color: Colors.red),
+            ),
+            onTap: () => deleteCallback(),
+          )
+        ],
+      )
     ];
 
     return AnimatedBuilder(
