@@ -5,15 +5,17 @@ import 'package:intl/intl.dart';
 import 'package:chmt/model/status.dart';
 
 class HouseHoldItemView extends StatelessWidget {
-  const HouseHoldItemView(
-      {Key key,
-        this.item,
-        this.animationController,
-        this.animation,
-        this.callback})
-      : super(key: key);
+  const HouseHoldItemView({
+    Key key,
+    this.item,
+    this.animationController,
+    this.animation,
+    this.phoneCall,
+    this.callback,
+  }) : super(key: key);
 
   final VoidCallback callback;
+  final VoidCallback phoneCall;
   final HouseHold item;
   final AnimationController animationController;
   final Animation<dynamic> animation;
@@ -57,20 +59,23 @@ class HouseHoldItemView extends StatelessWidget {
       SizedBox(height: 5),
       Divider(height: 1),
       SizedBox(height: 10),
-      RichText(
-        text: TextSpan(
-          text: r"Điện thoại: ",
-          style: subStyle,
-          children: <TextSpan>[
-            TextSpan(
-              text: '${item.phone}',
-              style: GoogleFonts.roboto(
-                color: Colors.blue,
-                fontWeight: FontWeight.w500,
-                fontSize: 15,
+      GestureDetector(
+        onTap: () => phoneCall(),
+        child: RichText(
+          text: TextSpan(
+            text: r"Điện thoại: ",
+            style: subStyle,
+            children: <TextSpan>[
+              TextSpan(
+                text: '${item.phone}',
+                style: GoogleFonts.roboto(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 15,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       SizedBox(height: 5),
@@ -131,8 +136,8 @@ class HouseHoldItemView extends StatelessWidget {
             transform: Matrix4.translationValues(
                 0.0, 50 * (1.0 - animation.value), 0.0),
             child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 16, right: 16, top: 8, bottom: 8),
+              padding:
+                  const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(0xFFFEFEFE),
@@ -149,7 +154,8 @@ class HouseHoldItemView extends StatelessWidget {
                   color: Colors.transparent,
                   child: InkWell(
                     highlightColor: Colors.transparent,
-                    splashColor: Color.fromRGBO(129, 199, 245, 1).withAlpha(120),
+                    splashColor:
+                        Color.fromRGBO(129, 199, 245, 1).withAlpha(120),
                     borderRadius: BorderRadius.all(Radius.circular(8.0)),
                     onTap: () {
                       callback();
@@ -181,10 +187,10 @@ class TitleText extends StatelessWidget {
 
   const TitleText(
       {Key key,
-        this.text,
-        this.fontSize = 18,
-        this.color,
-        this.fontWeight = FontWeight.w600})
+      this.text,
+      this.fontSize = 18,
+      this.color,
+      this.fontWeight = FontWeight.w600})
       : super(key: key);
 
   @override
@@ -213,8 +219,7 @@ class StatusView extends StatelessWidget {
       decoration: BoxDecoration(
           color: color,
           borderRadius: const BorderRadius.all(Radius.circular(3.0)),
-          border: Border.all(width: .7, color: color)
-      ),
+          border: Border.all(width: .7, color: color)),
       padding: padding ?? EdgeInsets.fromLTRB(3, 2, 3, 1.5),
       child: Text(
         status,

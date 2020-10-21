@@ -23,6 +23,8 @@ class HouseHold {
     return removeDiacritics(searchQuery).toLowerCase();
   }
 
+  String get phoneCall => 'tel:$phone';
+
   HouseHold.fromJson(Map json) {
     id = json['id'];
     status = json['status'];

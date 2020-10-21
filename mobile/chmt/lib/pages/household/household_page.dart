@@ -141,10 +141,15 @@ class _HouseHoldPage extends State<HouseHoldPage>
                             ),
                           );
                           animationController.forward();
-                          var customer = snapshot.data[index];
+                          var hh = snapshot.data[index];
                           return HouseHoldItemView(
                             callback: () {},
-                            item: customer,
+                            phoneCall: () => Utility.launchURL(
+                              context,
+                              url: hh.phoneCall,
+                              errorMessage: r'Số điện thoại không hợp lệ',
+                            ),
+                            item: hh,
                             animation: animation,
                             animationController: animationController,
                           );
