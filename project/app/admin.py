@@ -15,6 +15,8 @@ from rangefilter.filter import DateRangeFilter, DateTimeRangeFilter
 from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter, ChoiceDropdownFilter
 from django_restful_admin import admin as rest_admin
 from rest_framework.permissions import AllowAny, IsAdminUser
+from dynamic_raw_id.admin import DynamicRawIDMixin
+from dynamic_raw_id.filters import DynamicRawIDFilter
 
 vi_formats.DATETIME_FORMAT = "d/m/y H:i"
 
@@ -54,7 +56,6 @@ class CuuHoAdmin(admin.ModelAdmin):
         return queryset
 
 
-
 class TinhNguyenVienAdmin(admin.ModelAdmin):
     list_display = ('name', 'location', 'phone', 'status')
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
@@ -67,15 +68,19 @@ class TinhNguyenVienAdmin(admin.ModelAdmin):
         return queryset
 
 
-class HoDanAdmin(admin.ModelAdmin):
-    list_display = ('update_time', 'status', 'name', 'phone', 'get_note', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
-    list_display_links = ('name', 'phone')
+class HoDanAdmin(DynamicRawIDMixin, admin.ModelAdmin):
+    dynamic_raw_id_fields = ('tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
+    list_display = ('id', 'update_time', 'status', 'name', 'phone', 'get_note', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
+    list_display_links = ('id', 'name', 'phone',)
     list_editable = ('status',)
-    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
-    search_fields = ('name', 'phone', 'note')
+    list_filter = (
+        'id',
+        ('status', ChoiceDropdownFilter),
+        ('xa', DynamicRawIDFilter),
+    )
+    search_fields = ('name', 'phone', 'note', 'id')
     actions = [export_ho_dan_as_excel_action()]
-    # Built-in auto complete selection from Django
-    autocomplete_fields = ['volunteer', 'cuuho']
+    exclude = ('tinh', 'huyen', 'thon',)
 
     def get_queryset(self, request):
         queryset = super(HoDanAdmin, self).get_queryset(request)
@@ -96,7 +101,6 @@ class HoDanAdmin(admin.ModelAdmin):
         css = {
             'all': ('/static/css/custom.css',)
         }
-
 
 
 class HoDanCuuHoStatisticBase(admin.ModelAdmin):
@@ -136,15 +140,27 @@ class TinhAdmin(HoDanCuuHoStatisticBase):
 
 
 class HuyenAdmin(HoDanCuuHoStatisticBase):
+    search_fields = ('name',)
+    list_filter = (
+        ('tinh', ChoiceDropdownFilter),
+    )
     URL_CUSTOM_TAG = 'huyen'
 
 
 class XaAdmin(HoDanCuuHoStatisticBase):
+    search_fields = ('name',)
+    list_filter = (
+        ('huyen', ChoiceDropdownFilter),
+    )
     URL_CUSTOM_TAG = 'xa'
 
 
 
 class ThonAdmin(HoDanCuuHoStatisticBase):
+    search_fields = ('name',)
+    list_filter = (
+        ('huyen', ChoiceDropdownFilter),
+    )
     URL_CUSTOM_TAG = 'thon'
 
 

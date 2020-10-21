@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_restful_admin',
     'smart_selects',
+    'dynamic_raw_id',
 ]
 
 MIDDLEWARE = [
@@ -160,3 +161,5 @@ MEDIA_URL = '/media/'
 APPEND_SLASH=False
 
 CSRF_COOKIE_SECURE=True
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
