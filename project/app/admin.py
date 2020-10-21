@@ -140,7 +140,8 @@ class XaAdmin(HoDanCuuHoStatisticBase):
     URL_CUSTOM_TAG = 'xa'
     def get_queryset(self, request):
         queryset = super(HoDanCuuHoStatisticBase,self).get_queryset(request)
-        queryset = queryset.prefetch_related('cuuho_reversed', 'hodan_reversed').annotate(total_hodan=Count("hodan_reversed"))\
+        queryset = queryset.prefetch_related('cuuho_reversed', 'hodan_reversed')\
+        .filter(hodan_reversed__status=1).annotate(total_hodan=Count("hodan_reversed"))\
             .order_by('-total_hodan')
         return queryset
 
