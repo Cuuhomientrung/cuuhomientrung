@@ -92,6 +92,17 @@ class HouseHoldItemView extends StatelessWidget {
         ),
       ),
       SizedBox(height: 5),
+      // Linkify(
+      //   onOpen: (link) => Utility.launchURL(context, url: link.url),
+      //   text: '${item.note}',
+      //   maxLines: 1000000000,
+      //   textAlign: TextAlign.left,
+      //   style: GoogleFonts.roboto(
+      //     color: Colors.deepOrangeAccent,
+      //     fontWeight: FontWeight.w400,
+      //     fontSize: 15,
+      //   ),
+      // ),
       RichText(
         text: TextSpan(
           text: r"Ghi chú: ",

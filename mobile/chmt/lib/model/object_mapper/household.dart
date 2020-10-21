@@ -1,20 +1,9 @@
-
 import 'package:chmt/utils/utility.dart';
 import 'package:diacritic/diacritic.dart';
 
-class HouseHoldResponse {
-  List data;
-
-  HouseHoldResponse({this.data});
-
-  List<HouseHold> get houseHolds =>
-      data.map((e) => HouseHold.fromJson(e))
-          .toList();
-}
-
 class HouseHold {
   int id, status;
-  int tinh, huyen, xa, thon, volunteer, cuuho;
+  int province, district, commune, village, volunteer, rescue;
   String name, location, phone, note;
   DateTime updateTime;
 
@@ -33,12 +22,12 @@ class HouseHold {
     location = json['location'];
     phone = json['phone'];
     note = json['note'];
-    tinh = json[r'tinh'];
-    huyen = json[r'huyen'];
-    xa = json[r'xa'];
-    thon = json[r'thon'];
+    province = json[r'tinh'];
+    district = json[r'huyen'];
+    commune = json[r'xa'];
+    village = json[r'thon'];
     volunteer = json[r'volunteer'];
-    cuuho = json[r'cuuho'];
+    rescue = json[r'cuuho'];
   }
 
   Map<String, dynamic> toJson() => {
@@ -49,12 +38,12 @@ class HouseHold {
     "status": status,
     "phone": phone,
     "note": note,
-    "tinh": tinh,
-    "huyen": huyen,
-    "xa": xa,
-    "thon": thon,
+    "tinh": province,
+    "huyen": district,
+    "xa": commune,
+    "thon": village,
     "volunteer": volunteer,
-    "cuuho": cuuho,
+    "cuuho": rescue,
   };
 }
 

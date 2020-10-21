@@ -5,9 +5,24 @@ import 'package:chmt/model/model.dart';
 import 'package:chmt/utils/utility.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
+import 'package:getflutter/getflutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'house_hold_item.dart';
 import 'household_vm.dart';
+
+enum Address { province, district, commune }
+
+extension Location on Address {
+  String get location {
+    switch (this) {
+      case Address.province: return r'tỉnh';
+      case Address.district: return r'huyện';
+      case Address.commune: return r'xã';
+      default: return '';
+    }
+  }
+}
 
 class HouseHoldPage extends StatefulWidget {
   final HouseHoldViewModel viewModel;
@@ -35,7 +50,12 @@ class _HouseHoldPage extends State<HouseHoldPage>
 
     // timer = Timer.periodic(Duration(seconds: 15), (Timer t) => _refresh());
 
-    widget.viewModel.refreshStream.listen((e) => _refresh());
+    widget.viewModel.refreshStream.listen((e) => _reload());
+  }
+
+  void _reload() {
+    widget.viewModel.reset();
+    _refresh();
   }
 
   void _refresh() {
@@ -95,7 +115,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
                             return Container(
                               color: Color(0xFFFEFEFE),
                               padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
-                              child: Text('Bộ lọc'),
+                              child: _filterBar(),
                             );
                           },
                           childCount: 1,
@@ -165,6 +185,157 @@ class _HouseHoldPage extends State<HouseHoldPage>
       ],
     );
   }
+  
+  Widget _filterBar() {
+    return GFButtonBar(
+      alignment: WrapAlignment.start,
+      children: [
+        GFButton(
+          padding: EdgeInsets.symmetric(horizontal: 4),
+          onPressed: () => _refresh(),
+          child: Text(r"LỌC"),
+          color: GFColors.PRIMARY,
+          size: GFSize.SMALL,
+        ),
+        GFButton(
+          padding: EdgeInsets.symmetric(horizontal: 4),
+          onPressed: () => _selectAddress(Address.province),
+          child: StreamBuilder<Province>(
+            stream: widget.viewModel.selectedProvinceStream,
+            builder: (ctx, snapshot) {
+              var text = r"Tỉnh";
+              if (snapshot.hasData) text = snapshot.data.name;
+              return Text('$text ');
+            },
+          ),
+          icon: Icon(
+            Icons.arrow_drop_down,
+            color: Colors.white,
+          ),
+          color: Colors.blue,
+          size: GFSize.SMALL,
+        ),
+        GFButton(
+          padding: EdgeInsets.symmetric(horizontal: 4),
+          onPressed: () => _selectAddress(Address.district),
+          child: StreamBuilder<District>(
+            stream: widget.viewModel.selectedDistrictStream,
+            builder: (ctx, snapshot) {
+              var text = r"Huyện";
+              if (snapshot.hasData) text = snapshot.data.name;
+              return Text('$text ');
+            },
+          ),
+          icon: Icon(
+            Icons.arrow_drop_down,
+            color: Colors.white,
+          ),
+          color: Colors.blue,
+          size: GFSize.SMALL,
+        ),
+        GFButton(
+          padding: EdgeInsets.symmetric(horizontal: 4),
+          onPressed: () => _selectAddress(Address.commune),
+          child: StreamBuilder<Commune>(
+            stream: widget.viewModel.selectedCommuneStream,
+            builder: (ctx, snapshot) {
+              var text = r"Xã";
+              if (snapshot.hasData) text = snapshot.data.name;
+              return Text('$text ');
+            },
+          ),
+          icon: Icon(
+            Icons.arrow_drop_down,
+            color: Colors.white,
+          ),
+          color: Colors.blue,
+          size: GFSize.SMALL,
+        ),
+      ],
+    );
+  }
+
+  void _selectAddress(Address type) async {
+    var list = List<AddressItem>();
+    switch (type) {
+      case Address.province:
+        list = widget.viewModel.provinceList;
+      break;
+      case Address.district:
+        list = widget.viewModel.districtList;
+      break;
+      case Address.commune:
+        list = widget.viewModel.communeList;
+      break;
+      default: break;
+    }
+
+    if (list.isEmpty) return;
+
+    final address = await showDialog<AddressItem>(
+        context: context,
+        builder: (ctx) {
+          var textColor = Color(0xFF01477f);
+
+          return SimpleDialog(
+            title: Text(
+              r'Chọn ' + '${type.location}',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.openSans(
+                fontSize: 16,
+              ),
+            ),
+            children: list.map((d) {
+              return Column(
+                children: <Widget>[
+                  Divider(height: 0.7),
+                  Container(
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () => Navigator.pop(context, d),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 16.0,
+                            horizontal: 24.0,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '${d.name}',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.openSans(
+                                color: textColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Divider(height: 0.7),
+                ],
+              );
+            }).toList(),
+          );
+        });
+
+    if (address != null) {
+      switch (type) {
+        case Address.province:
+          widget.viewModel.selectedProvinceChanged(address);
+          break;
+        case Address.district:
+          widget.viewModel.selectedDistrictChanged(address);
+          break;
+        case Address.commune:
+          widget.viewModel.selectedCommuneChanged(address);
+          break;
+        default: break;
+      }
+      _refresh();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -172,6 +343,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
   }
 }
 
+///
 class ContestTabHeader extends SliverPersistentHeaderDelegate {
   final Widget child;
   final double height;

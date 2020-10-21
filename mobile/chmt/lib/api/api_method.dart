@@ -4,6 +4,9 @@ import 'package:dio/dio.dart';
 
 class APIPath {
   static String houseHold = r'hodan/';
+  static String province = r'tinh/';
+  static String district = r'huyen/';
+  static String commune = r'xa/';
 }
 
 class APIMethod {
