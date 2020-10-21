@@ -126,3 +126,13 @@ project/static/
 .env
 
 !/gradle/wrapper/gradle-wrapper.jar
+.idea/
+bin/
+gitignore
+include/
+lib/
+pip-selfcheck.json
+project/app/settings_dev.py
+project/db.sqlite3
+requirements_os.txt
+run_server_dev.sh
