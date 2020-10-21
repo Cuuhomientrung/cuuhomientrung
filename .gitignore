@@ -124,3 +124,14 @@ Pipfile
 Pipfile.lock
 project/static/
 .env
+
+.idea/
+bin/
+gitignore
+include/
+lib/
+pip-selfcheck.json
+project/app/settings_dev.py
+project/db.sqlite3
+requirements_os.txt
+run_server_dev.sh

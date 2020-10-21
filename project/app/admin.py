@@ -108,7 +108,7 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
     class Meta:
         abstract = True
 
-    list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
+    list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu', 'get_ho_dan_can_ung_cuu_google_map')
     search_fields = ('name', )
     list_per_page=PAGE_SIZE
     @mark_safe
@@ -126,6 +126,23 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
         return tag
     get_ho_dan_can_ung_cuu.short_description = "Hộ dân cần ứng cứu"
     get_ho_dan_can_ung_cuu.allow_tags = True
+
+    """Support to query data about "Xa" based on field commune_id of site: https://vietnamhometown.com
+    TODO:
+    1. More updating "huyen"
+    2. More to update "tinh"
+    """
+    @mark_safe
+    def get_ho_dan_can_ung_cuu_google_map(self, obj):
+        if self.URL_CUSTOM_TAG == 'xa':
+            tag = f'<a href="https://vietnamhometown.com/?commune_id={obj.pk}">Link</a>'
+        if self.URL_CUSTOM_TAG == 'huyen':
+            tag = 'Chưa hỗ trợ'
+        if self.URL_CUSTOM_TAG == 'tinh':
+            tag = 'Chưa hỗ trợ'
+        return tag
+    get_ho_dan_can_ung_cuu_google_map.short_description = "Google Maps"
+    get_ho_dan_can_ung_cuu_google_map.allow_tags = True
 
     def get_queryset(self, request):
         queryset = super(HoDanCuuHoStatisticBase, self).get_queryset(request)
