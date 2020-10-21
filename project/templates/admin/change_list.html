@@ -53,6 +53,29 @@
         {{ cl.formset.non_form_errors }}
     {% endif %}
     <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
+
+      {% block filters %}
+        {% if cl.has_filters %}
+          <div id="changelist-filter">
+            <div class="filter-header">
+              <h2>{% translate 'Filter' %}</h2>
+              {% if cl.has_active_filters %}
+                <h3 id="changelist-filter-clear">
+                  <a href="{{ cl.clear_all_filters_qs }}">&#10006; {% translate "Clear all filters" %}</a>
+                </h3>
+              {% endif %}
+            </div>
+            <div class="filter-body">
+              {% for spec in cl.filter_specs %}
+                <div class="filter-item">
+                  {% admin_list_filter cl spec %}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      {% endblock %}
+
       <div class="changelist-form-container">
         {% block search %}{% search_form cl %}{% endblock %}
         {% block date_hierarchy %}{% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}{% endblock %}
@@ -70,17 +93,9 @@
         {% block pagination %}{% pagination cl %}{% endblock %}
         </form>
       </div>
-      {% block filters %}
-        {% if cl.has_filters %}
-          <div id="changelist-filter">
-            <h2>{% translate 'Filter' %}</h2>
-            {% if cl.has_active_filters %}<h3 id="changelist-filter-clear">
-              <a href="{{ cl.clear_all_filters_qs }}">&#10006; {% translate "Clear all filters" %}</a>
-            </h3>{% endif %}
-            {% for spec in cl.filter_specs %}{% admin_list_filter cl spec %}{% endfor %}
-          </div>
-        {% endif %}
-      {% endblock %}
+
+
+
     </div>
   </div>
 {% endblock %}
