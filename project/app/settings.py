@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'django_restful_admin',
     'smart_selects',
     'dynamic_raw_id',
+    'admin_numeric_filter',
 ]
 
 MIDDLEWARE = [
