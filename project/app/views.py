@@ -15,7 +15,9 @@ class BaseRestfulAdmin(RestFulModelAdmin):
 
 
 class HoDanRestFulModelAdmin(BaseRestfulAdmin):
+
     def list(self, request):
+        ten = request.GET.get("ten")
         phone = request.GET.get("phone")
         tinh = request.GET.get("tinh")
         huyen = request.GET.get("huyen")
@@ -24,8 +26,14 @@ class HoDanRestFulModelAdmin(BaseRestfulAdmin):
         fromTime = request.GET.get("from")
         toTime = request.GET.get("to")
 
-        if  phone  or  tinh or  huyen or status  or fromTime or toTime:
+        if  phone or  tinh or  huyen or status  or fromTime or toTime or ten:
             filter = Q()
+            if ten:
+                operator = request.GET.get("ten_method")
+                if operator == "contain":
+                    filter = filter & Q(name__icontains=ten)
+                else:
+                    filter = filter & Q(name__iexact=ten)
             if phone:
                 filter = filter & Q(phone=phone)
             if tinh:
@@ -40,7 +48,7 @@ class HoDanRestFulModelAdmin(BaseRestfulAdmin):
                 start = datetime.datetime.strptime(fromTime,"%Y-%m-%d-%H-%M-%S")
                 end = datetime.datetime.strptime(toTime,"%Y-%m-%d-%H-%M-%S")
                 filter = filter & Q(update_time__range=(start,end))
-
+            
             queryset = HoDan.objects.filter(filter)
         else:
             #all if no filter

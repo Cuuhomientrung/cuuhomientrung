@@ -77,6 +77,7 @@ class HoDanAdmin(admin.ModelAdmin):
     # Built-in auto complete selection from Django
     autocomplete_fields = ['volunteer', 'cuuho']
 
+
     def get_queryset(self, request):
         queryset = super(HoDanAdmin, self).get_queryset(request)
         queryset = queryset\
@@ -159,7 +160,7 @@ admin.site.register(Huyen, HuyenAdmin)
 admin.site.register(Xa, XaAdmin)
 # admin.site.register(Thon, ThonAdmin)
 
-rest_admin.site.register(HoDan, view_class=HoDanRestFulModelAdmin)
+rest_admin.site.register(HoDan, view_class=HoDanRestFulModelAdmin,__doc__="hello")
 rest_admin.site.register(CuuHo, view_class=BaseRestfulAdmin)
 rest_admin.site.register(TinhNguyenVien, view_class=BaseRestfulAdmin)
 rest_admin.site.register(Tinh, view_class=BaseRestfulAdmin)
