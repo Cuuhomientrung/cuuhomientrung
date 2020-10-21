@@ -146,4 +146,8 @@ MEDIA_URL = '/media/'
 
 APPEND_SLASH=False
 
+<<<<<<< HEAD
 # CSRF_COOKIE_SECURE=True
+=======
+CSRF_COOKIE_SECURE=True
+>>>>>>> 267c1bd29086e6c9d78dad030e853edda0662369
