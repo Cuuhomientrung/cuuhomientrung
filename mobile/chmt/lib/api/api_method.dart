@@ -1,32 +1,28 @@
-import 'dart:convert';
-
 import 'package:chmt/utils/utility.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:dio/dio.dart';
 
+class APIPath {
+  static String houseHold = r'hodan/';
+}
+
 class APIMethod {
   static Dio _dio = APIMethod.dioClient();
 
+  static String baseUrl = 'https://cuuhomientrung.info/api/app/';
+
   static Dio dioClient() {
     Dio dio = Dio();
-    dio.options.baseUrl = 'https://cuuhomientrung.info/api/app/';
+    dio.options.baseUrl = baseUrl;
     dio.options.receiveTimeout = 20000;
     dio.options.connectTimeout = 20000;
-    dio.options.contentType = "application/json";
     return dio;
   }
 
-  static String getRawJson(dynamic rawJSON) {
-    return json.decode(rawJSON.toString()).toString()
-        .replaceAll("\n", "\\n")
-        .replaceAll("\t", "\\t")
-        .replaceAll("\r", "\\r");
-  }
-
-  //GET
+  /// GET
   static Future<dynamic> getData(
-      String path, Map<String, dynamic> params) async {
-    logger.info('>>>$path<<< PARAMS: $params');
+      String subPath, Map<String, dynamic> params) async {
+    logger.info('>>>$subPath<<< PARAMS: $params');
 
     try {
       var connectivityResult = await (Connectivity().checkConnectivity());
@@ -34,7 +30,7 @@ class APIMethod {
         throw r'Không có kết nối mạng';
       }
 
-      var res = await _dio.get(path, queryParameters: params);
+      Response res = await _dio.get(subPath, queryParameters: params);
       logger.info(res.data);
       return (res.data);
     } catch (e) {
@@ -43,8 +39,8 @@ class APIMethod {
   }
 
   /// POST
-  static Future<dynamic> postData(String path, Map params) async {
-    logger.info('>>>$path<<< PARAMS: $params');
+  static Future<dynamic> postData(String subPath, Map params) async {
+    logger.info('>>>$subPath<<< PARAMS: $params');
 
     try {
       var connectivityResult = await (Connectivity().checkConnectivity());
@@ -52,9 +48,9 @@ class APIMethod {
         throw r'Không có kết nối mạng';
       }
 
-      var res = await _dio.post(path, data: params);
+      Response res = await _dio.post(subPath, data: params);
 
-      logger.info('>>>$path<<< RESPONSE: ${res.data}');
+      logger.info('>>>$subPath<<< RESPONSE: ${res.data}');
 
       return (res.data);
     } catch (e) {
