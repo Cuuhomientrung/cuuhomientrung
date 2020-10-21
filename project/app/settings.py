@@ -52,12 +52,13 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    'app.middleware.RestAPICsrfMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'app.middleware.AutomaticUserLoginMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'app.urls'
 
@@ -143,7 +144,6 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = BASE_DIR + '/media'
 MEDIA_URL = '/media/'
 
-# CELERY BEAT
-CELERY_BROKER_URL = 'redis://localhost:6379'
-# If time zones are active (USE_TZ = True) define your local
-CELERY_TIMEZONE = 'Asia/Ho_Chi_Minh'
+APPEND_SLASH=False
+
+CSRF_COOKIE_SECURE=True
