@@ -7,13 +7,14 @@ from django.shortcuts import render
 from django.db import models
 import datetime
 from app.models import TinTuc, NguonLuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa, Thon
-from app.views import HoDanRestFulModelAdmin
+from app.views import BaseRestfulAdmin, HoDanRestFulModelAdmin
 from app.utils.export_to_excel import export_ho_dan_as_excel_action
 from django.conf.locale.vi import formats as vi_formats
 from django.forms import TextInput, Textarea
 from rangefilter.filter import DateRangeFilter, DateTimeRangeFilter
 from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter, ChoiceDropdownFilter
 from django_restful_admin import admin as rest_admin
+from rest_framework.permissions import AllowAny, IsAdminUser
 
 vi_formats.DATETIME_FORMAT = "d/m/y H:i"
 
@@ -131,7 +132,7 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
 
 class TinhAdmin(HoDanCuuHoStatisticBase):
     URL_CUSTOM_TAG = 'tinh'
-    
+
 
 
 class HuyenAdmin(HoDanCuuHoStatisticBase):
@@ -158,10 +159,9 @@ admin.site.register(Huyen, HuyenAdmin)
 admin.site.register(Xa, XaAdmin)
 # admin.site.register(Thon, ThonAdmin)
 
-rest_admin.site.register(HoDan,view_class=HoDanRestFulModelAdmin)
-rest_admin.site.register(CuuHo)
-rest_admin.site.register(TinhNguyenVien)
-
-rest_admin.site.register(Tinh)
-rest_admin.site.register(Huyen)
-rest_admin.site.register(Xa)
+rest_admin.site.register(HoDan, view_class=HoDanRestFulModelAdmin)
+rest_admin.site.register(CuuHo, view_class=BaseRestfulAdmin)
+rest_admin.site.register(TinhNguyenVien, view_class=BaseRestfulAdmin)
+rest_admin.site.register(Tinh, view_class=BaseRestfulAdmin)
+rest_admin.site.register(Huyen, view_class=BaseRestfulAdmin)
+rest_admin.site.register(Xa, view_class=BaseRestfulAdmin)
