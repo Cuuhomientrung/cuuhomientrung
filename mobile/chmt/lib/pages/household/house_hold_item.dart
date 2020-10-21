@@ -12,6 +12,7 @@ class HouseHoldItemView extends StatelessWidget {
     this.animation,
     this.phoneCall,
     this.callback,
+    this.address = '',
   }) : super(key: key);
 
   final VoidCallback callback;
@@ -19,6 +20,7 @@ class HouseHoldItemView extends StatelessWidget {
   final HouseHold item;
   final AnimationController animationController;
   final Animation<dynamic> animation;
+  final String address;
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +83,7 @@ class HouseHoldItemView extends StatelessWidget {
       SizedBox(height: 5),
       RichText(
         text: TextSpan(
-          text: 'Địa chỉ: ',
+          text: r'Địa điểm: ',
           style: subStyle,
           children: <TextSpan>[
             TextSpan(
@@ -92,17 +94,19 @@ class HouseHoldItemView extends StatelessWidget {
         ),
       ),
       SizedBox(height: 5),
-      // Linkify(
-      //   onOpen: (link) => Utility.launchURL(context, url: link.url),
-      //   text: '${item.note}',
-      //   maxLines: 1000000000,
-      //   textAlign: TextAlign.left,
-      //   style: GoogleFonts.roboto(
-      //     color: Colors.deepOrangeAccent,
-      //     fontWeight: FontWeight.w400,
-      //     fontSize: 15,
-      //   ),
-      // ),
+      RichText(
+        text: TextSpan(
+          text: r'Địa chỉ: ',
+          style: subStyle,
+          children: <TextSpan>[
+            TextSpan(
+              text: '$address',
+              style: textStyle,
+            ),
+          ],
+        ),
+      ),
+      SizedBox(height: 5),
       RichText(
         text: TextSpan(
           text: r"Ghi chú: ",

@@ -3,9 +3,13 @@ import 'package:diacritic/diacritic.dart';
 
 class HouseHold {
   int id, status;
-  int province, district, commune, village, volunteer, rescue;
+  int _province, _district, _commune, village, volunteer, rescue;
   String name, location, phone, note;
   DateTime updateTime;
+
+  int get province => _province ?? -1;
+  int get district => _district ?? -1;
+  int get commune => _commune ?? -1;
 
   String get searchText {
     String searchQuery = name + phone + getObject(location) + getObject(note);
@@ -22,9 +26,9 @@ class HouseHold {
     location = json['location'];
     phone = json['phone'];
     note = json['note'];
-    province = json[r'tinh'];
-    district = json[r'huyen'];
-    commune = json[r'xa'];
+    _province = json[r'tinh'];
+    _district = json[r'huyen'];
+    _commune = json[r'xa'];
     village = json[r'thon'];
     volunteer = json[r'volunteer'];
     rescue = json[r'cuuho'];
@@ -38,9 +42,9 @@ class HouseHold {
     "status": status,
     "phone": phone,
     "note": note,
-    "tinh": province,
-    "huyen": district,
-    "xa": commune,
+    "tinh": _province,
+    "huyen": _district,
+    "xa": _commune,
     "thon": village,
     "volunteer": volunteer,
     "cuuho": rescue,

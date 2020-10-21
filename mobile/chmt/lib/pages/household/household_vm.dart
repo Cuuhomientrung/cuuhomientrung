@@ -16,6 +16,11 @@ class HouseHoldViewModel extends BaseViewModel with ChangeNotifier {
   final _selectedDistrict = BehaviorSubject<District>();
   final _selectedCommune = BehaviorSubject<Commune>();
 
+  final _status = BehaviorSubject<int>();
+  Stream<int> get statusStream => _status.stream;
+  Function(int) get statusChanged => _status.sink.add;
+  int get status => _status.value;
+
   Stream<List<HouseHold>> get houseHoldStream => _houseHold.stream;
   Stream<bool> get refreshStream => _refresh.stream;
 
@@ -32,7 +37,7 @@ class HouseHoldViewModel extends BaseViewModel with ChangeNotifier {
   Function(List<District>) get districtChanged => _district.sink.add;
   List<District> get districtList {
    if (selectedProvince == null) {
-     return [];
+     return _district.value;
    } else {
      return _district.value.where((e) => e.parentID == selectedProvince.id).toList();
    }
@@ -42,7 +47,7 @@ class HouseHoldViewModel extends BaseViewModel with ChangeNotifier {
   Function(List<Commune>) get communeChanged => _commune.sink.add;
   List<Commune> get communeList {
     if (selectedDistrict == null) {
-      return [];
+      return _commune.value;
     } else {
       return _commune.value.where((e) => e.parentID == selectedDistrict.id).toList();
     }
@@ -61,15 +66,26 @@ class HouseHoldViewModel extends BaseViewModel with ChangeNotifier {
   Province get selectedProvince => _selectedProvince.value;
 
   HouseHoldViewModel() {
-    getProvinceList();
-    getDistrictList();
-    getCommuneList();
+    provinceStream.listen((event) => getDistrictList());
+    districtStream.listen((event) => getCommuneList());
+    communeStream.listen((event) => getHouseHoldList());
+
+    selectedProvinceStream.listen((event) {
+      selectedDistrictChanged(null);
+      selectedCommuneChanged(null);
+      statusChanged(null);
+    });
+
+    selectedDistrictStream.listen((event) {
+      selectedCommuneChanged(null);
+    });
   }
 
   void reset() {
     selectedProvinceChanged(null);
     selectedDistrictChanged(null);
     selectedCommuneChanged(null);
+    statusChanged(null);
   }
 
   void getHouseHoldList() {
@@ -77,6 +93,7 @@ class HouseHoldViewModel extends BaseViewModel with ChangeNotifier {
       r'tinh': selectedProvince != null ? selectedProvince.id : null,
       r'huyen': selectedDistrict != null ? selectedDistrict.id : null,
       r'xa': selectedCommune != null ? selectedCommune.id : null,
+      r'status': status != null ? status : null,
     };
 
     params.removeWhere((key, value) => value == null);
@@ -94,7 +111,25 @@ class HouseHoldViewModel extends BaseViewModel with ChangeNotifier {
   String getAddress(HouseHold houseHold) {
     var result = '';
     
-    var province = provinceList.firstWhere((element) => element.id == houseHold.province);
+    try {
+      var province = provinceList.firstWhere((element) => element.id == houseHold.province);
+      var district = _district.value.firstWhere((element) => element.id == houseHold.district);
+      var commune = _commune.value.firstWhere((element) => element.id == houseHold.commune);
+
+      if (province != null) {
+        result += province.name + ', ';
+      }
+
+      if (district != null) {
+        result += district.name + ', ';
+      }
+
+      if (commune != null) {
+        result += commune.name;
+      }
+    } catch (e) {
+      logger.info(e);
+    }
     
     return result;
   }
@@ -137,5 +172,6 @@ class HouseHoldViewModel extends BaseViewModel with ChangeNotifier {
     _selectedProvince.close();
     _selectedDistrict.close();
     _selectedCommune.close();
+    _status.close();
   }
 }

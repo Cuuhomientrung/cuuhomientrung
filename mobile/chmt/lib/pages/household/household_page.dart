@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:chmt/helper/search_box.dart';
+import 'package:chmt/helper/tab_header.dart';
 import 'package:chmt/model/model.dart';
 import 'package:chmt/utils/utility.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rxdart/rxdart.dart';
 
 import 'house_hold_item.dart';
 import 'household_vm.dart';
@@ -16,10 +18,14 @@ enum Address { province, district, commune }
 extension Location on Address {
   String get location {
     switch (this) {
-      case Address.province: return r'tỉnh';
-      case Address.district: return r'huyện';
-      case Address.commune: return r'xã';
-      default: return '';
+      case Address.province:
+        return r'tỉnh';
+      case Address.district:
+        return r'huyện';
+      case Address.commune:
+        return r'xã';
+      default:
+        return '';
     }
   }
 }
@@ -46,7 +52,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
     _initAnimation();
 
     super.initState();
-    widget.viewModel.getHouseHoldList();
+    widget.viewModel.getProvinceList();
 
     // timer = Timer.periodic(Duration(seconds: 15), (Timer t) => _refresh());
 
@@ -59,9 +65,14 @@ class _HouseHoldPage extends State<HouseHoldPage>
   }
 
   void _refresh() {
-    animationController
-        .reverse()
-        .then((v) => widget.viewModel.getHouseHoldList());
+    _scrollController
+        .animateTo(0.0,
+            curve: Curves.easeOut, duration: const Duration(milliseconds: 300))
+        .then((value) {
+      animationController
+          .reverse()
+          .then((v) => widget.viewModel.getHouseHoldList());
+    });
   }
 
   void _initAnimation() {
@@ -162,6 +173,8 @@ class _HouseHoldPage extends State<HouseHoldPage>
                           );
                           animationController.forward();
                           var hh = snapshot.data[index];
+                          var address = widget.viewModel.getAddress(hh);
+
                           return HouseHoldItemView(
                             callback: () {},
                             phoneCall: () => Utility.launchURL(
@@ -170,6 +183,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
                               errorMessage: r'Số điện thoại không hợp lệ',
                             ),
                             item: hh,
+                            address: address,
                             animation: animation,
                             animationController: animationController,
                           );
@@ -185,7 +199,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
       ],
     );
   }
-  
+
   Widget _filterBar() {
     return GFButtonBar(
       alignment: WrapAlignment.start,
@@ -193,8 +207,14 @@ class _HouseHoldPage extends State<HouseHoldPage>
         GFButton(
           padding: EdgeInsets.symmetric(horizontal: 4),
           onPressed: () => _refresh(),
-          child: Text(r"LỌC"),
-          color: GFColors.PRIMARY,
+          child: Text(
+            r"LỌC",
+            style: TextStyle(
+              color: Colors.black54,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          color: Colors.amber,
           size: GFSize.SMALL,
         ),
         GFButton(
@@ -209,7 +229,8 @@ class _HouseHoldPage extends State<HouseHoldPage>
             },
           ),
           icon: Icon(
-            Icons.arrow_drop_down,
+            Icons.location_on,
+            size: 16,
             color: Colors.white,
           ),
           color: Colors.blue,
@@ -227,7 +248,8 @@ class _HouseHoldPage extends State<HouseHoldPage>
             },
           ),
           icon: Icon(
-            Icons.arrow_drop_down,
+            Icons.location_on,
+            size: 16,
             color: Colors.white,
           ),
           color: Colors.blue,
@@ -241,6 +263,25 @@ class _HouseHoldPage extends State<HouseHoldPage>
             builder: (ctx, snapshot) {
               var text = r"Xã";
               if (snapshot.hasData) text = snapshot.data.name;
+              return Text('$text ');
+            },
+          ),
+          icon: Icon(
+            Icons.location_on,
+            size: 16,
+            color: Colors.white,
+          ),
+          color: Colors.blue,
+          size: GFSize.SMALL,
+        ),
+        GFButton(
+          padding: EdgeInsets.symmetric(horizontal: 4),
+          onPressed: () => _selectStatus(),
+          child: StreamBuilder<int>(
+            stream: widget.viewModel.statusStream,
+            builder: (ctx, snapshot) {
+              var text = r"Trạng thái cứu hộ";
+              if (snapshot.hasData) text = snapshot.data.statusString;
               return Text('$text ');
             },
           ),
@@ -260,14 +301,15 @@ class _HouseHoldPage extends State<HouseHoldPage>
     switch (type) {
       case Address.province:
         list = widget.viewModel.provinceList;
-      break;
+        break;
       case Address.district:
         list = widget.viewModel.districtList;
-      break;
+        break;
       case Address.commune:
         list = widget.viewModel.communeList;
-      break;
-      default: break;
+        break;
+      default:
+        break;
     }
 
     if (list.isEmpty) return;
@@ -277,9 +319,98 @@ class _HouseHoldPage extends State<HouseHoldPage>
         builder: (ctx) {
           var textColor = Color(0xFF01477f);
 
+          final query = BehaviorSubject<String>();
+          var textField = TextField(
+            cursorColor: Color(0xFF01477f),
+            textAlign: TextAlign.center,
+            decoration:
+                InputDecoration(hintText: r'Chọn ' + '${type.location}'),
+            onChanged: query.sink.add,
+          );
+
+          return StreamBuilder<String>(
+            stream: query.stream,
+            builder: (ctx, snapshot) {
+              var address = list;
+              if (snapshot.hasData && snapshot.data.isNotEmpty) {
+                var q = removeDiacritics(snapshot.data.toLowerCase());
+                address = address
+                    .where((e) =>
+                        removeDiacritics(e.name).toLowerCase().contains(q))
+                    .toList();
+              }
+
+              return SimpleDialog(
+                title: textField,
+                children: address.map((d) {
+                  return Column(
+                    children: <Widget>[
+                      Divider(height: 0.7),
+                      Container(
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context, d);
+                              query.close();
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 16.0,
+                                horizontal: 24.0,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '${d.name}',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.openSans(
+                                    color: textColor,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Divider(height: 0.7),
+                    ],
+                  );
+                }).toList(),
+              );
+            },
+          );
+        });
+
+    if (address != null) {
+      switch (type) {
+        case Address.province:
+          widget.viewModel.selectedProvinceChanged(address);
+          break;
+        case Address.district:
+          widget.viewModel.selectedDistrictChanged(address);
+          break;
+        case Address.commune:
+          widget.viewModel.selectedCommuneChanged(address);
+          break;
+        default:
+          break;
+      }
+      _refresh();
+    }
+  }
+
+  void _selectStatus() async {
+    List<int> list = [0, 1, 2, 3, 4];
+
+    final status = await showDialog<int>(
+        context: context,
+        builder: (ctx) {
+          var textColor = Color(0xFF01477f);
+
           return SimpleDialog(
             title: Text(
-              r'Chọn ' + '${type.location}',
+              r'Chọn trạng thái',
               textAlign: TextAlign.center,
               style: GoogleFonts.openSans(
                 fontSize: 16,
@@ -301,7 +432,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
                           ),
                           child: Center(
                             child: Text(
-                              '${d.name}',
+                              '${d.statusString}',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.openSans(
                                 color: textColor,
@@ -320,19 +451,8 @@ class _HouseHoldPage extends State<HouseHoldPage>
           );
         });
 
-    if (address != null) {
-      switch (type) {
-        case Address.province:
-          widget.viewModel.selectedProvinceChanged(address);
-          break;
-        case Address.district:
-          widget.viewModel.selectedDistrictChanged(address);
-          break;
-        case Address.commune:
-          widget.viewModel.selectedCommuneChanged(address);
-          break;
-        default: break;
-      }
+    if (status != null) {
+      widget.viewModel.statusChanged(status);
       _refresh();
     }
   }
@@ -340,30 +460,5 @@ class _HouseHoldPage extends State<HouseHoldPage>
   @override
   Widget build(BuildContext context) {
     return _body();
-  }
-}
-
-///
-class ContestTabHeader extends SliverPersistentHeaderDelegate {
-  final Widget child;
-  final double height;
-
-  ContestTabHeader({this.child = const SizedBox(), this.height = 52.0});
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return child;
-  }
-
-  @override
-  double get maxExtent => height;
-
-  @override
-  double get minExtent => height;
-
-  @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
   }
 }
