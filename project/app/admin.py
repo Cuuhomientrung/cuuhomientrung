@@ -32,19 +32,22 @@ class TinTucAdmin(admin.ModelAdmin):
 
 
 class NguonLucAdmin(admin.ModelAdmin):
-    list_display = ('status', 'name', 'location', 'tinh', 'huyen', 'xa', 'phone', 'volunteer')
-    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
+    list_display = ('status', 'name', 'location', 'tinh',
+                    'huyen', 'xa', 'phone', 'volunteer')
+    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),
+                   ('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
     list_editable = ('status',)
 
 
 class CuuHoAdmin(admin.ModelAdmin):
-    list_display = ('update_time', 'status', 'name', 'phone', 'location', 'tinh', 'huyen', 'xa', 'volunteer')
+    list_display = ('update_time', 'status', 'name', 'phone',
+                    'location', 'tinh', 'huyen', 'xa', 'volunteer')
     # list_editable = ('tinh', 'huyen', 'xa', 'volunteer')
-    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
+    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter), ('huyen',
+                                                                                       RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
     list_editable = ('status',)
-
 
     def get_queryset(self, request):
         queryset = super(CuuHoAdmin, self).get_queryset(request)
@@ -54,10 +57,10 @@ class CuuHoAdmin(admin.ModelAdmin):
         return queryset
 
 
-
 class TinhNguyenVienAdmin(admin.ModelAdmin):
     list_display = ('name', 'location', 'phone', 'status')
-    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
+    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),
+                   ('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
     list_editable = ('status',)
 
@@ -68,10 +71,12 @@ class TinhNguyenVienAdmin(admin.ModelAdmin):
 
 
 class HoDanAdmin(admin.ModelAdmin):
-    list_display = ('update_time', 'status', 'name', 'phone', 'get_note', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
+    list_display = ('update_time', 'status', 'name', 'phone', 'get_note',
+                    'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
     list_display_links = ('name', 'phone')
     list_editable = ('status',)
-    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
+    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),
+                   ('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
     search_fields = ('name', 'phone', 'note')
     actions = [export_ho_dan_as_excel_action()]
     # Built-in auto complete selection from Django
@@ -98,14 +103,12 @@ class HoDanAdmin(admin.ModelAdmin):
         }
 
 
-
 class HoDanCuuHoStatisticBase(admin.ModelAdmin):
     class Meta:
         abstract = True
 
     list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
     search_fields = ('name', )
-
 
     @mark_safe
     def get_cuu_ho_san_sang(self, obj):
@@ -125,14 +128,13 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
 
     def get_queryset(self, request):
         queryset = super(HoDanCuuHoStatisticBase, self).get_queryset(request)
-        queryset = queryset.prefetch_related('cuuho_reversed', 'hodan_reversed')
+        queryset = queryset.prefetch_related(
+            'cuuho_reversed', 'hodan_reversed')
         return queryset
-
 
 
 class TinhAdmin(HoDanCuuHoStatisticBase):
     URL_CUSTOM_TAG = 'tinh'
-
 
 
 class HuyenAdmin(HoDanCuuHoStatisticBase):
@@ -141,7 +143,6 @@ class HuyenAdmin(HoDanCuuHoStatisticBase):
 
 class XaAdmin(HoDanCuuHoStatisticBase):
     URL_CUSTOM_TAG = 'xa'
-
 
 
 class ThonAdmin(HoDanCuuHoStatisticBase):

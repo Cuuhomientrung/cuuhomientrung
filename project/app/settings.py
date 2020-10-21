@@ -26,8 +26,7 @@ SECRET_KEY = 'ybcim6=@)la&g9@!asz1rx95=qd&39$tl1j1(1uflb_$mo*w##'
 DEBUG = True
 # DEBUG = False
 
-ALLOWED_HOSTS = ['*'
-    ]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -82,7 +81,6 @@ WSGI_APPLICATION = 'app.wsgi.application'
 SITE_ID = 1
 
 # USE THIS SETTING IF RUNNING ON LOCAL
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -92,7 +90,7 @@ SITE_ID = 1
 
 # USE THIS SETTING IF RUNNING ON PRODUCTION
 DATABASES = {
-        'default':{
+    'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'cuuhomientrung',
         'USER': 'administrator',
@@ -121,7 +119,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -138,12 +135,16 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-STATIC_ROOT= BASE_DIR + '/static/'
+STATIC_ROOT = BASE_DIR + '/static/'
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = BASE_DIR + '/media'
 MEDIA_URL = '/media/'
 
-APPEND_SLASH=False
+APPEND_SLASH = False
 
-CSRF_COOKIE_SECURE=True
+# Enable on production, disable on local
+# CSRF_COOKIE_SECURE = True
+
+# Uploaded files
+UPLOADS_ROOT = os.path.join(BASE_DIR, 'uploads')

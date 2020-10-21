@@ -1,0 +1,42 @@
+<head>
+  <title>Trang nhập dữ liệu (XLSX)</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css"
+  />
+  <style>
+    html,
+    * {
+      font-family: Roboto, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <h1>Nhập dữ liệu</h1>
+  <p>Hiện tại, trang web chỉ hỗ trợ XLSX</p>
+  <p>
+    Tham khảo
+    <a
+      target="_blank"
+      href="https://docs.google.com/spreadsheets/d/161tQvKuYcdZMjc8sie0UKKV8HZV6AYMTHZxq-U4pygQ/edit#gid=0"
+      >ví dụ</a
+    >
+  </p>
+  <p>{% if error_message %}</p>
+
+  <div class="row">
+    <div class="card warning large">
+      <h3>Lỗi!</h3>
+      <p>{{ error_message }}</p>
+    </div>
+  </div>
+  {% endif %}
+  <div class="row">
+    <div class="card large">
+      <form action="/import_table/" method="post" enctype="multipart/form-data">
+        {% csrf_token %} {{ form }}
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+  </div>
+</body>

@@ -1,0 +1,78 @@
+<head>
+  <title>Xác nhận nhập dữ liệu</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css"
+  />
+  <style>
+    html,
+    * {
+      font-family: Roboto, sans-serif;
+    }
+    .table-container {
+      resize: both;
+      overflow: auto;
+    }
+    #hodan-table {
+      max-height: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Xác nhận nhập dữ liệu</h1>
+  {% if error %}
+  <div class="row">
+    <div class="card warning large">
+      <h3>Lỗi {{ error }}</h3>
+      {% if error_message %}
+      <p>{{ error_message }}</p>
+      {% endif %} {% if error_info %}
+      <pre>{{ error_info }}</pre>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %} {% if hodan_list %}
+  <div class="table-container">
+    <table class="stripped" id="hodan-table">
+      <caption>
+        Danh sách hộ dân
+      </caption>
+      <thead>
+        <tr>
+          <th>Hộ dân</th>
+          <th>Tình trạng</th>
+          <th>Vị trí</th>
+          <th>Tỉnh</th>
+          <th>Huyện</th>
+          <th>Xã</th>
+          <th>Số điện thoại</th>
+          <th>Ghi chú</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for hodan in hodan_list %}
+        <tr>
+          <td>{{ hodan.name }}</td>
+          <td>{{ hodan.status }}</td>
+          <td>{{ hodan.location }}</td>
+          <td>{{ hodan.tinh }}</td>
+          <td>{{ hodan.huyen }}</td>
+          <td>{{ hodan.xa }}</td>
+          <td>{{ hodan.phone }}</td>
+          <td>{{ hodan.note }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% endif %}
+  <div class="row">
+    <div class="card large">
+      <form action="{{ action }}" method="post" enctype="multipart/form-data">
+        {% csrf_token %} {{ form }}
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+  </div>
+</body>
