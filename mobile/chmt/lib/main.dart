@@ -1,3 +1,4 @@
+import 'package:chmt/pages/household/household_vm.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -51,6 +52,15 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+
+  final viewModel = HouseHoldViewModel();
+
+  @override
+  void initState() {
+    super.initState();
+
+    viewModel.getHouseHoldList();
+  }
 
   void _incrementCounter() {
     setState(() {

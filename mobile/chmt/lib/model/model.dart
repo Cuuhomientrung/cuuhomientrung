@@ -1,0 +1,1 @@
+export 'object_mapper/household.dart';
