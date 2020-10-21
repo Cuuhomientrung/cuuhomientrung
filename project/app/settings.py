@@ -102,7 +102,7 @@ DATABASES = {
         'USER': env('DB_USER', default='administrator'),
         'PASSWORD': env('DB_PASSWORD', default='bangtin_ainews_2811#'),
         'HOST': env('DB_HOSTNAME', default='103.192.236.67'),
-        'PORT': env('DB_HOSTNAME', default=5432),
+        'PORT': env('DB_PORT', default=5432),
     }
 }
 
