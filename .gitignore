@@ -127,6 +127,7 @@ project/static/
 
 !/gradle/wrapper/gradle-wrapper.jar
 .idea/
+
 bin/
 gitignore
 include/
