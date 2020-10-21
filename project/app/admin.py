@@ -18,6 +18,8 @@ from rest_framework.permissions import AllowAny, IsAdminUser
 
 vi_formats.DATETIME_FORMAT = "d/m/y H:i"
 
+PAGE_SIZE = 30
+
 # admin interface
 
 admin.site.site_header = 'Hệ thống thông tin Cứu hộ miền Trung'
@@ -27,6 +29,7 @@ admin.site_url = '/'
 
 
 class TinTucAdmin(admin.ModelAdmin):
+    list_per_page=PAGE_SIZE
     list_display = ('update_time', 'title', 'url')
     search_fields = ('title',)
 
@@ -36,7 +39,7 @@ class NguonLucAdmin(admin.ModelAdmin):
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
     list_editable = ('status',)
-
+    list_per_page=PAGE_SIZE
 
 class CuuHoAdmin(admin.ModelAdmin):
     list_display = ('update_time', 'status', 'name', 'phone', 'location', 'tinh', 'huyen', 'xa', 'volunteer')
@@ -44,7 +47,7 @@ class CuuHoAdmin(admin.ModelAdmin):
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
     list_editable = ('status',)
-
+    list_per_page=PAGE_SIZE
 
     def get_queryset(self, request):
         queryset = super(CuuHoAdmin, self).get_queryset(request)
@@ -60,7 +63,7 @@ class TinhNguyenVienAdmin(admin.ModelAdmin):
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
     list_editable = ('status',)
-
+    list_per_page=PAGE_SIZE
     def get_queryset(self, request):
         queryset = super(TinhNguyenVienAdmin, self).get_queryset(request)
         queryset = queryset.prefetch_related('tinh', 'huyen', 'xa')
@@ -74,6 +77,7 @@ class HoDanAdmin(admin.ModelAdmin):
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
     search_fields = ('name', 'phone', 'note')
     actions = [export_ho_dan_as_excel_action()]
+    list_per_page=PAGE_SIZE
     # Built-in auto complete selection from Django
     autocomplete_fields = ['volunteer', 'cuuho']
 
@@ -105,8 +109,7 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
 
     list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
     search_fields = ('name', )
-
-
+    list_per_page=PAGE_SIZE
     @mark_safe
     def get_cuu_ho_san_sang(self, obj):
         hodan = [item for item in obj.cuuho_reversed.all() if item.status == 1]
@@ -132,20 +135,24 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
 
 class TinhAdmin(HoDanCuuHoStatisticBase):
     URL_CUSTOM_TAG = 'tinh'
+    list_per_page=PAGE_SIZE
 
 
 
 class HuyenAdmin(HoDanCuuHoStatisticBase):
     URL_CUSTOM_TAG = 'huyen'
+    list_per_page=PAGE_SIZE
 
 
 class XaAdmin(HoDanCuuHoStatisticBase):
     URL_CUSTOM_TAG = 'xa'
+    list_per_page=PAGE_SIZE
 
 
 
 class ThonAdmin(HoDanCuuHoStatisticBase):
     URL_CUSTOM_TAG = 'thon'
+    list_per_page=PAGE_SIZE
 
 
 admin.site.register(TinTuc, TinTucAdmin)
