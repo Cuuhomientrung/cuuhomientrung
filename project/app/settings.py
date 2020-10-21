@@ -17,6 +17,18 @@ import environ
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 
+env = environ.Env(
+    DEBUG=(bool, True),
+    DB_NAME=(str, 'cuuhomientrung'),
+    DB_USER=(str, 'administrator'),
+    DB_PASSWORD=(str, 'bangtin_ainews_2811#'),
+    DB_HOSTNAME=(str, '103.192.236.67'),
+    DB_PORT=(int, 5432)
+)
+environ.Env.read_env(
+    os.path.join(BASE_DIR, '..', '.env')
+)
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -24,13 +36,7 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 SECRET_KEY = 'ybcim6=@)la&g9@!asz1rx95=qd&39$tl1j1(1uflb_$mo*w##'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = False
-
-env = environ.Env()
-environ.Env.read_env(
-    os.path.join(BASE_DIR, '..', '.env')
-)
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['*']
 
@@ -108,11 +114,11 @@ SITE_ID = 1
 DATABASES = {
         'default':{
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('DB_NAME', default='cuuhomientrung'),
-        'USER': env('DB_USER', default='administrator'),
-        'PASSWORD': env('DB_PASSWORD', default='bangtin_ainews_2811#'),
-        'HOST': env('DB_HOSTNAME', default='103.192.236.67'),
-        'PORT': env('DB_POST', default=5432),
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOSTNAME'),
+        'PORT': env('DB_PORT'),
     }
 }
 
