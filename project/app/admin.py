@@ -1,20 +1,40 @@
 import django
+import datetime
+import pytz
 from django.contrib import admin
 from django.db.models import Count, F, Count
 from django.utils.safestring import mark_safe
 from django.views.decorators.cache import never_cache
 from django.shortcuts import render
 from django.db import models
-import datetime
+from app.settings import TIME_ZONE
 from app.models import TinTuc, NguonLuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa, Thon
 from app.views import BaseRestfulAdmin, HoDanRestFulModelAdmin
-from app.utils.export_to_excel import export_ho_dan_as_excel_action
+from app.utils.export_to_excel import export_ho_dan_as_excel_action, utc_to_local
 from django.conf.locale.vi import formats as vi_formats
 from django.forms import TextInput, Textarea
 from rangefilter.filter import DateRangeFilter, DateTimeRangeFilter
 from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter, ChoiceDropdownFilter
 from django_restful_admin import admin as rest_admin
 from rest_framework.permissions import AllowAny, IsAdminUser
+from dynamic_raw_id.admin import DynamicRawIDMixin
+from dynamic_raw_id.filters import DynamicRawIDFilter
+from django.utils.html import format_html
+from admin_numeric_filter.admin import NumericFilterModelAdmin, SingleNumericFilter, RangeNumericFilter, \
+    SliderNumericFilter
+from mapbox_location_field.admin import MapAdmin
+from mapbox_location_field.forms import LocationField
+from django.forms import ModelForm
+from simple_history.admin import SimpleHistoryAdmin
+from django_select2_admin_filters.admin import (
+  Select2AdminFilterMixin
+)
+from django_select2_admin_filters.filters import (
+  ChoiceSelect2Filter, ModelSelect2Filter
+)
+from app.settings import (
+    REVISION
+)
 
 vi_formats.DATETIME_FORMAT = "d/m/y H:i"
 
@@ -28,6 +48,13 @@ admin.index_title = 'Hệ thống thông tin Cứu hộ miền Trung'
 admin.site_url = '/'
 
 
+# Helper classes
+class PeopleNumericFilter(SliderNumericFilter):
+    STEP = 1
+
+
+
+# Admin classes
 class TinTucAdmin(admin.ModelAdmin):
     list_per_page=PAGE_SIZE
     list_display = ('update_time', 'title', 'url')
@@ -41,13 +68,25 @@ class NguonLucAdmin(admin.ModelAdmin):
     list_editable = ('status',)
     list_per_page=PAGE_SIZE
 
-class CuuHoAdmin(admin.ModelAdmin):
+
+class CuuHoLocationForm(ModelForm):
+    class Meta:
+        model = CuuHo
+        fields = "__all__"
+        exclude = ('tinh', 'huyen', 'thon',)
+
+
+class CuuHoAdmin(DynamicRawIDMixin, admin.ModelAdmin):
+    dynamic_raw_id_fields = ('tinh', 'huyen', 'xa', 'volunteer',)
     list_display = ('update_time', 'status', 'name', 'phone', 'location', 'tinh', 'huyen', 'xa', 'volunteer')
-    # list_editable = ('tinh', 'huyen', 'xa', 'volunteer')
-    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
+    list_filter = (
+        ('status', ChoiceDropdownFilter),
+        ('xa', DynamicRawIDFilter),
+    )
     search_fields = ('name', 'phone')
     list_editable = ('status',)
-    list_per_page=PAGE_SIZE
+    list_per_page = PAGE_SIZE
+    form = CuuHoLocationForm
 
     def get_queryset(self, request):
         queryset = super(CuuHoAdmin, self).get_queryset(request)
@@ -56,6 +95,10 @@ class CuuHoAdmin(admin.ModelAdmin):
             .order_by('-status')
         return queryset
 
+    class Media:
+        css = {
+            'all': (f'/static/css/custom.css?v={REVISION}',)
+        }
 
 
 class TinhNguyenVienAdmin(admin.ModelAdmin):
@@ -63,24 +106,60 @@ class TinhNguyenVienAdmin(admin.ModelAdmin):
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
     list_editable = ('status',)
-    list_per_page=PAGE_SIZE
+    list_per_page = PAGE_SIZE
+
     def get_queryset(self, request):
         queryset = super(TinhNguyenVienAdmin, self).get_queryset(request)
         queryset = queryset.prefetch_related('tinh', 'huyen', 'xa')
         return queryset
 
 
-class HoDanAdmin(admin.ModelAdmin):
-    list_display = ('update_time', 'status', 'name', 'phone', 'get_note', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
-    list_display_links = ('name', 'phone')
-    list_editable = ('status',)
-    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
-    search_fields = ('name', 'phone', 'note')
-    actions = [export_ho_dan_as_excel_action()]
-    list_per_page=PAGE_SIZE
-    # Built-in auto complete selection from Django
-    autocomplete_fields = ['volunteer', 'cuuho']
+class HoDanLocationForm(ModelForm):
+    class Meta:
+        model = HoDan
+        fields = "__all__"
+        exclude = ('tinh', 'huyen', 'thon',)
 
+    geo_location = LocationField(
+        required=False,
+        map_attrs={
+            "style": "mapbox://styles/mapbox/outdoors-v11",
+            "zoom": 10,
+            "center": [106.507467036133, 17.572843459110928],
+            "cursor_style": 'pointer',
+            "marker_color": "red",
+            "rotate": False,
+            "geocoder": True,
+            "fullscreen_button": True,
+            "navigation_buttons": True,
+            "track_location_button": True,
+            "readonly": True,
+            "placeholder": "Chọn một địa điểm",
+        }
+    )
+
+
+class HoDanHistoryAdmin(SimpleHistoryAdmin):
+    history_list_display = [
+        'history_date', 'history_type', 'status', 'get_note', 'volunteer',
+        'cuuho', 'ip_address'
+    ]
+
+
+class HoDanAdmin(DynamicRawIDMixin, NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.ModelAdmin):
+    dynamic_raw_id_fields = ('tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
+    list_display = ('id', 'get_update_time', 'status', 'name', 'phone', 'get_note', 'people_number', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
+    list_display_links = ('id', 'name', 'phone',)
+    list_editable = ('status',)
+    list_filter = (
+        ('people_number', PeopleNumericFilter),
+        ('status', ChoiceDropdownFilter),
+        ('xa', DynamicRawIDFilter),
+        'update_time',
+    )
+    search_fields = ('name', 'phone', 'note', 'id')
+    actions = [export_ho_dan_as_excel_action()]
+    form = HoDanLocationForm
 
     def get_queryset(self, request):
         queryset = super(HoDanAdmin, self).get_queryset(request)
@@ -97,11 +176,23 @@ class HoDanAdmin(admin.ModelAdmin):
             return ''
     get_note.short_description = 'Ghi chú'
 
+    def get_update_time(self, obj):
+        # TODO: ho tro trong vong 3 ngay
+        # se remove code ngay sau do
+        # 23 / 10 / 2020 00:00:00 GMT + 7
+        compare_time = datetime.datetime(2020, 10, 22, 17, 0, 0, tzinfo=datetime.timezone.utc).astimezone(tz=pytz.timezone(TIME_ZONE))
+        update_time = utc_to_local(obj.update_time).strftime("%m/%d/%Y %H:%M")
+        if utc_to_local(obj.created_time) >= compare_time:
+            return format_html('<div class="highlight-red"> {} </div>', update_time)
+        else:
+            return format_html('<div class="highlight-blue"> {} </div>', update_time)
+    get_update_time.short_description = 'Cập nhật'
+    get_update_time.allow_tags = True
+
     class Media:
         css = {
-            'all': ('/static/css/custom.css',)
+            'all': (f'/static/css/custom.css?v={REVISION}',)
         }
-
 
 
 class HoDanCuuHoStatisticBase(admin.ModelAdmin):
@@ -111,6 +202,7 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
     list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
     search_fields = ('name', )
     list_per_page=PAGE_SIZE
+
     @mark_safe
     def get_cuu_ho_san_sang(self, obj):
         hodan = [item for item in obj.cuuho_reversed.all() if item.status == 1]
@@ -137,13 +229,60 @@ class TinhAdmin(HoDanCuuHoStatisticBase):
     list_per_page=PAGE_SIZE
 
 
+class Huyen2TinhFilter(ModelSelect2Filter):
+    title = 'Tìm theo tỉnh'
+    parameter_name = 'tinh'
+    autocomplete_queryset = Tinh.objects.all()
+    search_fields = ['name__icontains']
 
-class HuyenAdmin(HoDanCuuHoStatisticBase):
+    # optionally you can override queryset method
+    def queryset(self, request, queryset):
+        val = self.value()
+        if val:
+            return queryset.filter(tinh__pk=val)
+        return queryset
+
+
+class HuyenAdmin(Select2AdminFilterMixin, HoDanCuuHoStatisticBase):
+    list_filter = (
+        Huyen2TinhFilter,
+    )
     URL_CUSTOM_TAG = 'huyen'
     list_per_page=PAGE_SIZE
 
 
-class XaAdmin(HoDanCuuHoStatisticBase):
+class Xa2HuyenFilter(ModelSelect2Filter):
+    title = 'Tìm theo huyện'
+    parameter_name = 'huyen'
+    autocomplete_queryset = Huyen.objects.all()
+    search_fields = ['name__icontains']
+
+    # optionally you can override queryset method
+    def queryset(self, request, queryset):
+        val = self.value()
+        if val:
+            return queryset.filter(huyen__pk=val)
+        return queryset
+
+
+class Xa2TinhFilter(ModelSelect2Filter):
+    title = 'Tìm theo tỉnh'
+    parameter_name = 'tinh'
+    autocomplete_queryset = Tinh.objects.all()
+    search_fields = ['name__icontains']
+
+    # optionally you can override queryset method
+    def queryset(self, request, queryset):
+        val = self.value()
+        if val:
+            return queryset.filter(huyen__tinh__pk=val)
+        return queryset
+
+
+class XaAdmin(Select2AdminFilterMixin, HoDanCuuHoStatisticBase):
+    list_filter = (
+        Xa2HuyenFilter, Xa2TinhFilter,
+    )
     URL_CUSTOM_TAG = 'xa'
     def get_queryset(self, request):
         queryset = super(HoDanCuuHoStatisticBase,self).get_queryset(request)
@@ -154,8 +293,10 @@ class XaAdmin(HoDanCuuHoStatisticBase):
     list_per_page=PAGE_SIZE
 
 
-
 class ThonAdmin(HoDanCuuHoStatisticBase):
+    list_filter = (
+        ('huyen', ChoiceDropdownFilter),
+    )
     URL_CUSTOM_TAG = 'thon'
     list_per_page=PAGE_SIZE
 

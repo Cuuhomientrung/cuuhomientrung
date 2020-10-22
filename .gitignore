@@ -125,3 +125,5 @@ Pipfile
 Pipfile.lock
 project/static/
 .env
+!logs/.gitkeep
+logs/*
