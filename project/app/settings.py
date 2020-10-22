@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import environ
+import sentry_sdk
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,6 +26,9 @@ env = environ.Env(
     DB_HOSTNAME=(str, '103.192.236.67'),
     DB_PORT=(int, 5432),
     MAPBOX_KEY=(str, 'pk.eyJ1IjoiZHp1bmdkYSIsImEiOiJja2drMDFka2wwMW9zMndxZW9lMXBud3d5In0.oKlf9RF-X-SKkUJUAQ9ndw'),
+    SENTRY_DSN=(str, None),
+    DEPLOY_ENV=(str, 'local'),
+    GIT_VERSION=(str, None),
 )
 environ.Env.read_env(
     os.path.join(BASE_DIR, '..', '.env')
@@ -35,7 +39,6 @@ environ.Env.read_env(
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'ybcim6=@)la&g9@!asz1rx95=qd&39$tl1j1(1uflb_$mo*w##'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
@@ -65,7 +68,78 @@ INSTALLED_APPS = [
     'simple_history',
 ]
 
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "root": {"level": "INFO", "handlers": ["console"]},
+    "formatters": {
+        "verbose": {
+            "format": (
+                "%(levelname)s %(name)s %(message)s [PID:%(process)d:%(threadName)s]"
+            )
+        },
+        "simple": {"format": "%(levelname)s %(message)s"},
+    },
+    "filters": {
+        "require_debug_false": {"()": "django.utils.log.RequireDebugFalse"},
+    },
+    "handlers": {
+        'errors_file': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.RotatingFileHandler',
+            # 5 MB
+            'maxBytes': 1024*1024*5,
+            'backupCount': 5,
+            'filename': os.path.join(BASE_DIR, '..', 'logs', 'logs_errors.log'),
+            'filters': ['require_debug_false'],
+        },
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+            'filters': [],
+        },
+    },
+    "loggers": {
+        'django.request': {
+            'handlers': ['errors_file'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        "django": {
+            "handlers": ["console", "errors_file"],
+            "level": "INFO",
+            "propagate": True,
+        },
+        "django.server": {"handlers": ["console"], "level": "INFO", "propagate": True},
+    },
+}
+
+
 MAPBOX_KEY = env('MAPBOX_KEY')
+DEPLOY_ENV = env('DEPLOY_ENV')
+SENTRY_DSN = env('SENTRY_DSN')
+GIT_VERSION = env('GIT_VERSION')
+if SENTRY_DSN:
+    from sentry_sdk.integrations.django import DjangoIntegration
+    from sentry_sdk.integrations.logging import LoggingIntegration
+    import logging
+
+    integrations = [DjangoIntegration()]
+    logger_level = logging.INFO
+    sentry_logging = LoggingIntegration(
+        level=logger_level,
+        event_level=logger_level
+    )
+    integrations.append(sentry_logging)
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=integrations,
+        send_default_pii=True,
+        environment=DEPLOY_ENV,
+        release=GIT_VERSION,
+    )
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
