@@ -31,9 +31,6 @@ extension Location on Address {
 }
 
 class RescuerPage extends StatefulWidget {
-  final RescuerViewModel viewModel;
-
-  const RescuerPage(this.viewModel);
 
   @override
   State<StatefulWidget> createState() => _RescuerPage();
@@ -45,26 +42,25 @@ class _RescuerPage extends State<RescuerPage>
   ScrollController _scrollController = ScrollController();
   var searchEditingCtl = TextEditingController(text: '');
 
-  Timer timer;
+  final viewModel = RescuerViewModel();
 
   @override
   void initState() {
     _initAnimation();
 
     super.initState();
-    _getData();
+    viewModel.getRescuerList();
 
-    // timer = Timer.periodic(Duration(seconds: 15), (Timer t) => _refresh());
-
-    widget.viewModel.refreshStream.listen((e) => _reload());
-  }
-
-  void _getData() async {
-    widget.viewModel.getRescuerList();
+    viewModel.refreshStream.listen((e) => _reload());
+    viewModel.rescuerStream.listen((e) {
+      setState(() {
+        rescuerCount = e.length.toString();
+      });
+    });
   }
 
   void _reload() {
-    widget.viewModel.reset();
+    viewModel.reset();
     _refresh();
   }
 
@@ -75,7 +71,7 @@ class _RescuerPage extends State<RescuerPage>
         .then((value) {
       animationController
           .reverse()
-          .then((v) => widget.viewModel.getRescuerList());
+          .then((v) => viewModel.getRescuerList());
     });
   }
 
@@ -89,7 +85,6 @@ class _RescuerPage extends State<RescuerPage>
   @override
   void dispose() {
     super.dispose();
-    timer.cancel();
     animationController.dispose();
   }
 
@@ -97,14 +92,14 @@ class _RescuerPage extends State<RescuerPage>
     List<Rescuer> result = List<Rescuer>();
 
     if (query.isEmpty) {
-      result = widget.viewModel.rescuerList;
+      result = viewModel.rescuerList;
     } else {
-      result = widget.viewModel.rescuerList.where((e) {
+      result = viewModel.rescuerList.where((e) {
         return e.searchText.contains(removeDiacritics(query).toLowerCase());
       }).toList();
     }
 
-    widget.viewModel.rescuerChanged(result);
+    viewModel.rescuerChanged(result);
   }
 
   Widget _body() {
@@ -152,7 +147,7 @@ class _RescuerPage extends State<RescuerPage>
                     ];
                   },
                   body: StreamBuilder<List<Rescuer>>(
-                    stream: widget.viewModel.rescuerStream,
+                    stream: viewModel.rescuerStream,
                     builder: (ctx, snapshot) {
                       if (!snapshot.hasData) {
                         return Center(child: Container(
@@ -177,7 +172,7 @@ class _RescuerPage extends State<RescuerPage>
                           );
                           animationController.forward();
                           var rescuer = snapshot.data[index];
-                          var address = widget.viewModel.getLandmark(rescuer);
+                          var address = viewModel.getLandmark(rescuer);
 
                           return RescuerItemView(
                             callback: () {},
@@ -226,7 +221,7 @@ class _RescuerPage extends State<RescuerPage>
           padding: EdgeInsets.symmetric(horizontal: 4),
           onPressed: () => _selectAddress(Address.province),
           child: StreamBuilder<Province>(
-            stream: widget.viewModel.selectedProvinceStream,
+            stream: viewModel.selectedProvinceStream,
             builder: (ctx, snapshot) {
               var text = r"Tỉnh";
               if (snapshot.hasData) text = snapshot.data.name;
@@ -245,7 +240,7 @@ class _RescuerPage extends State<RescuerPage>
           padding: EdgeInsets.symmetric(horizontal: 4),
           onPressed: () => _selectAddress(Address.district),
           child: StreamBuilder<District>(
-            stream: widget.viewModel.selectedDistrictStream,
+            stream: viewModel.selectedDistrictStream,
             builder: (ctx, snapshot) {
               var text = r"Huyện";
               if (snapshot.hasData) text = snapshot.data.name;
@@ -264,7 +259,7 @@ class _RescuerPage extends State<RescuerPage>
           padding: EdgeInsets.symmetric(horizontal: 4),
           onPressed: () => _selectAddress(Address.commune),
           child: StreamBuilder<Commune>(
-            stream: widget.viewModel.selectedCommuneStream,
+            stream: viewModel.selectedCommuneStream,
             builder: (ctx, snapshot) {
               var text = r"Xã";
               if (snapshot.hasData) text = snapshot.data.name;
@@ -283,7 +278,7 @@ class _RescuerPage extends State<RescuerPage>
           padding: EdgeInsets.symmetric(horizontal: 4),
           onPressed: () => _selectStatus(),
           child: StreamBuilder<int>(
-            stream: widget.viewModel.statusStream,
+            stream: viewModel.statusStream,
             builder: (ctx, snapshot) {
               var text = r"Trạng thái cứu hộ";
               if (snapshot.hasData) text = snapshot.data.rescuerStatus;
@@ -305,13 +300,13 @@ class _RescuerPage extends State<RescuerPage>
     var list = List<AddressItem>();
     switch (type) {
       case Address.province:
-        list = widget.viewModel.provinceList;
+        list = viewModel.provinceList;
         break;
       case Address.district:
-        list = widget.viewModel.districtList;
+        list = viewModel.districtList;
         break;
       case Address.commune:
-        list = widget.viewModel.communeList;
+        list = viewModel.communeList;
         break;
       default:
         break;
@@ -390,13 +385,13 @@ class _RescuerPage extends State<RescuerPage>
     if (address != null) {
       switch (type) {
         case Address.province:
-          widget.viewModel.selectedProvinceChanged(address);
+          viewModel.selectedProvinceChanged(address);
           break;
         case Address.district:
-          widget.viewModel.selectedDistrictChanged(address);
+          viewModel.selectedDistrictChanged(address);
           break;
         case Address.commune:
-          widget.viewModel.selectedCommuneChanged(address);
+          viewModel.selectedCommuneChanged(address);
           break;
         default:
           break;
@@ -461,13 +456,35 @@ class _RescuerPage extends State<RescuerPage>
     final status = await statusChange();
 
     if (status != null) {
-      widget.viewModel.statusChanged(status);
+      viewModel.statusChanged(status);
       _refresh();
     }
   }
 
+  var rescuerCount = '';
+
   @override
   Widget build(BuildContext context) {
-    return _body();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          rescuerCount.isNotEmpty ? '$rescuerCount ' + r'đội cứu hộ' : r'Đội cứu hộ',
+          style: GoogleFonts.openSans(
+            fontSize: 17,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.replay),
+            onPressed: () {
+              Utility.hideKeyboardOf(context);
+              _refresh();
+            },
+          )
+        ],
+      ),
+      body: _body(),
+    );
   }
 }

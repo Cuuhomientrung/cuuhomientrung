@@ -32,9 +32,6 @@ extension Location on Address {
 }
 
 class HouseHoldPage extends StatefulWidget {
-  final HouseHoldViewModel viewModel;
-
-  const HouseHoldPage(this.viewModel);
 
   @override
   State<StatefulWidget> createState() => _HouseHoldPage();
@@ -46,19 +43,26 @@ class _HouseHoldPage extends State<HouseHoldPage>
   ScrollController _scrollController = ScrollController();
   var searchEditingCtl = TextEditingController(text: '');
 
+  final viewModel = HouseHoldViewModel();
+
   @override
   void initState() {
     _initAnimation();
 
     super.initState();
 
-    widget.viewModel.getHouseHoldList();
+    viewModel.getHouseHoldList();
 
-    widget.viewModel.refreshStream.listen((e) => _reload());
+    viewModel.refreshStream.listen((e) => _reload());
+    viewModel.houseHoldStream.listen((e) {
+      setState(() {
+        houseHoldCount = e.length.toString();
+      });
+    });
   }
 
   void _reload() {
-    widget.viewModel.reset();
+    viewModel.reset();
     _refresh();
   }
 
@@ -69,7 +73,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
         .then((value) {
       animationController
           .reverse()
-          .then((v) => widget.viewModel.getHouseHoldList());
+          .then((v) => viewModel.getHouseHoldList());
     });
   }
 
@@ -90,14 +94,14 @@ class _HouseHoldPage extends State<HouseHoldPage>
     List<HouseHold> result = List<HouseHold>();
 
     if (query.isEmpty) {
-      result = widget.viewModel.houseHoldList;
+      result = viewModel.houseHoldList;
     } else {
-      result = widget.viewModel.houseHoldList.where((e) {
+      result = viewModel.houseHoldList.where((e) {
         return e.searchText.contains(removeDiacritics(query).toLowerCase());
       }).toList();
     }
 
-    widget.viewModel.houseHoldChanged(result);
+    viewModel.houseHoldChanged(result);
   }
 
   void _updateHouseHoldStatus(HouseHold item) async {
@@ -179,7 +183,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
                     ];
                   },
                   body: StreamBuilder<List<HouseHold>>(
-                    stream: widget.viewModel.houseHoldStream,
+                    stream: viewModel.houseHoldStream,
                     builder: (ctx, snapshot) {
                       if (!snapshot.hasData) {
                         return Center(child: Container(
@@ -204,7 +208,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
                           );
                           animationController.forward();
                           var hh = snapshot.data[index];
-                          var address = widget.viewModel.getLandmark(hh);
+                          var address = viewModel.getLandmark(hh);
 
                           return HouseHoldItemView(
                             callback: () {},
@@ -254,7 +258,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
           padding: EdgeInsets.symmetric(horizontal: 4),
           onPressed: () => _selectAddress(Address.province),
           child: StreamBuilder<Province>(
-            stream: widget.viewModel.selectedProvinceStream,
+            stream: viewModel.selectedProvinceStream,
             builder: (ctx, snapshot) {
               var text = r"Tỉnh";
               if (snapshot.hasData) text = snapshot.data.name;
@@ -273,7 +277,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
           padding: EdgeInsets.symmetric(horizontal: 4),
           onPressed: () => _selectAddress(Address.district),
           child: StreamBuilder<District>(
-            stream: widget.viewModel.selectedDistrictStream,
+            stream: viewModel.selectedDistrictStream,
             builder: (ctx, snapshot) {
               var text = r"Huyện";
               if (snapshot.hasData) text = snapshot.data.name;
@@ -292,7 +296,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
           padding: EdgeInsets.symmetric(horizontal: 4),
           onPressed: () => _selectAddress(Address.commune),
           child: StreamBuilder<Commune>(
-            stream: widget.viewModel.selectedCommuneStream,
+            stream: viewModel.selectedCommuneStream,
             builder: (ctx, snapshot) {
               var text = r"Xã";
               if (snapshot.hasData) text = snapshot.data.name;
@@ -311,7 +315,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
           padding: EdgeInsets.symmetric(horizontal: 4),
           onPressed: () => _selectStatus(),
           child: StreamBuilder<int>(
-            stream: widget.viewModel.statusStream,
+            stream: viewModel.statusStream,
             builder: (ctx, snapshot) {
               var text = r"Trạng thái cứu hộ";
               if (snapshot.hasData) text = snapshot.data.statusString;
@@ -333,13 +337,13 @@ class _HouseHoldPage extends State<HouseHoldPage>
     var list = List<AddressItem>();
     switch (type) {
       case Address.province:
-        list = widget.viewModel.provinceList;
+        list = viewModel.provinceList;
         break;
       case Address.district:
-        list = widget.viewModel.districtList;
+        list = viewModel.districtList;
         break;
       case Address.commune:
-        list = widget.viewModel.communeList;
+        list = viewModel.communeList;
         break;
       default:
         break;
@@ -418,13 +422,13 @@ class _HouseHoldPage extends State<HouseHoldPage>
     if (address != null) {
       switch (type) {
         case Address.province:
-          widget.viewModel.selectedProvinceChanged(address);
+          viewModel.selectedProvinceChanged(address);
           break;
         case Address.district:
-          widget.viewModel.selectedDistrictChanged(address);
+          viewModel.selectedDistrictChanged(address);
           break;
         case Address.commune:
-          widget.viewModel.selectedCommuneChanged(address);
+          viewModel.selectedCommuneChanged(address);
           break;
         default:
           break;
@@ -488,13 +492,35 @@ class _HouseHoldPage extends State<HouseHoldPage>
 
     if (status != null) {
       if (status == -1) status = null;
-      widget.viewModel.statusChanged(status);
+      viewModel.statusChanged(status);
       _refresh();
     }
   }
 
+  var houseHoldCount = '';
+
   @override
   Widget build(BuildContext context) {
-    return _body();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          houseHoldCount.isNotEmpty ? '$houseHoldCount ' + r'lời kêu cứu' : r'Cứu hộ miền Trung',
+          style: GoogleFonts.openSans(
+            fontSize: 17,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.replay),
+            onPressed: () {
+              Utility.hideKeyboardOf(context);
+              _refresh();
+            },
+          )
+        ],
+      ),
+      body: _body(),
+    );
   }
 }

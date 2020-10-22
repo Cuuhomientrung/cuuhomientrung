@@ -39,7 +39,9 @@ class LoadAppViewModel extends BaseViewModel with ChangeNotifier {
 
   void getProvinceList() {
     repo.getProvinceList().then((value) {
-      provinceChanged(value.provinceList);
+      var list = value.provinceList;
+      list.sort((a, b) => a.id.compareTo(b.id));
+      provinceChanged(list);
     }).catchError((e) {
       logger.info(e);
       provinceChanged([]);

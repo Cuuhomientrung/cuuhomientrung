@@ -6,6 +6,8 @@ class AppGlobal {
 
   static final shared = AppGlobal._();
 
+  static const baseUrl = r'https://cuuhomientrung.info/';
+
   List<Province> provinceList = [];
   List<District> districtList = [];
   List<Commune> communeList = [];

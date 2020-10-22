@@ -1,4 +1,4 @@
-import 'package:chmt/pages/home/home_page.dart';
+import 'package:chmt/pages/drawer/navigate_home.dart';
 import 'package:chmt/pages/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +23,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case Routes.homePage:
       return FadeTransitionPageRoute(
         settings: RouteSettings(name: Routes.homePage),
-        builder: (context) => HomePage(),
+        builder: (context) => NavigationHomeScreen(),
       );
 
     default:

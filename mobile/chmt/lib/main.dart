@@ -1,5 +1,3 @@
-import 'package:chmt/pages/household/household_vm.dart';
-import 'package:chmt/pages/rescuer/rescuer_vm.dart';
 import 'package:chmt/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,15 +7,7 @@ void main() {
 
   Provider.debugCheckInvalidValueType = null;
 
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => HouseHoldViewModel()),
-        ChangeNotifierProvider(create: (_) => RescuerViewModel()),
-      ],
-      child: MyApp(),
-    ),
-  );
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
