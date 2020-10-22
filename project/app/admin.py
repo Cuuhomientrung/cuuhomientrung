@@ -88,6 +88,7 @@ class LocationForm(ModelForm):
         exclude = ('tinh', 'huyen', 'thon',)
 
     geo_location = LocationField(
+        required=False,
         map_attrs={
             "style": "mapbox://styles/mapbox/outdoors-v11",
             "zoom": 10,

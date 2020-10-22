@@ -158,7 +158,7 @@ class HoDan(models.Model):
     update_time = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
     location = models.TextField(blank=True, default='', verbose_name='Địa chỉ')
     status = models.IntegerField(choices=HODAN_STATUS, default=0, verbose_name="Tình trạng")
-    people_number = models.PositiveIntegerField(default=1, verbose_name="Số người")
+    people_number = models.PositiveIntegerField(blank=True, null=True, default=1, verbose_name="Số người")
     tinh = models.ForeignKey(
         Tinh, blank=True, null=True, on_delete=models.CASCADE,
         related_name="hodan_reversed"
@@ -190,6 +190,19 @@ class HoDan(models.Model):
     class Meta:
         verbose_name = 'Hộ dân cần ứng cứu'
         verbose_name_plural = 'Hộ dân cần ứng cứu'
+
+    def save(self, *args, **kwargs):
+        # Auto update huyen
+        if self.xa and self.xa.pk:
+            if self.xa.huyen and self.xa.huyen.pk:
+                self.huyen = self.xa.huyen
+
+        # Auto update tinh
+        if self.huyen and self.huyen.pk:
+            if self.huyen.tinh and self.huyen.tinh.pk:
+                self.tinh = self.huyen.tinh
+
+        super().save(*args, **kwargs)
 
 
 class NguonLuc(models.Model):
