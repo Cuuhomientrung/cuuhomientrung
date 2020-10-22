@@ -1,6 +1,11 @@
 from django.db import models
 from smart_selects.db_fields import ChainedForeignKey
 from mapbox_location_field.models import LocationField
+from simple_history.models import HistoricalRecords
+from django.dispatch import receiver
+from simple_history.signals import (
+    post_create_historical_record
+)
 
 RESOURCE_STATUS = [
     (1, 'Sẵn sàng'),
@@ -153,6 +158,18 @@ class CustomLocationField(LocationField):
     pass
 
 
+class IPAddressHistoricalModel(models.Model):
+    """
+    Abstract model for history models tracking the IP address.
+    """
+    ip_address = models.GenericIPAddressField(
+        name='ip_address', blank=True, null=True
+    )
+
+    class Meta:
+        abstract = True
+
+
 class HoDan(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Hộ dân")
     update_time = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
@@ -183,6 +200,10 @@ class HoDan(models.Model):
     volunteer = models.ForeignKey(TinhNguyenVien, blank=True, null=True, verbose_name="Tình nguyện viên xác minh", on_delete=models.CASCADE)
     cuuho = models.ForeignKey(CuuHo, null=True, blank= True, verbose_name="Đơn vị cứu hộ tiếp cận", on_delete=models.CASCADE)
     geo_location = CustomLocationField(null=True, blank=True)
+    history = HistoricalRecords(
+        history_change_reason_field=models.TextField(null=True),
+        bases=[IPAddressHistoricalModel,]
+    )
 
     def __str__(self):
         return self.name
@@ -203,6 +224,14 @@ class HoDan(models.Model):
                 self.tinh = self.huyen.tinh
 
         super().save(*args, **kwargs)
+
+
+@receiver(post_create_historical_record)
+def post_create_historical_record_callback(sender, **kwargs):
+    history_instance = kwargs['history_instance']
+    # thread.request for use only when the simple_history middleware is on and enabled
+    history_instance.ip_address = HistoricalRecords.thread.request.META['REMOTE_ADDR']
+    history_instance.save(update_fields=['ip_address',])
 
 
 class NguonLuc(models.Model):

@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'dynamic_raw_id',
     'admin_numeric_filter',
     'mapbox_location_field',
+    'simple_history',
 ]
 
 MAPBOX_KEY = env('MAPBOX_KEY')
@@ -75,6 +76,7 @@ MIDDLEWARE = [
     'app.middleware.AutomaticUserLoginMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 

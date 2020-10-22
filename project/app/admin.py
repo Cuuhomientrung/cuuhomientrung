@@ -22,6 +22,7 @@ from admin_numeric_filter.admin import NumericFilterModelAdmin, SingleNumericFil
 from mapbox_location_field.admin import MapAdmin
 from mapbox_location_field.forms import LocationField
 from django.forms import ModelForm
+from simple_history.admin import SimpleHistoryAdmin
 
 vi_formats.DATETIME_FORMAT = "d/m/y H:i"
 
@@ -106,7 +107,14 @@ class LocationForm(ModelForm):
     )
 
 
-class HoDanAdmin(DynamicRawIDMixin, NumericFilterModelAdmin, MapAdmin, admin.ModelAdmin):
+class HoDanHistoryAdmin(SimpleHistoryAdmin):
+    history_list_display = [
+        'history_date', 'history_type', 'status', 'get_note', 'volunteer',
+        'cuuho', 'ip_address'
+    ]
+
+
+class HoDanAdmin(DynamicRawIDMixin, NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.ModelAdmin):
     dynamic_raw_id_fields = ('tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
     list_display = ('id', 'update_time', 'status', 'name', 'phone', 'get_note', 'people_number', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
     list_display_links = ('id', 'name', 'phone',)
