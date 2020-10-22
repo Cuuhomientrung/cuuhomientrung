@@ -15,53 +15,53 @@
     {{ block.super }}
 
     <script>
-      function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = django.jQuery.trim(cookies[i]);
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
+      if (typeof django !== 'undefined') {
+        ($ => {
+          function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = $.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
                 }
             }
-        }
-        return cookieValue;
-      }
-      var csrftoken = getCookie('csrftoken');
+            return cookieValue;
+          }
+          var csrftoken = getCookie('csrftoken');
 
-      function csrfSafeMethod(method) {
-        // these HTTP methods do not require CSRF protection
-        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-      }
-      django.jQuery.ajaxSetup({
-        complete: function(xhr, status) {
-          django.jQuery('[name=csrfmiddlewaretoken]').val(getCookie('csrftoken'))
-        },
-        beforeSend: function(xhr, settings) {
-            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-            }
-        }
-      });
-    </script>
+          function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+          }
+          $.ajaxSetup({
+              complete: function(xhr, status) {
+                $('[name=csrfmiddlewaretoken]').val(getCookie('csrftoken'))
+              },
+              beforeSend: function(xhr, settings) {
+                  if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                      xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                  }
+              }
+          });
 
-    <script>
-      ($ => {
-        $('input.vForeignKeyRawIdAdminField').on('click', e => {
-            $(e.target)
-              .closest('.DynamicRawIDFilter')
-              .find('.dynamic_raw_id-related-lookup')
-              .click();
-
+          $('input.vForeignKeyRawIdAdminField').on('click', e => {
               $(e.target)
-                .closest('.related-widget-wrapper')
+                .closest('.DynamicRawIDFilter')
                 .find('.dynamic_raw_id-related-lookup')
                 .click();
-        });
-      })(django.jQuery);
+
+                $(e.target)
+                  .closest('.related-widget-wrapper')
+                  .find('.dynamic_raw_id-related-lookup')
+                  .click();
+          });
+        })(django.jQuery);
+      }
     </script>
 
     <style type="text/css">
