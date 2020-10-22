@@ -2,19 +2,32 @@
     max-width: 100%;
 }
 
+.field-status select,
 .field-tinh select,
 .field-huyen select,
 .field-xa select,
 .field-cuuho select {
-    width: 100px;
+    min-width: 100px;
+    max-width: 125px;
+}
+
+.column-phone,
+td.field-phone {
+  max-width: 125px;
+}
+
+.column-name,
+td.field-name {
+  min-width: 150px;
+  max-width: 250px;
 }
 
 .column-get_note,
 .column-location,
 td.field-location,
 td.field-get_note {
-    width: 200px;
     min-width: 200px;
+    max-width: 300px;
 }
 
 #changelist {
