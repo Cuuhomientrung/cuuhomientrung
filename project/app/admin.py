@@ -1,12 +1,13 @@
 import django
+import datetime
+import pytz
 from django.contrib import admin
 from django.db.models import Count, F
 from django.utils.safestring import mark_safe
 from django.views.decorators.cache import never_cache
 from django.shortcuts import render
 from django.db import models
-import datetime
-import pytz
+from app.settings import TIME_ZONE
 from app.models import TinTuc, NguonLuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa, Thon
 from app.views import BaseRestfulAdmin, HoDanRestFulModelAdmin
 from app.utils.export_to_excel import export_ho_dan_as_excel_action, utc_to_local
@@ -114,7 +115,7 @@ class HoDanAdmin(DynamicRawIDMixin, NumericFilterModelAdmin, admin.ModelAdmin):
         # TODO: ho tro trong vong 3 ngay
         # se remove code ngay sau do
         # 23 / 10 / 2020 00:00:00 GMT + 7
-        compare_time = datetime.datetime(2020, 10, 22, 17, 0, 0, tzinfo=datetime.timezone.utc).astimezone(tz=pytz.timezone("Asia/Ho_Chi_Minh"))
+        compare_time = datetime.datetime(2020, 10, 22, 17, 0, 0, tzinfo=datetime.timezone.utc).astimezone(tz=pytz.timezone(TIME_ZONE))
         update_time = utc_to_local(obj.update_time).strftime("%m/%d/%Y %H:%M")
         if utc_to_local(obj.created_time) >= compare_time:
             return format_html('<div class="highlight-red"> {} </div>', update_time)
