@@ -159,7 +159,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       Container(
 //                        width: calculateUserWidgetWidth,
                         child: Text(
-                          AppGlobal.baseUrl,
+                          r'cuuhomientrung.info',
                           overflow: TextOverflow.fade,
                           style: GoogleFonts.lato(
                             fontSize: 13.0,
@@ -222,7 +222,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                             ),
                             SizedBox(width: 10),
                             Text(
-                              AppGlobal.baseUrl,
+                              'CHMT',
                               style: GoogleFonts.lato(
                                 fontSize: 17.0,
                                 fontWeight: FontWeight.w400,
