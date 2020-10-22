@@ -89,6 +89,11 @@ class CuuHoAdmin(DynamicRawIDMixin, admin.ModelAdmin):
             .order_by('-status')
         return queryset
 
+    class Media:
+        css = {
+            'all': ('/static/css/custom.css',)
+        }
+
 
 class TinhNguyenVienAdmin(admin.ModelAdmin):
     list_display = ('name', 'location', 'phone', 'status')
