@@ -19,7 +19,6 @@ django-mapbox-location-field==1.6.3
 django-multiselectfield==0.1.12
 django-restful-admin==1.1.3
 django-select2==7.4.2
-django-select2-admin-filters==0.1.3
 django-simple-history==2.12.0
 django-smart-selects==1.5.9
 django-timezone-field==4.0

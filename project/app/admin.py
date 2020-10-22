@@ -1,40 +1,29 @@
-import django
 import datetime
 import pytz
 from django.contrib import admin
-from django.db.models import Count, F
 from django.utils.safestring import mark_safe
-from django.views.decorators.cache import never_cache
-from django.shortcuts import render
-from django.db import models
 from app.settings import TIME_ZONE
-from app.models import TinTuc, NguonLuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa, Thon
+from app.models import TinTuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa
 from app.views import BaseRestfulAdmin, HoDanRestFulModelAdmin
 from app.utils.export_to_excel import export_ho_dan_as_excel_action, utc_to_local
 from django.conf.locale.vi import formats as vi_formats
-from django.forms import TextInput, Textarea
-from rangefilter.filter import DateRangeFilter, DateTimeRangeFilter
-from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter, ChoiceDropdownFilter
+from django_admin_listfilter_dropdown.filters import (
+    RelatedDropdownFilter, ChoiceDropdownFilter, RelatedOnlyFieldListFilter
+)
 from django_restful_admin import admin as rest_admin
-from rest_framework.permissions import AllowAny, IsAdminUser
 from dynamic_raw_id.admin import DynamicRawIDMixin
 from dynamic_raw_id.filters import DynamicRawIDFilter
 from django.utils.html import format_html
-from admin_numeric_filter.admin import NumericFilterModelAdmin, SingleNumericFilter, RangeNumericFilter, \
+from admin_numeric_filter.admin import NumericFilterModelAdmin, \
     SliderNumericFilter
 from mapbox_location_field.admin import MapAdmin
 from mapbox_location_field.forms import LocationField
 from django.forms import ModelForm
 from simple_history.admin import SimpleHistoryAdmin
-from django_select2_admin_filters.admin import (
-    Select2AdminFilterMixin
-)
-from django_select2_admin_filters.filters import (
-    ChoiceSelect2Filter, ModelSelect2Filter
-)
 from app.settings import (
     REVISION
 )
+from admin_auto_filters.filters import AutocompleteFilter
 
 vi_formats.DATETIME_FORMAT = "d/m/y H:i"
 
@@ -51,6 +40,16 @@ admin.site_url = '/'
 # Helper classes
 class PeopleNumericFilter(SliderNumericFilter):
     STEP = 1
+
+
+class HuyenAdminFilter(AutocompleteFilter):
+    title = 'Lọc theo huyện'
+    field_name = 'huyen'
+
+
+class XaAdminFilter(AutocompleteFilter):
+    title = 'Lọc theo xã'
+    field_name = 'xa'
 
 
 # Admin classes
@@ -83,7 +82,9 @@ class CuuHoAdmin(DynamicRawIDMixin, admin.ModelAdmin):
                     'location', 'tinh', 'huyen', 'xa', 'volunteer')
     list_filter = (
         ('status', ChoiceDropdownFilter),
-        ('xa', DynamicRawIDFilter),
+        ('tinh', RelatedOnlyFieldListFilter),
+        XaAdminFilter,
+        HuyenAdminFilter,
     )
     search_fields = ('name', 'phone')
     list_editable = ('status',)
@@ -237,59 +238,18 @@ class TinhAdmin(HoDanCuuHoStatisticBase):
     list_per_page = PAGE_SIZE
 
 
-class Huyen2TinhFilter(ModelSelect2Filter):
-    title = 'Tìm theo tỉnh'
-    parameter_name = 'tinh'
-    autocomplete_queryset = Tinh.objects.all()
-    search_fields = ['name__icontains']
-
-    # optionally you can override queryset method
-    def queryset(self, request, queryset):
-        val = self.value()
-        if val:
-            return queryset.filter(tinh__pk=val)
-        return queryset
-
-
-class HuyenAdmin(Select2AdminFilterMixin, HoDanCuuHoStatisticBase):
+class HuyenAdmin(HoDanCuuHoStatisticBase):
     list_filter = (
-        Huyen2TinhFilter,
+        ('tinh', RelatedOnlyFieldListFilter),
     )
     URL_CUSTOM_TAG = 'huyen'
     list_per_page = PAGE_SIZE
 
 
-class Xa2HuyenFilter(ModelSelect2Filter):
-    title = 'Tìm theo huyện'
-    parameter_name = 'huyen'
-    autocomplete_queryset = Huyen.objects.all()
-    search_fields = ['name__icontains']
-
-    # optionally you can override queryset method
-    def queryset(self, request, queryset):
-        val = self.value()
-        if val:
-            return queryset.filter(huyen__pk=val)
-        return queryset
-
-
-class Xa2TinhFilter(ModelSelect2Filter):
-    title = 'Tìm theo tỉnh'
-    parameter_name = 'tinh'
-    autocomplete_queryset = Tinh.objects.all()
-    search_fields = ['name__icontains']
-
-    # optionally you can override queryset method
-    def queryset(self, request, queryset):
-        val = self.value()
-        if val:
-            return queryset.filter(huyen__tinh__pk=val)
-        return queryset
-
-
-class XaAdmin(Select2AdminFilterMixin, HoDanCuuHoStatisticBase):
+class XaAdmin(HoDanCuuHoStatisticBase):
     list_filter = (
-        Xa2HuyenFilter, Xa2TinhFilter,
+        ('huyen__tinh', RelatedOnlyFieldListFilter),
+        HuyenAdminFilter,
     )
     URL_CUSTOM_TAG = 'xa'
     list_per_page = PAGE_SIZE
@@ -297,7 +257,8 @@ class XaAdmin(Select2AdminFilterMixin, HoDanCuuHoStatisticBase):
 
 class ThonAdmin(HoDanCuuHoStatisticBase):
     list_filter = (
-        ('huyen', ChoiceDropdownFilter),
+        ('huyen__tinh', RelatedOnlyFieldListFilter),
+        HuyenAdminFilter,
     )
     URL_CUSTOM_TAG = 'thon'
     list_per_page = PAGE_SIZE
