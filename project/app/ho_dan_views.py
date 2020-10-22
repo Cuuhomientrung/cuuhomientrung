@@ -11,6 +11,7 @@ def index(request):
     context = {
         'list_ho_dan': [
             {
+                'id': ho_dan.id,
                 'name': ho_dan.name,
                 'update_time': ho_dan.update_time,
                 'tinh': ho_dan.tinh,
@@ -19,6 +20,7 @@ def index(request):
                 'location': ho_dan.location,
                 'status': status_dict[ho_dan.status],
                 'people_number': ho_dan.people_number,
+                'note': ho_dan.note,
             }
             for ho_dan in list_ho_dan
         ],

@@ -1,6 +1,8 @@
 {% extends "admin/base_site.html" %}
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/ho_dan.css' %}">
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/ho_dan.css">
+{% endblock %}
 {% block content %}
     <div class="table-ho-dan">
         <table>
@@ -8,7 +10,6 @@
                 <tr>
                     <th> STT </th>
                     <th> Hộ dân </th>
-                    <th> Cập nhật lúc </th>
                     <th> Trạng thái </th>
                     <th> Số người </th>
                     <th> Địa chỉ </th>
@@ -21,9 +22,10 @@
                     <tr>
                         <th> {{ ho_dan.id }} </th>
                         <th> {{ ho_dan.name }} </th>
-                        <th> {{ ho_dan.update_time }} </th>
-                        <th class="{% if ho_dan.status == 'Cần ứng cứu gấp' or ho_dan.status == 'Gặp nạn' %} emergency {% endif %}">
-                            {{ ho_dan.status }}
+                        <th>
+                            <button class="{% if ho_dan.status == 'Cần ứng cứu gấp' or ho_dan.status == 'Gặp nạn' %} emergency {% endif %}"> {{ ho_dan.status }} </button>
+                            <br>
+                            <span> {{ ho_dan.update_time }} </span>
                         </th>
                         <th> {{ ho_dan.people_number }} </th>
                         <th> {{ ho_dan.location }}
@@ -32,11 +34,26 @@
                             {% if ho_dan.tinh %}, {{ ho_dan.tinh }} {% endif %}
                         </th>
                         <th> {{ ho_dan.phone }} </th>
-                        <th> {{ ho_dan.note }} </th>
+                        <th> {{ ho_dan.note|truncatechars_html:80 }}
+                            <a id="see-more-note"> See more </a>
+                        </th>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 
+{% endblock %}
+
+
+{% block scripts_extra %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript">
+    $('#see-more-note').on("click", function() {
+        console.log("hi");
+    });
+    $(document).ready(function() {
+        console.log("ready");
+    });
+</script>
 {% endblock %}
