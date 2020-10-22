@@ -23,6 +23,12 @@ from mapbox_location_field.admin import MapAdmin
 from mapbox_location_field.forms import LocationField
 from django.forms import ModelForm
 from simple_history.admin import SimpleHistoryAdmin
+from django_select2_admin_filters.admin import (
+  Select2AdminFilterMixin
+)
+from django_select2_admin_filters.filters import (
+  ChoiceSelect2Filter, ModelSelect2Filter
+)
 
 vi_formats.DATETIME_FORMAT = "d/m/y H:i"
 
@@ -36,10 +42,13 @@ admin.index_title = 'Hệ thống thông tin Cứu hộ miền Trung'
 admin.site_url = '/'
 
 
+# Helper classes
 class PeopleNumericFilter(SliderNumericFilter):
     STEP = 1
 
 
+
+# Admin classes
 class TinTucAdmin(admin.ModelAdmin):
     list_per_page=PAGE_SIZE
     list_display = ('update_time', 'title', 'url')
@@ -53,13 +62,25 @@ class NguonLucAdmin(admin.ModelAdmin):
     list_editable = ('status',)
     list_per_page=PAGE_SIZE
 
-class CuuHoAdmin(admin.ModelAdmin):
+
+class CuuHoLocationForm(ModelForm):
+    class Meta:
+        model = CuuHo
+        fields = "__all__"
+        exclude = ('tinh', 'huyen', 'thon',)
+
+
+class CuuHoAdmin(DynamicRawIDMixin, admin.ModelAdmin):
+    dynamic_raw_id_fields = ('tinh', 'huyen', 'xa', 'volunteer',)
     list_display = ('update_time', 'status', 'name', 'phone', 'location', 'tinh', 'huyen', 'xa', 'volunteer')
-    # list_editable = ('tinh', 'huyen', 'xa', 'volunteer')
-    list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter), ('thon', RelatedDropdownFilter))
+    list_filter = (
+        ('status', ChoiceDropdownFilter),
+        ('xa', DynamicRawIDFilter),
+    )
     search_fields = ('name', 'phone')
     list_editable = ('status',)
-    list_per_page=PAGE_SIZE
+    list_per_page = PAGE_SIZE
+    form = CuuHoLocationForm
 
     def get_queryset(self, request):
         queryset = super(CuuHoAdmin, self).get_queryset(request)
@@ -82,7 +103,7 @@ class TinhNguyenVienAdmin(admin.ModelAdmin):
         return queryset
 
 
-class LocationForm(ModelForm):
+class HoDanLocationForm(ModelForm):
     class Meta:
         model = HoDan
         fields = "__all__"
@@ -127,7 +148,7 @@ class HoDanAdmin(DynamicRawIDMixin, NumericFilterModelAdmin, MapAdmin, HoDanHist
     )
     search_fields = ('name', 'phone', 'note', 'id')
     actions = [export_ho_dan_as_excel_action()]
-    form = LocationForm
+    form = HoDanLocationForm
 
     def get_queryset(self, request):
         queryset = super(HoDanAdmin, self).get_queryset(request)
@@ -157,6 +178,7 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
     list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
     search_fields = ('name', )
     list_per_page=PAGE_SIZE
+
     @mark_safe
     def get_cuu_ho_san_sang(self, obj):
         hodan = [item for item in obj.cuuho_reversed.all() if item.status == 1]
@@ -179,30 +201,69 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
         return queryset
 
 
-
 class TinhAdmin(HoDanCuuHoStatisticBase):
     URL_CUSTOM_TAG = 'tinh'
     list_per_page=PAGE_SIZE
 
 
+class Huyen2TinhFilter(ModelSelect2Filter):
+    title = 'Tìm theo tỉnh'
+    parameter_name = 'tinh'
+    autocomplete_queryset = Tinh.objects.all()
+    search_fields = ['name__icontains']
 
-class HuyenAdmin(HoDanCuuHoStatisticBase):
+    # optionally you can override queryset method
+    def queryset(self, request, queryset):
+        val = self.value()
+        if val:
+            return queryset.filter(tinh__pk=val)
+        return queryset
+
+
+class HuyenAdmin(Select2AdminFilterMixin, HoDanCuuHoStatisticBase):
     search_fields = ('name',)
     list_filter = (
-        ('tinh', ChoiceDropdownFilter),
+        Huyen2TinhFilter,
     )
     URL_CUSTOM_TAG = 'huyen'
     list_per_page=PAGE_SIZE
 
 
-class XaAdmin(HoDanCuuHoStatisticBase):
-    search_fields = ('name',)
+class Xa2HuyenFilter(ModelSelect2Filter):
+    title = 'Tìm theo huyện'
+    parameter_name = 'huyen'
+    autocomplete_queryset = Huyen.objects.all()
+    search_fields = ['name__icontains']
+
+    # optionally you can override queryset method
+    def queryset(self, request, queryset):
+        val = self.value()
+        if val:
+            return queryset.filter(huyen__pk=val)
+        return queryset
+
+
+class Xa2TinhFilter(ModelSelect2Filter):
+    title = 'Tìm theo tỉnh'
+    parameter_name = 'tinh'
+    autocomplete_queryset = Tinh.objects.all()
+    search_fields = ['name__icontains']
+
+    # optionally you can override queryset method
+    def queryset(self, request, queryset):
+        val = self.value()
+        if val:
+            return queryset.filter(huyen__tinh__pk=val)
+        return queryset
+
+
+class XaAdmin(Select2AdminFilterMixin, HoDanCuuHoStatisticBase):
+    search_fields = ('name', 'huyen', 'huyen__tinh')
     list_filter = (
-        ('huyen', ChoiceDropdownFilter),
+        Xa2HuyenFilter, Xa2TinhFilter,
     )
     URL_CUSTOM_TAG = 'xa'
     list_per_page=PAGE_SIZE
-
 
 
 class ThonAdmin(HoDanCuuHoStatisticBase):

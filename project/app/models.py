@@ -95,7 +95,6 @@ class TinhNguyenVien(models.Model):
     def __str__(self):
         return self.name
 
-
     class Meta:
         verbose_name = 'Tình nguyên viên thông tin'
         verbose_name_plural = 'Tình nguyên viên thông tin'
@@ -104,39 +103,23 @@ class TinhNguyenVien(models.Model):
 class CuuHo(models.Model):
     update_time = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
     name = models.TextField(blank=True, default='', verbose_name="Đội cứu hộ")
-
     status = models.IntegerField(choices=CUUHO_STATUS, default=0, verbose_name="Tình trạng")
     tinh = models.ForeignKey(
         Tinh, blank=True, null=True, on_delete=models.CASCADE,
         related_name="cuuho_reversed"
     )
-    huyen = ChainedForeignKey(
+    huyen = models.ForeignKey(
         Huyen,
-        chained_field="tinh",
-        chained_model_field="tinh",
-        show_all=False,
-        auto_choose=True,
-        sort=True,
         blank=True, null=True, on_delete=models.CASCADE,
         related_name="cuuho_reversed"
     )
-    xa = ChainedForeignKey(
+    xa = models.ForeignKey(
         Xa,
-        chained_field="huyen",
-        chained_model_field="huyen",
-        show_all=False,
-        auto_choose=True,
-        sort=True,
         blank=True, null=True, on_delete=models.CASCADE,
         related_name="cuuho_reversed"
     )
-    thon = ChainedForeignKey(
+    thon = models.ForeignKey(
         Thon,
-        chained_field="huyen",
-        chained_model_field="huyen",
-        show_all=False,
-        auto_choose=True,
-        sort=True,
         blank=True, null=True, on_delete=models.CASCADE,
         related_name="cuuho_reversed"
     )
@@ -152,6 +135,19 @@ class CuuHo(models.Model):
     class Meta:
         verbose_name = 'Các đội Cứu hộ'
         verbose_name_plural = 'Các đội Cứu hộ'
+
+    def save(self, *args, **kwargs):
+        # Auto update huyen
+        if self.xa and self.xa.pk:
+            if self.xa.huyen and self.xa.huyen.pk:
+                self.huyen = self.xa.huyen
+
+        # Auto update tinh
+        if self.huyen and self.huyen.pk:
+            if self.huyen.tinh and self.huyen.tinh.pk:
+                self.tinh = self.huyen.tinh
+
+        super().save(*args, **kwargs)
 
 
 class CustomLocationField(LocationField):

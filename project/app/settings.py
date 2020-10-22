@@ -66,6 +66,8 @@ INSTALLED_APPS = [
     'admin_numeric_filter',
     'mapbox_location_field',
     'simple_history',
+    'django_select2',
+    'django_select2_admin_filters',
 ]
 
 
