@@ -32,7 +32,6 @@ extension Location on Address {
 }
 
 class HouseHoldPage extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() => _HouseHoldPage();
 }
@@ -71,9 +70,8 @@ class _HouseHoldPage extends State<HouseHoldPage>
         .animateTo(0.0,
             curve: Curves.easeOut, duration: const Duration(milliseconds: 300))
         .then((value) {
-      animationController
-          .reverse()
-          .then((v) => viewModel.getHouseHoldList());
+      animationController.reverse();
+      viewModel.getHouseHoldList();
     });
   }
 
@@ -186,7 +184,8 @@ class _HouseHoldPage extends State<HouseHoldPage>
                     stream: viewModel.houseHoldStream,
                     builder: (ctx, snapshot) {
                       if (!snapshot.hasData) {
-                        return Center(child: Container(
+                        return Center(
+                            child: Container(
                           child: ColorLoader(),
                           width: 40,
                           height: 40,
@@ -504,7 +503,9 @@ class _HouseHoldPage extends State<HouseHoldPage>
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          houseHoldCount.isNotEmpty ? '$houseHoldCount ' + r'lời kêu cứu' : r'Cứu hộ miền Trung',
+          houseHoldCount.isNotEmpty
+              ? '$houseHoldCount ' + r'lời kêu cứu'
+              : r'Cứu hộ miền Trung',
           style: GoogleFonts.openSans(
             fontSize: 17,
             fontWeight: FontWeight.w600,
@@ -515,7 +516,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
             icon: Icon(Icons.replay),
             onPressed: () {
               Utility.hideKeyboardOf(context);
-              _refresh();
+              _reload();
             },
           )
         ],
