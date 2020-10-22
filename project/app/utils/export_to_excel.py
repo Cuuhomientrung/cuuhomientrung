@@ -6,19 +6,23 @@ from app.models import CUUHO_STATUS, HODAN_STATUS
 from datetime import datetime, timezone
 import pytz
 
+
 def write_a_row(worksheet, row, array):
     col = 0
     for x in array:
         worksheet.write(row, col, x)
         col += 1
 
+
 def lookup_in_a_list_of_tuples(arr, key):
     for x in arr:
         if x[0] == key:
             return x[1]
 
+
 def utc_to_local(utc_dt):
     return utc_dt.replace(tzinfo=timezone.utc).astimezone(tz=pytz.timezone("Asia/Ho_Chi_Minh"))
+
 
 def export_ho_dan_as_excel_action(fields=None, exclude=None, header=True):
     """
@@ -28,8 +32,10 @@ def export_ho_dan_as_excel_action(fields=None, exclude=None, header=True):
     """
     def export_as_excel(modeladmin, request, queryset):
         opts = modeladmin.model._meta
-        field_names = ["name", "status", "location", "tinh", "xa", "huyen", "phone", "cuuho", "update_time", "note"]
-        display_names = ["Tên hộ dân", "Tình trạng", "Vị trí", "Tỉnh", "Xã", "Huyện", "Sdt", "Cứu hộ", "Thời gian cuối cùng cập nhật", "Ghi chú"]
+        field_names = ["name", "status", "location", "tinh",
+                       "xa", "huyen", "phone", "cuuho", "update_time", "note"]
+        display_names = ["Tên hộ dân", "Tình trạng", "Vị trí", "Tỉnh", "Xã",
+                         "Huyện", "Sdt", "Cứu hộ", "Thời gian cuối cùng cập nhật", "Ghi chú"]
         file_name = "Danh_sach_ho_dan"
 
         output = io.BytesIO()
@@ -44,7 +50,8 @@ def export_ho_dan_as_excel_action(fields=None, exclude=None, header=True):
             arr = []
             for field in field_names:
                 if field == "status":
-                    arr.append(lookup_in_a_list_of_tuples(HODAN_STATUS, getattr(obj, field)))
+                    arr.append(lookup_in_a_list_of_tuples(
+                        HODAN_STATUS, getattr(obj, field)))
                 elif field == "update_time":
                     utc_time = getattr(obj, field)
                     local_datetime = utc_to_local(utc_time)
@@ -58,7 +65,8 @@ def export_ho_dan_as_excel_action(fields=None, exclude=None, header=True):
 
         output.seek(0)
 
-        response = HttpResponse(output.read(), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        response = HttpResponse(output.read(
+        ), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
         response['Content-Disposition'] = f"attachment; filename={file_name}.xlsx"
 
         output.close()

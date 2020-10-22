@@ -13,13 +13,13 @@
 
 .column-phone,
 td.field-phone {
-  max-width: 125px;
+    max-width: 125px;
 }
 
 .column-name,
 td.field-name {
-  min-width: 150px;
-  max-width: 250px;
+    min-width: 150px;
+    max-width: 250px;
 }
 
 .column-get_note,
@@ -38,7 +38,7 @@ td.field-get_note {
     margin: 0;
     width: 100%;
     margin-bottom: 15px;
-    box-shadow: 1px 5px 5px rgba(0,0,0,0.15);
+    box-shadow: 1px 5px 5px rgba(0, 0, 0, 0.15);
 }
 
 .filter-body {
@@ -49,6 +49,12 @@ td.field-get_note {
 .filter-item {
     width: 200px;
     min-width: 20%;
+}
+
+// Filter number of hodan
+.filter-item .admin-numeric-filter-wrapper {
+    display: block;
+    width: 100%;
 }
 
 .toggle-nav-sidebar {
@@ -70,7 +76,7 @@ td.field-get_note {
 }
 
 .DynamicRawIDFilter input {
-    width: 70%!important;
+    width: 60% !important;
 }
 
 .DynamicRawIDFilter a {
@@ -81,31 +87,60 @@ td.field-get_note {
     flex-basis: 100%;
 }
 
-@media screen and (max-width:1024px) {
+@media screen and (max-width: 1024px) {
     #changelist-filter {
-        width: 100%!important;
+        width: 100% !important;
     }
+}
+
+@media screen and (max-width: 768px) {
+    .filter-item {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    #changelist-filter {
+        top: 0 !important;
+        position: static !important;
+    }
+}
+
+/* Custom filter on mobile */
+.filter-toggle {
+    display: none !important;
+    margin-left: auto;
+    color: #fff !important;
+    border: 1px solid #fff;
+    padding: 3px 7px;
+    border-radius: 3px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.filter-toggle:hover,
+.filter-toggle:focus {
+    background: #fff;
+    color: #44B78B !important;
+    text-decoration: none;
+}
+
+.filter-mobile .filter-body {
+    display: none;
+}
+
+.filter-mobile--open .filter-body {
+    display: block;
 }
 
 @media screen and (max-width:768px) {
-    .filter-item {
-        width: 100%;
-        min-width: 100%;
+    #changelist-filter .filter-header h2 {
+        min-height: 20px;
         display: flex;
-        justify-content: space-between;
+        align-items: center;
     }
 
-    .filter-item ul {
-        width: 40%;
-        flex-basis: 40%;
-        margin-left: auto;
-        padding: 0;
-        margin: 0;
-    }
-}
-
-@media screen and (min-width:768px) {
-    #changelist-filter {
-        top: 0!important;
+    .filter-toggle {
+        display: block !important;
     }
 }
