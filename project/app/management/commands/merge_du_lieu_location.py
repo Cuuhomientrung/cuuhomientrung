@@ -3,6 +3,7 @@ import django
 from django.core.management.base import BaseCommand
 from app.models import Tinh, Huyen, Xa, Thon, HoDan
 
+
 class Command(BaseCommand):
     def handle(self, **options):
         """Merge du lieu tinh, huyen, xa bi trung lap"""
@@ -12,9 +13,10 @@ class Command(BaseCommand):
             nameA = tinhA.name.strip().lower()
             for tinhB in tinhs:
                 nameB = tinhB.name.strip().lower()
-                if tinhA.pk != tinhB.pk and (nameB in nameA): # duplicated
-                    print(f"Phat hien {nameB} ({tinhB.pk}) trung lap voi {nameA}({tinhA})")
-                    # update ho dan cua B sang A 
+                if tinhA.pk != tinhB.pk and (nameB in nameA):  # duplicated
+                    print(
+                        f"Phat hien {nameB} ({tinhB.pk}) trung lap voi {nameA}({tinhA})")
+                    # update ho dan cua B sang A
                     HoDan.objects.filter(tinh=tinhB).update(tinh=tinhA)
 
                     # remove tinhB
@@ -30,9 +32,10 @@ class Command(BaseCommand):
                 nameA = tinhA.name.strip().lower()
                 for tinhB in tinhs:
                     nameB = tinhB.name.strip().lower()
-                    if tinhA.pk != tinhB.pk and (nameB in nameA): # duplicated
-                        print(f"Phat hien {nameB} ({tinhB.pk}) trung lap voi {nameA}({tinhA})")
-                        # update ho dan cua B sang A 
+                    if tinhA.pk != tinhB.pk and (nameB in nameA):  # duplicated
+                        print(
+                            f"Phat hien {nameB} ({tinhB.pk}) trung lap voi {nameA}({tinhA})")
+                        # update ho dan cua B sang A
                         HoDan.objects.filter(huyen=tinhB).update(huyen=tinhA)
 
                         # remove tinhB
@@ -47,9 +50,10 @@ class Command(BaseCommand):
                 nameA = tinhA.name.strip().lower()
                 for tinhB in tinhs:
                     nameB = tinhB.name.strip().lower()
-                    if tinhA.pk != tinhB.pk and (nameB in nameA): # duplicated
-                        print(f"Phat hien {nameB} ({tinhB.pk}) trung lap voi {nameA}({tinhA})")
-                        # update ho dan cua B sang A 
+                    if tinhA.pk != tinhB.pk and (nameB in nameA):  # duplicated
+                        print(
+                            f"Phat hien {nameB} ({tinhB.pk}) trung lap voi {nameA}({tinhA})")
+                        # update ho dan cua B sang A
                         HoDan.objects.filter(xa=tinhB).update(xa=tinhA)
 
                         # remove tinhB
@@ -64,18 +68,13 @@ class Command(BaseCommand):
                 nameA = tinhA.name.strip().lower()
                 for tinhB in tinhs:
                     nameB = tinhB.name.strip().lower()
-                    if tinhA.pk != tinhB.pk and (nameB in nameA): # duplicated
-                        print(f"Phat hien {nameB} ({tinhB.pk}) trung lap voi {nameA}({tinhA})")
-                        # update ho dan cua B sang A 
+                    if tinhA.pk != tinhB.pk and (nameB in nameA):  # duplicated
+                        print(
+                            f"Phat hien {nameB} ({tinhB.pk}) trung lap voi {nameA}({tinhA})")
+                        # update ho dan cua B sang A
                         HoDan.objects.filter(thon=tinhB).update(thon=tinhA)
 
                         # remove tinhB
                         tinhB.delete()
             except:
                 pass
-
-
-
-                    
-
-

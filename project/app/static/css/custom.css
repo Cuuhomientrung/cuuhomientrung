@@ -13,13 +13,13 @@
 
 .column-phone,
 td.field-phone {
-  max-width: 125px;
+    max-width: 125px;
 }
 
 .column-name,
 td.field-name {
-  min-width: 150px;
-  max-width: 250px;
+    min-width: 150px;
+    max-width: 250px;
 }
 
 .column-get_note,
@@ -38,7 +38,7 @@ td.field-get_note {
     margin: 0;
     width: 100%;
     margin-bottom: 15px;
-    box-shadow: 1px 5px 5px rgba(0,0,0,0.15);
+    box-shadow: 1px 5px 5px rgba(0, 0, 0, 0.15);
 }
 
 .filter-body {
@@ -76,7 +76,7 @@ td.field-get_note {
 }
 
 .DynamicRawIDFilter input {
-    width: 60%!important;
+    width: 60% !important;
 }
 
 .DynamicRawIDFilter a {
@@ -87,21 +87,21 @@ td.field-get_note {
     flex-basis: 100%;
 }
 
-@media screen and (max-width:1024px) {
+@media screen and (max-width: 1024px) {
     #changelist-filter {
-        width: 100%!important;
+        width: 100% !important;
     }
 }
 
-@media screen and (max-width:768px) {
+@media screen and (max-width: 768px) {
     .filter-item {
         width: 100%;
     }
 }
 
-@media screen and (min-width:768px) {
+@media screen and (min-width: 768px) {
     #changelist-filter {
-        top: 0!important;
+        top: 0 !important;
         position: static !important;
     }
 }

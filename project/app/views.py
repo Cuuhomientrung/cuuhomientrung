@@ -1,11 +1,11 @@
 from rest_framework import serializers, viewsets
 import datetime
-from django.db.models import  Q
+from django.db.models import Q
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.views.generic.edit import FormView
 from django.shortcuts import render, redirect
 from django.contrib.admin.views.decorators import staff_member_required
-from django_restful_admin import  RestFulModelAdmin
+from django_restful_admin import RestFulModelAdmin
 from rest_framework.response import Response
 from app.models import HoDan
 
@@ -26,7 +26,7 @@ class HoDanRestFulModelAdmin(BaseRestfulAdmin):
         fromTime = request.GET.get("from")
         toTime = request.GET.get("to")
 
-        if  phone or  tinh or  huyen or status  or fromTime or toTime or ten:
+        if phone or tinh or huyen or status or fromTime or toTime or ten:
             filter = Q()
             if ten:
                 operator = request.GET.get("ten_method")
@@ -45,13 +45,14 @@ class HoDanRestFulModelAdmin(BaseRestfulAdmin):
             if status:
                 filter = filter & Q(status=status)
             if fromTime and toTime:
-                start = datetime.datetime.strptime(fromTime,"%Y-%m-%d-%H-%M-%S")
-                end = datetime.datetime.strptime(toTime,"%Y-%m-%d-%H-%M-%S")
-                filter = filter & Q(update_time__range=(start,end))
-            
+                start = datetime.datetime.strptime(
+                    fromTime, "%Y-%m-%d-%H-%M-%S")
+                end = datetime.datetime.strptime(toTime, "%Y-%m-%d-%H-%M-%S")
+                filter = filter & Q(update_time__range=(start, end))
+
             queryset = HoDan.objects.filter(filter)
         else:
-            #all if no filter
+            # all if no filter
             queryset = HoDan.objects.all()
         page = self.paginate_queryset(queryset)
         if page is not None:
