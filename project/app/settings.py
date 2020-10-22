@@ -24,7 +24,7 @@ env = environ.Env(
     DB_PASSWORD=(str, 'bangtin_ainews_2811#'),
     DB_HOSTNAME=(str, '103.192.236.67'),
     DB_PORT=(int, 5432),
-    MAPBOX_KEY=(str, ''),
+    MAPBOX_KEY=(str, 'pk.eyJ1IjoiZHp1bmdkYSIsImEiOiJja2drMDFka2wwMW9zMndxZW9lMXBud3d5In0.oKlf9RF-X-SKkUJUAQ9ndw'),
 )
 environ.Env.read_env(
     os.path.join(BASE_DIR, '..', '.env')
