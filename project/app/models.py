@@ -228,21 +228,21 @@ class HoDan(models.Model):
 
 # TODO: update ip from user
 # Find a better way to get ip latter
-# @receiver(post_create_historical_record)
-# def post_create_historical_record_callback(sender, **kwargs):
-#     def get_client_ip(request):
-#         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-#         if x_forwarded_for:
-#             ip = x_forwarded_for.split(',')[0]
-#         else:
-#             ip = request.META.get('REMOTE_ADDR')
-#         return ip
-#
-#     history_instance = kwargs['history_instance']
-#     # thread.request for use only when the simple_history middleware is on and enabled
-#     history_instance.ip_address = get_client_ip(HistoricalRecords.thread.request)
-#     if history_instance.ip_address:
-#         history_instance.save(update_fields=['ip_address',])
+@receiver(post_create_historical_record)
+def post_create_historical_record_callback(sender, **kwargs):
+    def get_client_ip(request):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
+
+    history_instance = kwargs['history_instance']
+    # thread.request for use only when the simple_history middleware is on and enabled
+    history_instance.ip_address = get_client_ip(HistoricalRecords.thread.request)
+    if history_instance.ip_address:
+        history_instance.save(update_fields=['ip_address',])
 
 
 class NguonLuc(models.Model):

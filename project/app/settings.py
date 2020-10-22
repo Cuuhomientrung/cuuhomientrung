@@ -68,7 +68,6 @@ INSTALLED_APPS = [
 MAPBOX_KEY = env('MAPBOX_KEY')
 
 MIDDLEWARE = [
-    # 'simple_history.middleware.HistoryRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -77,6 +76,7 @@ MIDDLEWARE = [
     'app.middleware.AutomaticUserLoginMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 
