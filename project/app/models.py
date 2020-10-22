@@ -197,7 +197,7 @@ class HoDan(models.Model):
     )
     phone = models.TextField(blank=True, default='', verbose_name='Điện thoại liên hệ')
     note = models.TextField(blank=True, default='', verbose_name='Ghi chú')
-    plus_code = models.TextField(blank=True, default='', verbose_name='Google Plus Code')
+    plus_code = models.TextField(blank=True, default='', null=True, verbose_name='Google Plus Code')
     volunteer = models.ForeignKey(TinhNguyenVien, blank=True, null=True, verbose_name="Tình nguyện viên xác minh", on_delete=models.CASCADE)
     cuuho = models.ForeignKey(CuuHo, null=True, blank= True, verbose_name="Đơn vị cứu hộ tiếp cận", on_delete=models.CASCADE)
     geo_location = CustomLocationField(null=True, blank=True)

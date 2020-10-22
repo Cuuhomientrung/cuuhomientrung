@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='hodan',
             name='plus_code',
-            field=models.TextField(blank=True, default='', verbose_name='Google Plus Code'),
+            field=models.TextField(blank=True, null=True,  default='', verbose_name='Google Plus Code'),
         ),
     ]
