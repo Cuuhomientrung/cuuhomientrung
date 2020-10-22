@@ -1,0 +1,42 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/ho_dan.css' %}">
+{% block content %}
+    <div class="table-ho-dan">
+        <table>
+            <thead>
+                <tr>
+                    <th> STT </th>
+                    <th> Hộ dân </th>
+                    <th> Cập nhật lúc </th>
+                    <th> Trạng thái </th>
+                    <th> Số người </th>
+                    <th> Địa chỉ </th>
+                    <th> Số điện thoại </th>
+                    <th> Ghi chú </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ho_dan in list_ho_dan %}
+                    <tr>
+                        <th> {{ ho_dan.id }} </th>
+                        <th> {{ ho_dan.name }} </th>
+                        <th> {{ ho_dan.update_time }} </th>
+                        <th class="{% if ho_dan.status == 'Cần ứng cứu gấp' or ho_dan.status == 'Gặp nạn' %} emergency {% endif %}">
+                            {{ ho_dan.status }}
+                        </th>
+                        <th> {{ ho_dan.people_number }} </th>
+                        <th> {{ ho_dan.location }}
+                            {% if ho_dan.xa %}, {{ ho_dan.xa }} {% endif %}
+                            {% if ho_dan.huyen %}, {{ ho_dan.huyen }} {% endif %}
+                            {% if ho_dan.tinh %}, {{ ho_dan.tinh }} {% endif %}
+                        </th>
+                        <th> {{ ho_dan.phone }} </th>
+                        <th> {{ ho_dan.note }} </th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
