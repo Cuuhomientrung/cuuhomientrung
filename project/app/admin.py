@@ -160,6 +160,7 @@ class HoDanAdmin(DynamicRawIDMixin, NumericFilterModelAdmin, MapAdmin, HoDanHist
     search_fields = ('name', 'phone', 'note', 'id')
     actions = [export_ho_dan_as_excel_action()]
     form = HoDanLocationForm
+    list_per_page=PAGE_SIZE
 
     def get_queryset(self, request):
         queryset = super(HoDanAdmin, self).get_queryset(request)
