@@ -22,7 +22,10 @@ from dynamic_raw_id.filters import DynamicRawIDFilter
 from django.utils.html import format_html
 from admin_numeric_filter.admin import NumericFilterModelAdmin, SingleNumericFilter, RangeNumericFilter, \
     SliderNumericFilter
-
+from mapbox_location_field.admin import MapAdmin
+from mapbox_location_field.forms import LocationField
+from django.forms import ModelForm
+from simple_history.admin import SimpleHistoryAdmin
 
 vi_formats.DATETIME_FORMAT = "d/m/y H:i"
 
@@ -74,14 +77,47 @@ class TinhNguyenVienAdmin(admin.ModelAdmin):
     list_filter = (('status', ChoiceDropdownFilter), ('tinh', RelatedDropdownFilter),('huyen', RelatedDropdownFilter), ('xa', RelatedDropdownFilter))
     search_fields = ('name', 'phone')
     list_editable = ('status',)
-    list_per_page=PAGE_SIZE
+    list_per_page = PAGE_SIZE
+
     def get_queryset(self, request):
         queryset = super(TinhNguyenVienAdmin, self).get_queryset(request)
         queryset = queryset.prefetch_related('tinh', 'huyen', 'xa')
         return queryset
 
 
-class HoDanAdmin(DynamicRawIDMixin, NumericFilterModelAdmin, admin.ModelAdmin):
+class LocationForm(ModelForm):
+    class Meta:
+        model = HoDan
+        fields = "__all__"
+        exclude = ('tinh', 'huyen', 'thon',)
+
+    geo_location = LocationField(
+        required=False,
+        map_attrs={
+            "style": "mapbox://styles/mapbox/outdoors-v11",
+            "zoom": 10,
+            "center": [106.507467036133, 17.572843459110928],
+            "cursor_style": 'pointer',
+            "marker_color": "red",
+            "rotate": False,
+            "geocoder": True,
+            "fullscreen_button": True,
+            "navigation_buttons": True,
+            "track_location_button": True,
+            "readonly": True,
+            "placeholder": "Chọn một địa điểm",
+        }
+    )
+
+
+class HoDanHistoryAdmin(SimpleHistoryAdmin):
+    history_list_display = [
+        'history_date', 'history_type', 'status', 'get_note', 'volunteer',
+        'cuuho', 'ip_address'
+    ]
+
+
+class HoDanAdmin(DynamicRawIDMixin, NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.ModelAdmin):
     dynamic_raw_id_fields = ('tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
     list_display = ('id', 'get_update_time', 'status', 'name', 'phone', 'get_note', 'people_number', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
     list_display_links = ('id', 'name', 'phone',)
@@ -94,7 +130,7 @@ class HoDanAdmin(DynamicRawIDMixin, NumericFilterModelAdmin, admin.ModelAdmin):
     )
     search_fields = ('name', 'phone', 'note', 'id')
     actions = [export_ho_dan_as_excel_action()]
-    exclude = ('tinh', 'huyen', 'thon',)
+    form = LocationForm
 
     def get_queryset(self, request):
         queryset = super(HoDanAdmin, self).get_queryset(request)

@@ -17,3 +17,5 @@ django-environ==0.4.5
 django-admin-interface==0.14.0
 django-dynamic-raw-id==2.7
 django-admin-numeric-filter==0.1.6
+django-mapbox-location-field==1.6.3
+django-simple-history==2.12.0

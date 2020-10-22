@@ -23,7 +23,8 @@ env = environ.Env(
     DB_USER=(str, 'administrator'),
     DB_PASSWORD=(str, 'bangtin_ainews_2811#'),
     DB_HOSTNAME=(str, '103.192.236.67'),
-    DB_PORT=(int, 5432)
+    DB_PORT=(int, 5432),
+    MAPBOX_KEY=(str, 'pk.eyJ1IjoiZHp1bmdkYSIsImEiOiJja2drMDFka2wwMW9zMndxZW9lMXBud3d5In0.oKlf9RF-X-SKkUJUAQ9ndw'),
 )
 environ.Env.read_env(
     os.path.join(BASE_DIR, '..', '.env')
@@ -60,7 +61,11 @@ INSTALLED_APPS = [
     'smart_selects',
     'dynamic_raw_id',
     'admin_numeric_filter',
+    'mapbox_location_field',
+    'simple_history',
 ]
+
+MAPBOX_KEY = env('MAPBOX_KEY')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -71,6 +76,7 @@ MIDDLEWARE = [
     'app.middleware.AutomaticUserLoginMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 

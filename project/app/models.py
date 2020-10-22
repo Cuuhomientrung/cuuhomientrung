@@ -1,7 +1,11 @@
-import django
-import datetime
 from django.db import models
 from smart_selects.db_fields import ChainedForeignKey
+from mapbox_location_field.models import LocationField
+from simple_history.models import HistoricalRecords
+from django.dispatch import receiver
+from simple_history.signals import (
+    post_create_historical_record
+)
 
 RESOURCE_STATUS = [
     (1, 'Sẵn sàng'),
@@ -150,12 +154,28 @@ class CuuHo(models.Model):
         verbose_name_plural = 'Các đội Cứu hộ'
 
 
+class CustomLocationField(LocationField):
+    pass
+
+
+class IPAddressHistoricalModel(models.Model):
+    """
+    Abstract model for history models tracking the IP address.
+    """
+    ip_address = models.GenericIPAddressField(
+        name='ip_address', blank=True, null=True
+    )
+
+    class Meta:
+        abstract = True
+
+
 class HoDan(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Hộ dân")
     update_time = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
     location = models.TextField(blank=True, default='', verbose_name='Địa chỉ')
     status = models.IntegerField(choices=HODAN_STATUS, default=0, verbose_name="Tình trạng")
-    people_number = models.PositiveIntegerField(default=1, verbose_name="Số người")
+    people_number = models.PositiveIntegerField(blank=True, null=True, default=1, verbose_name="Số người")
     tinh = models.ForeignKey(
         Tinh, blank=True, null=True, on_delete=models.CASCADE,
         related_name="hodan_reversed"
@@ -180,6 +200,11 @@ class HoDan(models.Model):
     volunteer = models.ForeignKey(TinhNguyenVien, blank=True, null=True, verbose_name="Tình nguyện viên xác minh", on_delete=models.CASCADE)
     cuuho = models.ForeignKey(CuuHo, null=True, blank= True, verbose_name="Đơn vị cứu hộ tiếp cận", on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now=True, verbose_name='Ngày tạo')
+    geo_location = CustomLocationField(null=True, blank=True)
+    history = HistoricalRecords(
+        history_change_reason_field=models.TextField(null=True),
+        bases=[IPAddressHistoricalModel,]
+    )
 
     def __str__(self):
         return self.name
@@ -187,6 +212,38 @@ class HoDan(models.Model):
     class Meta:
         verbose_name = 'Hộ dân cần ứng cứu'
         verbose_name_plural = 'Hộ dân cần ứng cứu'
+
+    def save(self, *args, **kwargs):
+        # Auto update huyen
+        if self.xa and self.xa.pk:
+            if self.xa.huyen and self.xa.huyen.pk:
+                self.huyen = self.xa.huyen
+
+        # Auto update tinh
+        if self.huyen and self.huyen.pk:
+            if self.huyen.tinh and self.huyen.tinh.pk:
+                self.tinh = self.huyen.tinh
+
+        super().save(*args, **kwargs)
+
+
+# TODO: update ip from user
+# Find a better way to get ip latter
+@receiver(post_create_historical_record)
+def post_create_historical_record_callback(sender, **kwargs):
+    def get_client_ip(request):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
+
+    history_instance = kwargs['history_instance']
+    # thread.request for use only when the simple_history middleware is on and enabled
+    history_instance.ip_address = get_client_ip(HistoricalRecords.thread.request)
+    if history_instance.ip_address:
+        history_instance.save(update_fields=['ip_address',])
 
 
 class NguonLuc(models.Model):
