@@ -56,9 +56,16 @@
 
       {% block filters %}
         {% if cl.has_filters %}
-          <div id="changelist-filter">
+          <div id="changelist-filter"
+            {% if cl.has_active_filters %}
+              class="filter-mobile--open"
+            {% endif %}
+            >
             <div class="filter-header">
-              <h2>{% translate 'Filter' %}</h2>
+              <h2>
+                {% translate 'Filter' %}
+                <a class="filter-toggle" href="javascript:;">Ẩn / hiện bộ lọc</a>
+              </h2>
               {% if cl.has_active_filters %}
                 <h3 id="changelist-filter-clear">
                   <a href="{{ cl.clear_all_filters_qs }}">&#10006; {% translate "Clear all filters" %}</a>
@@ -98,4 +105,31 @@
 
     </div>
   </div>
+{% endblock %}
+
+{% block footer %}
+    {{ block.super }}
+    <script>
+      if (typeof django !== 'undefined') {
+        ($ => {
+          const ww = $(window).width();
+          const filter = $('#changelist-filter');
+          const toggle = $('.filter-toggle');
+
+          if (ww < 768) {
+            filter.addClass('filter-mobile');
+          } else {
+            filter.removeClass('filter-mobile');
+          }
+
+          toggle.on('click', function() {
+            if (filter.hasClass('filter-mobile--open')) {
+              filter.removeClass('filter-mobile--open');
+            } else {
+              filter.addClass('filter-mobile--open');
+            }
+          });
+        })(django.jQuery);
+      }
+    </script>
 {% endblock %}

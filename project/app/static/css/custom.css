@@ -51,6 +51,12 @@ td.field-get_note {
     min-width: 20%;
 }
 
+// Filter number of hodan
+.filter-item .admin-numeric-filter-wrapper {
+    display: block;
+    width: 100%;
+}
+
 .toggle-nav-sidebar {
     width: 50px;
     cursor: pointer;
@@ -90,17 +96,6 @@ td.field-get_note {
 @media screen and (max-width:768px) {
     .filter-item {
         width: 100%;
-        min-width: 100%;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .filter-item ul {
-        width: 40%;
-        flex-basis: 40%;
-        margin-left: auto;
-        padding: 0;
-        margin: 0;
     }
 }
 
@@ -108,5 +103,44 @@ td.field-get_note {
     #changelist-filter {
         top: 0!important;
         position: static !important;
+    }
+}
+
+/* Custom filter on mobile */
+.filter-toggle {
+    display: none !important;
+    margin-left: auto;
+    color: #fff !important;
+    border: 1px solid #fff;
+    padding: 3px 7px;
+    border-radius: 3px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.filter-toggle:hover,
+.filter-toggle:focus {
+    background: #fff;
+    color: #44B78B !important;
+    text-decoration: none;
+}
+
+.filter-mobile .filter-body {
+    display: none;
+}
+
+.filter-mobile--open .filter-body {
+    display: block;
+}
+
+@media screen and (max-width:768px) {
+    #changelist-filter .filter-header h2 {
+        min-height: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    .filter-toggle {
+        display: block !important;
     }
 }
