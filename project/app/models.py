@@ -79,6 +79,10 @@ class Thon(models.Model):
         verbose_name = "Thôn"
         verbose_name_plural = "Thôn"
 
+class TrangThaiHoDan(models.Model):
+    name = models.TextField(blank=True, default='', verbose_name="Tên trạng thái")
+    created_time = models.DateTimeField(auto_now=True, verbose_name='Ngày tạo')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
 
 class TinhNguyenVien(models.Model):
     name = models.TextField(blank=True, default='', verbose_name='Họ và tên')
@@ -171,6 +175,10 @@ class HoDan(models.Model):
     update_time = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
     location = models.TextField(blank=True, default='', verbose_name='Địa chỉ')
     status = models.IntegerField(choices=HODAN_STATUS, default=0, verbose_name="Tình trạng")
+    status_key = models.ForeignKey(
+        TrangThaiHoDan, blank=False, null=False, on_delete=models.CASCADE, default=0,
+        verbose_name="Trạng thái"
+    )
     people_number = models.PositiveIntegerField(blank=True, null=True, default=1, verbose_name="Số người")
     tinh = models.ForeignKey(
         Tinh, blank=True, null=True, on_delete=models.CASCADE,
@@ -240,7 +248,6 @@ def post_create_historical_record_callback(sender, **kwargs):
     history_instance.ip_address = get_client_ip(HistoricalRecords.thread.request)
     if history_instance.ip_address:
         history_instance.save(update_fields=['ip_address',])
-
 
 class NguonLuc(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Nguồn lực")
