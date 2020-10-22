@@ -195,7 +195,7 @@ class HoDan(models.Model):
     note = models.TextField(blank=True, default='', verbose_name='Ghi chú')
     volunteer = models.ForeignKey(TinhNguyenVien, blank=True, null=True, verbose_name="Tình nguyện viên xác minh", on_delete=models.CASCADE)
     cuuho = models.ForeignKey(CuuHo, null=True, blank= True, verbose_name="Đơn vị cứu hộ tiếp cận", on_delete=models.CASCADE)
-    created_time = models.DateTimeField(auto_now=True, verbose_name='Ngày tạo')
+    created_time = models.DateTimeField(auto_now_add=True, verbose_name='Ngày tạo')
     geo_location = CustomLocationField(null=True, blank=True)
     history = HistoricalRecords(
         history_change_reason_field=models.TextField(null=True),
