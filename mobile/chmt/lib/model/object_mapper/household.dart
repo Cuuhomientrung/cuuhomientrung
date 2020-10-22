@@ -1,7 +1,18 @@
 import 'package:chmt/utils/utility.dart';
 import 'package:diacritic/diacritic.dart';
 
-class HouseHold {
+abstract class RescueObject {
+  int id, status;
+  int _province, _district, _commune, village, volunteer, rescue;
+  String name, location, phone, note;
+  DateTime updateTime;
+
+  int get province => _province ?? -1;
+  int get district => _district ?? -1;
+  int get commune => _commune ?? -1;
+}
+
+class HouseHold implements RescueObject {
   int id, status;
   int _province, _district, _commune, village, volunteer, rescue;
   String name, location, phone, note;
@@ -42,12 +53,12 @@ class HouseHold {
     "status": status,
     "phone": phone,
     "note": note,
-    "tinh": _province,
-    "huyen": _district,
+    r"tinh": _province,
+    r"huyen": _district,
     "xa": _commune,
-    "thon": village,
+    r"thon": village,
     "volunteer": volunteer,
-    "cuuho": rescue,
+    r"cuuho": rescue,
   };
 }
 

@@ -2,34 +2,17 @@
 import 'package:chmt/utils/utility.dart';
 import 'package:diacritic/diacritic.dart';
 
-class Rescuer {
-  Rescuer({
-    this.id,
-    this.updateTime,
-    this.name,
-    this.status,
-    this.location,
-    this.phone,
-    this.note,
-    this.tinh,
-    this.huyen,
-    this.xa,
-    this.thon,
-    this.volunteer,
-  });
+import 'household.dart';
 
-  int id;
+class Rescuer implements RescueObject {
+  int id, status;
+  int _province, _district, _commune, village, volunteer, rescue;
+  String name, location, phone, note;
   DateTime updateTime;
-  String name;
-  int status;
-  String location;
-  String phone;
-  String note;
-  int tinh;
-  int huyen;
-  int xa;
-  int thon;
-  int volunteer;
+
+  int get province => _province ?? -1;
+  int get district => _district ?? -1;
+  int get commune => _commune ?? -1;
 
   String get searchText {
     String searchQuery = name + phone + getObject(location) + getObject(note);
@@ -38,33 +21,35 @@ class Rescuer {
 
   String get phoneCall => 'tel:$phone';
 
-  factory Rescuer.fromJson(Map<String, dynamic> json) => Rescuer(
-    id: json["id"],
-    updateTime: DateTime.parse(json["update_time"]),
-    name: json["name"],
-    status: json["status"],
-    location: json["location"],
-    phone: json["phone"],
-    note: json["note"],
-    tinh: json["tinh"] == null ? null : json["tinh"],
-    huyen: json["huyen"] == null ? null : json["huyen"],
-    xa: json["xa"] == null ? null : json["xa"],
-    thon: json["thon"] == null ? null : json["thon"],
-    volunteer: json["volunteer"] == null ? null : json["volunteer"],
-  );
+  Rescuer.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    status = json['status'];
+    name = json['name'];
+    updateTime = DateTime.parse(json["update_time"]).toLocal();
+    location = json['location'];
+    phone = json['phone'];
+    note = json['note'];
+    _province = json[r'tinh'];
+    _district = json[r'huyen'];
+    _commune = json[r'xa'];
+    village = json[r'thon'];
+    volunteer = json[r'volunteer'];
+    rescue = json[r'cuuho'];
+  }
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "update_time": updateTime.toIso8601String(),
     "name": name,
-    "status": status,
+    "update_time": updateTime.toIso8601String(),
     "location": location,
+    "status": status,
     "phone": phone,
     "note": note,
-    "tinh": tinh == null ? null : tinh,
-    "huyen": huyen == null ? null : huyen,
-    "xa": xa == null ? null : xa,
-    "thon": thon == null ? null : thon,
-    "volunteer": volunteer == null ? null : volunteer,
+    r"tinh": _province,
+    r"huyen": _district,
+    "xa": _commune,
+    r"thon": village,
+    "volunteer": volunteer,
+    r"cuuho": rescue,
   };
 }

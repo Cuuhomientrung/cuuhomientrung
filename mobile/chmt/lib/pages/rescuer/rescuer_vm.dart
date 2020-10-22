@@ -10,37 +10,8 @@ class RescuerViewModel extends HouseHoldViewModel {
   Function(List<Rescuer>) get rescuerChanged => _rescuer.sink.add;
   List<Rescuer> get rescuerList => _rescuer.value;
 
-  String getRescuerLandmark(Rescuer rescuer) {
-    var result = '';
-
-    try {
-      var province = provinceList.firstWhere((element) => element.id == rescuer.tinh);
-      var district = allDistrict.firstWhere((element) => element.id == rescuer.huyen);
-      var commune = allCommune.firstWhere((element) => element.id == rescuer.xa);
-
-      if (province != null) {
-        result += province.name + ', ';
-      }
-
-      if (district != null) {
-        result += district.name + ', ';
-      }
-
-      if (commune != null) {
-        result += commune.name;
-      }
-    } catch (e) {
-      logger.info(e);
-    }
-
-    return result;
-  }
-
-  @override
-  void listener() {
-    provinceStream.listen((event) => getDistrictList());
-    districtStream.listen((event) => getCommuneList());
-    communeStream.listen((event) => getRescuerList());
+  RescuerViewModel() {
+    init();
   }
 
   void getRescuerList() {

@@ -51,7 +51,8 @@ class _HouseHoldPage extends State<HouseHoldPage>
     _initAnimation();
 
     super.initState();
-    widget.viewModel.getProvinceList();
+
+    widget.viewModel.getHouseHoldList();
 
     widget.viewModel.refreshStream.listen((e) => _reload());
   }
@@ -100,13 +101,24 @@ class _HouseHoldPage extends State<HouseHoldPage>
   }
 
   void _updateHouseHoldStatus(HouseHold item) async {
-    final status = await statusChange();
+    final status = await statusChange([0, 1, 2, 3, 4]);
 
     if (status != null) {
       // TODO: - Change household status
-      Utility.showLoading(context, r'Đang cập nhật');
-      await Future.delayed(Duration(seconds: 3));
-      Navigator.pop(context);
+      // Utility.showLoading(context, r'Đang cập nhật');
+      // await Future.delayed(Duration(seconds: 3));
+      // Navigator.pop(context);
+
+      var newItem = item;
+      newItem.status = status;
+      newItem.updateTime = DateTime.now();
+      var hhJson = newItem.toJson();
+      logger.info(hhJson);
+
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text(r'Đang cập nhật'),
+        duration: Duration(milliseconds: 1000),
+      ));
     }
   }
 
@@ -192,7 +204,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
                           );
                           animationController.forward();
                           var hh = snapshot.data[index];
-                          var address = widget.viewModel.getAddress(hh);
+                          var address = widget.viewModel.getLandmark(hh);
 
                           return HouseHoldItemView(
                             callback: () {},
@@ -421,9 +433,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
     }
   }
 
-  Future<int> statusChange() async {
-    List<int> list = [0, 1, 2, 3, 4];
-
+  Future<int> statusChange(List<int> list) async {
     return await showDialog<int>(
         context: context,
         builder: (ctx) {
@@ -474,9 +484,10 @@ class _HouseHoldPage extends State<HouseHoldPage>
   }
 
   void _selectStatus() async {
-    final status = await statusChange();
+    var status = await statusChange([-1, 0, 1, 2, 3, 4]);
 
     if (status != null) {
+      if (status == -1) status = null;
       widget.viewModel.statusChanged(status);
       _refresh();
     }

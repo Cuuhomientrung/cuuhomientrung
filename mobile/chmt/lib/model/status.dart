@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 extension HODAN_STATUS on int {
   String get statusString {
     switch (this) {
+      case -1: return r'Tất cả';
       case 0: return r'Chưa xác minh';
       case 1: return r'Cần ứng cứu gấp';
       case 2: return r'Không gọi được';

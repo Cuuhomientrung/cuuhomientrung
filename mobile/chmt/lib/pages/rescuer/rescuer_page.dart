@@ -60,7 +60,7 @@ class _RescuerPage extends State<RescuerPage>
   }
 
   void _getData() async {
-    widget.viewModel.getProvinceList();
+    widget.viewModel.getRescuerList();
   }
 
   void _reload() {
@@ -177,7 +177,7 @@ class _RescuerPage extends State<RescuerPage>
                           );
                           animationController.forward();
                           var rescuer = snapshot.data[index];
-                          var address = widget.viewModel.getRescuerLandmark(rescuer);
+                          var address = widget.viewModel.getLandmark(rescuer);
 
                           return RescuerItemView(
                             callback: () {},
