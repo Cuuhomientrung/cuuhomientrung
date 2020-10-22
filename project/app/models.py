@@ -176,7 +176,7 @@ class HoDan(models.Model):
     location = models.TextField(blank=True, default='', verbose_name='Địa chỉ')
     status = models.IntegerField(choices=HODAN_STATUS, default=0, verbose_name="Tình trạng")
     status_key = models.ForeignKey(
-        TrangThaiHoDan, blank=False, null=False, on_delete=models.CASCADE, default=0,
+        TrangThaiHoDan, blank=True, null=True, on_delete=models.CASCADE, default=0,
         verbose_name="Trạng thái"
     )
     people_number = models.PositiveIntegerField(blank=True, null=True, default=1, verbose_name="Số người")

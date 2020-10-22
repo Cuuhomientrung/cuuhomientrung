@@ -23,11 +23,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='historicalhodan',
             name='status_key',
-            field=models.ForeignKey(blank=True, db_constraint=False, default=0, null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='+', to='app.trangthaihodan', verbose_name='Trạng thái'),
+            field=models.ForeignKey(blank=True, db_constraint=False, null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='+', to='app.trangthaihodan', verbose_name='Trạng thái'),
         ),
         migrations.AddField(
             model_name='hodan',
             name='status_key',
-            field=models.ForeignKey(default=0, on_delete=django.db.models.deletion.CASCADE, to='app.trangthaihodan', verbose_name='Trạng thái'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='app.trangthaihodan', verbose_name='Trạng thái'),
         ),
     ]
