@@ -229,7 +229,6 @@ class Huyen2TinhFilter(ModelSelect2Filter):
 
 
 class HuyenAdmin(Select2AdminFilterMixin, HoDanCuuHoStatisticBase):
-    search_fields = ('name',)
     list_filter = (
         Huyen2TinhFilter,
     )
@@ -266,7 +265,6 @@ class Xa2TinhFilter(ModelSelect2Filter):
 
 
 class XaAdmin(Select2AdminFilterMixin, HoDanCuuHoStatisticBase):
-    search_fields = ('name', 'huyen', 'huyen__tinh')
     list_filter = (
         Xa2HuyenFilter, Xa2TinhFilter,
     )
@@ -275,7 +273,6 @@ class XaAdmin(Select2AdminFilterMixin, HoDanCuuHoStatisticBase):
 
 
 class ThonAdmin(HoDanCuuHoStatisticBase):
-    search_fields = ('name',)
     list_filter = (
         ('huyen', ChoiceDropdownFilter),
     )

@@ -17,16 +17,13 @@
     <script>
       if (typeof django !== 'undefined') {
         ($ => {
-          $('input.vForeignKeyRawIdAdminField').on('click', e => {
-              $(e.target)
-                .closest('.DynamicRawIDFilter')
-                .find('.dynamic_raw_id-related-lookup')
-                .click();
-
-                $(e.target)
-                  .closest('.related-widget-wrapper')
-                  .find('.dynamic_raw_id-related-lookup')
-                  .click();
+          $('input.vForeignKeyRawIdAdminField').each((index, item) => {
+            $(item).on('click', e => {
+              filter = $(item).closest('.related-widget-wrapper');
+              if (filter) {
+                filter.find('.dynamic_raw_id-related-lookup').click();
+              }
+            });
           });
         })(django.jQuery);
       }
