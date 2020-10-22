@@ -29,6 +29,9 @@ from django_select2_admin_filters.admin import (
 from django_select2_admin_filters.filters import (
   ChoiceSelect2Filter, ModelSelect2Filter
 )
+from app.settings import (
+    REVISION
+)
 
 vi_formats.DATETIME_FORMAT = "d/m/y H:i"
 
@@ -91,7 +94,7 @@ class CuuHoAdmin(DynamicRawIDMixin, admin.ModelAdmin):
 
     class Media:
         css = {
-            'all': ('/static/css/custom.css',)
+            'all': (f'/static/css/custom.css?v={REVISION}',)
         }
 
 
@@ -172,7 +175,7 @@ class HoDanAdmin(DynamicRawIDMixin, NumericFilterModelAdmin, MapAdmin, HoDanHist
 
     class Media:
         css = {
-            'all': ('/static/css/custom.css',)
+            'all': (f'/static/css/custom.css?v={REVISION}',)
         }
 
 
