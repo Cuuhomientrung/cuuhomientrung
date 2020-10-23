@@ -3,7 +3,8 @@ import pytz
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from app.settings import TIME_ZONE
-from app.models import TinTuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa
+from app.models import TinTuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa,\
+    TrangThaiHoDan
 from app.views import BaseRestfulAdmin, HoDanRestFulModelAdmin
 from app.utils.export_to_excel import export_ho_dan_as_excel_action, utc_to_local
 from django.conf.locale.vi import formats as vi_formats
@@ -264,6 +265,10 @@ class ThonAdmin(HoDanCuuHoStatisticBase):
     list_per_page = PAGE_SIZE
 
 
+class TrangThaiHoDanAdmin(admin.ModelAdmin):
+    pass
+
+
 admin.site.register(TinTuc, TinTucAdmin)
 # admin.site.register(NguonLuc, NguonLucAdmin)
 admin.site.register(HoDan, HoDanAdmin)
@@ -273,6 +278,7 @@ admin.site.register(TinhNguyenVien, TinhNguyenVienAdmin)
 admin.site.register(Tinh, TinhAdmin)
 admin.site.register(Huyen, HuyenAdmin)
 admin.site.register(Xa, XaAdmin)
+admin.site.register(TrangThaiHoDan, TrangThaiHoDanAdmin)
 # admin.site.register(Thon, ThonAdmin)
 
 rest_admin.site.register(

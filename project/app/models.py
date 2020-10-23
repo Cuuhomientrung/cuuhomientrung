@@ -94,14 +94,18 @@ class Thon(models.Model):
         verbose_name = "Thôn"
         verbose_name_plural = "Thôn"
 
+
 class TrangThaiHoDan(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Tên trạng thái")
     created_time = models.DateTimeField(auto_now=True, verbose_name='Ngày tạo')
     update_time = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
+
     def __str__(self):
         return "%s" % (self.name)
+
     def __unicode__(self):
         return u'%s' % (self.name)
+
 
 class TinhNguyenVien(models.Model):
     name = models.TextField(blank=True, default='', verbose_name='Họ và tên')
