@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'mapbox_location_field',
     'simple_history',
     'django_select2',
+    'easy_select2',
     'admin_auto_filters',
 ]
 
