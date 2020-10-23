@@ -10,7 +10,7 @@ from app.views import BaseRestfulAdmin, HoDanRestFulModelAdmin
 from app.utils.export_to_excel import export_ho_dan_as_excel_action, utc_to_local
 from django.conf.locale.vi import formats as vi_formats
 from django_admin_listfilter_dropdown.filters import (
-    RelatedDropdownFilter, ChoiceDropdownFilter, RelatedOnlyFieldListFilter
+    ChoiceDropdownFilter
 )
 from django_restful_admin import admin as rest_admin
 from dynamic_raw_id.admin import DynamicRawIDMixin
@@ -91,9 +91,13 @@ class CuuHoLocationForm(ModelForm):
         fields = "__all__"
         exclude = ('thon',)
 
+    tinh = ModelChoiceField(queryset=Tinh.objects.all(), widget=Select2(), required=False)
+    huyen = ModelChoiceField(queryset=Huyen.objects.all(), widget=Select2(), required=False)
+    xa = ModelChoiceField(queryset=Xa.objects.all(), widget=Select2(), required=False)
+    volunteer = ModelChoiceField(queryset=TinhNguyenVien.objects.all(), widget=Select2(), required=False)
+
 
 class CuuHoAdmin(DynamicRawIDMixin, admin.ModelAdmin):
-    dynamic_raw_id_fields = ('tinh', 'huyen', 'xa', 'volunteer',)
     list_display = ('update_time', 'status', 'name', 'phone',
                     'location', 'tinh', 'huyen', 'xa', 'volunteer')
     list_filter = (
@@ -123,7 +127,7 @@ class CuuHoAdmin(DynamicRawIDMixin, admin.ModelAdmin):
 class TinhNguyenVienAdmin(admin.ModelAdmin):
     list_display = ('name', 'location', 'phone', 'status')
     list_filter = (
-        StatusAdminFilter,
+        'status',
         TinhAdminFilter,
         XaAdminFilter,
         HuyenAdminFilter,
