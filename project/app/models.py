@@ -121,17 +121,17 @@ class CuuHo(models.Model):
     status = models.IntegerField(
         choices=CUUHO_STATUS, default=0, verbose_name="Tình trạng")
     tinh = models.ForeignKey(
-        Tinh, blank=True, null=True, on_delete=models.CASCADE,
+        Tinh, null=True, on_delete=models.CASCADE,
         related_name="cuuho_reversed"
     )
     huyen = models.ForeignKey(
         Huyen,
-        blank=True, null=True, on_delete=models.CASCADE,
+        null=True, on_delete=models.CASCADE,
         related_name="cuuho_reversed"
     )
     xa = models.ForeignKey(
         Xa,
-        blank=True, null=True, on_delete=models.CASCADE,
+        null=True, on_delete=models.CASCADE,
         related_name="cuuho_reversed"
     )
     thon = models.ForeignKey(
