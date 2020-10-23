@@ -121,7 +121,7 @@
           function calculateWidth() {
             ww = $(window).width();
 
-            if (ww > 1) {
+            if (ww < 768) {
               filter.addClass('filter-mobile');
             } else {
               filter.removeClass('filter-mobile');
@@ -129,7 +129,7 @@
           }
 
           toggle.on('click', function() {
-            if (ww > 1) {
+            if (ww < 768) {
               if (filter.hasClass('filter-mobile--open')) {
                 filter.removeClass('filter-mobile--open');
               } else {
