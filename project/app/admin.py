@@ -276,7 +276,10 @@ class ThonAdmin(HoDanCuuHoStatisticBase):
 
 
 class TrangThaiHoDanAdmin(admin.ModelAdmin):
-    pass
+
+    def __init__(self, model, admin_site):
+        self.list_display = [field.name for field in model._meta.fields if field.name != "id"]
+        super(TrangThaiHoDanAdmin, self).__init__(model, admin_site)
 
 
 admin.site.register(TinTuc, TinTucAdmin)
