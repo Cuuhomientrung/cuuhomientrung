@@ -44,6 +44,8 @@ class _HouseHoldPage extends State<HouseHoldPage>
 
   final viewModel = HouseHoldViewModel();
 
+  final List<int> allStatus = [0,1,2,3,4,5,6,7,8];
+
   @override
   void initState() {
     _initAnimation();
@@ -103,7 +105,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
   }
 
   void _updateHouseHoldStatus(HouseHold item) async {
-    final status = await statusChange([0, 1, 2, 3, 4]);
+    final status = await statusChange(allStatus);
 
     if (status != null) {
       // TODO: - Change household status
@@ -487,7 +489,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
   }
 
   void _selectStatus() async {
-    var status = await statusChange([-1, 0, 1, 2, 3, 4]);
+    var status = await statusChange([-1] + allStatus);
 
     if (status != null) {
       if (status == -1) status = null;

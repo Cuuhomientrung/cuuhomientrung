@@ -9,6 +9,10 @@ extension HODAN_STATUS on int {
       case 2: return r'Không gọi được';
       case 3: return r'Đã được cứu';
       case 4: return r'Gặp nạn';
+      case 5: return r'Đã gửi cứu hộ';
+      case 6: return r'Cần thức ăn';
+      case 7: return r'Cần thuốc men';
+      case 8: return r'Đã ổn';
       default: return r'Chưa xác minh';
     }
   }
@@ -17,8 +21,8 @@ extension HODAN_STATUS on int {
     switch (this) {
       case 0: return Colors.blueGrey;
       case 1: return Colors.deepPurple;
-      case 2: return Colors.orange;
-      case 3: return Colors.green;
+      case 2: case 5: case 6: case 7: return Colors.orange;
+      case 3: case 8: return Colors.green;
       case 4: return Colors.red;
       default: return Colors.white;
     }
