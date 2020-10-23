@@ -1,6 +1,7 @@
 import datetime
 import pytz
 from django.contrib import admin
+from django.db.models import Count, F, Count
 from django.utils.safestring import mark_safe
 from app.settings import TIME_ZONE
 from app.models import TinTuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa
@@ -234,7 +235,6 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
             'cuuho_reversed', 'hodan_reversed')
         return queryset
 
-
 class TinhAdmin(HoDanCuuHoStatisticBase):
     URL_CUSTOM_TAG = 'tinh'
     list_per_page = PAGE_SIZE
@@ -254,7 +254,15 @@ class XaAdmin(HoDanCuuHoStatisticBase):
         HuyenAdminFilter,
     )
     URL_CUSTOM_TAG = 'xa'
-    list_per_page = PAGE_SIZE
+
+    def get_queryset(self, request):
+        queryset = super(HoDanCuuHoStatisticBase,self).get_queryset(request)
+        queryset = queryset.prefetch_related('cuuho_reversed', 'hodan_reversed')\
+        .filter(hodan_reversed__status=1).annotate(total_hodan=Count("hodan_reversed"))\
+            .order_by('-total_hodan')
+        return queryset
+
+    list_per_page=PAGE_SIZE
 
 
 class ThonAdmin(HoDanCuuHoStatisticBase):
