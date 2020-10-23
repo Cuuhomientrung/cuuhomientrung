@@ -1,43 +1,131 @@
 {% extends "admin/base_site.html" %}
 
+{% block extrahead %}
+{{ block.super }}
+  <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="static/css/main.css">
+{% endblock %}
+
 {% block content %}
-    <div class="table-ho-dan">
-        <table>
-            <thead>
-                <tr>
-                    <th> STT </th>
-                    <th> Hộ dân </th>
-                    <th> Trạng thái </th>
-                    <th> Số người </th>
-                    <th> Địa chỉ </th>
-                    <th> Số điện thoại </th>
-                    <th> Ghi chú </th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for ho_dan in page_obj %}
-                    <tr>
-                        <th> {{ ho_dan.id }} </th>
-                        <th> {{ ho_dan.name }} </th>
-                        <th>
-                            <button class="{% if ho_dan.status == 'Cần ứng cứu gấp' or ho_dan.status == 'Gặp nạn' %} emergency {% endif %}"> {{ ho_dan.status }} </button>
-                            <br>
-                            <span> {{ ho_dan.update_time }} </span>
-                        </th>
-                        <th> {{ ho_dan.people_number }} </th>
-                        <th> {{ ho_dan.location }}
-                            {% if ho_dan.xa %}, {{ ho_dan.xa }} {% endif %}
-                            {% if ho_dan.huyen %}, {{ ho_dan.huyen }} {% endif %}
-                            {% if ho_dan.tinh %}, {{ ho_dan.tinh }} {% endif %}
-                        </th>
-                        <th> {{ ho_dan.phone }} </th>
-                        <th> {{ ho_dan.note|truncatechars_html:80 }}
-                            <a id="see-more-note"> See more </a>
-                        </th>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="d-none d-show-desktop">
+      <table class="citizen-table">
+        <thead>
+          <tr>
+            <th> STT </th>
+            <th> Hộ dân </th>
+            <th> Trạng thái </th>
+            <th> Số người </th>
+            <th> Địa chỉ </th>
+            <th> Số điện thoại </th>
+            <th> Ghi chú </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for hodan in page_obj %}
+            <tr>
+              <th> {{ hodan.id }} </th>
+              <th> {{ hodan.name }} </th>
+              <th>
+                <button class="{% if hodan.status == 'Cần ứng cứu gấp' or hodan.status == 'Gặp nạn' %} emergency {% endif %}"> {{ hodan.status }} </button>
+                <br>
+                <span> {{ hodan.update_time }} </span>
+              </th>
+              <th> {{ hodan.people_number }} </th>
+              <th> {{ hodan.location }}
+                {% if hodan.xa %}, {{ hodan.xa }} {% endif %}
+                {% if hodan.huyen %}, {{ hodan.huyen }} {% endif %}
+                {% if hodan.tinh %}, {{ hodan.tinh }} {% endif %}
+              </th>
+              <th> {{ hodan.phone }} </th>
+              <th> {{ hodan.note|truncatechars_html:80 }}
+                <a id="see-more-note"> See more </a>
+              </th>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="d-none d-show-mobile">
+      <ul class="citizen-list">
+        {% for hodan in page_obj %}
+          <li>
+            <div class="citizen-item">
+              <div class="citizen-header">
+                <h5>
+                  <span>#{{ hodan.id }}</span>
+                  <span>-</span>
+                  <span> {{ hodan.name }} </span>
+                </h5>
+              </div>
+              <div class="citizen-meta">
+                <span class="citizen-status">{{ hodan.status }}</span>
+                <div class="citizen-updated-time">
+                  <span>Cập nhật: </span>
+                  <span> {{ hodan.update_time }} </span>
+                </div>
+              </div>
+              <div class="citizen-body">
+                <div class="citizen-info">
+                  <div class="citizen-label"> Điện thoại </div>
+                  <div class="citizen-value citizen-value--phone"> 
+                    <a href="tel:{{ hodan.phone }}">
+                      <i class="la la-phone"></i>
+                      {{ hodan.phone }}
+                    </a>
+                  </div>
+                </div>
+                <div class="citizen-info">
+                  <div class="citizen-label"> Địa chỉ </div>
+                  <div class="citizen-value"> 
+                    {{ hodan.location }}
+                    <ul class="citizen-location">
+                      {% if hodan.xa %}, {{ hodan.xa }} {% endif %}
+                      {% if hodan.huyen %}, {{ hodan.huyen }} {% endif %}
+                      {% if hodan.tinh %}, {{ hodan.tinh }} {% endif %}
+                    </ul>
+                  </div>
+                </div>
+                <div class="citizen-info">
+                  <div class="citizen-label"> Số người </div>
+                  <div class="citizen-value">
+                    <span class="citizen-number"> 
+                      <strong>{{ hodan.people_number }}</strong>
+                      <span>người</span> 
+                    </span>
+                  </div>
+                </div>
+                <div class="citizen-info">
+                  <div class="citizen-label"> Ghi chú </div>
+                  <div class="citizen-value"> {{ hodan.note }} </div>
+                </div>
+                <div class="citizen-info">
+                  <div class="citizen-label"> Đơn vị cứu hộ</div>
+                  <div class="citizen-value"> 
+                    {% if hodan.cuuho %}
+                      {{ hodan.cuuho }} 
+                    {% else %}
+                      {{ '_ _ _ _ _' }}
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="citizen-footer">
+                <div class="citizen-footer-info">
+                  <span>Gửi lúc: </span>
+                  <span> {{ hodan.created_time }} </span>
+                </div>
+                {% if hodan.volunteer %}
+                <div class="citizen-footer-info">
+                  <span>Bởi TNV: </span>
+                  <span> {{ hodan.volunteer }} </span>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
     </div>
 
     <nav aria-label="Page navigation">

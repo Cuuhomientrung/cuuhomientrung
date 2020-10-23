@@ -15,6 +15,7 @@ def index(request):
     list_ho_dan = [{
         'id': ho_dan.id,
         'name': ho_dan.name,
+        'created_time': ho_dan.created_time,
         'update_time': ho_dan.update_time,
         'tinh': ho_dan.tinh,
         'huyen': ho_dan.huyen,
@@ -24,6 +25,9 @@ def index(request):
         'people_number': ho_dan.people_number,
         'note': ho_dan.note,
         'phone': ho_dan.phone,
+        'volunteer': ho_dan.volunteer,
+        'cuuho': ho_dan.cuuho,
+        'geo_location': ho_dan.geo_location,
     } for ho_dan in get_ho_dan()]
 
     paginator = Paginator(list_ho_dan, PAGE_SIZE)
