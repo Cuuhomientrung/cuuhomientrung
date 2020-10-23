@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.core.paginator import Paginator
-from app.models import HoDan
+from app.models import HoDan, HODAN_STATUS
 
 def get_ho_dan():
     return HoDan.objects.all()
