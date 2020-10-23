@@ -26,7 +26,7 @@ def index(request):
         'phone': ho_dan.phone,
     } for ho_dan in get_ho_dan()]
 
-    paginator = Paginator(list_ho_dan, 2)
+    paginator = Paginator(list_ho_dan, PAGE_SIZE)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'ho_dan_index.html', {'page_obj': page_obj})
