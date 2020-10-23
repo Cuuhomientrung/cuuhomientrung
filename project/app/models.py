@@ -35,6 +35,16 @@ HODAN_STATUS = [
     (4, "Gặp nạn")
 ]
 
+HODAN_STATUS_NEW = [
+    (1, 'Chưa xác minh'),
+    (2, 'Không gọi được'),
+    (3, 'Cần ứng cứu gấp'),
+    (4, 'Đã gửi cứu hộ'),
+    (5, 'Cần thức ăn'),
+    (6, 'Cần thuốc men'),
+    (7, 'Đã an toàn')
+]
+
 class Tinh(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Tỉnh")
 
@@ -83,6 +93,10 @@ class TrangThaiHoDan(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Tên trạng thái")
     created_time = models.DateTimeField(auto_now=True, verbose_name='Ngày tạo')
     update_time = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
+    def __str__(self):
+        return "%s" % (self.name)
+    def __unicode__(self):
+        return u'%s' % (self.name)
 
 class TinhNguyenVien(models.Model):
     name = models.TextField(blank=True, default='', verbose_name='Họ và tên')
@@ -175,8 +189,7 @@ class HoDan(models.Model):
     update_time = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
     location = models.TextField(blank=True, default='', verbose_name='Địa chỉ')
     status = models.IntegerField(choices=HODAN_STATUS, default=0, verbose_name="Tình trạng")
-    status_key = models.ForeignKey(
-        TrangThaiHoDan, blank=True, null=True, on_delete=models.CASCADE, default=0,
+    status_key = models.ForeignKey(TrangThaiHoDan, blank=True, null=True, on_delete=models.CASCADE, default=0,
         verbose_name="Trạng thái"
     )
     people_number = models.PositiveIntegerField(blank=True, null=True, default=1, verbose_name="Số người")
