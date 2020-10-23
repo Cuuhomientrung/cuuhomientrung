@@ -73,7 +73,7 @@ class CuuHoLocationForm(ModelForm):
     class Meta:
         model = CuuHo
         fields = "__all__"
-        exclude = ('tinh', 'huyen', 'thon',)
+        exclude = ('thon',)
 
 
 class CuuHoAdmin(DynamicRawIDMixin, admin.ModelAdmin):
@@ -122,7 +122,7 @@ class HoDanLocationForm(ModelForm):
     class Meta:
         model = HoDan
         fields = "__all__"
-        exclude = ('tinh', 'huyen', 'thon',)
+        exclude = ('thon',)
 
     geo_location = LocationField(
         required=False,
@@ -159,6 +159,8 @@ class HoDanAdmin(DynamicRawIDMixin, NumericFilterModelAdmin, MapAdmin, HoDanHist
     list_filter = (
         ('people_number', PeopleNumericFilter),
         ('status', ChoiceDropdownFilter),
+        ('tinh', DynamicRawIDFilter),
+        ('huyen', DynamicRawIDFilter),
         ('xa', DynamicRawIDFilter),
         'update_time',
     )
