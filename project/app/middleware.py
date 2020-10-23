@@ -3,9 +3,15 @@ from django.contrib.auth.models import User
 from django.contrib.auth.middleware import MiddlewareMixin
 from django.urls import resolve
 from django.middleware.csrf import CsrfViewMiddleware
+from django.shortcuts import redirect
 
 
 class AutomaticUserLoginMiddleware(MiddlewareMixin):
+
+    def process_request(self, request):
+        if request.path == '/admin':
+            auth.logout(request)
+            return redirect('/auth/', permanent=True)
 
     def process_view(self, request, view_func, view_args, view_kwargs):
 
