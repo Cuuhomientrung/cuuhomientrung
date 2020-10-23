@@ -130,7 +130,7 @@ td.field-get_note {
 }
 
 .filter-mobile--open .filter-body {
-    display: block;
+    display: flex;
 }
 
 @media screen and (max-width:768px) {
