@@ -4,6 +4,7 @@
 {% block extrastyle %}
   {{ block.super }}
   <link rel="stylesheet" type="text/css" href="{% static "admin/css/changelists.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "css/filter.css" %}">
   {% if cl.formset %}
     <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}">
   {% endif %}
@@ -112,23 +113,34 @@
     <script>
       if (typeof django !== 'undefined') {
         ($ => {
-          const ww = $(window).width();
+          let ww = $(window).width();
           const filter = $('#changelist-filter');
           const toggle = $('.filter-toggle');
 
-          if (ww < 768) {
-            filter.addClass('filter-mobile');
-          } else {
-            filter.removeClass('filter-mobile');
+          function calculateWidth() {
+            ww = $(window).width();
+
+            if (ww < 768) {
+              filter.addClass('filter-mobile');
+            } else {
+              filter.removeClass('filter-mobile');
+            }
           }
 
           toggle.on('click', function() {
-            if (filter.hasClass('filter-mobile--open')) {
-              filter.removeClass('filter-mobile--open');
-            } else {
-              filter.addClass('filter-mobile--open');
+            if (ww < 768) {
+              if (filter.hasClass('filter-mobile--open')) {
+                filter.removeClass('filter-mobile--open');
+              } else {
+                filter.addClass('filter-mobile--open');
+              }
             }
           });
+
+          $(window).on('resize', function() {
+            calculateWidth();
+          });
+          calculateWidth();
         })(django.jQuery);
       }
     </script>
