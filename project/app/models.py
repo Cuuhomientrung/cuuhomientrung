@@ -23,6 +23,7 @@ CUUHO_STATUS = [
     (0, 'Chưa xác minh'),
     (1, 'Sẵn sàng'),
     (2, 'Không gọi được'),
+    (5, 'Cần hỗ trợ'),
     (3, 'Đang cứu hộ'),
     (4, 'Đang nghỉ'),
 ]
@@ -121,16 +122,16 @@ class CuuHo(models.Model):
     status = models.IntegerField(
         choices=CUUHO_STATUS, default=0, verbose_name="Tình trạng")
     tinh = models.ForeignKey(
-        Tinh, null=True, on_delete=models.CASCADE,
+        Tinh, blank=True, null=True, on_delete=models.CASCADE,
         related_name="cuuho_reversed"
     )
     huyen = models.ForeignKey(
-        Huyen,
+        Huyen, blank=True,
         null=True, on_delete=models.CASCADE,
         related_name="cuuho_reversed"
     )
     xa = models.ForeignKey(
-        Xa,
+        Xa, blank=True,
         null=True, on_delete=models.CASCADE,
         related_name="cuuho_reversed"
     )
