@@ -1,7 +1,7 @@
 {% extends "admin/base_site.html" %}
 {% load static %}
-{% block extra_head %}
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/ho_dan.css">
+{% block stylesheet %}
+    <link rel="stylesheet" href ="{% static 'css/custom.css' %}" type="text/css">
 {% endblock %}
 {% block content %}
     <div class="table-ho-dan">
@@ -18,7 +18,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for ho_dan in list_ho_dan %}
+                {% for ho_dan in page_obj %}
                     <tr>
                         <th> {{ ho_dan.id }} </th>
                         <th> {{ ho_dan.name }} </th>
@@ -43,17 +43,34 @@
         </table>
     </div>
 
-{% endblock %}
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page=1" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">begin</span>
+          </a>
+        </li>   {% endif %}
 
+        {% for n in page_obj.paginator.page_range %}
+          {% if page_obj.number == n %}
+            <li class="page-item active">
+              <span class="page-link">{{ n }}<span class="sr-only">(current)</span></span>
+            </li>
+          {% elif n > page_obj.number|add:'-3' and n < page_obj.number|add:'3' %}
+            <li class="page-item"><a class="page-link" href="?page={{ n }}">{{ n }}</a></li>
+          {% endif %}
+        {% endfor %}
 
-{% block scripts_extra %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script type="text/javascript">
-    $('#see-more-note').on("click", function() {
-        console.log("hi");
-    });
-    $(document).ready(function() {
-        console.log("ready");
-    });
-</script>
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">end</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+    </nav>
 {% endblock %}
