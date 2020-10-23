@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.core.paginator import Paginator
-from app.models import HoDan, HODAN_STATUS
+from app.models import HoDan
 
 def get_ho_dan():
     return HoDan.objects.all()
@@ -20,7 +20,7 @@ def index(request):
         'huyen': ho_dan.huyen,
         'xa': ho_dan.xa,
         'location': ho_dan.location,
-        'status': status_dict[ho_dan.status],
+        'status': ho_dan.status,
         'people_number': ho_dan.people_number,
         'note': ho_dan.note,
         'phone': ho_dan.phone,
