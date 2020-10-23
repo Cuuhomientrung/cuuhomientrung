@@ -1,0 +1,106 @@
+#changelist {
+    display: block;
+}
+
+#changelist .changelist-form-container {
+    max-width: 100%;
+}
+
+#changelist-filter {
+    margin: 0;
+    width: 100%;
+    margin-bottom: 15px;
+    box-shadow: 1px 5px 5px rgba(0, 0, 0, 0.15);
+}
+
+.filter-body {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.filter-item {
+    width: 200px;
+    min-width: 20%;
+}
+
+// Filter number of hodan
+.filter-item .admin-numeric-filter-wrapper {
+    display: block;
+    width: 100%;
+}
+
+.DynamicRawIDFilter p {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.DynamicRawIDFilter input {
+    width: 60% !important;
+}
+
+.DynamicRawIDFilter a {
+    padding: 3px 5px;
+}
+
+.DynamicRawIDFilter .dynamic_raw_id_label {
+    flex-basis: 100%;
+}
+
+@media screen and (max-width: 1024px) {
+    #changelist-filter {
+        width: 100% !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .filter-item {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    #changelist-filter {
+        top: 0 !important;
+        position: static !important;
+    }
+}
+
+/* Custom filter on mobile */
+.filter-toggle {
+    display: none !important;
+    margin-left: auto;
+    color: #fff !important;
+    border: 1px solid #fff;
+    padding: 3px 7px;
+    border-radius: 3px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.filter-toggle:hover,
+.filter-toggle:focus {
+    background: #fff;
+    color: #44B78B !important;
+    text-decoration: none;
+}
+
+.filter-mobile .filter-body {
+    display: none;
+}
+
+.filter-mobile--open .filter-body {
+    display: flex;
+}
+
+@media screen and (max-width:768px) {
+    #changelist-filter .filter-header h2 {
+        min-height: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    .filter-toggle {
+        display: block !important;
+    }
+}

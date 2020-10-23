@@ -20,7 +20,7 @@
           $('input.vForeignKeyRawIdAdminField').each((index, item) => {
             $(item).on('click', e => {
               filter = $(item).closest('.related-widget-wrapper');
-              if (filter) {
+              if (filter.length) {
                 filter.find('.dynamic_raw_id-related-lookup').click();
               }
             });
