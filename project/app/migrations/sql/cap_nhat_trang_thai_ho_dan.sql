@@ -18,6 +18,10 @@ UPDATE app_hodan SET status_key_id = 1 WHERE status = 0;
 UPDATE app_hodan SET status_key_id = 2 WHERE status = 2;
 UPDATE app_hodan SET status_key_id = 3 WHERE status = 1 OR status = 4;
 UPDATE app_hodan SET status_key_id = 7 WHERE status = 3;
+UPDATE app_hodan SET status_key_id = 4 WHERE status = 5;
+UPDATE app_hodan SET status_key_id = 5 WHERE status = 6;
+UPDATE app_hodan SET status_key_id = 6 WHERE status = 7;
+UPDATE app_hodan SET status_key_id = 7 WHERE status = 8;
 
 /*
 Update app_hodan, set value of status based on status_key_id
