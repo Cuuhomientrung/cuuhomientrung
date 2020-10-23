@@ -32,7 +32,11 @@ HODAN_STATUS = [
     (1, "Cần ứng cứu gấp"),
     (2, "Không gọi được"),
     (3, "Đã được cứu"),
-    (4, "Gặp nạn")
+    (4, "Gặp nạn"),
+    (5, "Đã gửi cứu hộ"),
+    (6, "Cần thức ăn"),
+    (7, "Cần thuốc men"),
+    (8, "Đã ổn")
 ]
 
 class Tinh(models.Model):
