@@ -22,5 +22,5 @@ UPDATE app_hodan SET status_key_id = 7 WHERE status = 3;
 /*
 Update app_hodan, set value of status based on status_key_id
 */
--- UPDATE app_hodan SET status = status_key_id;
+UPDATE app_hodan SET status = status_key_id;
 
