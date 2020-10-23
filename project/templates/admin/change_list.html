@@ -1,9 +1,10 @@
-{% extends "admin/base_site.html" %}
+{% extends "admin/change_list.html" %}
 {% load i18n admin_urls static admin_list %}
 
 {% block extrastyle %}
   {{ block.super }}
   <link rel="stylesheet" type="text/css" href="{% static "admin/css/changelists.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "css/filter.css" %}">
   {% if cl.formset %}
     <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}">
   {% endif %}
@@ -52,13 +53,21 @@
         </p>
         {{ cl.formset.non_form_errors }}
     {% endif %}
+
     <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
 
       {% block filters %}
         {% if cl.has_filters %}
-          <div id="changelist-filter">
+          <div id="changelist-filter"
+            {% if cl.has_active_filters %}
+              class="filter-mobile--open"
+            {% endif %}
+            >
             <div class="filter-header">
-              <h2>{% translate 'Filter' %}</h2>
+              <h2>
+                {% translate 'Filter' %}
+                <a class="filter-toggle" href="javascript:;">Ẩn / hiện bộ lọc</a>
+              </h2>
               {% if cl.has_active_filters %}
                 <h3 id="changelist-filter-clear">
                   <a href="{{ cl.clear_all_filters_qs }}">&#10006; {% translate "Clear all filters" %}</a>
@@ -98,4 +107,42 @@
 
     </div>
   </div>
+{% endblock %}
+
+{% block footer %}
+    {{ block.super }}
+    <script>
+      if (typeof django !== 'undefined') {
+        ($ => {
+          let ww = $(window).width();
+          const filter = $('#changelist-filter');
+          const toggle = $('.filter-toggle');
+
+          function calculateWidth() {
+            ww = $(window).width();
+
+            if (ww > 1) {
+              filter.addClass('filter-mobile');
+            } else {
+              filter.removeClass('filter-mobile');
+            }
+          }
+
+          toggle.on('click', function() {
+            if (ww > 1) {
+              if (filter.hasClass('filter-mobile--open')) {
+                filter.removeClass('filter-mobile--open');
+              } else {
+                filter.addClass('filter-mobile--open');
+              }
+            }
+          });
+
+          $(window).on('resize', function() {
+            calculateWidth();
+          });
+          calculateWidth();
+        })(django.jQuery);
+      }
+    </script>
 {% endblock %}
