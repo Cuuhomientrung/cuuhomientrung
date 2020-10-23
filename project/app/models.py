@@ -259,10 +259,13 @@ def post_create_historical_record_callback(sender, **kwargs):
 
     history_instance = kwargs['history_instance']
     # thread.request for use only when the simple_history middleware is on and enabled
-    history_instance.ip_address = get_client_ip(
-        HistoricalRecords.thread.request)
-    if history_instance.ip_address:
-        history_instance.save(update_fields=['ip_address', ])
+    try:
+        history_instance.ip_address = get_client_ip(
+            HistoricalRecords.thread.request)
+        if history_instance.ip_address:
+            history_instance.save(update_fields=['ip_address', ])
+    except:
+        pass
 
 
 class NguonLuc(models.Model):
