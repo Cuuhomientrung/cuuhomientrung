@@ -156,18 +156,18 @@ class CuuHo(models.Model):
         verbose_name = 'Các đội Cứu hộ'
         verbose_name_plural = 'Các đội Cứu hộ'
 
-    def save(self, *args, **kwargs):
-        # Auto update huyen
-        if self.xa and self.xa.pk:
-            if self.xa.huyen and self.xa.huyen.pk:
-                self.huyen = self.xa.huyen
+    # def save(self, *args, **kwargs):
+    #     # Auto update huyen
+    #     if self.xa and self.xa.pk:
+    #         if self.xa.huyen and self.xa.huyen.pk:
+    #             self.huyen = self.xa.huyen
 
-        # Auto update tinh
-        if self.huyen and self.huyen.pk:
-            if self.huyen.tinh and self.huyen.tinh.pk:
-                self.tinh = self.huyen.tinh
+    #     # Auto update tinh
+    #     if self.huyen and self.huyen.pk:
+    #         if self.huyen.tinh and self.huyen.tinh.pk:
+    #             self.tinh = self.huyen.tinh
 
-        super().save(*args, **kwargs)
+    #     super().save(*args, **kwargs)
 
 
 class CustomLocationField(LocationField):
@@ -232,18 +232,18 @@ class HoDan(models.Model):
         verbose_name = 'Hộ dân cần ứng cứu'
         verbose_name_plural = 'Hộ dân cần ứng cứu'
 
-    def save(self, *args, **kwargs):
-        # Auto update huyen
-        if self.xa and self.xa.pk:
-            if self.xa.huyen and self.xa.huyen.pk:
-                self.huyen = self.xa.huyen
+    # def save(self, *args, **kwargs):
+    #     # Auto update huyen
+    #     if self.xa and self.xa.pk:
+    #         if self.xa.huyen and self.xa.huyen.pk:
+    #             self.huyen = self.xa.huyen
 
-        # Auto update tinh
-        if self.huyen and self.huyen.pk:
-            if self.huyen.tinh and self.huyen.tinh.pk:
-                self.tinh = self.huyen.tinh
+    #     # Auto update tinh
+    #     if self.huyen and self.huyen.pk:
+    #         if self.huyen.tinh and self.huyen.tinh.pk:
+    #             self.tinh = self.huyen.tinh
 
-        super().save(*args, **kwargs)
+    #     super().save(*args, **kwargs)
 
 
 # TODO: update ip from user
