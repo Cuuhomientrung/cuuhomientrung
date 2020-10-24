@@ -32,7 +32,7 @@ env = environ.Env(
     DEPLOY_ENV=(str, 'local'),
     GIT_VERSION=(str, None),
 )
-environ.Env.read_env(
+env.read_env(
     os.path.join(BASE_DIR, '..', '.env')
 )
 
