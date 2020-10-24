@@ -146,16 +146,27 @@ class CuuHo(models.Model):
         Tinh, blank=True, null=True, on_delete=models.CASCADE,
         related_name="cuuho_reversed"
     )
-    huyen = models.ForeignKey(
-        Huyen, blank=True,
-        null=True, on_delete=models.CASCADE,
-        related_name="cuuho_reversed"
-    )
-    xa = models.ForeignKey(
-        Xa, blank=True,
-        null=True, on_delete=models.CASCADE,
-        related_name="cuuho_reversed"
-    )
+ 
+    huyen = ChainedForeignKey(
+        Huyen,
+        chained_field = "tinh",
+        chained_model_field = "tinh",
+        show_all = False,
+        auto_choose = True,
+        sort=True,
+        blank=True,
+        null=True)
+        
+    xa = ChainedForeignKey(
+        Xa,
+        chained_field = "huyen",
+        chained_model_field = "huyen",
+        show_all = False,
+        auto_choose = True,
+        sort=True,
+        blank=True,
+        null=True)
+
     thon = models.ForeignKey(
         Thon,
         blank=True, null=True, on_delete=models.CASCADE,

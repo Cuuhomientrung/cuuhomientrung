@@ -91,9 +91,6 @@ class CuuHoLocationForm(ModelForm):
         fields = "__all__"
         exclude = ('thon',)
 
-    tinh = ModelChoiceField(queryset=Tinh.objects.all(), widget=Select2(), required=False)
-    huyen = ModelChoiceField(queryset=Huyen.objects.all(), widget=Select2(), required=False)
-    xa = ModelChoiceField(queryset=Xa.objects.all(), widget=Select2(), required=False)
     volunteer = ModelChoiceField(queryset=TinhNguyenVien.objects.all(), widget=Select2(), required=False)
 
 
