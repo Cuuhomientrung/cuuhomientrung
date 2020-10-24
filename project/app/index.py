@@ -2,6 +2,7 @@ from app.admin import TinhAdmin
 from app.models import Tinh, HoDan, CuuHo
 from django.db.models import Count
 from django.shortcuts import render
+from django.urls import reverse
 
 
 def index(request):
@@ -12,9 +13,11 @@ def index(request):
         .filter(hodan_reversed__status=1)\
         .annotate(total_hodan=Count("hodan_reversed"))\
         .order_by('-total_hodan')[0:5]
+    hodanurl = reverse("admin:app_hodan_changelist")
+    cuuhourl=reverse("admin:app_cuuho_changelist")
     tinhInfos = [
         {
-            "url": f'/app/hodan/?{TinhAdmin.URL_CUSTOM_TAG}={tinh.pk}&status_id=3',
+            "url": f'{hodanurl}?{TinhAdmin.URL_CUSTOM_TAG}={tinh.pk}&status_id=3',
             "total_hodan": tinh.total_hodan,
             "id": tinh.pk,
             "name": tinh.name
@@ -27,7 +30,7 @@ def index(request):
         'tong_hodan_cap_cuu': tong_hodan_cap_cuu,
         'tong_doi_cuu_ho': tong_doi_cuu_ho,
         'tinhInfos': tinhInfos,
-        'hodan_url' : '/app/hodan/',
-        'cuuho_url': '/app/cuuho/',
+        'hodan_url' : hodanurl,
+        'cuuho_url': cuuhourl,
     }
     return render(request, 'index.html', context=context)
