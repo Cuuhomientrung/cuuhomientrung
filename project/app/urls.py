@@ -25,5 +25,5 @@ urlpatterns = [
     path('chaining/', include('smart_selects.urls')),
     url(r'^admin/dynamic_raw_id/', include('dynamic_raw_id.urls')),
     path('select2/', include('django_select2.urls')),
-    path("ho_dan", ho_dan_views.index),
+    url(r'^ho_dan$', ho_dan_views.index),
 ]
