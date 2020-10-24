@@ -154,13 +154,13 @@ class HouseHoldItemView extends StatelessWidget {
             ),
           ),
           SizedBox(width: 5),
-          InkWell(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-              child: Icon(Icons.delete_forever, color: Colors.red),
-            ),
-            onTap: () => deleteCallback(),
-          )
+          // InkWell(
+          //   child: Padding(
+          //     padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+          //     child: Icon(Icons.delete_forever, color: Colors.red),
+          //   ),
+          //   onTap: () => deleteCallback(),
+          // )
         ],
       )
     ];

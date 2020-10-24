@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:chmt/helper/color_loader.dart';
 import 'package:chmt/helper/search_box.dart';
 import 'package:chmt/helper/tab_header.dart';
 import 'package:chmt/model/model.dart';
@@ -31,6 +30,8 @@ extension Location on Address {
   }
 }
 
+final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
 class HouseHoldPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _HouseHoldPage();
@@ -44,7 +45,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
 
   final viewModel = HouseHoldViewModel();
 
-  final List<int> allStatus = [0,1,2,3,4,5,6,7,8];
+  final List<int> allStatus = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
   @override
   void initState() {
@@ -104,34 +105,73 @@ class _HouseHoldPage extends State<HouseHoldPage>
     viewModel.houseHoldChanged(result);
   }
 
+  void showMessage({String text = r'Đang cập nhật'}) {
+    _scaffoldKey.currentState.hideCurrentSnackBar();
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text(text),
+      action: SnackBarAction(
+        label: 'OK',
+        onPressed: () => _scaffoldKey.currentState.hideCurrentSnackBar(),
+      ),
+    ));
+  }
+
   void _updateHouseHoldStatus(HouseHold item) async {
     final status = await statusChange(allStatus);
 
-    if (status != null) {
-      // TODO: - Change household status
-      // Utility.showLoading(context, r'Đang cập nhật');
-      // await Future.delayed(Duration(seconds: 3));
-      // Navigator.pop(context);
-
+    void update() {
       var newItem = item;
       newItem.status = status;
-      newItem.updateTime = DateTime.now();
-      var hhJson = newItem.toJson();
-      logger.info(hhJson);
+      newItem.setUpdateTime(DateTime.now());
 
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text(r'Đang cập nhật'),
-        duration: Duration(milliseconds: 1000),
-      ));
+      logger.info(newItem.toJson());
+
+      Utility.showLoading(context, r'Đang thực hiện');
+      viewModel.repo.updateHouseHold(item: newItem).then((value) {
+        Navigator.pop(context);
+        showMessage(text: r'Cập nhật trạng thái thành công');
+        setState(() => item.status = status);
+      }).catchError((e) {
+        logger.info(e);
+        Navigator.pop(context);
+        showMessage(text: r'Đã xảy ra lỗi. Vui lòng thử lại');
+      });
+    }
+
+    if (status != null) {
+      Utility.showConfirmDialog(
+        context,
+        message: r'Bạn có chắc muốn cập nhật trạng thái không?',
+        onPressedOK: update,
+      );
     }
   }
 
   void _deleteHouseHold(HouseHold item) async {
-    // TODO: - Delete household
-    Scaffold.of(context).showSnackBar(SnackBar(
-      content: Text(r'Đang cập nhật'),
-      duration: Duration(milliseconds: 1000),
-    ));
+    void delete() {
+      logger.info(item.toJson());
+
+      showMessage(text: r'Vui lòng thực hiện chức năng này trên web');
+
+      // Utility.showLoading(context, r'Đang thực hiện');
+      // viewModel.repo.updateHouseHold(item: item).then((value) {
+      //   Navigator.pop(context);
+      //   showMessage(text: r'Đã xóa');
+      //   List<HouseHold> list = viewModel.houseHoldList;
+      //   list.removeWhere((e) => e.id == item.id);
+      //   viewModel.houseHoldChanged(list);
+      // }).catchError((e) {
+      //   logger.info(e);
+      //   Navigator.pop(context);
+      //   showMessage(text: r'Đã xảy ra lỗi. Vui lòng thử lại');
+      // });
+    }
+
+    Utility.showConfirmDialog(
+      context,
+      message: r'Bạn có chắc muốn xóa trường hợp này không?',
+      onPressedOK: delete,
+    );
   }
 
   Widget _body() {
@@ -186,12 +226,7 @@ class _HouseHoldPage extends State<HouseHoldPage>
                     stream: viewModel.houseHoldStream,
                     builder: (ctx, snapshot) {
                       if (!snapshot.hasData) {
-                        return Center(
-                            child: Container(
-                          child: ColorLoader(),
-                          width: 40,
-                          height: 40,
-                        ));
+                        return Utility.centerLoadingIndicator();
                       }
 
                       return ListView.builder(
@@ -503,10 +538,11 @@ class _HouseHoldPage extends State<HouseHoldPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text(
           houseHoldCount.isNotEmpty
-              ? '$houseHoldCount ' + r'lời kêu cứu'
+              ? '$houseHoldCount ' + r'trường hợp'
               : r'Cứu hộ miền Trung',
           style: GoogleFonts.openSans(
             fontSize: 17,

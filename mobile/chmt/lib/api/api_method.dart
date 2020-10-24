@@ -61,4 +61,44 @@ class APIMethod {
       throw e;
     }
   }
+
+  /// PUT
+  static Future<dynamic> putData(String subPath, Map params) async {
+    logger.info('>>>$subPath<<< PARAMS: $params');
+
+    try {
+      var connectivityResult = await (Connectivity().checkConnectivity());
+      if (connectivityResult == ConnectivityResult.none) {
+        throw r'Không có kết nối mạng';
+      }
+
+      Response res = await _dio.put(subPath, data: params);
+
+      logger.info('>>>$subPath<<< RESPONSE: ${res.data}');
+
+      return (res.data);
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  /// PUT
+  static Future<dynamic> delete(String subPath, Map params) async {
+    logger.info('>>>$subPath<<< PARAMS: $params');
+
+    try {
+      var connectivityResult = await (Connectivity().checkConnectivity());
+      if (connectivityResult == ConnectivityResult.none) {
+        throw r'Không có kết nối mạng';
+      }
+
+      Response res = await _dio.delete(subPath, data: params);
+
+      logger.info('>>>$subPath<<< RESPONSE: ${res.data}');
+
+      return (res.data);
+    } catch (e) {
+      throw e;
+    }
+  }
 }

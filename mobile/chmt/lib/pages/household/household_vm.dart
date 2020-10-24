@@ -67,7 +67,7 @@ class HouseHoldViewModel extends LoadAppViewModel {
       selectedCommuneChanged(null);
     });
 
-    statusChanged(1); /// Lọc mặc định theo hộ cần ứng cứu gấp
+    // statusChanged(1); /// Lọc mặc định theo hộ cần ứng cứu gấp
   }
 
   @override

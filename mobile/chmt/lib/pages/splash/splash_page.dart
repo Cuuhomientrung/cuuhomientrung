@@ -1,8 +1,8 @@
 import 'package:chmt/pages/splash/loadapp_vm.dart';
 import 'package:chmt/router/router.dart';
 import 'package:chmt/utils/global.dart';
+import 'package:chmt/utils/utility.dart';
 import 'package:flutter/material.dart';
-import 'package:loading_indicator/loading_indicator.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen();
@@ -34,16 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: CurvedTransition(
         firstWidget: Container(color: Colors.white),
-        secondWidget: Center(
-          child: Container(
-            width: 110,
-            height: 110,
-            child: LoadingIndicator(
-              indicatorType: Indicator.ballClipRotateMultiple,
-              color: Colors.green,
-            ),
-          ),
-        ),
+        secondWidget: Utility.centerLoadingIndicator(size: 110),
         transitionDuration: 300,
         curve: Curves.bounceInOut,
       ),

@@ -21,41 +21,81 @@ class Utility {
     }
   }
 
-  static void showErrorDialog(BuildContext context,
-      {String title = 'Đã xảy ra lỗi', String message, Function pressOK}) {
-    showCupertinoDialog(
+  static Widget centerLoadingIndicator({double size = 64}) => Center(
+        child: Container(
+          width: size,
+          height: size,
+          child: LoadingIndicator(
+            indicatorType: Indicator.ballClipRotateMultiple,
+            color: Colors.blue,
+          ),
+        ),
+      );
+
+  static Future<bool> showConfirmDialog(
+    BuildContext context, {
+    String title = r'Xác nhận',
+    String message = '',
+    Widget child,
+    String okTitle = r'Đồng ý',
+    String cancelTitle = 'Bỏ qua',
+    bool showCancelButton = true,
+    Function onPressedOK,
+    Function onPressCancel,
+  }) {
+    var okAction = FlatButton(
+      child: Text(
+        okTitle,
+        style: TextStyle(color: Colors.deepOrange),
+      ),
+      onPressed: () {
+        Navigator.of(context).pop();
+        if (onPressedOK != null) {
+          onPressedOK();
+        }
+      },
+    );
+    var cancelAction = FlatButton(
+      child: Text(
+        cancelTitle,
+        style: TextStyle(color: Colors.blueGrey),
+      ),
+      onPressed: () {
+        Navigator.of(context).pop();
+        if (onPressCancel != null) {
+          onPressCancel();
+        }
+      },
+    );
+
+    var actions = showCancelButton ? [cancelAction, okAction] : [okAction];
+
+    return showCupertinoDialog<bool>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Text(
             title,
-            style: GoogleFonts.roboto(
+            style: GoogleFonts.merriweather(
               fontWeight: FontWeight.w500,
               fontSize: 18,
             ),
           ),
           content: Padding(
-            padding: const EdgeInsets.only(top: 5),
-            child: Text(
-              message,
-              style: GoogleFonts.openSans(
-                fontSize: 15,
-                height: 1.3,
-              ),
+            padding: EdgeInsets.only(top: 5),
+            child: Column(
+              children: [
+                Text(
+                  message,
+                  style: GoogleFonts.lato(
+                    fontSize: 15,
+                  ),
+                ),
+                child ?? SizedBox()
+              ],
             ),
           ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(
-                r"Đồng ý",
-                style: TextStyle(color: Colors.deepOrange),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-                if (pressOK != null) pressOK();
-              },
-            ),
-          ],
+          actions: actions,
         );
       },
     );
@@ -70,19 +110,27 @@ class Utility {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      if (needShowDialog) showErrorDialog(context, message: errorMessage);
+      if (needShowDialog)
+        showConfirmDialog(
+          context,
+          message: errorMessage,
+          title: r'Đã xảy ra lỗi',
+          showCancelButton: false,
+        );
     }
   }
 
   static showLoading(BuildContext context, String msg,
-      {Indicator type = Indicator.ballClipRotateMultiple,
-        Color color = Colors.white}) =>
+          {Indicator type = Indicator.ballClipRotateMultiple,
+          Color color = Colors.white}) =>
       showDialog(
         barrierDismissible: false,
         context: context,
         builder: (context) => _createLoading(context, msg, type, color),
       );
-  static _createLoading(BuildContext context, String msg, Indicator type, Color color) {
+
+  static _createLoading(
+      BuildContext context, String msg, Indicator type, Color color) {
     Size size = MediaQuery.of(context).size;
     return Center(
       child: Container(

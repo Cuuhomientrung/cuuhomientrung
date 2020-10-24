@@ -70,13 +70,12 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
     if (drawerIndex != drawerIndexData) {
       drawerIndex = drawerIndexData;
       if (drawerIndex == DrawerIndex.HouseHold) {
-        screenView = HouseHoldPage();
+        setState(() => screenView = HouseHoldPage());
       } else if (drawerIndex == DrawerIndex.RescuerTeam) {
-        screenView = RescuerPage();
+        setState(() => screenView = RescuerPage());
       } else if (drawerIndex == DrawerIndex.News) {
 
       }
-      setState(() {});
     }
   }
 }

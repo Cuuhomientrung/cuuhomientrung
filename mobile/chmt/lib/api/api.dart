@@ -6,4 +6,6 @@ abstract class API {
   Future<BaseResponse> getDistrictList();
   Future<BaseResponse> getCommuneList();
   Future<BaseResponse> getRescuerList({Map<String, dynamic> params});
+  Future<HouseHold> updateHouseHold({HouseHold item});
+  Future<dynamic> deleteHouseHold({HouseHold item});
 }

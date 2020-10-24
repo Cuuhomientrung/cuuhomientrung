@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:chmt/helper/color_loader.dart';
 import 'package:chmt/helper/search_box.dart';
 import 'package:chmt/helper/tab_header.dart';
 import 'package:chmt/model/model.dart';
@@ -122,7 +121,12 @@ class _RescuerPage extends State<RescuerPage>
                       SliverList(
                         delegate: SliverChildBuilderDelegate(
                               (context, index) {
-                            return SizedBox();
+                                return SizedBox();
+                            // return Container(
+                            //   color: Color(0xFFFEFEFE),
+                            //   padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+                            //   child: _filterBar(),
+                            // );
                           },
                           childCount: 1,
                         ),
@@ -150,11 +154,7 @@ class _RescuerPage extends State<RescuerPage>
                     stream: viewModel.rescuerStream,
                     builder: (ctx, snapshot) {
                       if (!snapshot.hasData) {
-                        return Center(child: Container(
-                          child: ColorLoader(),
-                          width: 50,
-                          height: 50,
-                        ));
+                        return Utility.centerLoadingIndicator();
                       }
 
                       return ListView.builder(

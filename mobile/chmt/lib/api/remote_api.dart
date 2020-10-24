@@ -57,4 +57,27 @@ class RemoteAPI implements API {
       throw e;
     }
   }
+
+  @override
+  Future<HouseHold> updateHouseHold({HouseHold item}) async {
+    try {
+      var res = await APIMethod.putData(
+              APIPath.houseHold + '${item.id}/', item.toJson())
+          .then((v) => Map<String, dynamic>.from(v));
+      return HouseHold.fromJson(res);
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  @override
+  Future<String> deleteHouseHold({HouseHold item}) async {
+    try {
+      return await APIMethod.delete(
+          APIPath.houseHold + '${item.id}/', item.toJson())
+          .then((v) => v.toString());
+    } catch (e) {
+      throw e;
+    }
+  }
 }
