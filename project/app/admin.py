@@ -12,7 +12,6 @@ from django_admin_listfilter_dropdown.filters import (
     ChoiceDropdownFilter
 )
 from django_restful_admin import admin as rest_admin
-from dynamic_raw_id.admin import DynamicRawIDMixin
 from django.utils.html import format_html
 from admin_numeric_filter.admin import NumericFilterModelAdmin, \
     SliderNumericFilter
@@ -97,7 +96,7 @@ class CuuHoLocationForm(ModelForm):
         self.fields['volunteer'] = ModelChoiceField(queryset=TinhNguyenVien.objects.all(), widget=Select2(), required=False)
 
 
-class CuuHoAdmin(DynamicRawIDMixin, admin.ModelAdmin):
+class CuuHoAdmin(admin.ModelAdmin):
     list_display = ('update_time', 'status', 'name', 'phone',
                     'location', 'tinh', 'huyen', 'xa', 'volunteer')
     list_filter = (
@@ -252,7 +251,7 @@ class HoDanHistoryAdmin(SimpleHistoryAdmin):
     ]
 
 
-class HoDanAdmin(DynamicRawIDMixin, NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.ModelAdmin):
+class HoDanAdmin(NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.ModelAdmin):
     list_display = ('id', 'get_update_time', 'status', 'name', 'phone', 'get_note',
                     'people_number', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
     fieldsets = (
@@ -307,11 +306,6 @@ class HoDanAdmin(DynamicRawIDMixin, NumericFilterModelAdmin, MapAdmin, HoDanHist
             return format_html('<div class="highlight-blue"> {} </div>', update_time)
     get_update_time.short_description = 'Cập nhật'
     get_update_time.allow_tags = True
-
-    @property
-    def media(self):
-        media = super().media
-        return media
 
     class Media:
         css = {
