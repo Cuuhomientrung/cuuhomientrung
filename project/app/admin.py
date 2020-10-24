@@ -18,7 +18,7 @@ from admin_numeric_filter.admin import NumericFilterModelAdmin, \
     SliderNumericFilter
 from mapbox_location_field.admin import MapAdmin
 from mapbox_location_field.forms import LocationField
-from django.forms import ModelForm, ModelChoiceField, CharField, Textarea
+from django.forms import ModelForm, ModelChoiceField, CharField, Textarea, TextInput
 from simple_history.admin import SimpleHistoryAdmin
 from app.settings import (
     REVISION
@@ -162,6 +162,8 @@ class HoDanForm(ModelForm):
             'note': Textarea(
                 attrs={'placeholder': 'Ví dụ:\n17:00 23/10: Có người lớn bị cảm cúm.\n20:39 23/10: Đã gọi xác minh bệnh.\n'}
             ),
+            'name': TextInput(attrs={'size': 50}),
+            'phone': TextInput(attrs={'size': 50})
         }
 
     def __init__(self, *args, **kwargs):
@@ -169,7 +171,6 @@ class HoDanForm(ModelForm):
         self.fields['volunteer'].label_from_instance = self.label_from_volunteer
         self.fields['volunteer'].label = 'Tình nguyện viên'
         self.fields['cuuho'].label_from_instance = self.label_from_cuuho
-        self.fields['cuuho'].label = 'Đội cứu hộ'
 
     @staticmethod
     def label_from_volunteer(obj):
@@ -181,8 +182,6 @@ class HoDanForm(ModelForm):
         status = _display_choices(CUUHO_STATUS, obj.status)
         return f"{obj.name} | {obj.phone} | {status}"
 
-    name = CharField(required=True)
-    phone = CharField(required=True)
     tinh = ModelChoiceField(queryset=Tinh.objects.all(), widget=Select2(), required=False, label='Tỉnh')
     huyen = ModelChoiceField(queryset=Huyen.objects.all(), widget=Select2(), required=False, label='Huyện')
     xa = ModelChoiceField(queryset=Xa.objects.all(), widget=Select2(), required=False, label='Xã')
