@@ -64,6 +64,11 @@
   color: #fff;
 }
 
+.citizen-status.status-emergency {
+  background: #FF4500;
+  border: 1px solid #FF4500;
+}
+
 .citizen-updated-time {
   margin-left: auto;
   font-size: 13px;

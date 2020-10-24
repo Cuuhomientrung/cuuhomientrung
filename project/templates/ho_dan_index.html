@@ -59,7 +59,7 @@
                 </h5>
               </div>
               <div class="citizen-meta">
-                <span class="citizen-status">{{ hodan.status }}</span>
+                <span class="citizen-status {%if hodan.status_emergency %} status-emergency {% endif %}">{{ hodan.status }}</span>
                 <div class="citizen-updated-time">
                   <span>Cập nhật: </span>
                   <span> {{ hodan.update_time }} </span>
@@ -68,7 +68,7 @@
               <div class="citizen-body">
                 <div class="citizen-info">
                   <div class="citizen-label"> Điện thoại </div>
-                  <div class="citizen-value citizen-value--phone"> 
+                  <div class="citizen-value citizen-value--phone">
                     <a href="tel:{{ hodan.phone }}">
                       <i class="la la-phone"></i>
                       {{ hodan.phone }}
@@ -77,7 +77,7 @@
                 </div>
                 <div class="citizen-info">
                   <div class="citizen-label"> Địa chỉ </div>
-                  <div class="citizen-value"> 
+                  <div class="citizen-value">
                     {{ hodan.location }}
                     <ul class="citizen-location">
                       {% if hodan.xa %}, {{ hodan.xa }} {% endif %}
@@ -89,9 +89,9 @@
                 <div class="citizen-info">
                   <div class="citizen-label"> Số người </div>
                   <div class="citizen-value">
-                    <span class="citizen-number"> 
+                    <span class="citizen-number">
                       <strong>{{ hodan.people_number }}</strong>
-                      <span>người</span> 
+                      <span>người</span>
                     </span>
                   </div>
                 </div>
@@ -101,9 +101,9 @@
                 </div>
                 <div class="citizen-info">
                   <div class="citizen-label"> Đơn vị cứu hộ</div>
-                  <div class="citizen-value"> 
+                  <div class="citizen-value">
                     {% if hodan.cuuho %}
-                      {{ hodan.cuuho }} 
+                      {{ hodan.cuuho }}
                     {% else %}
                       {{ '_ _ _ _ _' }}
                     {% endif %}
