@@ -8,7 +8,7 @@ from django.urls import reverse
 def index(request):
     tong_hodan_cap_cuu= HoDan.objects.filter(status_id=3).count()
     tong_doi_cuu_ho = CuuHo.objects.count()
-    
+
     totalByTinh = Tinh.objects.prefetch_related('hodan_reversed')\
         .filter(hodan_reversed__status=1)\
         .annotate(total_hodan=Count("hodan_reversed"))\
@@ -24,8 +24,6 @@ def index(request):
         } for tinh in totalByTinh
     ]
 
-
-
     context = {
         'tong_hodan_cap_cuu': tong_hodan_cap_cuu,
         'tong_doi_cuu_ho': tong_doi_cuu_ho,
@@ -33,4 +31,4 @@ def index(request):
         'hodan_url' : hodanurl,
         'cuuho_url': cuuhourl,
     }
-    return render(request, 'index.html', context=context)
+    return render(request, 'home_index.html', context=context)
