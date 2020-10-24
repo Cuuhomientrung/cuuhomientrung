@@ -1,1 +1,7 @@
 @import "~bootstrap/scss/bootstrap";
+
+// Base
+@import "./base/variables";
+
+// Pages
+@import "./pages/homepage";
