@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'django_select2',
     'django_select2_admin_filters',
     'admin_auto_filters',
+    'easy_select2',
 ]
 
 
