@@ -308,6 +308,11 @@ class HoDanAdmin(DynamicRawIDMixin, NumericFilterModelAdmin, MapAdmin, HoDanHist
     get_update_time.short_description = 'Cập nhật'
     get_update_time.allow_tags = True
 
+    @property
+    def media(self):
+        media = super().media
+        return media
+
     class Media:
         css = {
             'all': (f'/static/css/custom.css?v={REVISION}',)
