@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     'django_select2_admin_filters',
     'admin_auto_filters',
     'easy_select2',
+    'webpack_loader',
 ]
 
 
@@ -176,6 +177,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.static',
+                'app.context_processors.global_params',
             ],
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
@@ -246,8 +248,16 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-STATIC_ROOT= BASE_DIR + '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'deploy')
+
 STATIC_URL = '/static/'
+
+print(os.path.join(BASE_DIR, '..', 'static', 'webpack_bundles'))
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static', 'webpack_bundles'),
+)
 
 MEDIA_ROOT = BASE_DIR + '/media'
 MEDIA_URL = '/media/'
@@ -261,3 +271,16 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 REVISION = calendar.timegm(time.gmtime())
 
 SELECT2_USE_BUNDLED_JQUERY = False
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'webpack_bundles/', # must end with slash
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': [],
+        'EXCLUDE_RUNTIME': False,
+        'BASE_ENTRYPOINT': ''
+    }
+}

@@ -1,0 +1,25 @@
+{% load render_bundle from webpack_loader %}
+{% load static i18n %}
+
+<!DOCTYPE html>
+<html lang="{{ language }}">
+<head>
+  <meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  {% block meta %}
+    <title>Cứu Trợ Miền Trung</title>
+  {% endblock %}
+  <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+  {% block headers %}{% endblock %}
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+  {% block content %}{% endblock %}
+  {% block footer %}{% endblock %}
+
+  {% render_bundle 'home_page_loader' 'js' %}
+  {% block footer_scripts %}{% endblock %}
+
+  {% csrf_token %}
+</body>
+</html>
