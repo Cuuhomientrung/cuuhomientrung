@@ -6,7 +6,7 @@ import json
 
 
 def is_vietnamese(name):
-    accents = ['à', 'á', 'ạ', 'ả', 'ã', 'â', 'ó', 'ò', 'ỏ', 'ọ', 'õ', 'ô', 'ồ', 'ố', 'ổ', 'ộ', 'ơ', 'ờ', 'ớ', 'ở', 'ợ', 'ê',
+    accents = ['à', 'á', 'ạ', 'ả', 'ã', 'â', 'ấ', "ậ", "ẩ", 'ó', 'ò', 'ỏ', 'ọ', 'õ', 'ô', 'ồ', 'ố', 'ổ', 'ộ', 'ơ', 'ờ', 'ớ', 'ở', 'ợ', 'ê',
                'ề', 'ế', 'ể', 'ệ', 'ì', 'í', 'ỉ', 'ị', 'ù', 'ú', 'ụ', 'ủ', 'ư', 'ừ', 'ú', 'ủ', 'ự', 'ữ', 'ỳ', 'ý', 'ỷ', 'ỹ', 'ỵ',
                'đ', 'ũ']
     is_vietnamese = False
@@ -17,8 +17,8 @@ def is_vietnamese(name):
     return is_vietnamese
 
 def has_special_character(name):
-    accents = [':', '?', '@',
-               '(', ')', '/', '.', '$', '<', '>', '!', 'QPbmCRVM', 'OR 2+426-426-1=', '�', 'XjlZab0M']
+    accents = [':', '?', '@', '{', '}'
+               '(', ')', '/', '.', '$', '<', '>', '!', 'QPbmCRVM', 'OR', '�', 'XjlZab0M', 'acu']
     is_special = False
     for ch in accents:
         if ch in name:
@@ -33,7 +33,7 @@ class Command(BaseCommand):
 
         # for tinh in Tinh.objects.all():
         #     if not is_vietnamese(tinh.name):
-        #         if has_special_character(tinh.name):
+        #         if (not tinh.name.strip()) or has_special_character(tinh.name):
         #             tinh.delete()
         #         else:
         #             choice = input(
@@ -43,7 +43,7 @@ class Command(BaseCommand):
 
         # for huyen in Huyen.objects.all():
         #     if not is_vietnamese(huyen.name):
-        #         if has_special_character(huyen.name):
+        #         if (not huyen.name.strip()) or has_special_character(huyen.name):
         #             huyen.delete()
         #         else:
         #             choice = input(
@@ -53,7 +53,7 @@ class Command(BaseCommand):
 
         # for xa in Xa.objects.all():
         #     if not is_vietnamese(xa.name):
-        #         if has_special_character(xa.name):
+        #         if (not xa.name.strip()) or has_special_character(xa.name):
         #             xa.delete()
         #         else:
         #             choice = input(f"Do you want to delete {xa.name} ? (Y/N)")
