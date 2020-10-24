@@ -267,7 +267,7 @@ class HoDanAdmin(DynamicRawIDMixin, NumericFilterModelAdmin, MapAdmin, HoDanHist
         }),
     )
     list_display_links = ('id', 'name', 'phone',)
-    list_editable = ('status',)
+    list_editable = ()
     list_filter = (
         'status',
         TinhAdminFilter,
