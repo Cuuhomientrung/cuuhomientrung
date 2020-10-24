@@ -11,8 +11,6 @@ backend/profiles/*
 
 .python-version
 data/
-Pipfile
-Pipfile.lock
 project/static/
 !logs/.gitkeep
 logs/*
@@ -158,3 +156,6 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+Pipfile.lock
+node_modules/*
+project/app/static/webpack_bundles/*

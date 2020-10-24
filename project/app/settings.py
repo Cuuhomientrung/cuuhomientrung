@@ -27,8 +27,7 @@ env = environ.Env(
     DB_PASSWORD=(str, 'bangtin_ainews_2811#'),
     DB_HOSTNAME=(str, '103.192.236.67'),
     DB_PORT=(int, 5432),
-    MAPBOX_KEY=(
-        str, 'pk.eyJ1IjoiZHp1bmdkYSIsImEiOiJja2drMDFka2wwMW9zMndxZW9lMXBud3d5In0.oKlf9RF-X-SKkUJUAQ9ndw'),
+    MAPBOX_KEY=(str, 'pk.eyJ1IjoiZHp1bmdkYSIsImEiOiJja2drMDFka2wwMW9zMndxZW9lMXBud3d5In0.oKlf9RF-X-SKkUJUAQ9ndw'),
     SENTRY_DSN=(str, None),
     DEPLOY_ENV=(str, 'local'),
     GIT_VERSION=(str, None),
@@ -70,8 +69,10 @@ INSTALLED_APPS = [
     'mapbox_location_field',
     'simple_history',
     'django_select2',
-    'easy_select2',
+    'django_select2_admin_filters',
     'admin_auto_filters',
+    'easy_select2',
+    'webpack_loader',
 ]
 
 
@@ -176,6 +177,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.static',
+                'app.context_processors.global_params',
             ],
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
@@ -198,8 +200,9 @@ SITE_ID = 1
 # }
 
 # USE THIS SETTING IF RUNNING ON PRODUCTION
+
 DATABASES = {
-    'default': {
+        'default':{
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': env('DB_NAME'),
         'USER': env('DB_USER'),
@@ -228,6 +231,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -244,16 +248,39 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-STATIC_ROOT = BASE_DIR + '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'deploy')
+
 STATIC_URL = '/static/'
+
+print(os.path.join(BASE_DIR, '..', 'static', 'webpack_bundles'))
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static', 'webpack_bundles'),
+)
 
 MEDIA_ROOT = BASE_DIR + '/media'
 MEDIA_URL = '/media/'
 
-APPEND_SLASH = False
+APPEND_SLASH=False
 
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE=True
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 REVISION = calendar.timegm(time.gmtime())
+
+SELECT2_USE_BUNDLED_JQUERY = False
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'webpack_bundles/', # must end with slash
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': [],
+        'EXCLUDE_RUNTIME': False,
+        'BASE_ENTRYPOINT': ''
+    }
+}

@@ -1,11 +1,10 @@
 import datetime
 import pytz
 from django.contrib import admin
-from django.db.models import Count, F, Count
 from django.utils.safestring import mark_safe
 from app.settings import TIME_ZONE
 from app.models import TinTuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa,\
-    TrangThaiHoDan
+    TrangThaiHoDan, CUUHO_STATUS, TINHNGUYEN_STATUS
 from app.views import BaseRestfulAdmin, HoDanRestFulModelAdmin
 from app.utils.export_to_excel import export_ho_dan_as_excel_action, utc_to_local
 from django.conf.locale.vi import formats as vi_formats
@@ -13,13 +12,13 @@ from django_admin_listfilter_dropdown.filters import (
     ChoiceDropdownFilter
 )
 from django_restful_admin import admin as rest_admin
-from dynamic_raw_id.admin import DynamicRawIDMixin
 from django.utils.html import format_html
 from admin_numeric_filter.admin import NumericFilterModelAdmin, \
     SliderNumericFilter
 from mapbox_location_field.admin import MapAdmin
 from mapbox_location_field.forms import LocationField
-from django.forms import ModelForm, ModelChoiceField
+from django.forms import ModelForm, ModelChoiceField, Textarea, TextInput
+from django.db.models import Count
 from simple_history.admin import SimpleHistoryAdmin
 from app.settings import (
     REVISION
@@ -91,13 +90,13 @@ class CuuHoLocationForm(ModelForm):
         fields = "__all__"
         exclude = ('thon',)
 
-    tinh = ModelChoiceField(queryset=Tinh.objects.all(), widget=Select2(), required=False)
-    huyen = ModelChoiceField(queryset=Huyen.objects.all(), widget=Select2(), required=False)
-    xa = ModelChoiceField(queryset=Xa.objects.all(), widget=Select2(), required=False)
-    volunteer = ModelChoiceField(queryset=TinhNguyenVien.objects.all(), widget=Select2(), required=False)
+    def __init__(self, *args, **kwargs):
+        super(CuuHoLocationForm, self).__init__(*args, **kwargs)
+        self.fields["tinh"].queryset = Tinh.objects.order_by("name")
+        self.fields['volunteer'] = ModelChoiceField(queryset=TinhNguyenVien.objects.all(), widget=Select2(), required=False)
 
 
-class CuuHoAdmin(DynamicRawIDMixin, admin.ModelAdmin):
+class CuuHoAdmin(admin.ModelAdmin):
     list_display = ('update_time', 'status', 'name', 'phone',
                     'location', 'tinh', 'huyen', 'xa', 'volunteer')
     list_filter = (
@@ -142,17 +141,89 @@ class TinhNguyenVienAdmin(admin.ModelAdmin):
         return queryset
 
 
+# Helper function
+def _display_choices(choices, value):
+    for choice in choices:
+        if choice[0] == value:
+            return choice[1]
+    return ''
+
+
 class HoDanForm(ModelForm):
     class Meta:
         model = HoDan
         fields = "__all__"
-        exclude = ('thon',)
+        exclude = ('thon',),
+        labels = {
+            "name": "Tiêu đề",
+            "phone": "Số điện thoại",
+        }
+        widgets = {
+            'note': Textarea(
+                attrs={'placeholder': 'Ví dụ:\n17:00 23/10: Có người lớn bị cảm cúm.\n20:39 23/10: Đã gọi xác minh bệnh.\n'}
+            ),
+            'name': TextInput(attrs={'size': 50}),
+            'phone': TextInput(attrs={'size': 50})
+        }
 
-    tinh = ModelChoiceField(queryset=Tinh.objects.all(), widget=Select2(), required=False)
-    huyen = ModelChoiceField(queryset=Huyen.objects.all(), widget=Select2(), required=False)
-    xa = ModelChoiceField(queryset=Xa.objects.all(), widget=Select2(), required=False)
-    volunteer = ModelChoiceField(queryset=TinhNguyenVien.objects.all(), widget=Select2(), required=False)
-    cuuho = ModelChoiceField(queryset=CuuHo.objects.all(), widget=Select2(), required=False)
+    def __init__(self, *args, **kwargs):
+        super(HoDanForm, self).__init__(*args, **kwargs)
+        self.fields["tinh"].queryset = Tinh.objects.order_by("name")
+
+        self.fields['volunteer'] = ModelChoiceField(queryset=TinhNguyenVien.objects.all(), widget=Select2(), required=False)
+        self.fields['cuuho'] = ModelChoiceField(queryset=CuuHo.objects.all(), widget=Select2(), required=False)
+
+        self.fields['volunteer'].label_from_instance = self.label_from_volunteer
+        self.fields['volunteer'].label = 'Tình nguyện viên'
+
+        self.fields['cuuho'].label_from_instance = self.label_from_cuuho
+        self.fields['cuuho'].label = 'Đội cứu hộ'
+
+        self.fields["tinh"].label = "Tỉnh"
+        self.fields["tinh"].help_text = "Nhấn vào để chọn tỉnh"
+
+        self.fields["huyen"].label = "Huyện"
+        self.fields["huyen"].help_text = "Bạn phải chọn tỉnh trước"
+
+        self.fields["xa"].label = "Xã"
+        self.fields["xa"].help_text = "Bạn phải chọn tỉnh, và huyện trước"
+
+        self.fields['geo_location'] = LocationField(
+            required=False,
+            map_attrs={
+                "style": "mapbox://styles/mapbox/outdoors-v11",
+                "zoom": 10,
+                "center": [106.507467036133, 17.572843459110928],
+                "cursor_style": 'pointer',
+                "marker_color": "red",
+                "rotate": False,
+                "geocoder": True,
+                "fullscreen_button": True,
+                "navigation_buttons": True,
+                "track_location_button": True,
+                "readonly": True,
+                "placeholder": "Chọn một địa điểm trên bản đồ",
+            }
+        )
+
+    @staticmethod
+    def label_from_volunteer(obj):
+        status = _display_choices(TINHNGUYEN_STATUS, obj.status)
+        return f"{obj.name} | {obj.phone} | {status}"
+
+    @staticmethod
+    def label_from_cuuho(obj):
+        status = _display_choices(CUUHO_STATUS, obj.status)
+        return f"{obj.name} | {obj.phone} | {status}"
+
+    volunteer = ModelChoiceField(
+        queryset=TinhNguyenVien.objects.all(), widget=Select2(), required=False,
+        help_text="Tên | Số điện thoại | Trạng thái"
+    )
+    cuuho = ModelChoiceField(
+        queryset=CuuHo.objects.all(), widget=Select2(), required=False,
+        help_text="Tên | Số điện thoại | Trạng thái"
+    )
 
     geo_location = LocationField(
         required=False,
@@ -180,11 +251,22 @@ class HoDanHistoryAdmin(SimpleHistoryAdmin):
     ]
 
 
-class HoDanAdmin(DynamicRawIDMixin, NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.ModelAdmin):
+class HoDanAdmin(NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.ModelAdmin):
     list_display = ('id', 'get_update_time', 'status', 'name', 'phone', 'get_note',
                     'people_number', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
+    fieldsets = (
+        (None, {
+           'fields': ('name', 'phone', 'status')
+        }),
+        ('Thông tin', {
+            'fields': ('note', 'people_number', 'volunteer', 'cuuho',),
+        }),
+        ('Địa điểm', {
+            'fields': ('location', 'tinh', 'huyen', 'xa', 'geo_location'),
+        }),
+    )
     list_display_links = ('id', 'name', 'phone',)
-    list_editable = ('status',)
+    list_editable = ()
     list_filter = (
         'status',
         TinhAdminFilter,
@@ -249,16 +331,17 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
 
     @mark_safe
     def get_ho_dan_can_ung_cuu(self, obj):
-        hodan = [item for item in obj.hodan_reversed.all() if item.status_id == 3]
-        tag = f'<a href="/app/hodan/?{self.URL_CUSTOM_TAG}={obj.pk}&status_id=3">{len(hodan)}</a>'
+        tag = f'<a href="/app/hodan/?{self.URL_CUSTOM_TAG}={obj.pk}&status_id=3">{obj.total_hodan}</a>'
         return tag
     get_ho_dan_can_ung_cuu.short_description = "Hộ dân cần ứng cứu"
     get_ho_dan_can_ung_cuu.allow_tags = True
 
     def get_queryset(self, request):
-        queryset = super(HoDanCuuHoStatisticBase, self).get_queryset(request)
-        queryset = queryset.prefetch_related(
-            'cuuho_reversed', 'hodan_reversed')
+        queryset = super(HoDanCuuHoStatisticBase,self).get_queryset(request)
+        queryset = queryset.prefetch_related('cuuho_reversed', 'hodan_reversed')\
+            .filter(hodan_reversed__status_id=3)\
+            .annotate(total_hodan=Count("hodan_reversed"))\
+            .order_by('-total_hodan')
         return queryset
 
 
@@ -281,15 +364,6 @@ class XaAdmin(HoDanCuuHoStatisticBase):
         HuyenAdminFilter,
     )
     URL_CUSTOM_TAG = 'xa'
-
-    def get_queryset(self, request):
-        queryset = super(HoDanCuuHoStatisticBase,self).get_queryset(request)
-        queryset = queryset.prefetch_related('cuuho_reversed', 'hodan_reversed')\
-            .filter(hodan_reversed__status_id=3)\
-            .annotate(total_hodan=Count("hodan_reversed"))\
-            .order_by('-total_hodan')
-        return queryset
-
     list_per_page=PAGE_SIZE
 
 

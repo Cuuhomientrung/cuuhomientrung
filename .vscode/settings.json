@@ -1,6 +1,0 @@
-{
-    "python.dataScience.searchForJupyter": false,
-    "python.formatting.provider": "autopep8",
-    "prettier.tabWidth": 4,
-    "vetur.format.options.tabSize": 4
-}
