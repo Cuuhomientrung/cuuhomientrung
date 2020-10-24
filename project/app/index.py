@@ -1,6 +1,6 @@
 from app.admin import TinhAdmin
-from app.models import Tinh, HoDan, CuuHo,Xa
-from django.db.models import Count, Q
+from app.models import Tinh, HoDan, CuuHo
+from django.db.models import Count
 from django.shortcuts import render
 from django.urls import reverse
 

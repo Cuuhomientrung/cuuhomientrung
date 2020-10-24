@@ -32,7 +32,6 @@ vi_formats.DATETIME_FORMAT = "d/m/y H:i"
 PAGE_SIZE = 30
 
 # admin interface
-
 admin.site.site_header = 'Hệ thống thông tin Cứu hộ miền Trung'
 admin.site.site_title = 'Hệ thống thông tin Cứu hộ miền Trung'
 admin.index_title = 'Hệ thống thông tin Cứu hộ miền Trung'
@@ -341,9 +340,11 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
     get_ho_dan_can_ung_cuu.allow_tags = True
 
     def get_queryset(self, request):
-        queryset = super(HoDanCuuHoStatisticBase, self).get_queryset(request)
-        queryset = queryset.prefetch_related(
-            'cuuho_reversed', 'hodan_reversed')
+        queryset = super(HoDanCuuHoStatisticBase,self).get_queryset(request)
+        queryset = queryset.prefetch_related('cuuho_reversed', 'hodan_reversed')\
+            .filter(hodan_reversed__status_id=3)\
+            .annotate(total_hodan=Count("hodan_reversed"))\
+            .order_by('-total_hodan')
         return queryset
 
 
@@ -366,15 +367,6 @@ class XaAdmin(HoDanCuuHoStatisticBase):
         HuyenAdminFilter,
     )
     URL_CUSTOM_TAG = 'xa'
-
-    def get_queryset(self, request):
-        queryset = super(HoDanCuuHoStatisticBase,self).get_queryset(request)
-        queryset = queryset.prefetch_related('cuuho_reversed', 'hodan_reversed')\
-            .filter(hodan_reversed__status_id=3)\
-            .annotate(total_hodan=Count("hodan_reversed"))\
-            .order_by('-total_hodan')
-        return queryset
-
     list_per_page=PAGE_SIZE
 
 

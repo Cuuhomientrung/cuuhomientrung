@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
 from django_restful_admin import admin as rest_admin
+from app import ho_dan_views
 from app.index import index
 
 urlpatterns = [
@@ -27,4 +28,5 @@ urlpatterns = [
 
     path('admin/', admin.site.urls, name="admin_home"),
     path('select2/', include('django_select2.urls')),
+    url(r'^ho_dan$', ho_dan_views.index),
 ]
