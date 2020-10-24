@@ -17,63 +17,158 @@
   <body>
     <div class="wrapper">
       <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <a class="navbar-brand" href="#">Cứu hộ miền trung</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <div class="container">
+            <a class="navbar-brand" href="#">Cứu hộ miền trung</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
 
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="#">Hộ dân cần cứu trợ</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" href="#">Đội cứu trợ</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" href="#">Thông tin</a>
-              </li>
-            </ul>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Hộ dân cần cứu trợ</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Đội cứu trợ</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Thông tin</a>
+                </li>
+              </ul>
+            </div>
           </div>
         </nav>
       </header>
       <main role="main" class="py-5 px-3">
-        <div class="card-deck">
-          <div class="card card-homepage border-danger">
-            <div class="card-header">
-              <h5 class="card-title text-danger">
-                Hộ dân cần cứu trợ
-              </h5>
-              <div class="card-meta text-small">
-                <span>Đang có 123 hộ dân cần cứu trợ</span>
+        <div class="container">
+          <section class="mb-5">
+            <div class="card-deck">
+              <div class="card card-homepage border-danger">
+                <div class="card-header">
+                  <h5 class="card-title text-danger">
+                    Hộ dân cần cứu trợ
+                  </h5>
+                  <div class="card-meta text-small">
+                    <span>Đang có 123 hộ dân cần cứu trợ</span>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <p class="card-text">Phát hiện hộ dân cần cứu trợ? Thêm ngay để các TNV kết nối với các đội cứu trợ.</p>
+                </div>
+                <div class="card-footer">
+                  <a href="#" class="btn btn-danger">Thêm hộ dân</a>
+                  <a href="#" class="btn btn-secondary">Xem </a>
+                </div>
+              </div>
+              <div class="card card-homepage border-success">
+                <div class="card-header">
+                  <h5 class="card-title text-success">
+                    Đội cứu trợ
+                  </h5>
+                  <div class="card-meta text-small">
+                    <span>Đang có 56 đội cứu trợ</span>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <p class="card-text">Đăng ký trở thành đội cứu trợ để nhận được các yêu cầu cứu trợ mới nhất.</p>
+                </div>
+                <div class="card-footer">
+                  <a href="#" class="btn btn-success">Đăng ký đội cứu trợ</a>
+                  <a href="#" class="btn btn-secondary">Xem </a>
+                </div>
               </div>
             </div>
-            <div class="card-body">
-              <p class="card-text">Phát hiện hộ dân cần cứu trợ? Thêm ngay để các TNV kết nối với các đội cứu trợ.</p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-danger">Thêm hộ dân</a>
-              <a href="#" class="btn btn-secondary">Xem </a>
-            </div>
-          </div>
-          <div class="card card-homepage border-success">
-            <div class="card-header">
-              <h5 class="card-title text-success">
-                Đội cứu trợ
-              </h5>
-              <div class="card-meta text-small">
-                <span>Đang có 56 đội cứu trợ</span>
+          </section>
+
+          <section>
+            <h4 class="section-title mb-3">
+              Thông tin chi tiết các tỉnh
+              <i class="la la-angle-double-right"></i>
+            </h4>
+            <div class="card-deck card-deck-counter">
+              <div class="card">
+                <img class="card-img-top" src="https://thongtincuutro.com/images_Hung/hatinh.png" alt="Tỉnh">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    Hà tĩnh
+                  </h5>
+                  <div class="card-counter-info">
+                    <span class="card-counter-info-text text-danger">1</span>
+                    <span>Hộ dân cần cứu trợ</span>
+                  </div>
+                  <div class="card-counter-info">
+                    <span class="card-counter-info-text text-success">2</span>
+                    <span>Đội cứu trợ</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <img class="card-img-top" src="https://thongtincuutro.com/images_Hung/hatinh.png" alt="Tỉnh">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    Hà tĩnh
+                  </h5>
+                  <div class="card-counter-info">
+                    <span class="card-counter-info-text text-danger">1</span>
+                    <span>Hộ dân cần cứu trợ</span>
+                  </div>
+                  <div class="card-counter-info">
+                    <span class="card-counter-info-text text-success">2</span>
+                    <span>Đội cứu trợ</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <img class="card-img-top" src="https://thongtincuutro.com/images_Hung/hatinh.png" alt="Tỉnh">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    Hà tĩnh
+                  </h5>
+                  <div class="card-counter-info">
+                    <span class="card-counter-info-text text-danger">1</span>
+                    <span>Hộ dân cần cứu trợ</span>
+                  </div>
+                  <div class="card-counter-info">
+                    <span class="card-counter-info-text text-success">2</span>
+                    <span>Đội cứu trợ</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <img class="card-img-top" src="https://thongtincuutro.com/images_Hung/hatinh.png" alt="Tỉnh">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    Hà tĩnh
+                  </h5>
+                  <div class="card-counter-info">
+                    <span class="card-counter-info-text text-danger">1</span>
+                    <span>Hộ dân cần cứu trợ</span>
+                  </div>
+                  <div class="card-counter-info">
+                    <span class="card-counter-info-text text-success">2</span>
+                    <span>Đội cứu trợ</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <img class="card-img-top" src="https://thongtincuutro.com/images_Hung/hatinh.png" alt="Tỉnh">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    Hà tĩnh
+                  </h5>
+                  <div class="card-counter-info">
+                    <span class="card-counter-info-text text-danger">1</span>
+                    <span>Hộ dân cần cứu trợ</span>
+                  </div>
+                  <div class="card-counter-info">
+                    <span class="card-counter-info-text text-success">2</span>
+                    <span>Đội cứu trợ</span>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="card-body">
-              <p class="card-text">Đăng ký trở thành đội cứu trợ để nhận được các yêu cầu cứu trợ mới nhất.</p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-success">Đăng ký đội cứu trợ</a>
-              <a href="#" class="btn btn-secondary">Xem </a>
-            </div>
-          </div>
+          </section>
         </div>
       </main>
       <footer>
