@@ -156,7 +156,8 @@ class CuuHo(models.Model):
         sort=True,
         blank=True,
         null=True,
-        related_name="cuuho_reversed")
+        related_name="cuuho_reversed",
+        on_delete=models.CASCADE)
         
     xa = ChainedForeignKey(
         Xa,
@@ -167,7 +168,8 @@ class CuuHo(models.Model):
         sort=True,
         blank=True,
         null=True,
-        related_name="cuuho_reserved")
+        related_name="cuuho_reserved",
+        on_delete=models.CASCADE)
 
     thon = models.ForeignKey(
         Thon,
@@ -232,16 +234,30 @@ class HoDan(models.Model):
         Tinh, blank=True, null=True, on_delete=models.CASCADE,
         related_name="hodan_reversed"
     )
-    huyen = models.ForeignKey(
+    huyen = ChainedForeignKey(
         Huyen,
-        blank=True, null=True, on_delete=models.CASCADE,
-        related_name="hodan_reversed"
-    )
-    xa = models.ForeignKey(
+        chained_field = "tinh",
+        chained_model_field = "tinh",
+        show_all = False,
+        auto_choose = True,
+        sort=True,
+        blank=True,
+        null=True,
+        related_name="hodan_reversed",
+        on_delete=models.CASCADE)
+        
+    xa = ChainedForeignKey(
         Xa,
-        blank=True, null=True, on_delete=models.CASCADE,
-        related_name="hodan_reversed"
-    )
+        chained_field = "huyen",
+        chained_model_field = "huyen",
+        show_all = False,
+        auto_choose = True,
+        sort=True,
+        blank=True,
+        null=True,
+        related_name="hodan_reserved",
+        on_delete=models.CASCADE)
+
     thon = models.ForeignKey(
         Thon,
         blank=True, null=True, on_delete=models.CASCADE,

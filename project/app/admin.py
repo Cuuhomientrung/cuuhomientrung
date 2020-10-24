@@ -148,29 +148,28 @@ class HoDanForm(ModelForm):
         fields = "__all__"
         exclude = ('thon',)
 
-    tinh = ModelChoiceField(queryset=Tinh.objects.all(), widget=Select2(), required=False)
-    huyen = ModelChoiceField(queryset=Huyen.objects.all(), widget=Select2(), required=False)
-    xa = ModelChoiceField(queryset=Xa.objects.all(), widget=Select2(), required=False)
-    volunteer = ModelChoiceField(queryset=TinhNguyenVien.objects.all(), widget=Select2(), required=False)
-    cuuho = ModelChoiceField(queryset=CuuHo.objects.all(), widget=Select2(), required=False)
-
-    geo_location = LocationField(
-        required=False,
-        map_attrs={
-            "style": "mapbox://styles/mapbox/outdoors-v11",
-            "zoom": 10,
-            "center": [106.507467036133, 17.572843459110928],
-            "cursor_style": 'pointer',
-            "marker_color": "red",
-            "rotate": False,
-            "geocoder": True,
-            "fullscreen_button": True,
-            "navigation_buttons": True,
-            "track_location_button": True,
-            "readonly": True,
-            "placeholder": "Chọn một địa điểm",
-        }
-    )
+    def __init__(self, *args, **kwargs):
+        super(HoDanForm, self).__init__(*args, **kwargs)
+        self.fields["tinh"].queryset = Tinh.objects.order_by("name")
+        self.fields['volunteer'] = ModelChoiceField(queryset=TinhNguyenVien.objects.all(), widget=Select2(), required=False)
+        self.fields['cuuho'] = ModelChoiceField(queryset=CuuHo.objects.all(), widget=Select2(), required=False)
+        self.fields['geo_location'] = LocationField(
+            required=False,
+            map_attrs={
+                "style": "mapbox://styles/mapbox/outdoors-v11",
+                "zoom": 10,
+                "center": [106.507467036133, 17.572843459110928],
+                "cursor_style": 'pointer',
+                "marker_color": "red",
+                "rotate": False,
+                "geocoder": True,
+                "fullscreen_button": True,
+                "navigation_buttons": True,
+                "track_location_button": True,
+                "readonly": True,
+                "placeholder": "Chọn một địa điểm",
+            }
+        )
 
 
 class HoDanHistoryAdmin(SimpleHistoryAdmin):
