@@ -90,8 +90,11 @@ class CuuHoLocationForm(ModelForm):
         model = CuuHo
         fields = "__all__"
         exclude = ('thon',)
-
-    volunteer = ModelChoiceField(queryset=TinhNguyenVien.objects.all(), widget=Select2(), required=False)
+    
+    def __init__(self, *args, **kwargs):
+        super(CuuHoLocationForm, self).__init__(*args, **kwargs)
+        self.fields["tinh"].queryset = Tinh.objects.order_by("name")
+        self.fields['volunteer'] = ModelChoiceField(queryset=TinhNguyenVien.objects.all(), widget=Select2(), required=False)
 
 
 class CuuHoAdmin(DynamicRawIDMixin, admin.ModelAdmin):
