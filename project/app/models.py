@@ -284,13 +284,13 @@ class HoDan(models.Model):
 
     def save(self, *args, **kwargs):
         # Auto update huyen
-        if self.xa and self.xa.pk:
+        if self.xa and self.xa.pk and not self.xa.huyen:
             if self.xa.huyen and self.xa.huyen.pk:
                 self.huyen = self.xa.huyen
 
         # Auto update tinh
         if self.huyen and self.huyen.pk:
-            if self.huyen.tinh and self.huyen.tinh.pk:
+            if self.huyen.tinh and self.huyen.tinh.pk and not self.tinh:
                 self.tinh = self.huyen.tinh
 
         super().save(*args, **kwargs)

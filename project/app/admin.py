@@ -1,11 +1,10 @@
 import datetime
 import pytz
 from django.contrib import admin
-from django.db.models import Count, F, Count
 from django.utils.safestring import mark_safe
 from app.settings import TIME_ZONE
 from app.models import TinTuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa,\
-    TrangThaiHoDan
+    TrangThaiHoDan, CUUHO_STATUS, TINHNGUYEN_STATUS
 from app.views import BaseRestfulAdmin, HoDanRestFulModelAdmin
 from app.utils.export_to_excel import export_ho_dan_as_excel_action, utc_to_local
 from django.conf.locale.vi import formats as vi_formats
@@ -19,7 +18,7 @@ from admin_numeric_filter.admin import NumericFilterModelAdmin, \
     SliderNumericFilter
 from mapbox_location_field.admin import MapAdmin
 from mapbox_location_field.forms import LocationField
-from django.forms import ModelForm, ModelChoiceField
+from django.forms import ModelForm, ModelChoiceField, CharField, Textarea, TextInput
 from simple_history.admin import SimpleHistoryAdmin
 from app.settings import (
     REVISION
@@ -142,17 +141,40 @@ class TinhNguyenVienAdmin(admin.ModelAdmin):
         return queryset
 
 
+# Helper function
+def _display_choices(choices, value):
+    for choice in choices:
+        if choice[0] == value:
+            return choice[1]
+    return ''
+
+
 class HoDanForm(ModelForm):
     class Meta:
         model = HoDan
         fields = "__all__"
         exclude = ('thon',)
+        labels = {
+            "name": "Tiêu đề",
+            "phone": "Số điện thoại",
+        }
+        widgets = {
+            'note': Textarea(
+                attrs={'placeholder': 'Ví dụ:\n17:00 23/10: Có người lớn bị cảm cúm.\n20:39 23/10: Đã gọi xác minh bệnh.\n'}
+            ),
+            'name': TextInput(attrs={'size': 50}),
+            'phone': TextInput(attrs={'size': 50})
+        }
 
     def __init__(self, *args, **kwargs):
         super(HoDanForm, self).__init__(*args, **kwargs)
         self.fields["tinh"].queryset = Tinh.objects.order_by("name")
         self.fields['volunteer'] = ModelChoiceField(queryset=TinhNguyenVien.objects.all(), widget=Select2(), required=False)
         self.fields['cuuho'] = ModelChoiceField(queryset=CuuHo.objects.all(), widget=Select2(), required=False)
+        self.fields['volunteer'].label_from_instance = self.label_from_volunteer
+        self.fields['volunteer'].label = 'Tình nguyện viên'
+        self.fields['cuuho'].label_from_instance = self.label_from_cuuho
+
         self.fields['geo_location'] = LocationField(
             required=False,
             map_attrs={
@@ -170,6 +192,43 @@ class HoDanForm(ModelForm):
                 "placeholder": "Chọn một địa điểm",
             }
         )
+        
+    @staticmethod
+    def label_from_volunteer(obj):
+        status = _display_choices(TINHNGUYEN_STATUS, obj.status)
+        return f"{obj.name} | {obj.phone} | {status}"
+
+    @staticmethod
+    def label_from_cuuho(obj):
+        status = _display_choices(CUUHO_STATUS, obj.status)
+        return f"{obj.name} | {obj.phone} | {status}"
+
+    volunteer = ModelChoiceField(
+        queryset=TinhNguyenVien.objects.all(), widget=Select2(), required=False,
+        help_text="Tên | Số điện thoại | Trạng thái"
+    )
+    cuuho = ModelChoiceField(
+        queryset=CuuHo.objects.all(), widget=Select2(), required=False,
+        help_text="Tên | Số điện thoại | Trạng thái"
+    )
+
+    geo_location = LocationField(
+        required=False,
+        map_attrs={
+            "style": "mapbox://styles/mapbox/outdoors-v11",
+            "zoom": 10,
+            "center": [106.507467036133, 17.572843459110928],
+            "cursor_style": 'pointer',
+            "marker_color": "red",
+            "rotate": False,
+            "geocoder": True,
+            "fullscreen_button": True,
+            "navigation_buttons": True,
+            "track_location_button": True,
+            "readonly": True,
+            "placeholder": "Chọn một địa điểm",
+        }
+    )
 
 
 class HoDanHistoryAdmin(SimpleHistoryAdmin):
@@ -182,6 +241,17 @@ class HoDanHistoryAdmin(SimpleHistoryAdmin):
 class HoDanAdmin(DynamicRawIDMixin, NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.ModelAdmin):
     list_display = ('id', 'get_update_time', 'status', 'name', 'phone', 'get_note',
                     'people_number', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
+    fieldsets = (
+        (None, {
+           'fields': ('name', 'phone', 'status')
+        }),
+        ('Thông tin', {
+            'fields': ('note', 'people_number', 'volunteer', 'cuuho',),
+        }),
+        ('Địa điểm', {
+            'fields': ('location', 'tinh', 'huyen', 'xa', 'geo_location'),
+        }),
+    )
     list_display_links = ('id', 'name', 'phone',)
     list_editable = ('status',)
     list_filter = (
