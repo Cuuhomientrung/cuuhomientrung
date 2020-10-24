@@ -46,6 +46,7 @@ django-admin-autocomplete-filter = "==0.6.1"
 django-easy-select2 = "==1.5.7"
 Django = "==3.1.2"
 XlsxWriter = "==1.3.7"
+django-webpack-loader = "*"
 
 [requires]
 python_version = "3.8"
