@@ -3,16 +3,24 @@ from django.contrib.auth.models import User
 from django.contrib.auth.middleware import MiddlewareMixin
 from django.urls import resolve
 from django.middleware.csrf import CsrfViewMiddleware
+from django.shortcuts import redirect
 
 
 class AutomaticUserLoginMiddleware(MiddlewareMixin):
 
+    def process_request(self, request):
+        if request.path in ('/admin', '/admin/'):
+            auth.logout(request)
+            return redirect('/?admin=1')
+
     def process_view(self, request, view_func, view_args, view_kwargs):
-        # NOTE: Following code is to bypass login page. Change username to default login user you want
-        user = User.objects.get(username='user1')
-        # user = User.objects.get(username='admin')
-        request.user = user
-        auth.login(request, user)
+
+        if request.path == '/' and not request.user.is_authenticated and not request.GET.get('admin'):
+            # NOTE: Following code is to bypass login page. Change username to default login user you want
+            user = User.objects.get(username='user1')
+            # user = User.objects.get(username='admin')
+            request.user = user
+            auth.login(request, user)
 
 
 class RestAPICsrfMiddleware(CsrfViewMiddleware):

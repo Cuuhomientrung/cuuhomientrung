@@ -23,6 +23,7 @@ CUUHO_STATUS = [
     (0, 'Chưa xác minh'),
     (1, 'Sẵn sàng'),
     (2, 'Không gọi được'),
+    (5, 'Cần hỗ trợ'),
     (3, 'Đang cứu hộ'),
     (4, 'Đang nghỉ'),
 ]
@@ -39,6 +40,15 @@ HODAN_STATUS = [
     (8, "Đã ổn")
 ]
 
+HODAN_STATUS_NEW = [
+    (1, 'Chưa xác minh'),
+    (2, 'Không gọi được'),
+    (3, 'Cần ứng cứu gấp'),
+    (4, 'Đã gửi cứu hộ'),
+    (5, 'Cần thức ăn'),
+    (6, 'Cần thuốc men'),
+    (7, 'Đã an toàn')
+]
 
 class Tinh(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Tỉnh")
@@ -90,6 +100,18 @@ class Thon(models.Model):
         verbose_name_plural = "Thôn"
 
 
+class TrangThaiHoDan(models.Model):
+    name = models.TextField(blank=True, default='', verbose_name="Tên trạng thái")
+    created_time = models.DateTimeField(auto_now=True, verbose_name='Ngày tạo')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
+
+    def __str__(self):
+        return "%s" % (self.name)
+
+    def __unicode__(self):
+        return u'%s' % (self.name)
+
+
 class TinhNguyenVien(models.Model):
     name = models.TextField(blank=True, default='', verbose_name='Họ và tên')
     status = models.IntegerField(
@@ -124,16 +146,31 @@ class CuuHo(models.Model):
         Tinh, blank=True, null=True, on_delete=models.CASCADE,
         related_name="cuuho_reversed"
     )
-    huyen = models.ForeignKey(
+
+    huyen = ChainedForeignKey(
         Huyen,
-        blank=True, null=True, on_delete=models.CASCADE,
-        related_name="cuuho_reversed"
-    )
-    xa = models.ForeignKey(
+        chained_field = "tinh",
+        chained_model_field = "tinh",
+        show_all = False,
+        auto_choose = True,
+        sort=True,
+        blank=True,
+        null=True,
+        related_name="cuuho_reversed",
+        on_delete=models.CASCADE)
+
+    xa = ChainedForeignKey(
         Xa,
-        blank=True, null=True, on_delete=models.CASCADE,
-        related_name="cuuho_reversed"
-    )
+        chained_field = "huyen",
+        chained_model_field = "huyen",
+        show_all = False,
+        auto_choose = True,
+        sort=True,
+        blank=True,
+        null=True,
+        related_name="cuuho_reversed",
+        on_delete=models.CASCADE)
+
     thon = models.ForeignKey(
         Thon,
         blank=True, null=True, on_delete=models.CASCADE,
@@ -155,18 +192,18 @@ class CuuHo(models.Model):
         verbose_name = 'Các đội Cứu hộ'
         verbose_name_plural = 'Các đội Cứu hộ'
 
-    def save(self, *args, **kwargs):
-        # Auto update huyen
-        if self.xa and self.xa.pk:
-            if self.xa.huyen and self.xa.huyen.pk:
-                self.huyen = self.xa.huyen
+    # def save(self, *args, **kwargs):
+    #     # Auto update huyen
+    #     if self.xa and self.xa.pk:
+    #         if self.xa.huyen and self.xa.huyen.pk:
+    #             self.huyen = self.xa.huyen
 
-        # Auto update tinh
-        if self.huyen and self.huyen.pk:
-            if self.huyen.tinh and self.huyen.tinh.pk:
-                self.tinh = self.huyen.tinh
+    #     # Auto update tinh
+    #     if self.huyen and self.huyen.pk:
+    #         if self.huyen.tinh and self.huyen.tinh.pk:
+    #             self.tinh = self.huyen.tinh
 
-        super().save(*args, **kwargs)
+    #     super().save(*args, **kwargs)
 
 
 class CustomLocationField(LocationField):
@@ -189,24 +226,38 @@ class HoDan(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Hộ dân")
     update_time = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
     location = models.TextField(blank=True, default='', verbose_name='Địa chỉ')
-    status = models.IntegerField(
-        choices=HODAN_STATUS, default=0, verbose_name="Tình trạng")
-    people_number = models.PositiveIntegerField(
-        blank=True, null=True, default=1, verbose_name="Số người")
+    status = models.ForeignKey(TrangThaiHoDan, blank=True, null=True, on_delete=models.CASCADE, default=1,
+        verbose_name="Trạng thái"
+    )
+    people_number = models.PositiveIntegerField(blank=True, null=True, default=1, verbose_name="Số người")
     tinh = models.ForeignKey(
         Tinh, blank=True, null=True, on_delete=models.CASCADE,
         related_name="hodan_reversed"
     )
-    huyen = models.ForeignKey(
+    huyen = ChainedForeignKey(
         Huyen,
-        blank=True, null=True, on_delete=models.CASCADE,
-        related_name="hodan_reversed"
-    )
-    xa = models.ForeignKey(
+        chained_field = "tinh",
+        chained_model_field = "tinh",
+        show_all = False,
+        auto_choose = True,
+        sort=True,
+        blank=True,
+        null=True,
+        related_name="hodan_reversed",
+        on_delete=models.CASCADE)
+
+    xa = ChainedForeignKey(
         Xa,
-        blank=True, null=True, on_delete=models.CASCADE,
-        related_name="hodan_reversed"
-    )
+        chained_field = "huyen",
+        chained_model_field = "huyen",
+        show_all = False,
+        auto_choose = True,
+        sort=True,
+        blank=True,
+        null=True,
+        related_name="hodan_reversed",
+        on_delete=models.CASCADE)
+
     thon = models.ForeignKey(
         Thon,
         blank=True, null=True, on_delete=models.CASCADE,
@@ -230,19 +281,6 @@ class HoDan(models.Model):
     class Meta:
         verbose_name = 'Hộ dân cần ứng cứu'
         verbose_name_plural = 'Hộ dân cần ứng cứu'
-
-    def save(self, *args, **kwargs):
-        # Auto update huyen
-        if self.xa and self.xa.pk:
-            if self.xa.huyen and self.xa.huyen.pk:
-                self.huyen = self.xa.huyen
-
-        # Auto update tinh
-        if self.huyen and self.huyen.pk:
-            if self.huyen.tinh and self.huyen.tinh.pk:
-                self.tinh = self.huyen.tinh
-
-        super().save(*args, **kwargs)
 
 
 # TODO: update ip from user
