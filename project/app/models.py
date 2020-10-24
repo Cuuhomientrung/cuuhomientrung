@@ -155,7 +155,8 @@ class CuuHo(models.Model):
         auto_choose = True,
         sort=True,
         blank=True,
-        null=True)
+        null=True,
+        related_name="cuuho_reversed")
         
     xa = ChainedForeignKey(
         Xa,
@@ -165,7 +166,8 @@ class CuuHo(models.Model):
         auto_choose = True,
         sort=True,
         blank=True,
-        null=True)
+        null=True,
+        related_name="cuuho_reserved")
 
     thon = models.ForeignKey(
         Thon,
