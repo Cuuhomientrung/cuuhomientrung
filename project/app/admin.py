@@ -89,7 +89,7 @@ class CuuHoLocationForm(ModelForm):
         model = CuuHo
         fields = "__all__"
         exclude = ('thon',)
-    
+
     def __init__(self, *args, **kwargs):
         super(CuuHoLocationForm, self).__init__(*args, **kwargs)
         self.fields["tinh"].queryset = Tinh.objects.order_by("name")
@@ -169,11 +169,24 @@ class HoDanForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(HoDanForm, self).__init__(*args, **kwargs)
         self.fields["tinh"].queryset = Tinh.objects.order_by("name")
+
         self.fields['volunteer'] = ModelChoiceField(queryset=TinhNguyenVien.objects.all(), widget=Select2(), required=False)
         self.fields['cuuho'] = ModelChoiceField(queryset=CuuHo.objects.all(), widget=Select2(), required=False)
+
         self.fields['volunteer'].label_from_instance = self.label_from_volunteer
         self.fields['volunteer'].label = 'Tình nguyện viên'
+
         self.fields['cuuho'].label_from_instance = self.label_from_cuuho
+        self.fields['cuuho'].label = 'Đội cứu hộ'
+
+        self.fields["tinh"].label = "Tỉnh"
+        self.fields["tinh"].help_text = "Nhấn vào để chọn tỉnh"
+
+        self.fields["huyen"].label = "Huyện"
+        self.fields["huyen"].help_text = "Bạn phải chọn tỉnh trước"
+
+        self.fields["xa"].label = "Xã"
+        self.fields["xa"].help_text = "Bạn phải chọn tỉnh, và huyện trước"
 
         self.fields['geo_location'] = LocationField(
             required=False,
@@ -189,10 +202,10 @@ class HoDanForm(ModelForm):
                 "navigation_buttons": True,
                 "track_location_button": True,
                 "readonly": True,
-                "placeholder": "Chọn một địa điểm",
+                "placeholder": "Chọn một địa điểm trên bản đồ",
             }
         )
-        
+
     @staticmethod
     def label_from_volunteer(obj):
         status = _display_choices(TINHNGUYEN_STATUS, obj.status)
