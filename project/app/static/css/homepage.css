@@ -1,0 +1,32 @@
+body {
+  font-family: 'Inter', sans-serif;
+}
+.card-homepage {
+
+}
+
+.card-homepage .card-header {
+  background: transparent;
+  border: 0;
+}
+
+.card-homepage .card-title {
+  margin-bottom: .5rem;
+  font-size: 1.3em;
+  font-weight: 700;
+}
+
+.card-homepage .card-meta {
+  color: #888;
+}
+
+.card-homepage .card-body {
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+}
+
+.card-homepage .card-footer {
+  background: transparent;
+  border: 0;
+  padding-bottom: 1rem;
+}

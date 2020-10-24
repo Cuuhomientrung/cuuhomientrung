@@ -1,4 +1,105 @@
-{% extends "admin/base_site.html" %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="static/css/homepage.css">
+
+    <title>Cứu hộ miền trung</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="#">Cứu hộ miền trung</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="#">Hộ dân cần cứu trợ</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#">Đội cứu trợ</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#">Thông tin</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <main role="main" class="py-5 px-3">
+        <div class="card-deck">
+          <div class="card card-homepage border-danger">
+            <div class="card-header">
+              <h5 class="card-title text-danger">
+                Hộ dân cần cứu trợ
+              </h5>
+              <div class="card-meta text-small">
+                <span>Đang có 123 hộ dân cần cứu trợ</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <p class="card-text">Phát hiện hộ dân cần cứu trợ? Thêm ngay để các TNV kết nối với các đội cứu trợ.</p>
+            </div>
+            <div class="card-footer">
+              <a href="#" class="btn btn-danger">Thêm hộ dân</a>
+              <a href="#" class="btn btn-secondary">Xem </a>
+            </div>
+          </div>
+          <div class="card card-homepage border-success">
+            <div class="card-header">
+              <h5 class="card-title text-success">
+                Đội cứu trợ
+              </h5>
+              <div class="card-meta text-small">
+                <span>Đang có 56 đội cứu trợ</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <p class="card-text">Đăng ký trở thành đội cứu trợ để nhận được các yêu cầu cứu trợ mới nhất.</p>
+            </div>
+            <div class="card-footer">
+              <a href="#" class="btn btn-success">Đăng ký đội cứu trợ</a>
+              <a href="#" class="btn btn-secondary">Xem </a>
+            </div>
+          </div>
+        </div>
+      </main>
+      <footer>
+        
+      </footer>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+{% comment %}
+{% block extrahead %}
+{{ block.super }}
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="static/css/main.css">
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+{% endblock %}
 {% block content %}
     <ul>
     {% for tinh in tinhInfos %}
@@ -19,3 +120,4 @@
     Thêm thông tin cứu hộ {{ cuuho_url }} </br>
 
 {% endblock %}
+{% endcomment %}
