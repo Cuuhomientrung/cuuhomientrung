@@ -6,12 +6,10 @@ from app.models import HoDan, HODAN_STATUS
 def get_ho_dan():
     return HoDan.objects.all()
 
-PAGE_SIZE = 2
+PAGE_SIZE = 20
 
 def index(request):
-
     status_dict = dict(HODAN_STATUS)
-
     list_ho_dan = [{
         'id': ho_dan.id,
         'name': ho_dan.name,
@@ -28,7 +26,7 @@ def index(request):
         'volunteer': ho_dan.volunteer,
         'cuuho': ho_dan.cuuho,
         'geo_location': ho_dan.geo_location,
-    } for ho_dan in get_ho_dan()]
+    } for ho_dan in list(get_ho_dan()) * 100]
 
     paginator = Paginator(list_ho_dan, PAGE_SIZE)
     page_number = request.GET.get('page')
