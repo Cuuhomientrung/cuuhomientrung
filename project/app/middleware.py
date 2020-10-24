@@ -9,7 +9,7 @@ from django.shortcuts import redirect
 class AutomaticUserLoginMiddleware(MiddlewareMixin):
 
     def process_request(self, request):
-        if request.path.startswith('/admin'):
+        if request.path in ('/admin', '/admin/'):
             auth.logout(request)
             return redirect('/?admin=1')
 
