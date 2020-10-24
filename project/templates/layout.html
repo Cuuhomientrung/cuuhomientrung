@@ -20,8 +20,8 @@
 
 <body class="{% block body_class %}{% endblock %}">
     <div class="wrapper">
-        <header>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <header class="sticky-top">
+            <nav class="navbar  navbar-expand-lg navbar-dark bg-dark">
                 <div class="container">
                     <a class="navbar-brand" href="#">Cứu hộ miền trung</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,6 +46,8 @@
                     </div>
                 </div>
             </nav>
+        </header>
+        <div class="">
             <div class="p-3 bg-danger text-white d-block d-lg-none">
               <h4>
                 <span>Hotline:</span>
@@ -53,7 +55,7 @@
               </h4>
               <p class="m-0">Tiếp nhận mọi yêu cầu cứu trợ 24/24<br /> Hoàn toàn miễn phí</p>
             </div>
-        </header>
+        </div>
         <main role="main" class="py-4">
             <div class="container">
               {% block content %}{% endblock %}
