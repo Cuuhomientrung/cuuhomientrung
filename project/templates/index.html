@@ -1,0 +1,21 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+    <ul>
+    {% for tinh in tinhInfos %}
+    <li>
+      url: {{ tinh.url }} </br>
+      name: {{ tinh.name }}</br>
+      id: {{ tinh.id }} </br>
+      total_hodan: {{ tinh.total_hodan }} </br>
+    </li>
+
+    {% endfor %}
+    </ul>
+    Hộ dân cần cứu:
+    {{ tong_hodan_cap_cuu }}
+    Thêm thông tin hộ dân {{ hodan_url }} </br>
+    Cứu hộ:
+    {{ tong_doi_cuu_ho }}
+    Thêm thông tin cứu hộ {{ cuuho_url }} </br>
+
+{% endblock %}
