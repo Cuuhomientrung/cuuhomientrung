@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'simple_history',
     'django_select2',
     'django_select2_admin_filters',
+    'admin_auto_filters'
 ]
 
 
