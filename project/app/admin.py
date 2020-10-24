@@ -331,16 +331,17 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
 
     @mark_safe
     def get_ho_dan_can_ung_cuu(self, obj):
-        hodan = [item for item in obj.hodan_reversed.all() if item.status_id == 3]
-        tag = f'<a href="/app/hodan/?{self.URL_CUSTOM_TAG}={obj.pk}&status_id=3">{len(hodan)}</a>'
+        tag = f'<a href="/app/hodan/?{self.URL_CUSTOM_TAG}={obj.pk}&status_id=3">{obj.total_hodan}</a>'
         return tag
     get_ho_dan_can_ung_cuu.short_description = "Hộ dân cần ứng cứu"
     get_ho_dan_can_ung_cuu.allow_tags = True
 
     def get_queryset(self, request):
-        queryset = super(HoDanCuuHoStatisticBase, self).get_queryset(request)
-        queryset = queryset.prefetch_related(
-            'cuuho_reversed', 'hodan_reversed')
+        queryset = super(HoDanCuuHoStatisticBase,self).get_queryset(request)
+        queryset = queryset.prefetch_related('cuuho_reversed', 'hodan_reversed')\
+            .filter(hodan_reversed__status_id=3)\
+            .annotate(total_hodan=Count("hodan_reversed"))\
+            .order_by('-total_hodan')
         return queryset
 
 
@@ -363,15 +364,6 @@ class XaAdmin(HoDanCuuHoStatisticBase):
         HuyenAdminFilter,
     )
     URL_CUSTOM_TAG = 'xa'
-
-    def get_queryset(self, request):
-        queryset = super(HoDanCuuHoStatisticBase,self).get_queryset(request)
-        queryset = queryset.prefetch_related('cuuho_reversed', 'hodan_reversed')\
-            .filter(hodan_reversed__status_id=3)\
-            .annotate(total_hodan=Count("hodan_reversed"))\
-            .order_by('-total_hodan')
-        return queryset
-
     list_per_page=PAGE_SIZE
 
 
