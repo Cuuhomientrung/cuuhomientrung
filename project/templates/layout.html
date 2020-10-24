@@ -25,9 +25,8 @@
                 <div class="container">
                     <a class="navbar-brand" href="#">Cứu hộ miền trung</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
@@ -41,16 +40,47 @@
                             </li>
                         </ul>
                     </div>
+                    <div class="text-white d-none d-lg-block">
+                      <span>Hotline:</span>
+                      <a class="text-white" href="tel:18006132">1800 6132</a>
+                    </div>
                 </div>
             </nav>
+            <div class="p-3 bg-danger text-white d-block d-lg-none">
+              <h4>
+                <span>Hotline:</span>
+                <a class="text-white" href="tel:18006132">1800 6132</a>
+              </h4>
+              <p class="m-0">Tiếp nhận mọi yêu cầu cứu trợ 24/24<br /> Hoàn toàn miễn phí</p>
+            </div>
         </header>
-        <main role="main" class="py-5 px-3">
+        <main role="main" class="py-4">
             <div class="container">
               {% block content %}{% endblock %}
             </div>
         </main>
-        <footer>
-          {% block footer %}{% endblock %}
+        <footer class="footer">
+          <div class="container">
+            {% block footer %}{% endblock %}
+            <div class="footer-copyright">
+              <h5 class="mb-4">
+                Hệ thống thông tin Cứu hộ miền Trung
+              </h5>
+              <p>
+                Thông tin trên site được kết nối tới Sở chỉ huy tiền phương 
+                phòng, chống lụt bão của Quân khu IV đặt tại Thừa Thiên Huế 
+                làm đầu vào cho công tác điều phối cứu hộ.
+              </p>
+              <p>
+                Các trường hợp cần cứu hộ khẩn cấp, xin gọi theo số hotline: 
+                <a class="text-white" href="tel:1800 6132">1800 6132 </a>
+                (miễn phí + live 100%) để đội cứu hộ tới ứng cứu.
+              </p>
+              <div class="">
+                <a class="btn btn-outline-info" href="#">Thông tin</a>
+              </div>
+            </div>
+          </div>
         </footer>
     </div>
 
