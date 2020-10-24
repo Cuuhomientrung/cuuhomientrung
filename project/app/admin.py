@@ -18,7 +18,8 @@ from admin_numeric_filter.admin import NumericFilterModelAdmin, \
     SliderNumericFilter
 from mapbox_location_field.admin import MapAdmin
 from mapbox_location_field.forms import LocationField
-from django.forms import ModelForm, ModelChoiceField, CharField, Textarea, TextInput
+from django.forms import ModelForm, ModelChoiceField, Textarea, TextInput
+from django.db.models import Count
 from simple_history.admin import SimpleHistoryAdmin
 from app.settings import (
     REVISION
