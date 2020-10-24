@@ -12,6 +12,7 @@ def index(request):
     totalByTinh = Tinh.objects.prefetch_related('hodan_reversed')\
         .filter(hodan_reversed__status=1)\
         .annotate(total_hodan=Count("hodan_reversed"))\
+        .annotate(total_cuuho=Count("cuuho_reversed"))\
         .order_by('-total_hodan')[0:5]
     hodanurl = reverse("admin:app_hodan_changelist")
     cuuhourl=reverse("admin:app_cuuho_changelist")
@@ -19,6 +20,7 @@ def index(request):
         {
             "url": f'{hodanurl}?{TinhAdmin.URL_CUSTOM_TAG}={tinh.pk}&status_id=3',
             "total_hodan": tinh.total_hodan,
+            "total_cuuho": tinh.total_cuuho,
             "id": tinh.pk,
             "name": tinh.name
         } for tinh in totalByTinh
@@ -29,6 +31,8 @@ def index(request):
         'tong_doi_cuu_ho': tong_doi_cuu_ho,
         'tinhInfos': tinhInfos,
         'hodan_url' : hodanurl,
+        'them_hodan_url': reverse("admin:app_hodan_add"),
+        'them_cuuho_url': reverse("admin:app_cuuho_add"),
         'cuuho_url': cuuhourl,
     }
     return render(request, 'home_index.html', context=context)
