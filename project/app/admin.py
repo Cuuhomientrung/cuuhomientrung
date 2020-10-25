@@ -7,7 +7,7 @@ from rest_framework import routers
 from app.settings import TIME_ZONE
 from app.models import TinTuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa,\
     TrangThaiHoDan, CUUHO_STATUS, TINHNGUYEN_STATUS
-from app.views import BaseRestfulAdmin, HoDanRestFulModelAdmin, CuuHoViewSet
+from app.views import BaseRestfulAdmin, HoDanRestFulModelAdmin, CuuHoViewSet, HoDanViewSet
 from app.utils.export_to_excel import export_ho_dan_as_excel_action, utc_to_local
 from django.conf.locale.vi import formats as vi_formats
 from django_admin_listfilter_dropdown.filters import ChoiceDropdownFilter, RelatedDropdownFilter
@@ -401,6 +401,7 @@ admin.site.register(TrangThaiHoDan, TrangThaiHoDanAdmin)
 
 router = routers.DefaultRouter()
 router.register('cuuho', CuuHoViewSet)
+router.register('hodan', HoDanViewSet)
 
 # rest_admin.site.register(
 #     HoDan, view_class=HoDanRestFulModelAdmin)

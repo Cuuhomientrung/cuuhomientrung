@@ -21,6 +21,16 @@ class CuuHoViewSet(viewsets.ModelViewSet):
     serializer_class = CuuHoSerializer
     queryset = CuuHo.objects.all()
 
+class HoDanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CuuHo
+        fields = '__all__'
+
+
+class HoDanViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = HoDanSerializer
+    queryset = HoDan.objects.all()
 
 class BaseRestfulAdmin(RestFulModelAdmin):
     permission_classes = ()
