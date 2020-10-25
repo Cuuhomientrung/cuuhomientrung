@@ -31,6 +31,7 @@ env = environ.Env(
     SENTRY_DSN=(str, None),
     DEPLOY_ENV=(str, 'local'),
     GIT_VERSION=(str, None),
+    CSRF_COOKIE_SECURE=(bool, False),
 )
 environ.Env.read_env(
     os.path.join(BASE_DIR, '..', '.env')
@@ -252,9 +253,9 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = BASE_DIR + '/media'
 MEDIA_URL = '/media/'
 
-APPEND_SLASH=False
+APPEND_SLASH = False
 
-CSRF_COOKIE_SECURE=True
+CSRF_COOKIE_SECURE = env('CSRF_COOKIE_SECURE')
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
