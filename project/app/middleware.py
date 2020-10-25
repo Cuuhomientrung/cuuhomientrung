@@ -9,13 +9,13 @@ from django.shortcuts import redirect
 class AutomaticUserLoginMiddleware(MiddlewareMixin):
 
     def process_request(self, request):
-        if request.path in ('/admin', '/admin/'):
+        if request.path in ('/admin_r', '/admin_r/'):
             auth.logout(request)
-            return redirect('/?admin=1')
+            return redirect('/admin/?r=1')
 
     def process_view(self, request, view_func, view_args, view_kwargs):
 
-        if not request.user.is_authenticated and not request.GET.get('admin'):
+        if not request.user.is_authenticated and not request.GET.get('r'):
             # NOTE: Following code is to bypass login page. Change username to default login user you want
             user = User.objects.get(username='user1')
             # user = User.objects.get(username='admin')

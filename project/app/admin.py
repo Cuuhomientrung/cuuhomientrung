@@ -24,6 +24,7 @@ from app.settings import (
     REVISION
 )
 from admin_auto_filters.filters import AutocompleteFilter
+from django.urls import reverse
 from easy_select2.widgets import Select2
 
 vi_formats.DATETIME_FORMAT = "d/m/y H:i"
@@ -31,7 +32,6 @@ vi_formats.DATETIME_FORMAT = "d/m/y H:i"
 PAGE_SIZE = 30
 
 # admin interface
-
 admin.site.site_header = 'Hệ thống thông tin Cứu hộ miền Trung'
 admin.site.site_title = 'Hệ thống thông tin Cứu hộ miền Trung'
 admin.index_title = 'Hệ thống thông tin Cứu hộ miền Trung'
@@ -323,8 +323,9 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
 
     @mark_safe
     def get_cuu_ho_san_sang(self, obj):
-        hodan = [item for item in obj.cuuho_reversed.all() if item.status == 1]
-        tag = f'<a href="/app/cuuho/?{self.URL_CUSTOM_TAG}={obj.pk}&status=1">{len(hodan)}</a>'
+        cuuho = [item for item in obj.cuuho_reversed.all() if item.status == 1]
+        url = reverse('admin:app_cuuho_changelist')
+        tag = f'<a href="{url}?{self.URL_CUSTOM_TAG}={obj.pk}&status=1">{len(cuuho)}</a>'
         return tag
     get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
     get_cuu_ho_san_sang.allow_tags = True
@@ -332,15 +333,18 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
     @mark_safe
     def get_ho_dan_can_ung_cuu(self, obj):
         hodan = [item for item in obj.hodan_reversed.all() if item.status_id == 3]
-        tag = f'<a href="/app/hodan/?{self.URL_CUSTOM_TAG}={obj.pk}&status_id=3">{len(hodan)}</a>'
+        url = reverse('admin:app_hodan_changelist')
+        tag = f'<a href="{url}?{self.URL_CUSTOM_TAG}={obj.pk}&status_id=3">{len(hodan)}</a>'
         return tag
     get_ho_dan_can_ung_cuu.short_description = "Hộ dân cần ứng cứu"
     get_ho_dan_can_ung_cuu.allow_tags = True
 
     def get_queryset(self, request):
-        queryset = super(HoDanCuuHoStatisticBase, self).get_queryset(request)
-        queryset = queryset.prefetch_related(
-            'cuuho_reversed', 'hodan_reversed')
+        queryset = super(HoDanCuuHoStatisticBase,self).get_queryset(request)
+        queryset = queryset.prefetch_related('cuuho_reversed', 'hodan_reversed')\
+            .filter(hodan_reversed__status_id=3)\
+            .annotate(total_hodan=Count("hodan_reversed"))\
+            .order_by('-total_hodan')
         return queryset
 
 
@@ -363,15 +367,6 @@ class XaAdmin(HoDanCuuHoStatisticBase):
         HuyenAdminFilter,
     )
     URL_CUSTOM_TAG = 'xa'
-
-    def get_queryset(self, request):
-        queryset = super(HoDanCuuHoStatisticBase,self).get_queryset(request)
-        queryset = queryset.prefetch_related('cuuho_reversed', 'hodan_reversed')\
-            .filter(hodan_reversed__status_id=3)\
-            .annotate(total_hodan=Count("hodan_reversed"))\
-            .order_by('-total_hodan')
-        return queryset
-
     list_per_page=PAGE_SIZE
 
 
@@ -404,7 +399,7 @@ admin.site.register(TrangThaiHoDan, TrangThaiHoDanAdmin)
 # admin.site.register(Thon, ThonAdmin)
 
 rest_admin.site.register(
-    HoDan, view_class=HoDanRestFulModelAdmin, __doc__="hello")
+    HoDan, view_class=HoDanRestFulModelAdmin)
 rest_admin.site.register(CuuHo, view_class=BaseRestfulAdmin)
 rest_admin.site.register(TinhNguyenVien, view_class=BaseRestfulAdmin)
 rest_admin.site.register(Tinh, view_class=BaseRestfulAdmin)
