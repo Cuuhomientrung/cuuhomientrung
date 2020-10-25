@@ -1,18 +1,21 @@
 /** Landing page css */
 /* Utilities css first */
-.d-none {
-  display: none;
-}
 
 @media screen and (min-width: 1024px) {
   .d-show-desktop {
     display: block;
+  }
+  .d-show-mobile {
+    display: none!important;
   }
 }
 
 @media screen and (max-width: 1023px) {
   .d-show-mobile {
     display: block;
+  }
+  .d-show-desktop {
+    display: none!important;
   }
 }
 
@@ -101,10 +104,10 @@
 }
 
 .citizen-number {
-  // white-space: nowrap;
-  // border: 1px solid #44B78B;
-  // border-radius: 5px;
-  // padding: 2px 5px;
+  /* white-space: nowrap;
+  border: 1px solid #44B78B;
+  border-radius: 5px;
+  padding: 2px 5px; */
 }
 
 .citizen-footer {

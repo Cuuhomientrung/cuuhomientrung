@@ -1,9 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.core.paginator import Paginator
-from app.models import HoDan, HODAN_STATUS_NEW
+from app.models import HoDan, Tinh, Huyen, Xa, HODAN_STATUS_NEW
 
 def get_ho_dan(status=None, tinh=None, huyen=None, xa=None):
+    print (status, tinh, huyen, xa)
     query = HoDan.objects
     if status:
         query = query.filter(status=status)
@@ -15,10 +16,19 @@ def get_ho_dan(status=None, tinh=None, huyen=None, xa=None):
         query = query.filter(xa=xa)
     return query.all()
 
+def get_tinh():
+    return Tinh.objects.all()
+
+def get_huyen():
+    return Huyen.objects.all()
+
+def get_xa():
+    return Xa.objects.all()
+
 PAGE_SIZE = 20
 
 def index(request):
-    status = request.GET.get("status_id")
+    status = request.GET.get("status")
     tinh = request.GET.get("tinh")
     huyen = request.GET.get("huyen")
     xa = request.GET.get("xa")
@@ -40,12 +50,7 @@ def index(request):
         'xa': ho_dan.xa,
         'location': ho_dan.location,
         'status': ho_dan.status,
-        #TODO: fix here, not a good code
-        'status_emergency': str(ho_dan.status) in [
-            "Cần ứng cứu gấp",
-            "Cần thức ăn",
-            "Cần thuốc men",
-        ],
+        'status_emergency': ho_dan.status.id in [3, 5, 6],
         'people_number': ho_dan.people_number,
         'note': ho_dan.note,
         'phone': ho_dan.phone,
@@ -57,7 +62,17 @@ def index(request):
     paginator = Paginator(list_dict_ho_dan, PAGE_SIZE)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+
     return render(request, 'ho_dan_index.html', {
+        'filter': {
+            'status': status,
+            'tinh': tinh,
+            'huyen': huyen,
+            'xa': xa,
+        },
         'page_obj': page_obj,
         'status_dict': dict(HODAN_STATUS_NEW),
+        'list_tinh': get_tinh(),
+        'list_huyen': get_huyen(),
+        'list_xa': get_xa(),
     })
