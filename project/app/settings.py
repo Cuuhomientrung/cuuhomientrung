@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'admin_auto_filters',
     'easy_select2',
     'webpack_loader',
+    'rest_framework.authtoken',
 ]
 
 
@@ -287,5 +288,8 @@ WEBPACK_LOADER = {
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 20
+    'PAGE_SIZE': 20,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
 }

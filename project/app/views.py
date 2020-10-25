@@ -17,6 +17,7 @@ class CuuHoSerializer(serializers.ModelSerializer):
 
 
 class CuuHoViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     serializer_class = CuuHoSerializer
     queryset = CuuHo.objects.all()
 
