@@ -24,7 +24,7 @@
             </div>
             <div class="card-footer">
                 <a href="{{ them_hodan_url }}" class="btn btn-danger">Thêm hộ dân</a>
-                <a href="{{ hodan_url}}" class="btn btn-secondary">Xem </a>
+                <a href="{{ hodan_url }}" class="btn btn-secondary">Xem </a>
             </div>
         </div>
         <div class="card card-homepage border-success">
@@ -58,14 +58,19 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">
-                    {{ tinh.name }}
+                    <a class="text-decoration-none text-dark font-weight-bolder" href="{{ hodan_url }}?tinh__pk__exact={{ tinh.id }}"> {{ tinh.name }} </a>
                 </h5>
                 <div class="card-counter-info">
-                    <span class="card-counter-info-text text-danger">{{ tinh.total_hodan }}</span>
+                    <span class="card-counter-info-text text-danger">
+                      <a class="text-danger font-weight-bolder" href="{{ hodan_url }}?tinh__pk__exact={{ tinh.id }}"> {{ tinh.total_hodan }}
+                      </a>
+                    </span>
                     <span>Hộ dân cần cứu trợ</span>
                 </div>
                 <div class="card-counter-info">
-                    <span class="card-counter-info-text text-success">{{ tinh.total_cuuho }}</span>
+                    <span class="card-counter-info-text text-success">
+                      <a class="text-success font-weight-bolder" href="{{ cuuho_url }}?tinh__pk__exact={{ tinh.id }}"> {{ tinh.total_cuuho }} </a>
+                    </span>
                     <span>Đội cứu trợ</span>
                 </div>
             </div>
