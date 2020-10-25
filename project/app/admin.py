@@ -74,8 +74,8 @@ class NguonLucAdmin(admin.ModelAdmin):
     list_filter = (
         ('status', ChoiceDropdownFilter),
         TinhAdminFilter,
-        XaAdminFilter,
         HuyenAdminFilter,
+        XaAdminFilter,
     )
     search_fields = ('name', 'phone')
     list_editable = ('status',)
@@ -100,8 +100,8 @@ class CuuHoAdmin(admin.ModelAdmin):
     list_filter = (
         ('status', ChoiceDropdownFilter),
         TinhAdminFilter,
-        XaAdminFilter,
         HuyenAdminFilter,
+        XaAdminFilter,
     )
     search_fields = ('name', 'phone')
     list_editable = ('status',)
@@ -126,8 +126,8 @@ class TinhNguyenVienAdmin(admin.ModelAdmin):
     list_filter = (
         'status',
         TinhAdminFilter,
-        XaAdminFilter,
         HuyenAdminFilter,
+        XaAdminFilter,        
     )
     search_fields = ('name', 'phone')
     list_editable = ('status',)
@@ -250,8 +250,11 @@ class HoDanHistoryAdmin(SimpleHistoryAdmin):
 
 
 class HoDanAdmin(NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.ModelAdmin):
-    list_display = ('id', 'get_update_time', 'status', 'name', 'phone', 'get_note',
-                    'people_number', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
+    list_display = (
+        'id', 'update_time', 'status', 'name', 'phone', 'get_note',
+        'people_number', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho',
+        'get_update_time'
+    )
     fieldsets = (
         (None, {
            'fields': ('name', 'phone', 'status')
@@ -268,8 +271,8 @@ class HoDanAdmin(NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.Mod
     list_filter = (
         ('status', RelatedDropdownFilter),
         TinhAdminFilter,
-        XaAdminFilter,
         HuyenAdminFilter,
+        XaAdminFilter,
     )
     search_fields = ('name', 'phone', 'note', 'id')
     actions = [export_ho_dan_as_excel_action()]
@@ -280,7 +283,7 @@ class HoDanAdmin(NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.Mod
         queryset = super(HoDanAdmin, self).get_queryset(request)
         queryset = queryset\
             .prefetch_related('tinh', 'huyen', 'xa', 'volunteer', 'cuuho', 'status')\
-            .order_by('-status', '-update_time')
+            .order_by('-update_time')
 
         return queryset
 
