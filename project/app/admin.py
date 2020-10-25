@@ -16,7 +16,7 @@ from admin_numeric_filter.admin import NumericFilterModelAdmin, \
 from mapbox_location_field.admin import MapAdmin
 from mapbox_location_field.forms import LocationField
 from django.forms import ModelForm, ModelChoiceField, Textarea, TextInput
-from django.db.models import Count
+from django.db.models import Count, Q
 from simple_history.admin import SimpleHistoryAdmin
 from app.settings import (
     REVISION
@@ -340,8 +340,7 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
     def get_queryset(self, request):
         queryset = super(HoDanCuuHoStatisticBase,self).get_queryset(request)
         queryset = queryset.prefetch_related('cuuho_reversed', 'hodan_reversed')\
-            .filter(hodan_reversed__status_id=3)\
-            .annotate(total_hodan=Count("hodan_reversed"))\
+            .annotate(total_hodan=Count("hodan_reversed", filter=Q(hodan_reversed__status_id=3)))\
             .order_by('-total_hodan')
         return queryset
 
