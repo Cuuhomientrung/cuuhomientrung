@@ -32,13 +32,14 @@ def index(request):
     tinh = request.GET.get("tinh")
     huyen = request.GET.get("huyen")
     xa = request.GET.get("xa")
+    page_number = request.GET.get('page')
 
     list_ho_dan = list(get_ho_dan(
         status=status,
         tinh=tinh,
         huyen=huyen,
         xa=xa,
-    ))
+    )) * 100
 
     list_dict_ho_dan = [{
         'id': ho_dan.id,
@@ -60,7 +61,6 @@ def index(request):
     } for ho_dan in list_ho_dan]
 
     paginator = Paginator(list_dict_ho_dan, PAGE_SIZE)
-    page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
     return render(request, 'ho_dan_index.html', {

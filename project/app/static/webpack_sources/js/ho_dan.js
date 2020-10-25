@@ -40,4 +40,12 @@ $(document).ready(() => {
             $("#select-xa option[huyen-id=" + huyen + "]").show();
         }
     });
+    $('#see-more-note').on("click", function() {
+        $('.see-less').hide();
+        $('.see-more').show();
+    });
+    $('#see-less-note').on("click", function() {
+        $('.see-less').show();
+        $('.see-more').hide();
+    });
 });

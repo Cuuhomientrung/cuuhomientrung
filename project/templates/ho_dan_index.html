@@ -61,7 +61,9 @@
             <td> {{ hodan.id }} </td>
             <td> {{ hodan.name }} </td>
             <td>
-              <button class="{% if hodan.status == 'Cần ứng cứu gấp' or hodan.status == 'Gặp nạn' %} emergency {% endif %}"> {{ hodan.status }} </button>
+              <button class="btn btn-small {% if hodan.status_emergency %} btn-danger {% else %} btn-success {% endif %}">
+                {{ hodan.status }}
+              </button>
               <br>
               <span> {{ hodan.update_time }} </span>
             </td>
@@ -72,8 +74,15 @@
               {% if hodan.tinh %}, {{ hodan.tinh }} {% endif %}
             </td>
             <td> {{ hodan.phone }} </td>
-            <td> {{ hodan.note|truncatechars_html:80 }}
-              <a id="see-more-note"> See more </a>
+            <td>
+              <span class="see-less">
+                {{ hodan.note|truncatechars_html:80 }}
+                <a id="see-more-note"> See more </a>
+              </span>
+              <span class="see-more" style="display: none;">
+                {{ hodan.note}}
+                <a id="see-less-note"> See less </a>
+              </span>
             </td>
           </tr>
         {% endfor %}
@@ -165,7 +174,7 @@
     <ul class="pagination">
       {% if page_obj.has_previous %}
       <li class="page-item">
-        <a class="page-link" href="?page=1" aria-label="Previous">
+        <a class="page-link" href="{{ request.get_full_path }}page=1" aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
           <span class="sr-only">begin</span>
         </a>
@@ -177,13 +186,13 @@
             <span class="page-link">{{ n }}<span class="sr-only">(current)</span></span>
           </li>
         {% elif n > page_obj.number|add:'-3' and n < page_obj.number|add:'3' %}
-          <li class="page-item"><a class="page-link" href="?page={{ n }}">{{ n }}</a></li>
+          <li class="page-item"><a class="page-link" href="{{ request.get_full_path }}page={{ n }}">{{ n }}</a></li>
         {% endif %}
       {% endfor %}
 
       {% if page_obj.has_next %}
         <li class="page-item">
-          <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">
+          <a class="page-link" href="{{ request.get_full_path }}page={{ page_obj.paginator.num_pages }}" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
             <span class="sr-only">end</span>
           </a>
