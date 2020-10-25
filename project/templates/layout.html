@@ -1,0 +1,94 @@
+{% load render_bundle from webpack_loader %}
+{% load static i18n %}
+
+<!DOCTYPE html>
+<html lang="{{ language }}">
+<head>
+  <meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  {% block meta %}
+    <title>Cứu Trợ Miền Trung</title>
+  {% endblock %}
+  <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+  {% block headers %}{% endblock %}
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+    <div class="wrapper">
+        <header class="sticky-top">
+            <nav class="navbar  navbar-expand-lg navbar-dark bg-dark">
+                <div class="container">
+                    <a class="navbar-brand" href="#">Cứu hộ miền trung</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ hodan_url }}">Hộ dân cần cứu trợ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ cuuho_url }}">Đội cứu trợ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Thông tin</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="text-white d-none d-lg-block">
+                      <span>Hotline:</span>
+                      <a class="text-white font-weight-bolder" href="tel:18006132">1800 6132</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="">
+            <div class="p-3 bg-danger text-white d-block d-lg-none">
+              <h4>
+                <span>Hotline:</span>
+                <a class="text-white" href="tel:18006132">1800 6132</a>
+              </h4>
+              <p class="m-0">Tiếp nhận mọi yêu cầu cứu trợ 24/24<br /> Hoàn toàn miễn phí</p>
+            </div>
+        </div>
+        <main role="main" class="py-4">
+            <div class="container">
+              {% block content %}{% endblock %}
+            </div>
+        </main>
+        <footer class="footer">
+          <div class="container">
+            {% block footer %}{% endblock %}
+            <div class="footer-copyright">
+              <h5 class="mb-4">
+                Hệ thống thông tin Cứu hộ miền Trung
+              </h5>
+              <p>
+                Thông tin trên site được kết nối tới Sở chỉ huy tiền phương
+                phòng, chống lụt bão của Quân khu IV đặt tại Thừa Thiên Huế
+                làm đầu vào cho công tác điều phối cứu hộ.
+              </p>
+              <p>
+                Các trường hợp cần cứu hộ khẩn cấp, xin gọi theo số hotline:
+                <a class="text-white" href="tel:1800 6132">1800 6132 </a>
+                (miễn phí + live 100%) để đội cứu hộ tới ứng cứu.
+              </p>
+              <div class="">
+                <a class="btn btn-outline-info" href="#">Thông tin</a>
+              </div>
+            </div>
+          </div>
+        </footer>
+    </div>
+
+  {% render_bundle 'home_page_loader' 'js' %}
+  {% block footer_scripts %}{% endblock %}
+
+  {% csrf_token %}
+</body>
+</html>
