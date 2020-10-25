@@ -9,12 +9,18 @@
                 <h5 class="card-title text-danger">
                     Hộ dân cần cứu trợ
                 </h5>
-                <div class="card-meta text-small">
-                    <span>Đang có {{ tong_hodan_cap_cuu}} hộ dân cần cứu trợ</span>
+                <div class="card-text">
+                    <span>Đang có
+                      <span class="text-danger font-weight-bolder h4"> {{ tong_hodan_cap_cuu}} </span>
+                    hộ dân cần cứu trợ</span>
+                    <br>
+                    <span>Đã có
+                      <span class="text-success font-weight-bolder h4"> {{ tong_hodan_da_duoc_cuu }} </span>
+                    hộ dân được cứu trợ </span>
                 </div>
             </div>
             <div class="card-body">
-                <p class="card-text">Phát hiện hộ dân cần cứu trợ? Thêm ngay để các TNV kết nối với các đội cứu trợ.</p>
+                <p class="card-meta text-small">Phát hiện hộ dân cần cứu trợ? Thêm ngay để các TNV kết nối với các đội cứu trợ.</p>
             </div>
             <div class="card-footer">
                 <a href="{{ them_hodan_url }}" class="btn btn-danger">Thêm hộ dân</a>
@@ -26,12 +32,14 @@
                 <h5 class="card-title text-success">
                     Đội cứu trợ
                 </h5>
-                <div class="card-meta text-small">
-                    <span>Đang có {{ tong_doi_cuu_ho }} đội cứu trợ</span>
+                <div class="card-text">
+                    <span>Đang có
+                      <span class="text-success font-weight-bolder h4"> {{ tong_doi_cuu_ho }} </span>
+                    đội cứu trợ</span>
                 </div>
             </div>
             <div class="card-body">
-                <p class="card-text">Đăng ký trở thành đội cứu trợ để nhận được các yêu cầu cứu trợ mới nhất.</p>
+                <p class="card-meta text-small">Đăng ký trở thành đội cứu trợ để nhận được các yêu cầu cứu trợ mới nhất.</p>
             </div>
             <div class="card-footer">
                 <a href="{{them_cuuho_url}}" class="btn btn-success">Đăng ký đội cứu trợ</a>
