@@ -8,9 +8,7 @@ from app.models import TinTuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa,\
 from app.views import BaseRestfulAdmin, HoDanRestFulModelAdmin
 from app.utils.export_to_excel import export_ho_dan_as_excel_action, utc_to_local
 from django.conf.locale.vi import formats as vi_formats
-from django_admin_listfilter_dropdown.filters import (
-    ChoiceDropdownFilter
-)
+from django_admin_listfilter_dropdown.filters import ChoiceDropdownFilter, RelatedDropdownFilter
 from django_restful_admin import admin as rest_admin
 from django.utils.html import format_html
 from admin_numeric_filter.admin import NumericFilterModelAdmin, \
@@ -268,7 +266,7 @@ class HoDanAdmin(NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.Mod
     list_display_links = ('id', 'name', 'phone',)
     list_editable = ()
     list_filter = (
-        'status',
+        ('status', RelatedDropdownFilter),
         TinhAdminFilter,
         XaAdminFilter,
         HuyenAdminFilter,
@@ -363,7 +361,7 @@ class HuyenAdmin(HoDanCuuHoStatisticBase):
 
 class XaAdmin(HoDanCuuHoStatisticBase):
     list_filter = (
-        'huyen__tinh',
+        ('huyen__tinh', RelatedDropdownFilter),
         HuyenAdminFilter,
     )
     URL_CUSTOM_TAG = 'xa'
