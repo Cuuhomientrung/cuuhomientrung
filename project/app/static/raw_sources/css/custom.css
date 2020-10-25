@@ -37,3 +37,10 @@ td.field-get_note {
     width: 100px;
     font-size: 80px;
 }
+
+
+@media screen and (min-width: 768px) {
+    .results {
+        max-height: 500px;
+    }
+}
