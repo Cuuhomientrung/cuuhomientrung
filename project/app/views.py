@@ -7,7 +7,18 @@ from django.shortcuts import render, redirect
 from django.contrib.admin.views.decorators import staff_member_required
 from django_restful_admin import RestFulModelAdmin
 from rest_framework.response import Response
-from app.models import HoDan
+from app.models import HoDan, CuuHo
+
+
+class CuuHoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CuuHo
+        fields = '__all__'
+
+
+class CuuHoViewSet(viewsets.ModelViewSet):
+    serializer_class = CuuHoSerializer
+    queryset = CuuHo.objects.all()
 
 
 class BaseRestfulAdmin(RestFulModelAdmin):

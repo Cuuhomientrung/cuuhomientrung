@@ -2,10 +2,12 @@ import datetime
 import pytz
 from django.contrib import admin
 from django.utils.safestring import mark_safe
+from rest_framework import routers
+
 from app.settings import TIME_ZONE
 from app.models import TinTuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa,\
     TrangThaiHoDan, CUUHO_STATUS, TINHNGUYEN_STATUS
-from app.views import BaseRestfulAdmin, HoDanRestFulModelAdmin
+from app.views import BaseRestfulAdmin, HoDanRestFulModelAdmin, CuuHoViewSet
 from app.utils.export_to_excel import export_ho_dan_as_excel_action, utc_to_local
 from django.conf.locale.vi import formats as vi_formats
 from django_admin_listfilter_dropdown.filters import ChoiceDropdownFilter, RelatedDropdownFilter
@@ -396,10 +398,14 @@ admin.site.register(Xa, XaAdmin)
 admin.site.register(TrangThaiHoDan, TrangThaiHoDanAdmin)
 # admin.site.register(Thon, ThonAdmin)
 
-rest_admin.site.register(
-    HoDan, view_class=HoDanRestFulModelAdmin)
-rest_admin.site.register(CuuHo, view_class=BaseRestfulAdmin)
-rest_admin.site.register(TinhNguyenVien, view_class=BaseRestfulAdmin)
-rest_admin.site.register(Tinh, view_class=BaseRestfulAdmin)
-rest_admin.site.register(Huyen, view_class=BaseRestfulAdmin)
-rest_admin.site.register(Xa, view_class=BaseRestfulAdmin)
+
+router = routers.DefaultRouter()
+router.register('cuuho', CuuHoViewSet)
+
+# rest_admin.site.register(
+#     HoDan, view_class=HoDanRestFulModelAdmin)
+# rest_admin.site.register(CuuHo, view_class=BaseRestfulAdmin)
+# rest_admin.site.register(TinhNguyenVien, view_class=BaseRestfulAdmin)
+# rest_admin.site.register(Tinh, view_class=BaseRestfulAdmin)
+# rest_admin.site.register(Huyen, view_class=BaseRestfulAdmin)
+# rest_admin.site.register(Xa, view_class=BaseRestfulAdmin)
