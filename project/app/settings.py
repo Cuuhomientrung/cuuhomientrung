@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'admin_auto_filters',
     'easy_select2',
     'webpack_loader',
+    'django.contrib.postgres',
 ]
 
 
