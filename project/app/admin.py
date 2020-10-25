@@ -361,7 +361,7 @@ class HuyenAdmin(HoDanCuuHoStatisticBase):
 
 class XaAdmin(HoDanCuuHoStatisticBase):
     list_filter = (
-        'huyen__tinh',
+        ('huyen__tinh', RelatedDropdownFilter),
         HuyenAdminFilter,
     )
     URL_CUSTOM_TAG = 'xa'
