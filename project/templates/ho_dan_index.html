@@ -1,54 +1,49 @@
 {% extends "layout.html" %}
 {% load static i18n %}
 
-{% block extrahead %}
-{{ block.super }}
-  <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="{% static 'raw_sources/css/main.css' %}?v={{ REVISION }}">
-  <link rel="stylesheet" type="text/css" href="static/css/main.css">
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-{% endblock %}
+
 
 {% block content %}
 <div class="container">
   <div class="row filter">
     <div class="col-sm-3">
-      <select class="select">
-        <option> Chọn trạng thái </option>
+      <select class="select" id="select-status">
+        <option value="-1"> Chọn trạng thái </option>
         {% for id, name in status_dict.items %}
-          <option class="dropdown-item" type="button">{{ name }}</option>
+          <option value="{{ id }}">{{ name }}</option>
         {% endfor %}
       </select>
     </div>
-    <div class="col-sm-3">
-      <select class="select">
-        <option> Chọn trạng thái </option>
-        {% for id, name in status_dict.items %}
-          <option class="dropdown-item" type="button">{{ name }}</option>
+    <div class="col-sm-2">
+      <select class="select" id="select-tinh">
+        <option value="-1"> Chọn tỉnh </option>
+        {% for tinh in list_tinh %}
+          <option value="{{ tinh.id }}">{{ tinh.name }}</option>
         {% endfor %}
       </select>
     </div>
-    <div class="col-sm-3">
-      <select class="select">
-        <option> Chọn trạng thái </option>
-        {% for id, name in status_dict.items %}
-          <option class="dropdown-item" type="button">{{ name }}</option>
+    <div class="col-sm-2">
+      <select class="select" id="select-huyen">
+        <option value="-1"> Chọn huyện </option>
+        {% for huyen in list_huyen %}
+          <option value="{{ huyen.id }}" {%if huyen.tinh.id %} tinh-id="{{ huyen.tinh.id }}" {% endif %}>{{ huyen.name }}</option>
         {% endfor %}
       </select>
     </div>
-    <div class="col-sm-3">
-      <select class="select">
-        <option> Chọn trạng thái </option>
-        {% for id, name in status_dict.items %}
-          <option class="dropdown-item" type="button">{{ name }}</option>
+    <div class="col-sm-2">
+      <select class="select" id="select-xa">
+        <option value="-1"> Chọn xã </option>
+        {% for xa in list_xa %}
+          <option value="{{ xa.id }}" {% if xa.huyen.id %} huyen-id="{{ xa.huyen.id }}" {% endif %}>{{ xa.name }}</option>
         {% endfor %}
       </select>
+    </div>
+    <div class="col-sm-2">
+      <button id="search-button"> Tìm kiếm </button>
     </div>
   </div>
-  <div class="row d-none d-show-desktop">
-    <table class="citizen-table">
+  <div class="row d-show-desktop">
+    <table class="table citizen-table">
       <thead>
         <tr>
           <th> STT </th>
@@ -63,29 +58,29 @@
       <tbody>
         {% for hodan in page_obj %}
           <tr>
-            <th> {{ hodan.id }} </th>
-            <th> {{ hodan.name }} </th>
-            <th>
+            <td> {{ hodan.id }} </td>
+            <td> {{ hodan.name }} </td>
+            <td>
               <button class="{% if hodan.status == 'Cần ứng cứu gấp' or hodan.status == 'Gặp nạn' %} emergency {% endif %}"> {{ hodan.status }} </button>
               <br>
               <span> {{ hodan.update_time }} </span>
-            </th>
-            <th> {{ hodan.people_number }} </th>
-            <th> {{ hodan.location }}
+            </td>
+            <td> {{ hodan.people_number }} </td>
+            <td> {{ hodan.location }}
               {% if hodan.xa %}, {{ hodan.xa }} {% endif %}
               {% if hodan.huyen %}, {{ hodan.huyen }} {% endif %}
               {% if hodan.tinh %}, {{ hodan.tinh }} {% endif %}
-            </th>
-            <th> {{ hodan.phone }} </th>
-            <th> {{ hodan.note|truncatechars_html:80 }}
+            </td>
+            <td> {{ hodan.phone }} </td>
+            <td> {{ hodan.note|truncatechars_html:80 }}
               <a id="see-more-note"> See more </a>
-            </th>
+            </td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
-  <div class="row d-none d-show-mobile">
+  <div class="row d-show-mobile">
     <ul class="citizen-list">
       {% for hodan in page_obj %}
         <li>
@@ -200,3 +195,16 @@
 </div>
 
 {% endblock %}
+
+<!--
+{% block scripts_extra %}
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      {% for id, tinh in dict_tinh_huyen %}
+        console.log(id);
+      {% endfor %}
+    });
+  </script>
+
+{% endblock %} -->
