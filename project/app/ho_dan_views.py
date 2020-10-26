@@ -51,7 +51,7 @@ def index(request):
         tinh=tinh,
         huyen=huyen,
         xa=xa,
-    )) * 100
+    ))
 
     list_dict_ho_dan = [{
         'id': ho_dan.id,
@@ -63,7 +63,7 @@ def index(request):
         'xa': ho_dan.xa,
         'location': ho_dan.location,
         'status': ho_dan.status,
-        'status_emergency': ho_dan.status.id in [3, 5, 6],
+        'status_emergency': ho_dan.status.id in [3, 5, 6] if ho_dan.status,
         'people_number': ho_dan.people_number,
         'note': ho_dan.note,
         'phone': ho_dan.phone,
