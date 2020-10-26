@@ -1,0 +1,154 @@
+.table-hodan {
+
+}
+
+.citizen-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.citizen-item {
+  box-shadow: 1px 1px 15px 3px rgba(0, 0, 0, .15);
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-size: 15px;
+  color: #444;
+}
+
+.citizen-header {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+
+  display: flex;
+}
+
+.citizen-header h5 {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.citizen-meta {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.citizen-status {
+  white-space: nowrap;
+  border: 1px solid #44B78B;
+  border-radius: 5px;
+  padding: 2px 5px;
+  background: #44B78B;
+  color: #fff;
+}
+
+.citizen-status.status-emergency {
+  background: #FF4500;
+  border: 1px solid #FF4500;
+}
+
+.citizen-updated-time {
+  margin-left: auto;
+  font-size: 13px;
+}
+
+.citizen-body {
+  padding: 10px 15px;
+}
+
+.citizen-info {
+  display: flex;
+  margin-bottom: 5px;
+  padding: 3px 0;
+}
+
+.citizen-label {
+  flex: 100px 0 0;
+  margin-right: 15px;
+  color: #888;
+}
+
+.citizen-value {
+  flex: calc(100% - 100px) 0 1;
+  margin-left: auto;
+  text-align: right;
+}
+
+.citizen-value--phone {
+  font-size: 1.1em;
+}
+
+.citizen-number {
+  /* white-space: nowrap;
+  border: 1px solid #44B78B;
+  border-radius: 5px;
+  padding: 2px 5px; */
+}
+
+.citizen-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 15px;
+
+  font-size: 11px;
+  color: #888;
+}
+
+.citizen-filter {
+  .form-control {
+    padding-left: .25rem;
+    padding-right: .25rem;
+    margin-bottom: .25rem;
+  }
+
+  @include media-breakpoint-down(sm) {
+    .btn-filter {
+      display: block;
+      text-align: center;
+      width: 100%;
+    }
+  }
+}
+
+.citizen-table {
+  th,
+  td {
+    padding-left: .5rem;
+    padding-right: .5rem;
+  }
+
+  thead {
+    // background: #205493;
+    // color: #fff;
+
+    th {
+      white-space: nowrap;
+      font-size: .95em;
+    }
+  }
+
+  tbody {
+    td {
+      color: #444;
+      font-size: .9em;
+    }
+  }
+
+  .citizen-td-name {
+    max-width: 200px;
+    min-width: 150px;
+  }
+
+  .citizen-td-address {
+    max-width: 250px;
+    min-width: 200px;
+  }
+
+  .citizen-td-counter {
+    max-width: 80px;
+  }
+}

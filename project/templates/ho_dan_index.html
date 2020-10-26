@@ -1,13 +1,10 @@
 {% extends "layout.html" %}
 {% load static i18n %}
 
-
-
 {% block content %}
-<div class="container">
-  <div class="row filter">
+  <div class="row form-row citizen-filter mb-4">
     <div class="col-sm-3">
-      <select class="select" id="select-status">
+      <select class="form-control select" id="select-status">
         <option value="-1"> Chọn trạng thái </option>
         {% for id, name in status_dict.items %}
           <option value="{{ id }}">{{ name }}</option>
@@ -15,7 +12,7 @@
       </select>
     </div>
     <div class="col-sm-2">
-      <select class="select" id="select-tinh">
+      <select class="form-control select" id="select-tinh">
         <option value="-1"> Chọn tỉnh </option>
         {% for tinh in list_tinh %}
           <option value="{{ tinh.id }}">{{ tinh.name }}</option>
@@ -23,7 +20,7 @@
       </select>
     </div>
     <div class="col-sm-2">
-      <select class="select" id="select-huyen">
+      <select class="form-control select" id="select-huyen">
         <option value="-1"> Chọn huyện </option>
         {% for huyen in list_huyen %}
           <option value="{{ huyen.id }}" {%if huyen.tinh.id %} tinh-id="{{ huyen.tinh.id }}" {% endif %}>{{ huyen.name }}</option>
@@ -31,65 +28,70 @@
       </select>
     </div>
     <div class="col-sm-2">
-      <select class="select" id="select-xa">
+      <select class="form-control select" id="select-xa">
         <option value="-1"> Chọn xã </option>
         {% for xa in list_xa %}
           <option value="{{ xa.id }}" {% if xa.huyen.id %} huyen-id="{{ xa.huyen.id }}" {% endif %}>{{ xa.name }}</option>
         {% endfor %}
       </select>
     </div>
-    <div class="col-sm-2">
-      <button id="search-button"> Tìm kiếm </button>
+    <div class="col-sm-2 ml-auto text-right">
+      <button id="search-button" class="btn btn-outline-primary btn-filter"> Tìm kiếm </button>
     </div>
   </div>
-  <div class="row d-show-desktop">
-    <table class="table citizen-table">
-      <thead>
-        <tr>
-          <th> STT </th>
-          <th> Hộ dân </th>
-          <th> Trạng thái </th>
-          <th> Số người </th>
-          <th> Địa chỉ </th>
-          <th> Số điện thoại </th>
-          <th> Ghi chú </th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for hodan in page_obj %}
+  <div class="section d-none d-lg-block">
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered citizen-table">
+        <thead class="thead-dark">
           <tr>
-            <td> {{ hodan.id }} </td>
-            <td> {{ hodan.name }} </td>
-            <td>
-              <button class="btn btn-small {% if hodan.status_emergency %} btn-danger {% else %} btn-success {% endif %}">
-                {{ hodan.status }}
-              </button>
-              <br>
-              <span> {{ hodan.update_time }} </span>
-            </td>
-            <td> {{ hodan.people_number }} </td>
-            <td> {{ hodan.location }}
-              {% if hodan.xa %}, {{ hodan.xa }} {% endif %}
-              {% if hodan.huyen %}, {{ hodan.huyen }} {% endif %}
-              {% if hodan.tinh %}, {{ hodan.tinh }} {% endif %}
-            </td>
-            <td> {{ hodan.phone }} </td>
-            <td>
-              <span class="see-less">
-                {{ hodan.note|truncatechars_html:80 }}
-                <a id="see-more-note"> See more </a>
-              </span>
-              <span class="see-more" style="display: none;">
-                {{ hodan.note}}
-                <a id="see-less-note"> See less </a>
-              </span>
-            </td>
+            <th> STT </th>
+            <th class="citizen-td-name"> Hộ dân </th>
+            <th> Trạng thái </th>
+            <th class="citizen-td-counter"> Số người </th>
+            <th class="citizen-td-address"> Địa chỉ </th>
+            <th class="citizen-td-phone"> Số điện thoại </th>
+            <th> Ghi chú </th>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {% for hodan in page_obj %}
+            <tr>
+              <td> {{ hodan.id }} </td>
+              <td class="citizen-td-name"> {{ hodan.name }} </td>
+              <td>
+                <div class="mb-2">
+                  <span class="badge {% if hodan.status_emergency %} badge-danger {% else %} badge-info {% endif %}">
+                    {{ hodan.status }}
+                  </span>
+                </div>
+                <div class="">
+                  <span> {{ hodan.update_time }} </span>
+                </div>
+              </td>
+              <td class="citizen-td-counter"> {{ hodan.people_number }} </td>
+              <td class="citizen-td-address"> {{ hodan.location }}
+                {% if hodan.xa %}, {{ hodan.xa }} {% endif %}
+                {% if hodan.huyen %}, {{ hodan.huyen }} {% endif %}
+                {% if hodan.tinh %}, {{ hodan.tinh }} {% endif %}
+              </td>
+              <td class="citizen-td-phone"> {{ hodan.phone }} </td>
+              <td>
+                <span class="see-less">
+                  {{ hodan.note|truncatechars_html:80 }}
+                  <a id="see-more-note"> See more </a>
+                </span>
+                <span class="see-more" style="display: none;">
+                  {{ hodan.note}}
+                  <a id="see-less-note"> See less </a>
+                </span>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
-  <div class="row d-show-mobile">
+  <div class="d-block d-lg-none">
     <ul class="citizen-list">
       {% for hodan in page_obj %}
         <li>
@@ -102,7 +104,9 @@
               </h5>
             </div>
             <div class="citizen-meta">
-              <span class="citizen-status {%if hodan.status_emergency %} status-emergency {% endif %}">{{ hodan.status }}</span>
+              <span class="badge {% if hodan.status_emergency %} badge-danger {% else %} badge-info {% endif %}">
+                {{ hodan.status }}
+              </span>
               <div class="citizen-updated-time">
                 <span>Cập nhật: </span>
                 <span> {{ hodan.update_time }} </span>
@@ -170,7 +174,7 @@
       {% endfor %}
     </ul>
   </div>
-  <nav aria-label="row Page navigation">
+  <nav aria-label="row Page navigation" class="d-flex justify-content-end">
     <ul class="pagination">
       {% if page_obj.has_previous %}
       <li class="page-item">
@@ -200,8 +204,6 @@
         {% endif %}
       </ul>
   </nav>
-
-</div>
 
 {% endblock %}
 
