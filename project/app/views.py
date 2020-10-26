@@ -7,8 +7,68 @@ from django.shortcuts import render, redirect
 from django.contrib.admin.views.decorators import staff_member_required
 from django_restful_admin import RestFulModelAdmin
 from rest_framework.response import Response
-from app.models import HoDan
+from app.models import HoDan, CuuHo, TinhNguyenVien, Tinh, Huyen, Xa
 
+
+class CuuHoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CuuHo
+        fields = '__all__'
+
+class CuuHoViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = CuuHoSerializer
+    queryset = CuuHo.objects.all()
+
+class HoDanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CuuHo
+        fields = '__all__'
+
+class HoDanViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = HoDanSerializer
+    queryset = HoDan.objects.all()
+
+class TinhNguyenVienSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TinhNguyenVien
+        fields = '__all__'
+
+class TinhNguyenVienViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = TinhNguyenVienSerializer
+    queryset = TinhNguyenVien.objects.all()
+
+class TinhSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tinh
+        fields = '__all__'
+
+class TinhViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = TinhSerializer
+    queryset = Tinh.objects.all()
+
+class HuyenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Huyen
+        fields = '__all__'
+
+class HuyenViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = HuyenSerializer
+    queryset = Huyen.objects.all()
+
+class XaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Xa
+        fields = '__all__'
+
+class XaViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = XaSerializer
+    queryset = Xa.objects.all()
 
 class BaseRestfulAdmin(RestFulModelAdmin):
     permission_classes = ()
