@@ -32,10 +32,10 @@ def get_tinh():
     return Tinh.objects.all()
 
 def get_huyen():
-    return Huyen.objects.all()
+    return Huyen.objects.prefetch_related('tinh').all()
 
 def get_xa():
-    return Xa.objects.all()
+    return Xa.objects.prefetch_related('huyen').all()
 
 PAGE_SIZE = 20
 
