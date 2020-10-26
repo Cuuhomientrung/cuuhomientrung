@@ -7,7 +7,7 @@
       <select class="form-control select" id="select-status">
         <option value="-1"> Chọn trạng thái </option>
         {% for id, name in status_dict.items %}
-          <option value="{{ id }}">{{ name }}</option>
+          <option {% if id|stringformat:"i" == filtered.status %} selected {% endif %} value="{{ id }}">{{ name }}</option>
         {% endfor %}
       </select>
     </div>
@@ -15,7 +15,7 @@
       <select class="form-control select" id="select-tinh">
         <option value="-1"> Chọn tỉnh </option>
         {% for tinh in list_tinh %}
-          <option value="{{ tinh.id }}">{{ tinh.name }}</option>
+        <option {% if tinh.id|stringformat:"i" == filtered.tinh %} selected {% endif %} value="{{ tinh.id }}">{{ tinh.name }}</option>
         {% endfor %}
       </select>
     </div>
@@ -23,7 +23,9 @@
       <select class="form-control select" id="select-huyen">
         <option value="-1"> Chọn huyện </option>
         {% for huyen in list_huyen %}
-          <option value="{{ huyen.id }}" {%if huyen.tinh.id %} tinh-id="{{ huyen.tinh.id }}" {% endif %}>{{ huyen.name }}</option>
+          <option {% if huyen.id|stringformat:"i" == filtered.huyen %} selected {% endif %}
+            tinh-id="{{ huyen.tinh.id }}" value="{{ huyen.id }}">{{ huyen.name }}
+          </option>
         {% endfor %}
       </select>
     </div>
@@ -31,7 +33,8 @@
       <select class="form-control select" id="select-xa">
         <option value="-1"> Chọn xã </option>
         {% for xa in list_xa %}
-          <option value="{{ xa.id }}" {% if xa.huyen.id %} huyen-id="{{ xa.huyen.id }}" {% endif %}>{{ xa.name }}</option>
+          <option {% if xa.id|stringformat:"i" == filtered.xa %} selected {% endif %}
+            huyen-id="{{ xa.huyen.id }}" value="{{ xa.id }}">{{ xa.name }}</option>
         {% endfor %}
       </select>
     </div>

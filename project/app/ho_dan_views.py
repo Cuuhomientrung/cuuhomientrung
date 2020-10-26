@@ -74,18 +74,17 @@ def index(request):
 
     paginator = Paginator(list_dict_ho_dan, PAGE_SIZE)
     page_obj = paginator.get_page(page_number)
-
     return render(request, 'ho_dan_index.html', {
-        'filter': {
-            'status': status,
-            'tinh': tinh,
-            'huyen': huyen,
-            'xa': xa,
-        },
         'page_obj': page_obj,
         'status_dict': dict(HODAN_STATUS_NEW),
         'list_tinh': get_tinh(),
         'list_huyen': get_huyen(),
         'list_xa': get_xa(),
         'params_url': build_params_url(status, tinh, huyen, xa),
+        'filtered': {
+            'status': status,
+            'tinh': tinh,
+            'huyen': huyen,
+            'xa': xa,
+        },
     })

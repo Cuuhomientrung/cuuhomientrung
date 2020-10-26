@@ -30,6 +30,8 @@ $(document).ready(() => {
             $("#select-huyen option").hide();
             $("#select-huyen option[tinh-id=" + tinh + "]").show();
         }
+        $("#select-huyen option[value=-1]").show();
+        $("#select-huyen option").removeAttr("selected");
     });
     $('#select-huyen').on("change", function() {
         let huyen = $("#select-huyen option:selected").val();
@@ -39,6 +41,8 @@ $(document).ready(() => {
             $("#select-xa option").hide();
             $("#select-xa option[huyen-id=" + huyen + "]").show();
         }
+        $("#select-xa option[value=-1]").show();
+        $("#select-xa option").removeAttr("selected");
     });
     $('#see-more-note').on("click", function() {
         $('.see-less').hide();
