@@ -1,14 +1,13 @@
 FROM python:3
-ENV PYTHONUNBUFFERED=1
-
-RUN apt-get update
-RUN apt-get install -y vim
-RUN mkdir /code
-
 WORKDIR /code
-
-COPY requirements.txt /code/
-
-RUN pip install -r requirements.txt
-
-COPY . /code/
+ADD requirements.txt /code/requirements.txt
+RUN pip install -r requirements.txt &&\
+    pip install django-select2-admin-filters
+ADD . /code/
+RUN chmod +x *.sh
+ENV DB_NAME cuuhomientrung
+ENV DB_USER cuuhomientrung
+ENV DB_PASSWORD cuuhomientrung
+ENV DB_HOSTNAME localhost
+ENV DB_PORT 5432
+ENTRYPOINT ["bash","-c","env > .env && ./run_server.sh"]

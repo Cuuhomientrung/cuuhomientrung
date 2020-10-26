@@ -8,9 +8,7 @@ from app.models import TinTuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa,\
 from app.views import BaseRestfulAdmin, HoDanRestFulModelAdmin
 from app.utils.export_to_excel import export_ho_dan_as_excel_action, utc_to_local
 from django.conf.locale.vi import formats as vi_formats
-from django_admin_listfilter_dropdown.filters import (
-    ChoiceDropdownFilter
-)
+from django_admin_listfilter_dropdown.filters import ChoiceDropdownFilter, RelatedDropdownFilter
 from django_restful_admin import admin as rest_admin
 from django.utils.html import format_html
 from admin_numeric_filter.admin import NumericFilterModelAdmin, \
@@ -18,12 +16,13 @@ from admin_numeric_filter.admin import NumericFilterModelAdmin, \
 from mapbox_location_field.admin import MapAdmin
 from mapbox_location_field.forms import LocationField
 from django.forms import ModelForm, ModelChoiceField, Textarea, TextInput
-from django.db.models import Count
+from django.db.models import Count, Q
 from simple_history.admin import SimpleHistoryAdmin
 from app.settings import (
     REVISION
 )
 from admin_auto_filters.filters import AutocompleteFilter
+from django.urls import reverse
 from easy_select2.widgets import Select2
 
 vi_formats.DATETIME_FORMAT = "d/m/y H:i"
@@ -31,7 +30,6 @@ vi_formats.DATETIME_FORMAT = "d/m/y H:i"
 PAGE_SIZE = 30
 
 # admin interface
-
 admin.site.site_header = 'Hệ thống thông tin Cứu hộ miền Trung'
 admin.site.site_title = 'Hệ thống thông tin Cứu hộ miền Trung'
 admin.index_title = 'Hệ thống thông tin Cứu hộ miền Trung'
@@ -76,8 +74,8 @@ class NguonLucAdmin(admin.ModelAdmin):
     list_filter = (
         ('status', ChoiceDropdownFilter),
         TinhAdminFilter,
-        XaAdminFilter,
         HuyenAdminFilter,
+        XaAdminFilter,
     )
     search_fields = ('name', 'phone')
     list_editable = ('status',)
@@ -102,8 +100,8 @@ class CuuHoAdmin(admin.ModelAdmin):
     list_filter = (
         ('status', ChoiceDropdownFilter),
         TinhAdminFilter,
-        XaAdminFilter,
         HuyenAdminFilter,
+        XaAdminFilter,
     )
     search_fields = ('name', 'phone')
     list_editable = ('status',)
@@ -128,8 +126,8 @@ class TinhNguyenVienAdmin(admin.ModelAdmin):
     list_filter = (
         'status',
         TinhAdminFilter,
-        XaAdminFilter,
         HuyenAdminFilter,
+        XaAdminFilter,        
     )
     search_fields = ('name', 'phone')
     list_editable = ('status',)
@@ -252,8 +250,11 @@ class HoDanHistoryAdmin(SimpleHistoryAdmin):
 
 
 class HoDanAdmin(NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.ModelAdmin):
-    list_display = ('id', 'get_update_time', 'status', 'name', 'phone', 'get_note',
-                    'people_number', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho')
+    list_display = (
+        'id', 'update_time', 'status', 'name', 'phone', 'get_note',
+        'people_number', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho',
+        'get_update_time'
+    )
     fieldsets = (
         (None, {
            'fields': ('name', 'phone', 'status')
@@ -268,10 +269,10 @@ class HoDanAdmin(NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.Mod
     list_display_links = ('id', 'name', 'phone',)
     list_editable = ()
     list_filter = (
-        'status',
+        ('status', RelatedDropdownFilter),
         TinhAdminFilter,
-        XaAdminFilter,
         HuyenAdminFilter,
+        XaAdminFilter,
     )
     search_fields = ('name', 'phone', 'note', 'id')
     actions = [export_ho_dan_as_excel_action()]
@@ -282,7 +283,7 @@ class HoDanAdmin(NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.Mod
         queryset = super(HoDanAdmin, self).get_queryset(request)
         queryset = queryset\
             .prefetch_related('tinh', 'huyen', 'xa', 'volunteer', 'cuuho', 'status')\
-            .order_by('-status', '-update_time')
+            .order_by('-update_time')
 
         return queryset
 
@@ -323,15 +324,18 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
 
     @mark_safe
     def get_cuu_ho_san_sang(self, obj):
-        hodan = [item for item in obj.cuuho_reversed.all() if item.status == 1]
-        tag = f'<a href="/app/cuuho/?{self.URL_CUSTOM_TAG}={obj.pk}&status=1">{len(hodan)}</a>'
+        cuuho = [item for item in obj.cuuho_reversed.all() if item.status == 1]
+        url = reverse('admin:app_cuuho_changelist')
+        tag = f'<a href="{url}?{self.URL_CUSTOM_TAG}={obj.pk}&status=1">{len(cuuho)}</a>'
         return tag
     get_cuu_ho_san_sang.short_description = "Đơn vị cứu hộ sẵn sàng"
     get_cuu_ho_san_sang.allow_tags = True
 
     @mark_safe
     def get_ho_dan_can_ung_cuu(self, obj):
-        tag = f'<a href="/app/hodan/?{self.URL_CUSTOM_TAG}={obj.pk}&status_id=3">{obj.total_hodan}</a>'
+        hodan = [item for item in obj.hodan_reversed.all() if item.status_id == 3]
+        url = reverse('admin:app_hodan_changelist')
+        tag = f'<a href="{url}?{self.URL_CUSTOM_TAG}={obj.pk}&status_id=3">{len(hodan)}</a>'
         return tag
     get_ho_dan_can_ung_cuu.short_description = "Hộ dân cần ứng cứu"
     get_ho_dan_can_ung_cuu.allow_tags = True
@@ -339,8 +343,7 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
     def get_queryset(self, request):
         queryset = super(HoDanCuuHoStatisticBase,self).get_queryset(request)
         queryset = queryset.prefetch_related('cuuho_reversed', 'hodan_reversed')\
-            .filter(hodan_reversed__status_id=3)\
-            .annotate(total_hodan=Count("hodan_reversed"))\
+            .annotate(total_hodan=Count("hodan_reversed", filter=Q(hodan_reversed__status_id=3)))\
             .order_by('-total_hodan')
         return queryset
 
@@ -360,7 +363,7 @@ class HuyenAdmin(HoDanCuuHoStatisticBase):
 
 class XaAdmin(HoDanCuuHoStatisticBase):
     list_filter = (
-        'huyen__tinh',
+        ('huyen__tinh', RelatedDropdownFilter),
         HuyenAdminFilter,
     )
     URL_CUSTOM_TAG = 'xa'
@@ -396,7 +399,7 @@ admin.site.register(TrangThaiHoDan, TrangThaiHoDanAdmin)
 # admin.site.register(Thon, ThonAdmin)
 
 rest_admin.site.register(
-    HoDan, view_class=HoDanRestFulModelAdmin, __doc__="hello")
+    HoDan, view_class=HoDanRestFulModelAdmin)
 rest_admin.site.register(CuuHo, view_class=BaseRestfulAdmin)
 rest_admin.site.register(TinhNguyenVien, view_class=BaseRestfulAdmin)
 rest_admin.site.register(Tinh, view_class=BaseRestfulAdmin)

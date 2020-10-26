@@ -159,3 +159,4 @@ cython_debug/
 Pipfile.lock
 node_modules/*
 project/app/static/webpack_bundles/*
+project/webpack-stats.json

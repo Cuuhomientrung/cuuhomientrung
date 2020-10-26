@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+{% load static i18n %}
+
+{% block content %}
+<section class="mb-5">
+    <div class="card-deck">
+        <div class="card card-homepage border-danger">
+            <div class="card-header">
+                <h5 class="card-title text-danger">
+                    Hộ dân cần cứu trợ
+                </h5>
+                <div class="card-text">
+                    <span>Đang có
+                      <span class="text-danger font-weight-bolder h4"> {{ tong_hodan_cap_cuu}} </span>
+                    hộ dân cần cứu trợ</span>
+                    <br>
+                    <span>Đã có
+                      <span class="text-success font-weight-bolder h4"> {{ tong_hodan_da_duoc_cuu }} </span>
+                    hộ dân được cứu trợ </span>
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="card-meta text-small">Phát hiện hộ dân cần cứu trợ? Thêm ngay để các TNV kết nối với các đội cứu trợ.</p>
+            </div>
+            <div class="card-footer">
+                <a href="{{ them_hodan_url }}" class="btn btn-danger">Thêm hộ dân</a>
+                <a href="{{ hodan_url }}" class="btn btn-secondary">Xem </a>
+            </div>
+        </div>
+        <div class="card card-homepage border-success">
+            <div class="card-header">
+                <h5 class="card-title text-success">
+                    Đội cứu trợ
+                </h5>
+                <div class="card-text">
+                    <span>Đang có
+                      <span class="text-success font-weight-bolder h4"> {{ tong_doi_cuu_ho }} </span>
+                    đội cứu trợ</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="card-meta text-small">Đăng ký trở thành đội cứu trợ để nhận được các yêu cầu cứu trợ mới nhất.</p>
+            </div>
+            <div class="card-footer">
+                <a href="{{them_cuuho_url}}" class="btn btn-success">Đăng ký đội cứu trợ</a>
+                <a href="{{cuuho_url}}" class="btn btn-secondary">Xem </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h4 class="section-title mb-3">
+        Thông tin chi tiết các tỉnh
+    </h4>
+    <div class="card-deck card-deck-counter">
+        {% for tinh in tinhInfos %}
+        <div class="card bg-light">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a class="text-decoration-none text-dark font-weight-bolder" href="{{ hodan_url }}?tinh__pk__exact={{ tinh.id }}"> {{ tinh.name }} </a>
+                </h5>
+                <div class="card-counter-info">
+                    <span class="card-counter-info-text text-danger">
+                      <a class="text-danger font-weight-bolder" href="{{ hodan_url }}?tinh__pk__exact={{ tinh.id }}"> {{ tinh.total_hodan }}
+                      </a>
+                    </span>
+                    <span>Hộ dân cần cứu trợ</span>
+                </div>
+                <div class="card-counter-info">
+                    <span class="card-counter-info-text text-success">
+                      <a class="text-success font-weight-bolder" href="{{ cuuho_url }}?tinh__pk__exact={{ tinh.id }}"> {{ tinh.total_cuuho }} </a>
+                    </span>
+                    <span>Đội cứu trợ</span>
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
