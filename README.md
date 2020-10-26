@@ -98,10 +98,7 @@ Các file scss và js hiện tại import tại file loader. Css sẽ tự rende
 
 
 ## Tích hợp API
-Url để xem restful api doc
-```html
-/api/
-```
+Restful api doc [tại đây](https://cuuhomientrung.info/api/)
 
 Sau khi bạn được cấp `api_token`, các request sẽ follow theo doc như bình thường. Ngoài ra bạn phải thêm vào header tham số sau
 
