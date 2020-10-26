@@ -56,7 +56,7 @@ HODAN_STATUS_NEW = [
 
 class Token(BaseTokenClass):
     class Meta:
-        abstract = True
+        abstract = 'rest_framework.authtoken' not in settings.INSTALLED_APPS
 
 
 class Tinh(models.Model):
