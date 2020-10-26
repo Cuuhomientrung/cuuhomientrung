@@ -13,7 +13,7 @@ def get_ho_dan(status=None, tinh=None, huyen=None, xa=None):
         query = query.filter(huyen=huyen)
     if xa:
         query = query.filter(xa=xa)
-    query.prefetch_related('tinh', 'huyen', 'xa', 'status')
+    query = query.prefetch_related('tinh', 'huyen', 'xa', 'status', 'volunteer')
     return query.all()
 
 def build_params_url(status=None, tinh=None, huyen=None, xa=None):
