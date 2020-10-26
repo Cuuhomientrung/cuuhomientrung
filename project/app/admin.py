@@ -7,12 +7,11 @@ from rest_framework import routers
 from app.settings import TIME_ZONE
 from app.models import TinTuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa,\
     TrangThaiHoDan, CUUHO_STATUS, TINHNGUYEN_STATUS
-from app.views import BaseRestfulAdmin, HoDanRestFulModelAdmin, CuuHoViewSet, HoDanViewSet,\
-    TinhNguyenVienViewSet, TinhViewSet, HuyenViewSet, XaViewSet
+from app.views import CuuHoViewSet, HoDanViewSet,\
+    TinhNguyenVienViewSet, TinhViewSet, HuyenViewSet, XaViewSet, TrangThaiHoDanSet
 from app.utils.export_to_excel import export_ho_dan_as_excel_action, utc_to_local
 from django.conf.locale.vi import formats as vi_formats
 from django_admin_listfilter_dropdown.filters import ChoiceDropdownFilter, RelatedDropdownFilter
-from django_restful_admin import admin as rest_admin
 from django.utils.html import format_html
 from admin_numeric_filter.admin import NumericFilterModelAdmin, \
     SliderNumericFilter
@@ -130,7 +129,7 @@ class TinhNguyenVienAdmin(admin.ModelAdmin):
         'status',
         TinhAdminFilter,
         HuyenAdminFilter,
-        XaAdminFilter,        
+        XaAdminFilter,
     )
     search_fields = ('name', 'phone')
     list_editable = ('status',)
@@ -409,11 +408,4 @@ router.register('tinhnguyenvien', TinhNguyenVienViewSet)
 router.register('tinh', TinhViewSet)
 router.register('huyen', HuyenViewSet)
 router.register('xa', XaViewSet)
-
-# rest_admin.site.register(
-#     HoDan, view_class=HoDanRestFulModelAdmin)
-# rest_admin.site.register(CuuHo, view_class=BaseRestfulAdmin)
-# rest_admin.site.register(TinhNguyenVien, view_class=BaseRestfulAdmin)
-# rest_admin.site.register(Tinh, view_class=BaseRestfulAdmin)
-# rest_admin.site.register(Huyen, view_class=BaseRestfulAdmin)
-# rest_admin.site.register(Xa, view_class=BaseRestfulAdmin)
+router.register('hodan_status', TrangThaiHoDanSet)
