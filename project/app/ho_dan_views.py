@@ -13,7 +13,6 @@ def get_ho_dan(status=None, tinh=None, huyen=None, xa=None):
         query = query.filter(huyen=huyen)
     if xa:
         query = query.filter(xa=xa)
-    query.select_related('status')
     return query.all()
 
 def build_params_url(status=None, tinh=None, huyen=None, xa=None):
@@ -53,7 +52,10 @@ def index(request):
         xa=xa,
     ))
 
-    list_dict_ho_dan = [{
+    paginator = Paginator(list_ho_dan, PAGE_SIZE)
+    page_obj = paginator.get_page(page_number)
+    paged_list_ho_dan = page_obj.object_list
+    paged_list_dict_ho_dan = [{
         'id': ho_dan.id,
         'name': ho_dan.name,
         'created_time': ho_dan.created_time,
@@ -70,10 +72,9 @@ def index(request):
         'volunteer': ho_dan.volunteer,
         'cuuho': ho_dan.cuuho,
         'geo_location': ho_dan.geo_location,
-    } for ho_dan in list_ho_dan]
+    } for ho_dan in paged_list_ho_dan]
+    page_obj.object_list = paged_list_dict_ho_dan
 
-    paginator = Paginator(list_dict_ho_dan, PAGE_SIZE)
-    page_obj = paginator.get_page(page_number)
     return render(request, 'ho_dan_index.html', {
         'page_obj': page_obj,
         'status_dict': dict(HODAN_STATUS_NEW),
