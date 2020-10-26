@@ -79,14 +79,18 @@
               </td>
               <td class="citizen-td-phone"> {{ hodan.phone }} </td>
               <td>
-                <span class="see-less">
-                  {{ hodan.note|truncatechars_html:80 }}
-                  <a id="see-more-note"> See more </a>
-                </span>
-                <span class="see-more" style="display: none;">
-                  {{ hodan.note}}
-                  <a id="see-less-note"> See less </a>
-                </span>
+                {% if hodan.note and hodan.note|length > 80 %}
+                  <span class="see-less">
+                    {{ hodan.note|truncatechars_html:80 }}
+                    <a id="see-more-note"> See more </a>
+                  </span>
+                  <span class="see-more" style="display: none;">
+                    {{ hodan.note}}
+                    <a id="see-less-note"> See less </a>
+                  </span>
+                {% else %}
+                  {{ hodan.note }}
+                {% endif %}
               </td>
             </tr>
           {% endfor %}

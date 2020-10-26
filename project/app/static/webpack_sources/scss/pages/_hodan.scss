@@ -151,4 +151,24 @@
   .citizen-td-counter {
     max-width: 80px;
   }
+
+  .see-more,
+  .see-less {
+    > a {
+      color: #205493;
+    }
+  }
+}
+
+.page-link {
+  color: #205493;
+}
+
+.page-item {
+  &.active {
+    .page-link {
+      background-color: #205493;
+      border-color: #205493;
+    }
+  }
 }
