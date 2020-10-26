@@ -4,7 +4,6 @@ from django.core.paginator import Paginator
 from app.models import HoDan, Tinh, Huyen, Xa, HODAN_STATUS_NEW
 
 def get_ho_dan(status=None, tinh=None, huyen=None, xa=None):
-    print (status, tinh, huyen, xa)
     query = HoDan.objects
     if status:
         query = query.filter(status=status)
@@ -14,6 +13,7 @@ def get_ho_dan(status=None, tinh=None, huyen=None, xa=None):
         query = query.filter(huyen=huyen)
     if xa:
         query = query.filter(xa=xa)
+    query.select_related('status')
     return query.all()
 
 def build_params_url(status=None, tinh=None, huyen=None, xa=None):
