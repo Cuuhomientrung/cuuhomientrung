@@ -16,6 +16,18 @@ def get_ho_dan(status=None, tinh=None, huyen=None, xa=None):
         query = query.filter(xa=xa)
     return query.all()
 
+def build_params_url(status=None, tinh=None, huyen=None, xa=None):
+    url = "?"
+    if status:
+        url = url + "status=" + status + "&"
+    if tinh:
+        url = url + "tinh=" + tinh + "&"
+    if huyen:
+        url = url + "huyen=" + huyen + "&"
+    if xa:
+        url = url + "xa=" + xa + "&"
+    return url
+
 def get_tinh():
     return Tinh.objects.all()
 
@@ -75,4 +87,5 @@ def index(request):
         'list_tinh': get_tinh(),
         'list_huyen': get_huyen(),
         'list_xa': get_xa(),
+        'params_url': build_params_url(status, tinh, huyen, xa),
     })
