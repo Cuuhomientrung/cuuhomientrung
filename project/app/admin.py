@@ -321,7 +321,7 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
         abstract = True
 
     list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
-    search_fields = ('name', )
+    search_fields = ('name__unaccent', )
     list_per_page = PAGE_SIZE
 
     @mark_safe

@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'easy_select2',
     'webpack_loader',
     'rest_framework.authtoken',
+    'django.contrib.postgres',
 ]
 
 
