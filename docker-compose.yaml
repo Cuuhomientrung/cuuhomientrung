@@ -23,9 +23,15 @@ services:
   cuuhomientrung-web:
     container_name: cuuhomientrung-web
     build: .
-    command: python project/manage.py runserver 0.0.0.0:8087
+    command: tail -F /dev/null
     volumes:
       - .:/code
+    environment:
+      - DB_NAME=cuuhomientrung
+      - DB_USER=administrator
+      - DB_PASSWORD=bangtin_ainews_2811
+      - DB_HOSTNAME=cuuhomientrung-db
+      - DB_PORT=5432
     ports:
       - "8087:8087"
     depends_on:
