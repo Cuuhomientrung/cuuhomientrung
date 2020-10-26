@@ -141,6 +141,13 @@
   .citizen-td-name {
     max-width: 200px;
     min-width: 150px;
+    overflow: hidden;
+  }
+
+  .citizen-td-phone {
+    max-width: 120px;
+    min-width: 100px;
+    overflow: hidden;
   }
 
   .citizen-td-address {
