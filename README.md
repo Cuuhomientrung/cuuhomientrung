@@ -61,7 +61,7 @@ bash run_create_admin.sh
 4. Mặc định đăng nhập site bằng tài khoản admin
 - trong file project/app/middleware.py, thay đổi username thành username của admin đã tạo ở bước 3
 
-## Vận hành
+## Môi trường dev
 Chạy webserver bằng lệnh sau:
 ~~~
 bash run_server.sh
@@ -74,19 +74,20 @@ Mặc định site sẽ chạy ở localhost:8087
 
 - Phần home page mới sử sử dụng webpack-bundle của django để load file.
 
-## Bước 1:
+6. Hướng dẫn chuẩn bị môi trường dev
+- Bước 1:
 Chạy lệnh sau để dev trên local
 npm run watch
 
-## Bước 2:
+- Bước 2:
 Chạy lệnh sau để render ra các static file của thư viện (thường thì chỉ dùng cho admin page)
 ./project/manage.py collectstatic --no-input
 
-## Bước 3:
+- Bước 3:
 Tiến hành code và dev trong thư mục `project/app/static/webpack_sources`
 Các sources code của thư mục này sẽ được build tại thư mục `project/static/webpack_bundles`
 
-## Lưu ý:
+- Lưu ý:
 Tất cả các file static (js,css,svg,image) khi muốn nhúng vào html cần follow cú pháp sau:
 File này được tự động tìm trong `project/app/static`
 
@@ -94,3 +95,21 @@ File này được tự động tìm trong `project/app/static`
 "{% static '/path/to/some_file' %}?v={{ REVISION }}"
 ```
 Các file scss và js hiện tại import tại file loader. Css sẽ tự render ra và append vào header của html
+
+
+## Tích hợp API
+Url để xem restful api doc
+```html
+/api/
+```
+
+Sau khi bạn được cấp `api_token`, các request sẽ follow theo doc như bình thường. Ngoài ra bạn phải thêm vào header tham số sau
+
+```html
+Authorization: Token [api_token]
+```
+
+Ví dụ
+```html
+curl -X GET [hostname]/api/cuuho/ -H 'Authorization: Token [api_token]'
+```

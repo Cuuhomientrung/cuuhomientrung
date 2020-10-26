@@ -3,8 +3,7 @@ from smart_selects.db_fields import ChainedForeignKey
 from mapbox_location_field.models import LocationField
 from simple_history.models import HistoricalRecords
 from django.dispatch import receiver
-from rest_framework.authtoken.models import Token
-from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token as BaseTokenClass
 from django.conf import settings
 from simple_history.signals import (
     post_create_historical_record,
@@ -53,6 +52,12 @@ HODAN_STATUS_NEW = [
     (6, 'Cần thuốc men'),
     (7, 'Đã an toàn')
 ]
+
+
+class Token(BaseTokenClass):
+    class Meta:
+        abstract = True
+
 
 class Tinh(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Tỉnh")
@@ -352,6 +357,7 @@ class TinTuc(models.Model):
     class Meta:
         verbose_name_plural = "6. Tin tức quan trọng "
         verbose_name = "6. Tin tức quan trọng "
+
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
