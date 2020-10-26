@@ -18,10 +18,12 @@ from django.urls import path, include
 from django.conf.urls import url
 from django_restful_admin import admin as rest_admin
 from app import ho_dan_views
+from app.admin import router
 from app.index import index
 
 urlpatterns = [
     path('',index,name="index"),
+    path('api/', include(router.urls)),
     # path('api/', rest_admin.site.urls, name="rest_api"),
     path('chaining/', include('smart_selects.urls')),
     url(r'^admin/dynamic_raw_id/', include('dynamic_raw_id.urls')),

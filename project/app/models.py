@@ -3,9 +3,13 @@ from smart_selects.db_fields import ChainedForeignKey
 from mapbox_location_field.models import LocationField
 from simple_history.models import HistoricalRecords
 from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+from django.contrib.auth.models import User
+from django.conf import settings
 from simple_history.signals import (
-    post_create_historical_record
+    post_create_historical_record,
 )
+from django.db.models.signals import post_save
 
 RESOURCE_STATUS = [
     (1, 'Sẵn sàng'),
@@ -348,3 +352,8 @@ class TinTuc(models.Model):
     class Meta:
         verbose_name_plural = "6. Tin tức quan trọng "
         verbose_name = "6. Tin tức quan trọng "
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
