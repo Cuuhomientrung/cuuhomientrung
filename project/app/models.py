@@ -3,9 +3,12 @@ from smart_selects.db_fields import ChainedForeignKey
 from mapbox_location_field.models import LocationField
 from simple_history.models import HistoricalRecords
 from django.dispatch import receiver
+from rest_framework.authtoken.models import Token as BaseTokenClass
+from django.conf import settings
 from simple_history.signals import (
-    post_create_historical_record
+    post_create_historical_record,
 )
+from django.db.models.signals import post_save
 
 RESOURCE_STATUS = [
     (1, 'Sẵn sàng'),
@@ -50,6 +53,12 @@ HODAN_STATUS_NEW = [
     (7, 'Đã an toàn')
 ]
 
+
+class Token(BaseTokenClass):
+    class Meta:
+        abstract = 'rest_framework.authtoken' not in settings.INSTALLED_APPS
+
+
 class Tinh(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Tỉnh")
 
@@ -57,8 +66,8 @@ class Tinh(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = "Thống kê Tỉnh"
-        verbose_name_plural = "Thống kê Tỉnh"
+        verbose_name = "3. Thống kê Tỉnh"
+        verbose_name_plural = "3. Thống kê Tỉnh"
 
 
 class Huyen(models.Model):
@@ -70,8 +79,8 @@ class Huyen(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = "Thống kê Huyện"
-        verbose_name_plural = "Thống kê Huyện"
+        verbose_name = "4. Thống kê Huyện"
+        verbose_name_plural = "4. Thống kê Huyện"
 
 
 class Xa(models.Model):
@@ -83,8 +92,8 @@ class Xa(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = "Thống kê Xã"
-        verbose_name_plural = "Thống kê Xã"
+        verbose_name = "5. Thống kê Xã"
+        verbose_name_plural = "5. Thống kê Xã"
 
 
 class Thon(models.Model):
@@ -133,8 +142,8 @@ class TinhNguyenVien(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Tình nguyên viên thông tin'
-        verbose_name_plural = 'Tình nguyên viên thông tin'
+        verbose_name = '7. Tình nguyên viên thông tin'
+        verbose_name_plural = '7. Tình nguyên viên thông tin'
 
 
 class CuuHo(models.Model):
@@ -189,8 +198,8 @@ class CuuHo(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Các đội Cứu hộ'
-        verbose_name_plural = 'Các đội Cứu hộ'
+        verbose_name = '2. Các đội Cứu hộ'
+        verbose_name_plural = '2. Các đội Cứu hộ'
 
     # def save(self, *args, **kwargs):
     #     # Auto update huyen
@@ -279,8 +288,8 @@ class HoDan(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Hộ dân cần ứng cứu'
-        verbose_name_plural = 'Hộ dân cần ứng cứu'
+        verbose_name = '1. Hộ dân cần ứng cứu'
+        verbose_name_plural = '1. Hộ dân cần ứng cứu'
 
 
 # TODO: update ip from user
@@ -346,5 +355,11 @@ class TinTuc(models.Model):
         return self.title
 
     class Meta:
-        verbose_name_plural = "Tin tức quan trọng "
-        verbose_name = "Tin tức quan trọng "
+        verbose_name_plural = "6. Tin tức quan trọng "
+        verbose_name = "6. Tin tức quan trọng "
+
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
