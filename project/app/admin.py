@@ -253,7 +253,7 @@ class HoDanHistoryAdmin(SimpleHistoryAdmin):
 
 class HoDanAdmin(NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.ModelAdmin):
     list_display = (
-        'id', 'update_time', 'status', 'name', 'phone', 'get_note',
+        'id', 'created_time', 'status', 'name', 'phone', 'get_note',
         'people_number', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho',
         'get_update_time'
     )
@@ -285,7 +285,7 @@ class HoDanAdmin(NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.Mod
         queryset = super(HoDanAdmin, self).get_queryset(request)
         queryset = queryset\
             .prefetch_related('tinh', 'huyen', 'xa', 'volunteer', 'cuuho', 'status')\
-            .order_by('-update_time')
+            .order_by('-created_time')
 
         return queryset
 
