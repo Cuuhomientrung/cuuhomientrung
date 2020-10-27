@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
-from django_restful_admin import admin as rest_admin
+from django.conf import settings
 from app import ho_dan_views
 from app.admin import router
 from app.index import index
@@ -32,3 +32,10 @@ urlpatterns = [
     path('select2/', include('django_select2.urls')),
     url(r'^ho_dan$', ho_dan_views.index),
 ]
+
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
