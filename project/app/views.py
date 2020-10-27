@@ -4,18 +4,18 @@ from django.db.models import Q
 from rest_framework.permissions import IsAuthenticated
 from django_restful_admin import RestFulModelAdmin
 from rest_framework.response import Response
-from app.models import HoDan, CuuHo, TinhNguyenVien, Tinh, Huyen, Xa, TrangThaiHoDan
+from app.models import HoDan, CuuHo, TinhNguyenVien, NewTinh, NewHuyen, NewXa, TrangThaiHoDan
 
 
 class TinhHuyenXaBase(serializers.ModelSerializer):
     class Meta:
         abstract = True
 
-    tinh = serializers.PrimaryKeyRelatedField(queryset=Tinh.objects.all())
+    tinh = serializers.PrimaryKeyRelatedField(queryset=NewTinh.objects.all())
     tinh_display = serializers.SerializerMethodField(read_only=True)
-    huyen = serializers.PrimaryKeyRelatedField(queryset=Huyen.objects.all())
+    huyen = serializers.PrimaryKeyRelatedField(queryset=NewHuyen.objects.all())
     huyen_display = serializers.SerializerMethodField(read_only=True)
-    xa = serializers.PrimaryKeyRelatedField(queryset=Xa.objects.all())
+    xa = serializers.PrimaryKeyRelatedField(queryset=NewXa.objects.all())
     xa_display = serializers.SerializerMethodField(read_only=True)
 
     def get_tinh_display(self, obj):
@@ -88,26 +88,26 @@ class TinhNguyenVienViewSet(viewsets.ModelViewSet):
 
 class TinhSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Tinh
+        model = NewTinh
         fields = '__all__'
 
 
 class TinhViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = TinhSerializer
-    queryset = Tinh.objects.all()
+    queryset = NewTinh.objects.all()
 
 
 class HuyenSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Huyen
+        model = NewHuyen
         fields = '__all__'
 
 
 class HuyenViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = HuyenSerializer
-    queryset = Huyen.objects.all()
+    queryset = NewHuyen.objects.all()
 
 
 class TrangThaiHoDanSerializer(serializers.ModelSerializer):
@@ -124,14 +124,14 @@ class TrangThaiHoDanSet(viewsets.ModelViewSet):
 
 class XaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Xa
+        model = NewXa
         fields = '__all__'
 
 
 class XaViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = XaSerializer
-    queryset = Xa.objects.all()
+    queryset = NewXa.objects.all()
 
 
 class BaseRestfulAdmin(RestFulModelAdmin):
