@@ -46,8 +46,37 @@ CÙNG CHUNG TAY VÌ KHÚC RUỘT MIỀN TRUNG !!!
 pip3 install -r requirements.txt
 ~~~
 
-2. Thay đổi cấu hình database từ postgresql sang sqlite (để chạy được ở local)  
-- trong file project/app/settings.py, comment out config postgresql và thay bằng phần config sqlite
+~~2. Thay đổi cấu hình database từ postgresql sang sqlite (để chạy được ở local)~~
+
+~~- trong file project/app/settings.py, comment out config postgresql và thay bằng phần config sqlite~~
+
+2. Cài đặt PostgreSQL và tạo database shema
+- PostgreSQL
+    - Debian/Ubuntu
+        - Update mirror
+        ```
+        sudo apt update
+        ```
+        - Cài đặt postgresql
+        ```
+        sudo apt install postgresql
+        ```
+        - Cài đặt postgresql-contrib (để sử dụng `UnaccentExtension`) nếu chưa được cài sẵn cùng postgresql ở trên
+        ```
+        sudo apt install postgresql-contrib
+        ```
+    - Centos
+        - Cài đặt postgresql
+        ```
+        sudo yum install postgresql
+        ```
+        - Cài đặt postgresql-contrib 
+        ```
+        sudo yum install postgresql*contrib
+        ```
+    - Docker image: đã được cài sẵn `postgres-contrib`
+    - Các hệ điều hành khác vui lòng cài đặt `postgresql` và `postgresql-contrib` theo hướng dẫn chính thức [tại đây](https://www.postgresql.org/download/)
+    
 - chạy script sau để tạo lại schema
 ~~~
 bash run_migrate.sh
