@@ -63,8 +63,8 @@ class NewTinh(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Tỉnh")
     prefix = models.TextField(blank=True, default='', null=True)
     suffix = models.TextField(blank=True, default='', null=True)
-    long = models.TextField(blank=True, default='', null=True)
-    lat = models.TextField(blank=True, default='', null=True)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
     level = models.IntegerField(blank=True, null=True)
     id = models.AutoField(primary_key=True)
 
@@ -86,6 +86,22 @@ class Tinh(models.Model):
         verbose_name = "3. Thống kê Tỉnh"
         verbose_name_plural = "3. Thống kê Tỉnh"
 
+class NewHuyen(models.Model):
+    name = models.TextField(blank=True, default='', verbose_name="Huyện")
+    prefix = models.TextField(blank=True, default='', null=True)
+    suffix = models.TextField(blank=True, default='', null=True)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    level = models.IntegerField(blank=True, null=True)
+    id = models.AutoField(primary_key=True)
+    tinh = models.ForeignKey(NewTinh, blank=True, null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "4. Thống kê Huyện"
+        verbose_name_plural = "4. Thống kê Huyện"
 
 class Huyen(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Huyện")
@@ -99,6 +115,22 @@ class Huyen(models.Model):
         verbose_name = "4. Thống kê Huyện"
         verbose_name_plural = "4. Thống kê Huyện"
 
+class NewXa(models.Model):
+    name = models.TextField(blank=True, default='', verbose_name="Xã")
+    prefix = models.TextField(blank=True, default='', null=True)
+    suffix = models.TextField(blank=True, default='', null=True)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    level = models.IntegerField(blank=True, null=True)
+    id = models.AutoField(primary_key=True)
+    huyen = models.ForeignKey(NewHuyen, blank=True, null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "5. Thống kê Xã"
+        verbose_name_plural = "5. Thống kê Xã"
 
 class Xa(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Xã")
