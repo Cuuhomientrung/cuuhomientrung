@@ -1,5 +1,9 @@
 {% load render_bundle from webpack_loader %}
 {% load static i18n %}
+{% block extrahead %}
+  <link rel="stylesheet" type="text/css" href="{% static 'raw_sources/css/main.css' %}?v={{ REVISION }}">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+{% endblock %}
 
 <!DOCTYPE html>
 <html lang="{{ language }}">
@@ -47,8 +51,8 @@
                 </div>
             </nav>
         </header>
-        <div class="">
-            <div class="p-3 bg-danger text-white d-block d-lg-none">
+        <div class="bg-danger text-white d-block d-lg-none">
+            <div class="container py-3">
               <h4>
                 <span>Hotline:</span>
                 <a class="text-white" href="tel:18006132">1800 6132</a>
@@ -88,6 +92,7 @@
 
   {% render_bundle 'home_page_loader' 'js' %}
   {% block footer_scripts %}{% endblock %}
+  {% block scripts_extra %}{% endblock %}
 
   {% csrf_token %}
 </body>
