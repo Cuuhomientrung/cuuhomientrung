@@ -95,6 +95,15 @@ class CuuHoLocationForm(ModelForm):
         self.fields["tinh"].queryset = Tinh.objects.order_by("name")
         self.fields['volunteer'] = ModelChoiceField(queryset=TinhNguyenVien.objects.all(), widget=Select2(), required=False)
 
+        self.fields["tinh"].label = "Tỉnh"
+        self.fields["tinh"].help_text = "Nhấn vào để chọn tỉnh"
+
+        self.fields["huyen"].label = "Huyện"
+        self.fields["huyen"].help_text = "Bạn phải chọn tỉnh trước"
+
+        self.fields["xa"].label = "Xã"
+        self.fields["xa"].help_text = "Bạn phải chọn tỉnh, và huyện trước"
+
 
 class CuuHoAdmin(admin.ModelAdmin):
     list_display = ('update_time', 'status', 'name', 'phone',
