@@ -59,6 +59,23 @@ class Token(BaseTokenClass):
         abstract = 'rest_framework.authtoken' not in settings.INSTALLED_APPS
 
 
+class NewTinh(models.Model):
+    name = models.TextField(blank=True, default='', verbose_name="Tỉnh")
+    prefix = models.TextField(blank=True, default='', null=True)
+    suffix = models.TextField(blank=True, default='', null=True)
+    long = models.TextField(blank=True, default='', null=True)
+    lat = models.TextField(blank=True, default='', null=True)
+    level = models.IntegerField(blank=True, null=True)
+    id = models.AutoField(primary_key=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "3. Thống kê Tỉnh (new)"
+        verbose_name_plural = "3. Thống kê Tỉnh (new)"
+
+
 class Tinh(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Tỉnh")
 
