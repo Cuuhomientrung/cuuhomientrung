@@ -180,10 +180,10 @@ class TinhNguyenVien(models.Model):
     note = models.TextField(blank=True, default='', verbose_name='Ghi chú')
 
     tinh = models.ForeignKey(
-        Tinh, blank=True, null=True, on_delete=models.CASCADE)
+        NewTinh, blank=True, null=True, on_delete=models.CASCADE)
     huyen = models.ForeignKey(
-        Huyen, blank=True, null=True, on_delete=models.CASCADE)
-    xa = models.ForeignKey(Xa, blank=True, null=True, on_delete=models.CASCADE)
+        NewHuyen, blank=True, null=True, on_delete=models.CASCADE)
+    xa = models.ForeignKey(NewXa, blank=True, null=True, on_delete=models.CASCADE)
     thon = models.ForeignKey(
         Thon, blank=True, null=True, on_delete=models.CASCADE)
 
@@ -201,12 +201,12 @@ class CuuHo(models.Model):
     status = models.IntegerField(
         choices=CUUHO_STATUS, default=0, verbose_name="Tình trạng")
     tinh = models.ForeignKey(
-        Tinh, blank=True, null=True, on_delete=models.CASCADE,
+        NewTinh, blank=True, null=True, on_delete=models.CASCADE,
         related_name="cuuho_reversed"
     )
 
     huyen = ChainedForeignKey(
-        Huyen,
+        NewHuyen,
         chained_field = "tinh",
         chained_model_field = "tinh",
         show_all = False,
@@ -218,7 +218,7 @@ class CuuHo(models.Model):
         on_delete=models.CASCADE)
 
     xa = ChainedForeignKey(
-        Xa,
+        NewXa,
         chained_field = "huyen",
         chained_model_field = "huyen",
         show_all = False,
@@ -289,11 +289,11 @@ class HoDan(models.Model):
     )
     people_number = models.PositiveIntegerField(blank=True, null=True, default=1, verbose_name="Số người")
     tinh = models.ForeignKey(
-        Tinh, blank=True, null=True, on_delete=models.CASCADE,
+        NewTinh, blank=True, null=True, on_delete=models.CASCADE,
         related_name="hodan_reversed"
     )
     huyen = ChainedForeignKey(
-        Huyen,
+        NewHuyen,
         chained_field = "tinh",
         chained_model_field = "tinh",
         show_all = False,
@@ -305,7 +305,7 @@ class HoDan(models.Model):
         on_delete=models.CASCADE)
 
     xa = ChainedForeignKey(
-        Xa,
+        NewXa,
         chained_field = "huyen",
         chained_model_field = "huyen",
         show_all = False,
@@ -372,10 +372,10 @@ class NguonLuc(models.Model):
         choices=RESOURCE_STATUS, default=0, verbose_name="Tình trạng")
 
     tinh = models.ForeignKey(
-        Tinh, blank=True, null=True, on_delete=models.CASCADE)
+        NewTinh, blank=True, null=True, on_delete=models.CASCADE)
     huyen = models.ForeignKey(
-        Huyen, blank=True, null=True, on_delete=models.CASCADE)
-    xa = models.ForeignKey(Xa, blank=True, null=True, on_delete=models.CASCADE)
+        NewHuyen, blank=True, null=True, on_delete=models.CASCADE)
+    xa = models.ForeignKey(NewXa, blank=True, null=True, on_delete=models.CASCADE)
     thon = models.ForeignKey(
         Thon, blank=True, null=True, on_delete=models.CASCADE)
 

@@ -1,5 +1,5 @@
 from app.admin import TinhAdmin
-from app.models import Tinh, HoDan, CuuHo
+from app.models import NewTinh, HoDan, CuuHo
 from django.db.models import Count
 from django.shortcuts import render
 from django.urls import reverse
@@ -10,11 +10,11 @@ def index(request):
     tong_hodan_da_duoc_cuu = HoDan.objects.filter(status_id=7).count()
     tong_doi_cuu_ho = CuuHo.objects.count()
 
-    totalHoDanByTinh = Tinh.objects.prefetch_related('hodan_reversed')\
+    totalHoDanByTinh = NewTinh.objects.prefetch_related('hodan_reversed')\
         .filter(hodan_reversed__status_id=3)\
         .annotate(total_hodan=Count("hodan_reversed"))\
         .order_by('-total_hodan')[0:5]
-    cuuHoByTinh = Tinh.objects.prefetch_related('cuuho_reversed')\
+    cuuHoByTinh = NewTinh.objects.prefetch_related('cuuho_reversed')\
         .annotate(total_cuuho=Count("cuuho_reversed"))\
         .filter(id__in=[tinh.id for tinh in totalHoDanByTinh])
     cuuHoDict = dict((o.id,o) for o in cuuHoByTinh)

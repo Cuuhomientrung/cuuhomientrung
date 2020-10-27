@@ -5,7 +5,7 @@ from django.utils.safestring import mark_safe
 from rest_framework import routers
 
 from app.settings import TIME_ZONE
-from app.models import TinTuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa,\
+from app.models import TinTuc, TinhNguyenVien, CuuHo, HoDan, NewTinh, NewHuyen, NewXa,\
     TrangThaiHoDan, CUUHO_STATUS, TINHNGUYEN_STATUS
 from app.views import CuuHoViewSet, HoDanViewSet,\
     TinhNguyenVienViewSet, TinhViewSet, HuyenViewSet, XaViewSet, TrangThaiHoDanSet
@@ -92,7 +92,7 @@ class CuuHoLocationForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(CuuHoLocationForm, self).__init__(*args, **kwargs)
-        self.fields["tinh"].queryset = Tinh.objects.order_by("name")
+        self.fields["tinh"].queryset = NewTinh.objects.order_by("name")
         self.fields['volunteer'] = ModelChoiceField(queryset=TinhNguyenVien.objects.all(), widget=Select2(), required=False)
 
 
@@ -168,7 +168,7 @@ class HoDanForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(HoDanForm, self).__init__(*args, **kwargs)
-        self.fields["tinh"].queryset = Tinh.objects.order_by("name")
+        self.fields["tinh"].queryset = NewTinh.objects.order_by("name")
 
         self.fields['volunteer'] = ModelChoiceField(queryset=TinhNguyenVien.objects.all(), widget=Select2(), required=False)
         self.fields['cuuho'] = ModelChoiceField(queryset=CuuHo.objects.all(), widget=Select2(), required=False)
@@ -394,9 +394,9 @@ admin.site.register(HoDan, HoDanAdmin)
 admin.site.register(CuuHo, CuuHoAdmin)
 admin.site.register(TinhNguyenVien, TinhNguyenVienAdmin)
 
-admin.site.register(Tinh, TinhAdmin)
-admin.site.register(Huyen, HuyenAdmin)
-admin.site.register(Xa, XaAdmin)
+admin.site.register(NewTinh, TinhAdmin)
+admin.site.register(NewHuyen, HuyenAdmin)
+admin.site.register(NewXa, XaAdmin)
 admin.site.register(TrangThaiHoDan, TrangThaiHoDanAdmin)
 # admin.site.register(Thon, ThonAdmin)
 
