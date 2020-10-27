@@ -105,12 +105,11 @@ Mặc định site sẽ chạy ở localhost:8087
 
 6. Hướng dẫn chuẩn bị môi trường dev
 - Bước 1:
-Chạy lệnh sau để dev trên local
-npm run watch
+Chạy lệnh sau để dev trên local `npm run watch`
 
 - Bước 2:
 Chạy lệnh sau để render ra các static file của thư viện (thường thì chỉ dùng cho admin page)
-./project/manage.py collectstatic --no-input
+`./project/manage.py collectstatic --no-input`
 
 - Bước 3:
 Tiến hành code và dev trong thư mục `project/app/static/webpack_sources`
