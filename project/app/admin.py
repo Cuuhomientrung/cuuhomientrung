@@ -2,14 +2,16 @@ import datetime
 import pytz
 from django.contrib import admin
 from django.utils.safestring import mark_safe
+from rest_framework import routers
+
 from app.settings import TIME_ZONE
 from app.models import TinTuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa,\
     TrangThaiHoDan, CUUHO_STATUS, TINHNGUYEN_STATUS
-from app.views import BaseRestfulAdmin, HoDanRestFulModelAdmin
+from app.views import CuuHoViewSet, HoDanViewSet,\
+    TinhNguyenVienViewSet, TinhViewSet, HuyenViewSet, XaViewSet, TrangThaiHoDanSet
 from app.utils.export_to_excel import export_ho_dan_as_excel_action, utc_to_local
 from django.conf.locale.vi import formats as vi_formats
 from django_admin_listfilter_dropdown.filters import ChoiceDropdownFilter, RelatedDropdownFilter
-from django_restful_admin import admin as rest_admin
 from django.utils.html import format_html
 from admin_numeric_filter.admin import NumericFilterModelAdmin, \
     SliderNumericFilter
@@ -127,7 +129,7 @@ class TinhNguyenVienAdmin(admin.ModelAdmin):
         'status',
         TinhAdminFilter,
         HuyenAdminFilter,
-        XaAdminFilter,        
+        XaAdminFilter,
     )
     search_fields = ('name', 'phone')
     list_editable = ('status',)
@@ -319,7 +321,7 @@ class HoDanCuuHoStatisticBase(admin.ModelAdmin):
         abstract = True
 
     list_display = ('name', 'get_cuu_ho_san_sang', 'get_ho_dan_can_ung_cuu')
-    search_fields = ('name', )
+    search_fields = ('name__unaccent', )
     list_per_page = PAGE_SIZE
 
     @mark_safe
@@ -398,10 +400,12 @@ admin.site.register(Xa, XaAdmin)
 admin.site.register(TrangThaiHoDan, TrangThaiHoDanAdmin)
 # admin.site.register(Thon, ThonAdmin)
 
-rest_admin.site.register(
-    HoDan, view_class=HoDanRestFulModelAdmin)
-rest_admin.site.register(CuuHo, view_class=BaseRestfulAdmin)
-rest_admin.site.register(TinhNguyenVien, view_class=BaseRestfulAdmin)
-rest_admin.site.register(Tinh, view_class=BaseRestfulAdmin)
-rest_admin.site.register(Huyen, view_class=BaseRestfulAdmin)
-rest_admin.site.register(Xa, view_class=BaseRestfulAdmin)
+
+router = routers.DefaultRouter()
+router.register('cuuho', CuuHoViewSet)
+router.register('hodan', HoDanViewSet)
+router.register('tinhnguyenvien', TinhNguyenVienViewSet)
+router.register('tinh', TinhViewSet)
+router.register('huyen', HuyenViewSet)
+router.register('xa', XaViewSet)
+router.register('hodan_status', TrangThaiHoDanSet)
