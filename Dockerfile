@@ -9,14 +9,19 @@ RUN apt-get -y install curl gnupg
 RUN curl -sL https://deb.nodesource.com/setup_11.x  | bash -
 RUN apt-get -y install nodejs
 RUN npm install -g yarn
+RUN yarn
 
+# Install python requirement
 ADD requirements.txt /code/requirements.txt
 RUN pip install -r requirements.txt
 
-RUN yarn
-
+#Add code to image
 ADD . /code/
-RUN chmod +x *.sh
+RUN chmod +x *.sh 
+
+#Run necessary build
+RUN npm install &&\
+    npm run build
 
 # ENV should be configure from outside
 # @see docker-compose.yaml
