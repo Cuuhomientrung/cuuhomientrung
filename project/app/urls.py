@@ -31,6 +31,6 @@ urlpatterns = [
     path('admin/', admin.site.urls, name="admin_home"),
     path('select2/', include('django_select2.urls')),
     url(r'^ho_dan$', ho_dan_views.index),
-    url('huong-dan-tnv/', huong_dan_tnv_views.index),
-    url('thong-tin/', thong_tin_views.index),
+    url('huong_dan_tnv/', huong_dan_tnv_views.index),
+    url('thong_tin/', thong_tin_views.index),
 ]
