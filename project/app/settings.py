@@ -32,6 +32,7 @@ env = environ.Env(
     DEPLOY_ENV=(str, 'local'),
     GIT_VERSION=(str, None),
     CSRF_COOKIE_SECURE=(bool, False),
+    SECRET_KEY=(str, 'change_me'),
 )
 env.read_env(
     os.path.join(BASE_DIR, '..', '.env')
@@ -41,7 +42,7 @@ env.read_env(
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ybcim6=@)la&g9@!asz1rx95=qd&39$tl1j1(1uflb_$mo*w##'
+SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
@@ -77,6 +78,10 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django.contrib.postgres',
 ]
+
+
+if DEBUG:
+    INSTALLED_APPS += ['debug_toolbar']
 
 
 LOGGING = {
@@ -161,7 +166,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'simple_history.middleware.HistoryRequestMiddleware',
+    'app.middleware.CustomCacheMiddleware',
 ]
+
+if DEBUG:
+    MIDDLEWARE = ['debug_toolbar.middleware.DebugToolbarMiddleware',] + MIDDLEWARE
+    INTERNAL_IPS = ['localhost', '127.0.0.1', '*',]
+    def show_toolbar(request):
+        return True
+    SHOW_TOOLBAR_CALLBACK = show_toolbar
 
 
 ROOT_URLCONF = 'app.urls'
@@ -274,6 +287,7 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 REVISION = calendar.timegm(time.gmtime())
 
 SELECT2_USE_BUNDLED_JQUERY = False
+CACHE_PREFIX = f'select2_cache_key_{REVISION}_'
 
 WEBPACK_LOADER = {
     'DEFAULT': {

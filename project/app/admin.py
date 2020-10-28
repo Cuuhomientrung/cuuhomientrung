@@ -2,6 +2,7 @@ import datetime
 import pytz
 from django.contrib import admin
 from django.utils.safestring import mark_safe
+from django_select2.forms import ModelSelect2Widget
 from rest_framework import routers
 
 from app.settings import TIME_ZONE
@@ -92,8 +93,45 @@ class CuuHoLocationForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(CuuHoLocationForm, self).__init__(*args, **kwargs)
-        self.fields["tinh"].queryset = Tinh.objects.order_by("name")
-        self.fields['volunteer'] = ModelChoiceField(queryset=TinhNguyenVien.objects.all(), widget=Select2(), required=False)
+
+        self.fields['volunteer'] = ModelChoiceField(queryset=TinhNguyenVien.objects.order_by("-status"),
+                                               widget=ModelSelect2Widget(
+                                                   model=TinhNguyenVien,
+                                                   search_fields=['name__unaccent__icontains'],
+                                                   attrs={'style': 'min-width:250px', 'data-minimum-input-length': 0}
+                                               ), required=False)
+
+        self.fields["tinh"] = ModelChoiceField(queryset=Tinh.objects.order_by("name"),
+                                               widget=ModelSelect2Widget(
+                                                   model=Tinh,
+                                                   search_fields=['name__unaccent__icontains'],
+                                                   attrs={'style': 'min-width:250px', 'data-minimum-input-length': 0}
+                                               ), required=False)
+
+        self.fields["huyen"] = ModelChoiceField(queryset=Huyen.objects.order_by("name"),
+                                                widget=ModelSelect2Widget(
+                                                    model=Huyen,
+                                                    search_fields=['name__unaccent__icontains'],
+                                                    dependent_fields={'tinh': 'tinh'},
+                                                    attrs={'style': 'min-width:250px', 'data-minimum-input-length': 0}
+                                                ), required=False)
+
+        self.fields["xa"] = ModelChoiceField(queryset=Xa.objects.order_by("name"),
+                                             widget=ModelSelect2Widget(
+                                                 model=Xa,
+                                                 search_fields=['name__unaccent__icontains'],
+                                                 dependent_fields={'huyen': 'huyen'},
+                                                 attrs={'style': 'min-width:250px', 'data-minimum-input-length': 0}
+                                             ), required=False)
+
+        self.fields["tinh"].label = "Tỉnh"
+        self.fields["tinh"].help_text = "Nhấn vào để chọn tỉnh"
+
+        self.fields["huyen"].label = "Huyện"
+        self.fields["huyen"].help_text = "Bạn phải chọn tỉnh trước"
+
+        self.fields["xa"].label = "Xã"
+        self.fields["xa"].help_text = "Bạn phải chọn tỉnh, và huyện trước"
 
 
 class CuuHoAdmin(admin.ModelAdmin):
@@ -168,7 +206,28 @@ class HoDanForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(HoDanForm, self).__init__(*args, **kwargs)
-        self.fields["tinh"].queryset = Tinh.objects.order_by("name")
+        self.fields["tinh"] = ModelChoiceField(queryset=Tinh.objects.order_by("name"),
+                                               widget=ModelSelect2Widget(
+                                                   model=Tinh,
+                                                   search_fields=['name__unaccent__icontains'],
+                                                   attrs={'style': 'min-width:250px', 'data-minimum-input-length': 0}
+                                               ), required=False)
+
+        self.fields["huyen"] = ModelChoiceField(queryset=Huyen.objects.order_by("name"),
+                                                widget=ModelSelect2Widget(
+                                                    model=Huyen,
+                                                    search_fields=['name__unaccent__icontains'],
+                                                    dependent_fields={'tinh': 'tinh'},
+                                                    attrs={'style': 'min-width:250px', 'data-minimum-input-length': 0}
+                                                ), required=False)
+
+        self.fields["xa"] = ModelChoiceField(queryset=Xa.objects.order_by("name"),
+                                             widget=ModelSelect2Widget(
+                                                 model=Xa,
+                                                 search_fields=['name__unaccent__icontains'],
+                                                 dependent_fields={'huyen': 'huyen'},
+                                                 attrs={'style': 'min-width:250px', 'data-minimum-input-length': 0}
+                                             ), required=False)
 
         self.fields['volunteer'] = ModelChoiceField(queryset=TinhNguyenVien.objects.all(), widget=Select2(), required=False)
         self.fields['cuuho'] = ModelChoiceField(queryset=CuuHo.objects.all(), widget=Select2(), required=False)
@@ -253,7 +312,7 @@ class HoDanHistoryAdmin(SimpleHistoryAdmin):
 
 class HoDanAdmin(NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.ModelAdmin):
     list_display = (
-        'id', 'update_time', 'status', 'name', 'phone', 'get_note',
+        'id', 'created_time', 'status', 'name', 'phone', 'get_note',
         'people_number', 'location', 'tinh', 'huyen', 'xa', 'volunteer', 'cuuho',
         'get_update_time'
     )
@@ -285,7 +344,7 @@ class HoDanAdmin(NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.Mod
         queryset = super(HoDanAdmin, self).get_queryset(request)
         queryset = queryset\
             .prefetch_related('tinh', 'huyen', 'xa', 'volunteer', 'cuuho', 'status')\
-            .order_by('-update_time')
+            .order_by('-created_time')
 
         return queryset
 
