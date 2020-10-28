@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'django_admin_listfilter_dropdown',
     'django.contrib.sites',
     'rest_framework',
+    'django_filters',
     'django_restful_admin',
     'smart_selects',
     'dynamic_raw_id',
