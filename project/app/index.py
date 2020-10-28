@@ -9,11 +9,9 @@ from django.urls import reverse
 
 
 def index(request):
-    ho_dan_count = HoDan.objects.count()
     ho_dan_duoc_cuu_count = HoDan.objects.filter(status_id=7).count()
-    ho_dan_can_cuu_count = ho_dan_count - ho_dan_duoc_cuu_count
-
-    cuu_ho_count = CuuHo.objects.count()
+    ho_dan_can_cuu_count = HoDan.objects.filter(status_id=3).count()
+    cuu_ho_count = CuuHo.objects.filter(status=1).count()
 
     # sort theo data tu 0:00 ngay 27 VNT
     # issue 155
@@ -51,7 +49,7 @@ def index(request):
             "total_cuuho": cuu_ho_dict.get(tinh.pk, 0),
             "id": tinh.pk,
             "name": tinh.name,
-        } for tinh in  ho_dan_can_cuu_group_by_tinh
+        } for tinh in ho_dan_can_cuu_group_by_tinh
     ]
 
     context = {
@@ -60,12 +58,5 @@ def index(request):
         'tong_doi_cuu_ho': cuu_ho_count,
         'tong_tinh_nguyen_vien': tinh_nguyen_vien_count,
         'tinhInfos': tinhInfos,
-
-
-        'hodan_url' : reverse("admin:app_hodan_changelist"),
-        'them_hodan_url': reverse("admin:app_hodan_add"),
-        'them_cuuho_url': reverse("admin:app_cuuho_add"),
-        'cuuho_url': reverse("admin:app_cuuho_changelist"),
-        'tinhnguyenvien_url': reverse("admin:app_tinhnguyenvien_changelist"),
     }
     return render(request, 'home_index.html', context=context)
