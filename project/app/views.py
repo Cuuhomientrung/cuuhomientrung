@@ -3,21 +3,10 @@ from rest_framework import serializers, viewsets
 import datetime
 from django.db.models import Q
 from rest_framework.filters import SearchFilter
-from rest_framework.permissions import BasePermission, SAFE_METHODS
+from rest_framework.permissions import DjangoModelPermissions
 from django_restful_admin import RestFulModelAdmin
 from rest_framework.response import Response
 from app.models import HoDan, CuuHo, TinhNguyenVien, Tinh, Huyen, Xa, TrangThaiHoDan
-
-
-class IsAuthenticatedAndReadOnly(BasePermission):
-    """ The request is authenticated as a user and is a read-only request. """
-
-    def has_permission(self, request, view):
-        return bool(
-            request.method in SAFE_METHODS and
-            request.user and
-            request.user.is_authenticated
-        )
 
 
 class TinhHuyenXaBase(serializers.ModelSerializer):
@@ -48,7 +37,7 @@ class CuuHoSerializer(TinhHuyenXaBase):
 
 
 class CuuHoViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticatedAndReadOnly,)
+    permission_classes = (DjangoModelPermissions,)
     serializer_class = CuuHoSerializer
     queryset = CuuHo.objects.all()\
         .prefetch_related('tinh', 'huyen', 'xa')
@@ -82,7 +71,7 @@ class HoDanSerializer(TinhHuyenXaBase):
 
 
 class HoDanViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticatedAndReadOnly,)
+    permission_classes = (DjangoModelPermissions,)
     serializer_class = HoDanSerializer
     queryset = HoDan.objects.all()\
         .prefetch_related('tinh', 'huyen', 'xa', 'status')\
@@ -99,7 +88,7 @@ class TinhNguyenVienSerializer(TinhHuyenXaBase):
 
 
 class TinhNguyenVienViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticatedAndReadOnly,)
+    permission_classes = (DjangoModelPermissions,)
     serializer_class = TinhNguyenVienSerializer
     queryset = TinhNguyenVien.objects.all()\
         .prefetch_related('tinh', 'huyen', 'xa')
@@ -115,7 +104,7 @@ class TinhSerializer(serializers.ModelSerializer):
 
 
 class TinhViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticatedAndReadOnly,)
+    permission_classes = (DjangoModelPermissions,)
     serializer_class = TinhSerializer
     queryset = Tinh.objects.all()
     filter_backends = [DjangoFilterBackend, SearchFilter]
@@ -130,7 +119,7 @@ class HuyenSerializer(serializers.ModelSerializer):
 
 
 class HuyenViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticatedAndReadOnly,)
+    permission_classes = (DjangoModelPermissions,)
     serializer_class = HuyenSerializer
     queryset = Huyen.objects.all()
     filter_backends = [DjangoFilterBackend, SearchFilter]
@@ -145,7 +134,7 @@ class TrangThaiHoDanSerializer(serializers.ModelSerializer):
 
 
 class TrangThaiHoDanSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticatedAndReadOnly,)
+    permission_classes = (DjangoModelPermissions,)
     serializer_class = TrangThaiHoDanSerializer
     queryset = TrangThaiHoDan.objects.all()
     filter_backends = [DjangoFilterBackend, SearchFilter]
@@ -160,7 +149,7 @@ class XaSerializer(serializers.ModelSerializer):
 
 
 class XaViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticatedAndReadOnly,)
+    permission_classes = (DjangoModelPermissions,)
     serializer_class = XaSerializer
     queryset = Xa.objects.all()
     filter_backends = [DjangoFilterBackend, SearchFilter]
