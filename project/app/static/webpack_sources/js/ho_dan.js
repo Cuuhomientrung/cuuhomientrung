@@ -24,6 +24,15 @@ $(document).ready(() => {
     });
     $('#select-tinh').on("change", function() {
         let tinh = $("#select-tinh option:selected").val();
+        $.get('/get_huyen_api/?tinh='+tinh, function(data, err) {
+            let list_option = '<option value="-1"> Tất cả huyện </option>';
+            for (let key in data) {
+                list_option += '<option value="' + key + '"> ' + data[key] + ' </option>';
+            }
+            $("#select-tinh").children(list_option);
+		});
+
+
         if (tinh == "-1") {
             $("#select-huyen option").show();
         } else {

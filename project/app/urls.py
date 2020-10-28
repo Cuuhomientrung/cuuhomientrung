@@ -33,4 +33,6 @@ urlpatterns = [
     url(r'^ho_dan$', ho_dan_views.index),
     url('huong_dan_tnv/', huong_dan_tnv_views.index),
     url('thong_tin/', thong_tin_views.index),
+
+    url(r'^get_huyen_api/?$', ho_dan_views.get_huyen_api),
 ]
