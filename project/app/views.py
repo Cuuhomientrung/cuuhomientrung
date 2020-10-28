@@ -88,7 +88,7 @@ class HoDanViewSet(viewsets.ModelViewSet):
         .prefetch_related('tinh', 'huyen', 'xa', 'status')\
         .order_by('-update_time')
     filter_backends = [DjangoFilterBackend, SearchFilter]
-    filterset_fields = ['name', 'status', 'phone', 'location']
+    filterset_fields = ['name', 'phone', 'location']
     search_fields = filterset_fields
 
 
