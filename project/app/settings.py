@@ -79,6 +79,10 @@ INSTALLED_APPS = [
 ]
 
 
+if DEBUG:
+    INSTALLED_APPS += ['debug_toolbar']
+
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -162,6 +166,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'simple_history.middleware.HistoryRequestMiddleware',
 ]
+
+if DEBUG:
+    MIDDLEWARE = ['debug_toolbar.middleware.DebugToolbarMiddleware',] + MIDDLEWARE
+    INTERNAL_IPS = ['localhost', '127.0.0.1', '*',]
+    def show_toolbar(request):
+        return True
+    SHOW_TOOLBAR_CALLBACK = show_toolbar
 
 
 ROOT_URLCONF = 'app.urls'

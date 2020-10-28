@@ -50,6 +50,7 @@ django-webpack-loader = "*"
 django-select2-admin-filters = "*"
 pandas = "*"
 xlrd = "*"
+django-debug-toolbar = "*"
 
 [requires]
 python_version = "3.8"

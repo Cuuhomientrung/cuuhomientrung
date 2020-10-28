@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.conf.urls import url
 from django_restful_admin import admin as rest_admin
 from app import ho_dan_views, huong_dan_tnv_views, thong_tin_views
+from django.conf import settings
 from app.admin import router
 from app.index import index
 
@@ -34,3 +35,10 @@ urlpatterns = [
     url('huong_dan_tnv/', huong_dan_tnv_views.index),
     url('thong_tin/', thong_tin_views.index),
 ]
+
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
