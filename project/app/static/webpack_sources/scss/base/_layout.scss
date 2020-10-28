@@ -11,6 +11,12 @@ html {
   background: #052F58 !important;
 }
 
+.navbar-brand {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1rem;
+}
+
 .footer {
   padding: 2rem 0;
   font-size: 14px;
