@@ -15,7 +15,20 @@ html {
   display: inline-flex;
   align-items: center;
   font-size: 1rem;
+
 }
+.logo {
+  width: 30px;
+  height: 30px;
+  display: block;
+  border-radius: 50%;
+  overflow: hidden;
+
+  > svg {
+    width: 30px;
+    height: 30px;
+  }
+} 
 
 .footer {
   padding: 2rem 0;
