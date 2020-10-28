@@ -10,9 +10,10 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 
   {% block meta %}
-    <title>Cứu Trợ Miền Trung</title>
+    <title>Cứu hộ miền Trung</title>
   {% endblock %}
   <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
   {% block headers %}{% endblock %}
@@ -23,7 +24,10 @@
         <header class="sticky-top">
             <nav class="navbar  navbar-expand-lg navbar-dark bg-dark">
                 <div class="container">
-                    <a class="navbar-brand" href="#">Cứu hộ miền trung</a>
+                    <a class="navbar-brand" href="/">
+                      <img src="{% static "images/logo.png" %}" alt="Cứu hộ miền Trung">
+                      <span class="ml-2">Cứu hộ miền Trung</span>
+                    </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                       <span class="navbar-toggler-icon"></span>
                     </button>
@@ -41,22 +45,42 @@
                         </ul>
                     </div>
                     <div class="text-white d-none d-lg-block">
-                      <span>Hotline:</span>
-                      <a class="text-white font-weight-bolder" href="tel:18006132">1800 6132</a>
+                      <a class="text-white hotline-header" href="tel:18006132">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.4864 12.7192L13.5489 11.0317C13.3807 10.96 13.1937 10.9449 13.0162 10.9886C12.8386 11.0324 12.6801 11.1326 12.5645 11.2743L10.8207 13.4047C8.08409 12.1144 5.88171 9.91205 4.59141 7.1754L6.72187 5.43166C6.86379 5.31623 6.96424 5.15771 7.00801 4.98009C7.05178 4.80248 7.03649 4.61544 6.96445 4.44729L5.27695 0.509797C5.19789 0.328535 5.05806 0.18054 4.88157 0.0913328C4.70508 0.00212524 4.50299 -0.022704 4.31016 0.0211265L0.653906 0.864874C0.467989 0.907806 0.302114 1.01249 0.183352 1.16183C0.0645909 1.31118 -4.28277e-05 1.49637 2.12914e-08 1.68718C2.12914e-08 10.7047 7.30898 17.9996 16.3125 17.9996C16.5034 17.9998 16.6886 17.9352 16.8381 17.8164C16.9875 17.6976 17.0922 17.5317 17.1352 17.3457L17.9789 13.6895C18.0225 13.4957 17.9971 13.2928 17.9072 13.1157C17.8173 12.9386 17.6685 12.7984 17.4864 12.7192Z" fill="white"/>
+                        </svg>
+                        <span class="mx-2">Hotline:</span>
+                        <span>1800 6132</span>
+                      </a>
                     </div>
                 </div>
             </nav>
         </header>
-        <div class="">
-            <div class="p-3 bg-danger text-white d-block d-lg-none">
-              <h4>
-                <span>Hotline:</span>
-                <a class="text-white" href="tel:18006132">1800 6132</a>
-              </h4>
-              <p class="m-0">Tiếp nhận mọi yêu cầu cứu trợ 24/24<br /> Hoàn toàn miễn phí</p>
-            </div>
-        </div>
-        <main role="main" class="py-4">
+        <section class="section-hotline">
+          <div class="text-white">
+              <div class="container py-3 text-center">
+                <h4>
+                  <a class="text-white hotline" href="tel:18006132">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M23.3152 16.9589L18.0652 14.7089C17.8409 14.6133 17.5916 14.5932 17.3549 14.6515C17.1182 14.7099 16.9068 14.8435 16.7527 15.0323L14.4277 17.873C10.7788 16.1526 7.84228 13.2161 6.12187 9.5672L8.9625 7.24221C9.15172 7.08831 9.28565 6.87695 9.34401 6.64013C9.40237 6.4033 9.38199 6.15391 9.28594 5.92971L7.03594 0.679729C6.93052 0.438046 6.74408 0.240721 6.50876 0.121777C6.27344 0.00283366 6.00399 -0.030272 5.74687 0.0281686L0.871875 1.15317C0.623986 1.21041 0.402818 1.34998 0.24447 1.54911C0.0861212 1.74824 -5.71036e-05 1.99516 2.83885e-08 2.24957C2.83885e-08 14.273 9.74531 23.9995 21.75 23.9995C22.0045 23.9997 22.2515 23.9135 22.4507 23.7552C22.65 23.5968 22.7896 23.3756 22.8469 23.1276L23.9719 18.2526C24.0299 17.9943 23.9961 17.7238 23.8763 17.4876C23.7564 17.2515 23.558 17.0645 23.3152 16.9589Z" fill="white"/>
+                    </svg>
+                    <span class="mx-2">Hotline:</span>
+                    <span class="hotline-phone">1800 6132</span>
+                  </a>
+                </h4>
+                <p class="mb-1">
+                  Tiếp nhận mọi yêu cầu cứu trợ 24/24 - Hoàn toàn miễn phí
+                </p>
+                <p class="mb-0 d-none d-lg-block">
+                <span class="font-italic">
+                  cuuhomientrung.info
+                </span>
+                  - Hệ thống tổng hợp thông tin cứu hộ, cứu nạn
+                </p>
+              </div>
+          </div>
+        </section>
+        <main role="main" class="py-5">
             <div class="container">
               {% block content %}{% endblock %}
             </div>
@@ -69,17 +93,28 @@
                 Hệ thống thông tin Cứu hộ miền Trung
               </h5>
               <p>
-                Thông tin trên site được kết nối tới Sở chỉ huy tiền phương
-                phòng, chống lụt bão của Quân khu IV đặt tại Thừa Thiên Huế
+                Thông tin trên site được kết nối tới Sở chỉ huy tiền phương 
+                phòng, chống lụt bão của Quân khu IV đặt tại Thừa Thiên Huế 
                 làm đầu vào cho công tác điều phối cứu hộ.
               </p>
-              <p>
-                Các trường hợp cần cứu hộ khẩn cấp, xin gọi theo số hotline:
+              <p class="font-weight-bold">
+                Các trường hợp cần cứu hộ khẩn cấp, xin gọi theo số hotline: 
                 <a class="text-white" href="tel:1800 6132">1800 6132 </a>
-                (miễn phí + live 100%) để đội cứu hộ tới ứng cứu.
+                (miễn phí, 24/24) để đội cứu hộ tới ứng cứu.
               </p>
-              <div class="">
-                <a class="btn btn-outline-info" href="//facebook.com/cuuhomientrung.info">Thông tin</a>
+              <div class="mt-3">
+                <a class="btn btn-outline-light" href="#">
+                  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.625 0.375C5.20514 0.375 0 5.58202 0 12C0 18.4217 5.20514 23.625 11.625 23.625C18.0449 23.625 23.25 18.4217 23.25 12C23.25 5.58202 18.0449 0.375 11.625 0.375ZM11.625 5.53125C12.7123 5.53125 13.5938 6.41269 13.5938 7.5C13.5938 8.58731 12.7123 9.46875 11.625 9.46875C10.5377 9.46875 9.65625 8.58731 9.65625 7.5C9.65625 6.41269 10.5377 5.53125 11.625 5.53125ZM14.25 17.4375C14.25 17.7481 13.9981 18 13.6875 18H9.5625C9.25186 18 9 17.7481 9 17.4375V16.3125C9 16.0019 9.25186 15.75 9.5625 15.75H10.125V12.75H9.5625C9.25186 12.75 9 12.4981 9 12.1875V11.0625C9 10.7519 9.25186 10.5 9.5625 10.5H12.5625C12.8731 10.5 13.125 10.7519 13.125 11.0625V15.75H13.6875C13.9981 15.75 14.25 16.0019 14.25 16.3125V17.4375Z"/>
+                  </svg>
+                  <span class="ml-2">Thông tin</span>
+                </a>
+                <a class="btn btn-outline-light ml-2" target="_blank" href="//facebook.com/cuuhomientrung.info">
+                  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M23.875 12C23.875 5.57812 18.6719 0.375 12.25 0.375C5.82812 0.375 0.625 5.57812 0.625 12C0.625 17.8022 4.87609 22.6116 10.4336 23.4844V15.3605H7.48047V12H10.4336V9.43875C10.4336 6.52547 12.168 4.91625 14.8244 4.91625C16.0966 4.91625 17.4269 5.14313 17.4269 5.14313V8.0025H15.9606C14.5169 8.0025 14.0664 8.89875 14.0664 9.81797V12H17.2905L16.7748 15.3605H14.0664V23.4844C19.6239 22.6116 23.875 17.8022 23.875 12Z"/>
+                  </svg>
+                  <span class="ml-2">fb.com/cuuhomientrung.info</span>
+                </a>
               </div>
             </div>
           </div>
