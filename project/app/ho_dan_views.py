@@ -57,7 +57,7 @@ def get_huyen_api(request):
 
 def get_xa_api(request):
     huyen = request.GET.get("huyen")
-    list_xa = get_huyen(huyen)
+    list_xa = get_xa(huyen)
     dict_xa = {
         xa.id: xa.name
         for xa in list_xa
