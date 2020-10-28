@@ -93,8 +93,13 @@ class CuuHoLocationForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(CuuHoLocationForm, self).__init__(*args, **kwargs)
-        self.fields["tinh"].queryset = Tinh.objects.order_by("name")
-        self.fields['volunteer'] = ModelChoiceField(queryset=TinhNguyenVien.objects.all(), widget=Select2(), required=False)
+
+        self.fields['volunteer'] = ModelChoiceField(queryset=TinhNguyenVien.objects.order_by("-status"),
+                                               widget=ModelSelect2Widget(
+                                                   model=TinhNguyenVien,
+                                                   search_fields=['name__unaccent__icontains'],
+                                                   attrs={'style': 'min-width:250px', 'data-minimum-input-length': 0}
+                                               ), required=False)
 
         self.fields["tinh"] = ModelChoiceField(queryset=Tinh.objects.order_by("name"),
                                                widget=ModelSelect2Widget(

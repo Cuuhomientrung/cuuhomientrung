@@ -6,6 +6,23 @@ from django.middleware.csrf import CsrfViewMiddleware
 from django.shortcuts import redirect
 
 
+class CustomCacheMiddleware:
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+        # One-time configuration and initialization.
+
+    def __call__(self, request):
+
+        response = self.get_response(request)
+
+        app_name = resolve(request.path_info).app_name
+        if app_name == 'django_select2':
+            response["Cache-Control"] = "max-age=0, no-cache, no-store, must-revalidate, private"
+
+        return response
+
+
 class AutomaticUserLoginMiddleware(MiddlewareMixin):
 
     def process_request(self, request):
