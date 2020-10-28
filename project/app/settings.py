@@ -286,6 +286,10 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 REVISION = calendar.timegm(time.gmtime())
 
 SELECT2_USE_BUNDLED_JQUERY = False
+SELECT2_JS = 'admin/js/vendor/select2/select2.full.min.js'
+# SELECT2_CSS = 'admin/css/select2.css'
+SELECT2_I18N_PATH = 'admin/js/vendor/select2/i18n'
+CACHE_PREFIX = f'select2_cache_key_{REVISION}_'
 
 WEBPACK_LOADER = {
     'DEFAULT': {
