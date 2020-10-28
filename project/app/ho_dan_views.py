@@ -55,6 +55,15 @@ def get_huyen_api(request):
     }
     return HttpResponse(json.dumps(dict_huyen), content_type="application/json")
 
+def get_xa_api(request):
+    huyen = request.GET.get("huyen")
+    list_xa = get_huyen(huyen)
+    dict_xa = {
+        xa.id: xa.name
+        for xa in list_xa
+    }
+    return HttpResponse(json.dumps(dict_xa), content_type="application/json")
+
 def index(request):
     status = request.GET.get("status")
     tinh = request.GET.get("tinh")
@@ -96,8 +105,8 @@ def index(request):
         'page_obj': page_obj,
         'status_dict': dict(HODAN_STATUS_NEW),
         'list_tinh': get_tinh(),
-        'list_huyen': [],
-        'list_xa': [],
+        'list_huyen': get_huyen(tinh) if tinh else [],
+        'list_xa': get_xa(huyen) if huyen else [],
         'params_url': build_params_url(status, tinh, huyen, xa),
         'filtered': {
             'status': status,

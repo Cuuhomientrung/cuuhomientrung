@@ -35,4 +35,5 @@ urlpatterns = [
     url('thong_tin/', thong_tin_views.index),
 
     url(r'^get_huyen_api/?$', ho_dan_views.get_huyen_api),
+    url(r'^get_xa_api/?$', ho_dan_views.get_xa_api),
 ]
