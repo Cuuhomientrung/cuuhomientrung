@@ -287,7 +287,6 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 REVISION = calendar.timegm(time.gmtime())
 
 SELECT2_USE_BUNDLED_JQUERY = False
-CACHE_PREFIX = f'select2_cache_key_{REVISION}_'
 
 WEBPACK_LOADER = {
     'DEFAULT': {
@@ -309,3 +308,20 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
+
+if DEPLOY_ENV in ('staging', 'production'):
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+            'LOCATION': 'default_cache_table',
+        },
+        'select2': {
+            'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+            'LOCATION': 'select2_cache_table',
+        },
+    }
+
+    # Set the cache backend to select2
+    CACHE_PREFIX = f'cache_key_{REVISION}_'
+    SELECT2_CACHE_BACKEND = 'select2'
