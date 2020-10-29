@@ -1,6 +1,8 @@
 # Cài đặt các yêu cầu tiên quyết
 
-Chú ý: Nếu bạn đã cài `venv` như hướng dẫn trong tệp `docs/installation-without-docker/SET_UP_VIRTUALENV.md`, hãy bật `venv` khi thực hiện bất cứ lệnh nào dưới đây.
+Chú ý: Nếu bạn chọn cách sử dụng `venv` như hướng dẫn trong tệp [`docs/installation-without-docker/SET_UP_VIRTUALENV.md`](/docs/installation-without-docker/SET_UP_VIRTUALENV.md), hãy bật `venv` khi thực hiện bất cứ lệnh nào dưới đây.
+
+Chú ý: Nếu bạn chọn cách sử dụng `pipenv` như hướng dẫn trong tệp [`docs/installation-without-docker/SET_UP_PIPENV.md`](/docs/installation-without-docker/SET_UP_PIPENV.md), hãy bật môi trường `pipenv` khi thực hiện bất cứ lệnh nào dưới đây.
 
 ## 1. Đảm bảo đã cài Python và Node
 
