@@ -164,7 +164,7 @@ class CuuHoAdmin(admin.ModelAdmin):
 class TinhNguyenVienAdmin(admin.ModelAdmin):
     list_display = ('name', 'location', 'phone', 'status')
     list_filter = (
-        'status',
+        ('status', ChoiceDropdownFilter),
         TinhAdminFilter,
         HuyenAdminFilter,
         XaAdminFilter,
@@ -175,7 +175,9 @@ class TinhNguyenVienAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         queryset = super(TinhNguyenVienAdmin, self).get_queryset(request)
-        queryset = queryset.prefetch_related('tinh', 'huyen', 'xa')
+        queryset = queryset\
+            .prefetch_related('tinh', 'huyen', 'xa')\
+            .order_by('-status')
         return queryset
 
 
