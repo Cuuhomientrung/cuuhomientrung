@@ -1,31 +1,38 @@
-# Instruction how to set it up on your local and contribute to the project
+# Set up a local DEV environment with Docker
 
-## Installation
+## Install docker + docker-compose
 
-### Install Docker ENV + docker-compose (recommend)
-1. Install docker from (here)[https://docs.docker.com/engine/install/ubuntu/]
-2. Install docker-compose from (here)(https://docs.docker.com/compose/install/)
-### Run on local
-```
+- Install [docker](https://docs.docker.com/engine/install/)
+- Install [docker-compose](https://docs.docker.com/compose/install/)
+
+## Set up the DEV environment
+
+```shell
+# replace the repo with your fork
+git clone https://github.com/Cuuhomientrung/cuuhomientrung
+cd cuuhomientrung
 docker-compose up -d --build
 ```
 
-### Config database
+To access the DEV environment, run:
 
-### First time - Set it up
-```
+```shell
 docker exec -it cuuhomientrung-web bash
+```
+
+## Config the database (first time only)
+
+Within the DEV environment, run:
+
+```shell
 bash run_migrate.sh
 bash run_create_admin.sh ## Create with username: `user1`
 ```
 
-### Open on browser
-```
-localhost:8087
+## Start the DEV server
+
+```shell
+bash run_server.sh
 ```
 
-
-### Next time, access to docker-container
-```
-docker exec -it cuuhomientrung-web bash
-```
+The DEV server is listening at http://localhost:8087.
