@@ -199,7 +199,7 @@ class CuuHo(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = '2. Các đội Cứu hộ'
+        verbose_name = 'Các đội Cứu hộ'
         verbose_name_plural = '2. Các đội Cứu hộ'
 
     # def save(self, *args, **kwargs):
@@ -289,7 +289,7 @@ class HoDan(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = '1. Hộ dân cần ứng cứu'
+        verbose_name = 'Hộ dân cần ứng cứu'
         verbose_name_plural = '1. Hộ dân cần ứng cứu'
 
 
