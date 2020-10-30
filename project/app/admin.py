@@ -67,8 +67,11 @@ class XaAdminFilter(AutocompleteFilter):
 # Admin classes
 class TinTucAdmin(admin.ModelAdmin):
     list_per_page = PAGE_SIZE
-    list_display = ('update_time', 'title', 'url')
+    list_display = ('update_time', 'title', 'show_url')
     search_fields = ('title',)
+
+    def show_url(self, obj):
+        return format_html("<a href='{url}'>{url}</a>", url=obj.url)
 
 
 class NguonLucAdmin(admin.ModelAdmin):
