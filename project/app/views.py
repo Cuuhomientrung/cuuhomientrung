@@ -1,7 +1,9 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import serializers, viewsets
 import datetime
 from django.db.models import Q
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.filters import SearchFilter
+from rest_framework.permissions import DjangoModelPermissions
 from django_restful_admin import RestFulModelAdmin
 from rest_framework.response import Response
 from app.models import HoDan, CuuHo, TinhNguyenVien, NewTinh, NewHuyen, NewXa, TrangThaiHoDan
@@ -35,10 +37,13 @@ class CuuHoSerializer(TinhHuyenXaBase):
 
 
 class CuuHoViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
     serializer_class = CuuHoSerializer
     queryset = CuuHo.objects.all()\
         .prefetch_related('tinh', 'huyen', 'xa')
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_fields = ['name', 'status', 'phone', 'location']
+    search_fields = filterset_fields
 
 
 class HoDanSerializer(TinhHuyenXaBase):
@@ -66,11 +71,14 @@ class HoDanSerializer(TinhHuyenXaBase):
 
 
 class HoDanViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
     serializer_class = HoDanSerializer
     queryset = HoDan.objects.all()\
         .prefetch_related('tinh', 'huyen', 'xa', 'status')\
         .order_by('-update_time')
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_fields = ['name', 'phone', 'location']
+    search_fields = filterset_fields
 
 
 class TinhNguyenVienSerializer(TinhHuyenXaBase):
@@ -80,10 +88,13 @@ class TinhNguyenVienSerializer(TinhHuyenXaBase):
 
 
 class TinhNguyenVienViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
     serializer_class = TinhNguyenVienSerializer
     queryset = TinhNguyenVien.objects.all()\
         .prefetch_related('tinh', 'huyen', 'xa')
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_fields = ['name', 'status', 'phone', 'location']
+    search_fields = filterset_fields
 
 
 class TinhSerializer(serializers.ModelSerializer):
@@ -93,9 +104,12 @@ class TinhSerializer(serializers.ModelSerializer):
 
 
 class TinhViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
     serializer_class = TinhSerializer
     queryset = NewTinh.objects.all()
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_fields = ['name']
+    search_fields = filterset_fields
 
 
 class HuyenSerializer(serializers.ModelSerializer):
@@ -105,9 +119,12 @@ class HuyenSerializer(serializers.ModelSerializer):
 
 
 class HuyenViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
     serializer_class = HuyenSerializer
     queryset = NewHuyen.objects.all()
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_fields = ['name']
+    search_fields = filterset_fields
 
 
 class TrangThaiHoDanSerializer(serializers.ModelSerializer):
@@ -117,9 +134,12 @@ class TrangThaiHoDanSerializer(serializers.ModelSerializer):
 
 
 class TrangThaiHoDanSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
     serializer_class = TrangThaiHoDanSerializer
     queryset = TrangThaiHoDan.objects.all()
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_fields = ['name']
+    search_fields = filterset_fields
 
 
 class XaSerializer(serializers.ModelSerializer):
@@ -129,9 +149,12 @@ class XaSerializer(serializers.ModelSerializer):
 
 
 class XaViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
     serializer_class = XaSerializer
     queryset = NewXa.objects.all()
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_fields = ['name']
+    search_fields = filterset_fields
 
 
 class BaseRestfulAdmin(RestFulModelAdmin):

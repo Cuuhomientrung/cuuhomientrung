@@ -1,58 +1,67 @@
-.card-homepage .card-header {
-    background: transparent;
-    border: 0;
-}
+.card-homepage {
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  margin-bottom: 1rem;
 
-.card-homepage .card-title {
-    margin-bottom: .5rem;
-    font-size: 1.3em;
-    font-weight: 700;
-}
-
-.card-homepage .card-meta {
-    color: #888;
-}
-
-.card-homepage .card-body {
-    padding-top: .5rem;
-    padding-bottom: .5rem;
-}
-
-.card-homepage .card-footer {
-    background: transparent;
-    border: 0;
-    padding-bottom: 1rem;
-}
-
-.card-counter-info {
+  .card-header {
     display: flex;
-    align-items: center;
-    margin-bottom: .5rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    background: transparent;
+    border: 0;
+
+    h5 {
+      font-weight: 500;
+    }
+  }
+
+  .font-size-large {
+    line-height: 1.2;
     white-space: nowrap;
+  }
+
+  .card-body {
+    color: #2E3338;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .card-footer {
+    background: transparent;
+    border: 0;
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+
+      svg {
+        fill: currentColor;
+      }
+    }
+  }
 }
 
-.card-counter-info-text {
-    font-size: 1.2em;
-    margin-right: .5rem;
-    font-weight: 700;
-}
+.table-district {
+  font-weight: 700;
 
-.card-deck-counter .card-body {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, .6);
-    padding: 1rem;
-    font-size: .9em;
-    color: white;
-}
+  thead {
+    background: #EEEEEE;
 
-.card-deck-counter .card {
-    border-radius: 5px;
-    overflow: hidden;
-    min-height: 200px;
+    th {
+      border-bottom: 0;
+      white-space: nowrap;
+    }
+  }
+
+  th,
+  td {
+    &:first-child {
+      padding-left: 1.11rem;
+    }
+    &:last-child {
+      padding-right: 1.11rem;
+    }
+
+    &:not(:first-child) {
+      text-align: right;
+    }
+  }
 }
