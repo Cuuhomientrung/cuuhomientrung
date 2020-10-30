@@ -143,7 +143,7 @@ class TinhNguyenVien(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = '7. Tình nguyên viên thông tin'
+        verbose_name = 'Tình nguyên viên thông tin'
         verbose_name_plural = '7. Tình nguyên viên thông tin'
 
 
@@ -357,7 +357,7 @@ class TinTuc(models.Model):
 
     class Meta:
         verbose_name_plural = "6. Tin tức quan trọng "
-        verbose_name = "6. Tin tức quan trọng "
+        verbose_name = "Tin tức quan trọng "
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
