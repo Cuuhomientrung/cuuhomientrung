@@ -17,6 +17,7 @@ RESOURCE_STATUS = [
 ]
 
 TINHNGUYEN_STATUS = [
+    (0, 'Chưa xác minh'),
     (1, 'Sẵn sàng'),
     (2, 'Không gọi được'),
     (3, 'Đang nghỉ'),
