@@ -15,7 +15,7 @@ ADD requirements.txt .
 RUN pip install -r requirements.txt
 
 ADD package.json package-lock.json ./
-RUN npm instal
+RUN npm install
 
 # ENV should be configure from outside
 # @see docker-compose.yaml
