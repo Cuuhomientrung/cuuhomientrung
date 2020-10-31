@@ -2,7 +2,7 @@ import json
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.core.paginator import Paginator
-from app.models import HoDan, Tinh, Huyen, Xa, HODAN_STATUS_NEW
+from app.models import HoDan, Tinh, Huyen, Xa, TrangThaiHoDan
 
 def get_ho_dan(status=None, tinh=None, huyen=None, xa=None):
     query = HoDan.objects
@@ -44,6 +44,9 @@ def get_xa(huyen_id=None):
     if huyen_id:
         query = query.filter(huyen=huyen_id)
     return query.all()
+
+def get_status():
+    return TrangThaiHoDan.objects.all()
 
 PAGE_SIZE = 20
 
@@ -104,7 +107,7 @@ def index(request):
 
     return render(request, 'ho_dan_index.html', {
         'page_obj': page_obj,
-        'status_dict': dict(HODAN_STATUS_NEW),
+        'list_status': get_status(),
         'list_tinh': get_tinh(),
         'list_huyen': get_huyen(tinh) if tinh else [],
         'list_xa': get_xa(huyen) if huyen else [],

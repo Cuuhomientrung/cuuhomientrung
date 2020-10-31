@@ -2,7 +2,7 @@
 import io
 import xlsxwriter
 from django.http import HttpResponse
-from app.models import CUUHO_STATUS, HODAN_STATUS
+from app.models import CUUHO_STATUS
 from datetime import datetime, timezone
 import pytz
 
@@ -50,8 +50,7 @@ def export_ho_dan_as_excel_action(fields=None, exclude=None, header=True):
             arr = []
             for field in field_names:
                 if field == "status":
-                    arr.append(lookup_in_a_list_of_tuples(
-                        HODAN_STATUS, getattr(obj, field)))
+                    arr.append(obj.status.name)
                 elif field == "update_time":
                     utc_time = getattr(obj, field)
                     local_datetime = utc_to_local(utc_time)
