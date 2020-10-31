@@ -22,12 +22,13 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 
 env = environ.Env(
     DEBUG=(bool, True),
-    DB_NAME=(str, 'cuuhomientrung'),
-    DB_USER=(str, 'administrator'),
-    DB_PASSWORD=(str, 'bangtin_ainews_2811#'),
-    DB_HOSTNAME=(str, '103.192.236.67'),
+    DB_NAME=(str, 'my_db'),
+    DB_USER=(str, 'my_admin'),
+    DB_PASSWORD=(str, 'my_password'),
+    DB_HOSTNAME=(str, 'localhost'),
     DB_PORT=(int, 5432),
-    MAPBOX_KEY=(str, 'pk.eyJ1IjoiZHp1bmdkYSIsImEiOiJja2drMDFka2wwMW9zMndxZW9lMXBud3d5In0.oKlf9RF-X-SKkUJUAQ9ndw'),
+    MAPBOX_KEY=(
+        str, 'pk.eyJ1IjoiZHp1bmdkYSIsImEiOiJja2drMDFka2wwMW9zMndxZW9lMXBud3d5In0.oKlf9RF-X-SKkUJUAQ9ndw'),
     SENTRY_DSN=(str, None),
     DEPLOY_ENV=(str, 'local'),
     GIT_VERSION=(str, None),
@@ -171,8 +172,10 @@ MIDDLEWARE = [
 ]
 
 if DEBUG:
-    MIDDLEWARE = ['debug_toolbar.middleware.DebugToolbarMiddleware',] + MIDDLEWARE
-    INTERNAL_IPS = ['localhost', '127.0.0.1', '*',]
+    MIDDLEWARE = [
+        'debug_toolbar.middleware.DebugToolbarMiddleware', ] + MIDDLEWARE
+    INTERNAL_IPS = ['localhost', '127.0.0.1', '*', ]
+
     def show_toolbar(request):
         return True
     SHOW_TOOLBAR_CALLBACK = show_toolbar
@@ -207,19 +210,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'app.wsgi.application'
 SITE_ID = 1
 
-# USE THIS SETTING IF RUNNING ON LOCAL
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
-# USE THIS SETTING IF RUNNING ON PRODUCTION
-
 DATABASES = {
-        'default':{
+    'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': env('DB_NAME'),
         'USER': env('DB_USER'),
@@ -248,7 +240,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -268,8 +259,6 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'deploy')
 
 STATIC_URL = '/static/'
-
-print(os.path.join(BASE_DIR, '..', 'static', 'webpack_bundles'))
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
@@ -292,7 +281,7 @@ SELECT2_USE_BUNDLED_JQUERY = False
 WEBPACK_LOADER = {
     'DEFAULT': {
         'CACHE': not DEBUG,
-        'BUNDLE_DIR_NAME': 'webpack_bundles/', # must end with slash
+        'BUNDLE_DIR_NAME': 'webpack_bundles/',  # must end with slash
         'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
         'POLL_INTERVAL': 0.1,
         'TIMEOUT': None,
@@ -312,6 +301,8 @@ REST_FRAMEWORK = {
 
 
 if DEPLOY_ENV in ('staging', 'production'):
+    # keep origin cache time setting
+    DEPLOY_ENV_CACHE_MODIFIER = 1
     CACHES = {
         'default': {
             'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
@@ -326,3 +317,16 @@ if DEPLOY_ENV in ('staging', 'production'):
     # Set the cache backend to select2
     CACHE_PREFIX = f'cache_key_{REVISION}_'
     SELECT2_CACHE_BACKEND = 'select2'
+else:
+    # ignore all cache time setting
+    DEPLOY_ENV_CACHE_MODIFIER = 0
+
+
+VIEW_CACHE_SETTINS = {
+    'common': 60 * 15,
+    'static': 60 * 60 * 24,
+}
+
+# Update settings based on deploy env
+for key in VIEW_CACHE_SETTINS:
+    VIEW_CACHE_SETTINS[key] *= DEPLOY_ENV_CACHE_MODIFIER

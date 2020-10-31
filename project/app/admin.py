@@ -67,8 +67,11 @@ class XaAdminFilter(AutocompleteFilter):
 # Admin classes
 class TinTucAdmin(admin.ModelAdmin):
     list_per_page = PAGE_SIZE
-    list_display = ('update_time', 'title', 'url')
+    list_display = ('update_time', 'title', 'show_url')
     search_fields = ('title',)
+
+    def show_url(self, obj):
+        return format_html("<a href='{url}'>{url}</a>", url=obj.url)
 
 
 class NguonLucAdmin(admin.ModelAdmin):
@@ -164,7 +167,7 @@ class CuuHoAdmin(admin.ModelAdmin):
 class TinhNguyenVienAdmin(admin.ModelAdmin):
     list_display = ('name', 'location', 'phone', 'status')
     list_filter = (
-        'status',
+        ('status', ChoiceDropdownFilter),
         TinhAdminFilter,
         HuyenAdminFilter,
         XaAdminFilter,
@@ -175,7 +178,9 @@ class TinhNguyenVienAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         queryset = super(TinhNguyenVienAdmin, self).get_queryset(request)
-        queryset = queryset.prefetch_related('tinh', 'huyen', 'xa')
+        queryset = queryset\
+            .prefetch_related('tinh', 'huyen', 'xa')\
+            .order_by('-status')
         return queryset
 
 
