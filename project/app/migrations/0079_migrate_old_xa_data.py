@@ -2,6 +2,7 @@
 
 from django.db import migrations
 import csv
+import os
 from app.models import NewTinh, NewHuyen, NewXa, HoDan, CuuHo, Xa
 from django.db import models
 from django.conf import settings
