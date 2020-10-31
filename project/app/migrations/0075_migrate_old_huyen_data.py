@@ -6,7 +6,7 @@ from app.models import NewTinh, NewHuyen, NewXa, HoDan, CuuHo
 from django.db import models
 import os
 
-DATA_DIR = os.path.dirname(os.path.realpath('project/app/data_files'))
+DATA_DIR = os.path.realpath('project/app/data_files/')
 
 def migrate_huyen_id(apps, schema_editor):
     district_dict = {}

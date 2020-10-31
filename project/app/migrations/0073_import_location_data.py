@@ -4,7 +4,8 @@ from django.db import migrations
 import csv
 from app.models import NewTinh, NewHuyen, NewXa
 import os
-DATA_DIR = os.path.dirname(os.path.realpath('project/app/data_files'))
+
+DATA_DIR = os.path.realpath('project/app/data_files/')
 
 def import_tinh_data(apps, schema_editor):
      with open('{}/tinh.csv'.format(DATA_DIR)) as f:
