@@ -3,9 +3,11 @@
 from django.db import migrations
 import csv
 from app.models import NewTinh, NewHuyen, NewXa
+import os
+DATA_DIR = os.path.dirname(os.path.realpath('project/app/data_files'))
 
 def import_tinh_data(apps, schema_editor):
-     with open('project/app/data/tinh.csv') as f:
+     with open('{}/tinh.csv'.format(DATA_DIR)) as f:
         reader = csv.reader(f)
         next(reader, None)
         for row in reader:
@@ -20,7 +22,7 @@ def import_tinh_data(apps, schema_editor):
                 )
 
 def import_huyen_data(apps, schema_editor):
-     with open('project/app/data/huyen.csv') as f:
+     with open('{}/huyen.csv'.format(DATA_DIR)) as f:
         reader = csv.reader(f)
         next(reader, None)
         for row in reader:
@@ -36,7 +38,7 @@ def import_huyen_data(apps, schema_editor):
                 )
 
 def import_xa_data(apps, schema_editor):
-     with open('project/app/data/xa.csv') as f:
+     with open('{}/xa.csv'.format(DATA_DIR)) as f:
         reader = csv.reader(f)
         next(reader, None)
         for row in reader:

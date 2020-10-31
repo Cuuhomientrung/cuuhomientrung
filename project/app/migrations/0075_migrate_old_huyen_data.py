@@ -4,10 +4,13 @@ from django.db import migrations
 import csv
 from app.models import NewTinh, NewHuyen, NewXa, HoDan, CuuHo
 from django.db import models
+import os
+
+DATA_DIR = os.path.dirname(os.path.realpath('project/app/data_files'))
 
 def migrate_huyen_id(apps, schema_editor):
     district_dict = {}
-    with open('project/app/data/map_district.csv') as f:
+    with open('{}/map_district.csv'.format(DATA_DIR)) as f:
         reader = csv.reader(f)
         next(reader, None)
         for row in reader:
