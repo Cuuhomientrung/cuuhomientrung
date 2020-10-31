@@ -79,6 +79,7 @@ INSTALLED_APPS = [
     'webpack_loader',
     'rest_framework.authtoken',
     'django.contrib.postgres',
+    'django_extensions',
 ]
 
 
@@ -261,8 +262,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'deploy')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'static', 'webpack_bundles'),
+    os.path.join(BASE_DIR, 'app', 'static'),
+    os.path.join(BASE_DIR, 'app', 'static', 'webpack_bundles'),
 )
 
 MEDIA_ROOT = BASE_DIR + '/media'
