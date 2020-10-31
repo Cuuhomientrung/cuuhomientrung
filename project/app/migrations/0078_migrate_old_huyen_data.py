@@ -30,7 +30,7 @@ def migrate_huyen_id(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0074_migrate_old_tinh_data'),
+        ('app', '0077_migrate_old_tinh_data'),
     ]
 
     operations = [

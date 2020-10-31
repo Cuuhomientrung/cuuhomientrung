@@ -37,7 +37,7 @@ def migrate_xa_id(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0075_migrate_old_huyen_data'),
+        ('app', '0078_migrate_old_huyen_data'),
     ]
 
     operations = [

@@ -58,7 +58,7 @@ def import_xa_data(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0072_auto_20201027_1848'),
+        ('app', '0075_auto_20201027_1848'),
     ]
 
     operations = [

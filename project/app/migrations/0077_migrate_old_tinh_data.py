@@ -30,7 +30,7 @@ def migrate_tinh_id(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0073_import_location_data'),
+        ('app', '0076_import_location_data'),
     ]
 
     operations = [
