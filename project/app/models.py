@@ -17,6 +17,7 @@ RESOURCE_STATUS = [
 ]
 
 TINHNGUYEN_STATUS = [
+    (0, 'Chưa xác minh'),
     (1, 'Sẵn sàng'),
     (2, 'Không gọi được'),
     (3, 'Đang nghỉ'),
@@ -142,7 +143,7 @@ class TinhNguyenVien(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = '7. Tình nguyên viên thông tin'
+        verbose_name = 'Tình nguyên viên thông tin'
         verbose_name_plural = '7. Tình nguyên viên thông tin'
 
 
@@ -198,7 +199,7 @@ class CuuHo(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = '2. Các đội Cứu hộ'
+        verbose_name = 'Các đội Cứu hộ'
         verbose_name_plural = '2. Các đội Cứu hộ'
 
     # def save(self, *args, **kwargs):
@@ -288,7 +289,7 @@ class HoDan(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = '1. Hộ dân cần ứng cứu'
+        verbose_name = 'Hộ dân cần ứng cứu'
         verbose_name_plural = '1. Hộ dân cần ứng cứu'
 
 
@@ -356,7 +357,7 @@ class TinTuc(models.Model):
 
     class Meta:
         verbose_name_plural = "6. Tin tức quan trọng "
-        verbose_name = "6. Tin tức quan trọng "
+        verbose_name = "Tin tức quan trọng "
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
