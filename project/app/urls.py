@@ -37,7 +37,8 @@ urlpatterns = [
 
     url(
         r'^ho_dan$',
-        _common_cache(ho_dan_views.index)
+        _common_cache(ho_dan_views.index),
+        name='home_ho_dan'
     ),
     url(
         r'^get_huyen_api/?$',
