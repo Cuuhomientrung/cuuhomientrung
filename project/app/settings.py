@@ -303,10 +303,12 @@ REST_FRAMEWORK = {
 if DEPLOY_ENV in ('staging', 'production'):
     # keep origin cache time setting
     DEPLOY_ENV_CACHE_MODIFIER = 1
+    CACHE_PREFIX = f'cache_key_{REVISION}_'
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-            'LOCATION': 'default_cache_table',
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'unique-snowflake',
+            "KEY_PREFIX": CACHE_PREFIX,
         },
         'select2': {
             'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
@@ -315,7 +317,6 @@ if DEPLOY_ENV in ('staging', 'production'):
     }
 
     # Set the cache backend to select2
-    CACHE_PREFIX = f'cache_key_{REVISION}_'
     SELECT2_CACHE_BACKEND = 'select2'
 else:
     # ignore all cache time setting

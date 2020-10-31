@@ -22,11 +22,11 @@ from app.admin import router
 from app.index import index
 from django.views.decorators.cache import cache_page
 
-_home_cache = cache_page(settings.VIEW_CACHE_SETTINS['common'])
+_common_cache = cache_page(settings.VIEW_CACHE_SETTINS['common'])
 _static_cache = cache_page(settings.VIEW_CACHE_SETTINS['static'])
 
 urlpatterns = [
-    path('', _home_cache(index), name="index"),
+    path('', _common_cache(index), name="index"),
     path('api/', include(router.urls)),
     # path('api/', rest_admin.site.urls, name="rest_api"),
     path('chaining/', include('smart_selects.urls')),
@@ -34,7 +34,22 @@ urlpatterns = [
 
     path('admin/', admin.site.urls, name="admin_home"),
     path('select2/', include('django_select2.urls')),
-    url(r'^ho_dan$', ho_dan_views.index),
+
+    url(
+        r'^ho_dan$',
+        _common_cache(ho_dan_views.index),
+        name="home_ho_dan"
+    ),
+    url(
+        r'^get_huyen_api/?$',
+        _common_cache(ho_dan_views.get_huyen_api),
+        name="get_huyen_api",
+    ),
+    url(
+        r'^get_xa_api/?$',
+        _common_cache(ho_dan_views.get_xa_api),
+        name="get_xa_api",
+    ),
     url(
         'huong_dan_tnv/',
         _static_cache(huong_dan_tnv_views.index),
