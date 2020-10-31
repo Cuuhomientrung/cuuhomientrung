@@ -79,6 +79,7 @@ INSTALLED_APPS = [
     'webpack_loader',
     'rest_framework.authtoken',
     'django.contrib.postgres',
+    'django_extensions',
 ]
 
 
