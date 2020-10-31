@@ -1,100 +1,71 @@
 const path = require("path");
-const url = require("url");
 const webpack = require("webpack");
 const BundleTracker = require("webpack-bundle-tracker");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const autoprefixer = require("autoprefixer");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
-const baseStaticPath = process.env.STATIC_URL || "/static/";
-const publicPath = url.resolve(baseStaticPath, "/static/");
+const publicPath = process.env.STATIC_URL || "/static/";
 
 const resolve = path.resolve.bind(path, __dirname);
 
-const assetsPath = "project/app/static/webpack_sources";
-
-let bundleTrackerPlugin = new BundleTracker({
-  filename: "./project/webpack-stats.json",
-});
-
-const providePlugin = new webpack.ProvidePlugin({});
-
-let optimization = {};
-let plugins = [];
-
 module.exports = (env, argv) => {
-  plugins = [
-    new webpack.DefinePlugin({
-      "process.env.STATIC_URL": JSON.stringify(publicPath),
-    }),
-    bundleTrackerPlugin,
-    providePlugin,
-  ];
-
-  if (argv.watch) {
-    plugins.push(
-      new CleanWebpackPlugin({
-        root: resolve("."),
-        verbose: false,
-        dry: false,
-      })
-    );
-  }
-
-  if (argv.mode === "development") {
-    plugins.push(new webpack.SourceMapDevToolPlugin({}));
-  }
-
-  if (argv.mode === "production") {
-    optimization.minimizer = [
-      new UglifyJsPlugin({
-        cache: false,
-        parallel: false,
-        uglifyOptions: {
-          ecma: 6,
-          // warnings: false,
-          compress: {
-            drop_console: true,
-            // toplevel: true,
-          },
-          mangle: {
-            toplevel: true,
-            eval: true,
-          },
-          ie8: false,
-          comments: false,
-        },
-      }),
-    ];
-  }
-
-  const _sroucePath = (path) => {
-    return resolve(`./${assetsPath}/${path}`);
-  };
-
   return {
     context: __dirname,
     entry: {
-      home_page_loader: _sroucePath("js/index.js"),
-      // Thêm loader cho page mới ở đưới
+      home_page_loader: path.resolve(
+        __dirname,
+        "project/app/static/webpack_sources/js/index.js"
+      ),
     },
     output: {
-      path: resolve("./project/static/webpack_bundles/"),
+      path: path.resolve(__dirname, "project/app/static/webpack_bundles"),
       filename: "[name]-[hash].js",
       chunkFilename: "[name]-[chunkhash].js",
       publicPath,
     },
-    optimization,
+    optimization: {
+      minimizer:
+        argv.mode === "production"
+          ? [
+              // TODO: Use another repo, because:
+              // > This repository has been archived by the owner. It is now read-only.
+              //
+              // Recommendation: https://webpack.js.org/plugins/terser-webpack-plugin/
+              new UglifyJsPlugin({
+                cache: false,
+                parallel: false,
+                uglifyOptions: {
+                  ecma: 6,
+                  compress: {
+                    drop_console: true,
+                  },
+                  mangle: {
+                    toplevel: true,
+                    eval: true,
+                  },
+                },
+              }),
+            ]
+          : [],
+    },
     performance: {
       hints: "warning",
     },
-    plugins,
+    plugins: [
+      new webpack.DefinePlugin({
+        "process.env.STATIC_URL": JSON.stringify(publicPath),
+      }),
+      new BundleTracker({
+        path: path.join(__dirname, "project"),
+        filename: "webpack-stats.json",
+      }),
+      ...(argv.watch ? [new CleanWebpackPlugin()] : []),
+      ...(argv.mode === "development" ? [new webpack.SourceMapDevToolPlugin()] : []),
+    ],
     resolve: {
-      alias: {},
       extensions: [".js", ".jsx"],
     },
-    externals: {},
     mode: argv.mode,
     devtool: false,
     module: {
