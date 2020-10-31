@@ -301,6 +301,8 @@ REST_FRAMEWORK = {
 
 
 if DEPLOY_ENV in ('staging', 'production'):
+    # keep origin cache time setting
+    DEPLOY_ENV_CACHE_MODIFIER = 1
     CACHES = {
         'default': {
             'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
@@ -315,3 +317,16 @@ if DEPLOY_ENV in ('staging', 'production'):
     # Set the cache backend to select2
     CACHE_PREFIX = f'cache_key_{REVISION}_'
     SELECT2_CACHE_BACKEND = 'select2'
+else:
+    # ignore all cache time setting
+    DEPLOY_ENV_CACHE_MODIFIER = 0
+
+
+VIEW_CACHE_SETTINS = {
+    'common': 60 * 15,
+    'static': 60 * 60 * 24,
+}
+
+# Update settings based on deploy env
+for key in VIEW_CACHE_SETTINS:
+    VIEW_CACHE_SETTINS[key] *= DEPLOY_ENV_CACHE_MODIFIER
