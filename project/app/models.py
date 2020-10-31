@@ -72,8 +72,8 @@ class NewTinh(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = "3. Thống kê Tỉnh (new)"
-        verbose_name_plural = "3. Thống kê Tỉnh (new)"
+        verbose_name = "3. Thống kê Tỉnh"
+        verbose_name_plural = "3. Thống kê Tỉnh"
 
 
 class Tinh(models.Model):
