@@ -1,0 +1,183 @@
+old_id,new_id,old_name,new_name 
+1054,788,Huyện Bạch Thông,Huyện Bạch Thông
+108,568,Thị Xã Ba Đồn,Thị xã Ba Đồn
+110,568,TX Ba Đồn,Thị xã Ba Đồn 
+1125,787,Huyện Lạng Giang,Huyện Lạng Giang
+1132,308,Thành Phố Ninh Bình,Thành phố Ninh Bình
+1138,2100,Huyện Yên Mô,Huyện Yên Mô
+1145,538,Thị Xã La Gi,Thị xã La Gi
+1149,2330,Huyện Tánh Linh,Huyện Tánh Linh
+1171,2376,Huyện Sông Lô,Huyện Sông Lô
+1183,1810,Huyện Vĩnh Lợi,Huyện Vĩnh Lợi
+1208,547,Huyện Bắc Mê,Huyện Bắc Mê
+121,1080,Huyện Lệ Thủy,Huyện Lệ Thủy
+1210,1827,Huyện Quang Bình,Huyện Quang Bình
+1219,1315,Huyện Mèo Vạc,Huyện Mèo Vạc
+1224,568,Quảng Trung,Thị xã Ba Đồn
+1231,2371,Quảng Điền,Huyện Quảng Điền
+1238,2104,Tuyên Hóa,Huyện Tuyên Hóa
+1245,2104,Tuyên Hóa,Huyện Tuyên Hóa
+186,0,Tỉnh Quảng Bình,null
+187,824,Huyện Bố Trạch,Huyện Bố Trạch
+189,312,Thành Phố Đồng Hới,Thành phố Đồng Hới
+191,2104,Huyện Tuyên Hoá,Huyện Tuyên Hóa
+192,1336,Huyện Minh Hoá,Huyện Minh Hóa
+193,1080,Huyện Lệ Thuỷ,Huyện Lệ Thủy
+195,1848,Huyện Quảng Trạch,Huyện Quảng Trạch
+198,828,Huyện Cam Lộ,Huyện Cam Lộ
+200,1852,Huyện Đa Krông,Huyện Đa Krông
+201,316,Thành Phố Đông Hà,Thành phố Đông Hà
+202,1084,Huyện Gio Linh,Huyện Gio Linh
+203,1340,Huyện Hải Lăng,Huyện Hải Lăng
+204,1596,Huyện Hướng Hoá,Huyện Hướng Hóa
+205,2620,Huyện Vĩnh Linh,Huyện Vĩnh Linh
+206,2364,Huyện Triệu Phong,Huyện Triệu Phong
+207,572,Thị Xã Quảng Trị,Thị xã Quảng Trị
+209,805,Thị Xã Kỳ Anh,Thị xã Kỳ Anh
+211,1061,Huyện Cẩm Xuyên,Huyện Cẩm Xuyên
+213,2597,Huyện Đức Thọ,Huyện Đức Thọ
+214,293,Thành Phố Hà Tĩnh,Thành phố Hà Tĩnh
+215,2853,Huyện Thạch Hà,Huyện Thạch Hà
+216,2085,Huyện Lộc Hà,Huyện Lộc Hà
+218,549,Thị Xã Hồng Lĩnh,Thị xã Hồng Lĩnh
+221,2341,Huyện Nghi Xuân,Huyện Nghi Xuân
+222,3109,Huyện Vũ Quang,Huyện Vũ Quang
+224,1592,Huyện Quảng Ninh,Huyện Quảng Ninh
+23,1592,Hiền Ninh,Huyện Quảng Ninh
+3,316,TP Đông Hà,Thành phố Đông Hà
+30,1573,Huyện Hương Khê,Huyện Hương Khê
+31,3365,Huyện Kỳ Anh,Huyện Kỳ Anh
+32,1829,Huyện Hương Sơn,Huyện Hương Sơn
+33,1317,Huyện Can Lộc,Huyện Can Lộc
+425,270,Quận Cẩm Lệ,Quận Cẩm Lệ
+426,526,Quận Hải Châu,Quận Hải Châu
+428,782,Quận Liên Chiểu,Quận Liên Chiểu
+429,0,Thành Phố Đà Nẵng,null
+430,1038,Quận Ngũ Hành Sơn,Quận Ngũ Hành Sơn
+431,1806,Huyện Hoà Vang,Huyện Hòa Vang
+432,1550,Quận Thanh Khê,Quận Thanh Khê
+434,1294,Quận Sơn Trà,Quận Sơn Trà
+437,313,Thành Phố Hội An,Thành phố Hội An
+438,1081,Huyện Bắc Trà My,Huyện Bắc Trà My
+439,825,Thị Xã Điện Bàn,Thị xã Điện Bàn
+440,4409,Huyện Thăng Bình,Huyện Thăng Bình
+441,1849,Huyện Đại Lộc,Huyện Đại Lộc
+442,2617,Huyện Đông Giang,Huyện Đông Giang
+443,1593,Huyện Hiệp Đức,Huyện Hiệp Đức
+444,1337,Huyện Duy Xuyên,Huyện Duy Xuyên
+445,4153,Huyện Tây Giang,Huyện Tây Giang
+446,2105,Huyện Nam Giang,Huyện Nam Giang
+447,2361,Huyện Nam Trà My,Huyện Nam Trà My
+448,2873,Huyện Nông Sơn,Huyện Nông Sơn
+449,3129,Huyện Núi Thành,Huyện Núi Thành
+450,3385,Huyện Phước Sơn,Huyện Phước Sơn
+451,1846,Huyện Phú Ninh,Huyện Phù Ninh
+451,3641,Huyện Phú Ninh,Huyện Phú Ninh
+452,3897,Huyện Quế Sơn,Huyện Quế Sơn
+453,4665,Huyện Tiên Phước,Huyện Tiên Phước
+454,569,Thành Phố Tam Kỳ,Thành phố Tam Kỳ
+456,5387,Huyện Đông Anh,Huyện Đông Anh
+459,3595,Huyện Ba Vì,Huyện Ba Vì
+463,0,Chưa rõ,null
+467,1035,Quận Hà Đông,Quận Hà Đông
+476,1547,Quận Hoàng Mai,Quận Hoàng Mai
+487,3083,Quận Nam Từ Liêm,Quận Nam Từ Liêm
+495,780,Quận 3,Quận 3
+499,1804,Quận 7,Quận 7
+501,2316,Quận 9,Quận 9
+506,4364,Quận Tân Bình,Quận Tân Bình
+510,4876,Quận Thủ Đức,Quận Thủ Đức
+514,4620,Quận Tân Phú,Quận Tân Phú
+529,1592,Tỉnh Quảng Ninh,Huyện Quảng Ninh
+547,4930,Huyện Quảng Xương,Huyện Quảng Xương
+553,4674,Huyện Quan Sơn,Huyện Quan Sơn
+577,0,Huyện Châu Thành (hêt H.lực),null
+583,2063,Huyện Vĩnh Thạnh,Huyện Vĩnh Thạnh
+583,2840,Huyện Vĩnh Thạnh,Huyện Vĩnh Thạnh
+587,570,Huyện Ba Tơ,Huyện Ba Tơ
+588,826,Huyện Bình Sơn,Huyện Bình Sơn
+589,3642,Huyện Trà Bồng,Huyện Trà Bồng
+590,2106,Huyện Đức Phổ,Huyện Đức Phổ
+591,1338,Huyện Mộ Đức,Huyện Mộ Đức
+592,2106,Thị Xã Đức Phổ,Huyện Đức Phổ
+593,2362,Huyện Sơn Hà,Huyện Sơn Hà
+594,1850,Huyện Nghĩa Hành,Huyện Nghĩa Hành
+595,3386,Huyện Tư Nghĩa,Huyện Tư Nghĩa
+596,1594,Huyện Lý Sơn,Huyện Lý Sơn
+597,1082,Huyện Minh Long,Huyện Minh Long
+598,3130,Huyện Tây Trà,Huyện Tây Trà
+599,2874,Huyện Sơn Tịnh,Huyện Sơn Tịnh
+600,2618,Huyện Sơn Tây,Huyện Sơn Tây
+601,314,Thành Phố Quảng Ngãi,Thành phố Quảng Ngãi
+609,2359,Huyện Tuy An,Huyện Tuy An
+610,1335,Thị Xã Sông Cầu,Thị xã Sông Cầu
+611,567,Huyện Đông Hoà,Huyện Đông Hòa
+612,823,Huyện Đồng Xuân,Huyện Đồng Xuân
+614,1591,Huyện Sông Hinh,Huyện Sông Hinh
+615,1079,Huyện Phú Hoà,Huyện Phú Hòa
+616,311,Thành Phố Tuy Hoà,Thành phố Tuy Hòa
+618,1847,Huyện Sơn Hoà,Huyện Sơn Hòa
+624,302,Thành Phố Đà Lạt,Thành phố Đà Lạt
+625,2094,Huyện Đạ Huoai,Huyện Đạ Huoai
+631,3118,Huyện Đức Trọng,Huyện Đức Trọng
+634,1048,Huyện Hoài Ân,Huyện Hoài Ân
+635,536,Thị Xã An Nhơn,Thị xã An Nhơn
+636,2317,Huyện An Lão,Huyện An Lão
+636,792,Huyện An Lão,Huyện An Lão
+637,0,Tỉnh Bình Định,null
+638,2584,Huyện Vân Canh,Huyện Vân Canh
+639,1560,Huyện Phù Cát,Huyện Phù Cát
+641,1304,Huyện Hoài Nhơn,Huyện Hoài Nhơn
+642,1304,Thị Xã Hoài Nhơn,Huyện Hoài Nhơn
+643,1816,Huyện Phù Mỹ,Huyện Phù Mỹ
+644,2328,Huyện Tuy Phước,Huyện Tuy Phước
+645,2072,Huyện Tây Sơn,Huyện Tây Sơn
+646,280,Thành Phố Quy Nhơn,Thành phố Quy Nhơn
+694,1821,Huyện Ea Kar,Huyện Ea Kar
+73,1596,Huyện Hướng Hóa,Huyện Hướng Hóa
+734,1830,Huyện Kim Thành,Huyện Kim Thành
+736,2086,Huyện Nam Sách,Huyện Nam Sách
+746,2097,Huyện Đức Hoà,Huyện Đức Hòa
+76,293,TP Hà Tĩnh,Thành phố Hà Tĩnh
+825,533,Huyện Gia Bình,Huyện Gia Bình
+829,2069,Huyện Yên Phong,Huyện Yên Phong
+831,1813,Thị Xã Từ Sơn,Thị xã Từ Sơn
+833,0,Tỉnh Bà Rịa,null
+834,288,Thành Phố Biên Hoà,Thành phố Biên Hòa
+835,2336,Huyện Trảng Bom,Huyện Trảng Bom
+844,2080,Huyện Thống Nhất,Huyện Thống Nhất
+852,1303,Thành Phố Dĩ An,Thành phố Dĩ An
+853,1047,Thành Phố Thuận An,Thành phố Thuận An
+855,2071,Huyện Bàu Bàng,Huyện Bàu Bàng
+868,1600,Huyện Thái Thụy,Huyện Thái Thụy
+872,1331,Huyện Anh Sơn,Huyện Anh Sơn
+874,3891,Huyện Quỳ Châu,Huyện Quỳ Châu
+875,4915,Huyện Thanh Chương,Huyện Thanh Chương
+877,563,Thị Xã Cửa Lò,Thị xã Cửa Lò
+879,2611,Huyện Nam Đàn,Huyện Nam Đàn
+880,3379,Huyện Đô Lương,Huyện Đô Lương
+884,4147,Huyện Quỳ Hợp,Huyện Quỳ Hợp
+885,2099,Huyện Hưng Nguyên,Huyện Hưng Nguyên
+887,4659,Huyện Tân Kỳ,Huyện Tân Kỳ
+890,5427,Huyện Yên Thành,Huyện Yên Thành
+890,5427,Huyện Yên Thành,Huyện Yên Thành 
+891,2867,Huyện Nghi Lộc,Huyện Nghi Lộc
+892,307,Thành Phố Vinh,Thành phố Vinh
+898,1305,Huyện Bù Đốp,Huyện Bù Đốp
+899,1049,Huyện Bù Đăng,Huyện Bù Đăng
+900,2585,Huyện Bù Gia Mập,Huyện Bù Gia Mập
+901,1561,Huyện Chơn Thành,Huyện Chơn Thành
+903,2073,Huyện Đồng Phú,Huyện Đồng Phú
+905,2329,Huyện Hớn Quản,Huyện Hớn Quản
+907,1817,Huyện Lộc Ninh,Huyện Lộc Ninh
+921,2352,Huyện Văn Bàn,Huyện Văn Bàn
+933,2061,Huyện An Dương,Huyện An Dương
+943,3341,Huyện Thuỷ Nguyên,Huyện Thủy Nguyên
+947,1040,Huyện An Phú,Huyện An Phú
+948,0,Tỉnh An Giang,null
+954,1044,Huyện Chợ Mới,Huyện Chợ Mới
+954,1808,Huyện Chợ Mới,Huyện Chợ Mới
+967,3126,Huyện Thanh Thuỷ,Huyện Thanh Thủy
+969,566,Thị Xã Phú Thọ,Thị xã Phú Thọ
+987,2346,Huyện Vạn Ninh,Huyện Vạn Ninh
+991,298,Thành Phố Nha Trang,Thành phố Nha Trang
