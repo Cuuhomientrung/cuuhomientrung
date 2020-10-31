@@ -1,5 +1,5 @@
 """
-WSGI config for docbao_crawler project.
+WSGI config for cuuhomientrung.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

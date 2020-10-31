@@ -1,10 +1,6 @@
 from django.apps import AppConfig
 
 
-class ApiConfig(AppConfig):
-    # default_site = 'app.admin.CustomAdminSite'
+class MyAppConfig(AppConfig):
     name = 'app'
-    verbose_name = 'app'
-
-    def ready(self):
-        import app.signals
+    verbose_name = 'Cứu hộ miền Trung'
