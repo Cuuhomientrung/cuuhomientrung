@@ -4,6 +4,9 @@ from django.db import migrations
 import csv
 from app.models import NewTinh, NewHuyen, NewXa, HoDan, CuuHo, Xa
 from django.db import models
+from django.conf import settings
+
+DATA_DIR = os.path.join(settings.BASE_DIR, 'app', 'data_files')
 
 def migrate_xa_id(apps, schema_editor):
     for hodan in HoDan.objects.all():
