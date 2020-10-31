@@ -37,18 +37,15 @@ urlpatterns = [
 
     url(
         r'^ho_dan$',
-        _common_cache(ho_dan_views.index),
-        name="home_ho_dan"
+        _common_cache(ho_dan_views.index)
     ),
     url(
         r'^get_huyen_api/?$',
-        _common_cache(ho_dan_views.get_huyen_api),
-        name="get_huyen_api",
+        _common_cache(ho_dan_views.get_huyen_api)
     ),
     url(
         r'^get_xa_api/?$',
-        _common_cache(ho_dan_views.get_xa_api),
-        name="get_xa_api",
+        _common_cache(ho_dan_views.get_xa_api)
     ),
     url(
         'huong_dan_tnv/',
