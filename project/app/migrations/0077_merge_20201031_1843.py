@@ -6,7 +6,6 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0074_auto_20201027_1934'),
         ('app', '0076_migrate_old_xa_data'),
         ('app', '0073_merge_20201031_1716'),
     ]

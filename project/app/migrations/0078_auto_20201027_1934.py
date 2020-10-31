@@ -8,7 +8,7 @@ import smart_selects.db_fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0073_import_location_data'),
+        ('app', '0077_merge_20201031_1843'),
     ]
 
     operations = [
