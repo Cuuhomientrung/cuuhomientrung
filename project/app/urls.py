@@ -22,8 +22,12 @@ from app.admin import router
 from app.index import index
 from django.views.decorators.cache import cache_page
 
-_common_cache = cache_page(settings.VIEW_CACHE_SETTINS['common'])
-_static_cache = cache_page(settings.VIEW_CACHE_SETTINS['static'])
+_common_cache = cache_page(
+    settings.VIEW_CACHE_SETTINS['common'], key_prefix=settings.REVISION
+)
+_static_cache = cache_page(
+    settings.VIEW_CACHE_SETTINS['static'], key_prefix=settings.REVISION
+)
 
 urlpatterns = [
     path('', _common_cache(index), name="index"),
