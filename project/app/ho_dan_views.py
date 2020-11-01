@@ -1,7 +1,8 @@
+import json
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.core.paginator import Paginator
-from app.models import HoDan, Tinh, Huyen, Xa, HODAN_STATUS_NEW
+from app.models import HoDan, Tinh, Huyen, Xa, TrangThaiHoDan
 
 def get_ho_dan(status=None, tinh=None, huyen=None, xa=None):
     query = HoDan.objects
@@ -13,7 +14,8 @@ def get_ho_dan(status=None, tinh=None, huyen=None, xa=None):
         query = query.filter(huyen=huyen)
     if xa:
         query = query.filter(xa=xa)
-    query = query.prefetch_related('tinh', 'huyen', 'xa', 'status', 'volunteer')
+    query = query.prefetch_related('tinh', 'huyen', 'xa', 'status', 'volunteer')\
+            .order_by('-update_time', 'id')
     return query.all()
 
 def build_params_url(status=None, tinh=None, huyen=None, xa=None):
@@ -29,15 +31,42 @@ def build_params_url(status=None, tinh=None, huyen=None, xa=None):
     return url
 
 def get_tinh():
-    return Tinh.objects.all()
+    return Tinh.objects.order_by('name').all()
 
-def get_huyen():
-    return Huyen.objects.prefetch_related('tinh').all()
+def get_huyen(tinh_id=None):
+    query = Huyen.objects.prefetch_related('tinh').order_by('name')
+    if tinh_id:
+        query = query.filter(tinh=tinh_id)
+    return query.all()
 
-def get_xa():
-    return Xa.objects.prefetch_related('huyen').all()
+def get_xa(huyen_id=None):
+    query = Xa.objects.prefetch_related('huyen').order_by('name')
+    if huyen_id:
+        query = query.filter(huyen=huyen_id)
+    return query.all()
+
+def get_status():
+    return TrangThaiHoDan.objects.all()
 
 PAGE_SIZE = 20
+
+def get_huyen_api(request):
+    tinh = request.GET.get("tinh")
+    list_huyen = get_huyen(tinh)
+    dict_huyen = {
+        huyen.id: huyen.name
+        for huyen in list_huyen
+    }
+    return HttpResponse(json.dumps(dict_huyen), content_type="application/json")
+
+def get_xa_api(request):
+    huyen = request.GET.get("huyen")
+    list_xa = get_xa(huyen)
+    dict_xa = {
+        xa.id: xa.name
+        for xa in list_xa
+    }
+    return HttpResponse(json.dumps(dict_xa), content_type="application/json")
 
 def index(request):
     status = request.GET.get("status")
@@ -78,10 +107,10 @@ def index(request):
 
     return render(request, 'ho_dan_index.html', {
         'page_obj': page_obj,
-        'status_dict': dict(HODAN_STATUS_NEW),
+        'list_status': get_status(),
         'list_tinh': get_tinh(),
-        'list_huyen': get_huyen(),
-        'list_xa': get_xa(),
+        'list_huyen': get_huyen(tinh) if tinh else [],
+        'list_xa': get_xa(huyen) if huyen else [],
         'params_url': build_params_url(status, tinh, huyen, xa),
         'filtered': {
             'status': status,

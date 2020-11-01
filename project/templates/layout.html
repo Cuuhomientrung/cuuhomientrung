@@ -1,4 +1,4 @@
-{% load render_bundle from webpack_loader %}
+{% load render_bundle from custom_tags %}
 {% load static i18n %}
 {% block extrahead %}
   <link rel="stylesheet" type="text/css" href="{% static 'raw_sources/css/main.css' %}?v={{ REVISION }}">
@@ -149,7 +149,7 @@
             </div>
         </div>
       </section>
-      <main role="main" class="py-5">
+      <main role="main" class="py-5 bg-white">
           <div class="container">
             {% block content %}{% endblock %}
           </div>
@@ -158,7 +158,7 @@
         <div class="container">
           {% block footer %}{% endblock %}
           <div class="footer-copyright">
-            <h5 class="mb-4">
+            <h5 class="mb-5">
               Hệ thống thông tin Cứu hộ miền Trung
             </h5>
             <p>

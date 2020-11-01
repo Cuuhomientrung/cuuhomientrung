@@ -24,25 +24,27 @@ $(document).ready(() => {
     });
     $('#select-tinh').on("change", function() {
         let tinh = $("#select-tinh option:selected").val();
-        if (tinh == "-1") {
-            $("#select-huyen option").show();
-        } else {
-            $("#select-huyen option").hide();
-            $("#select-huyen option[tinh-id=" + tinh + "]").show();
-        }
-        $("#select-huyen option[value=-1]").show();
-        $("#select-huyen option").removeAttr("selected");
+        $.get('/get_huyen_api/?tinh='+tinh, function(data, err) {
+            $('#select-huyen').find('option').remove();
+            let ele = $('<option></option>').attr("value", -1).text("Tất cả huyện");
+            $("#select-huyen").append(ele);
+            for (let key in data) {
+                let ele = $('<option></option>').attr("value", key).text(data[key]);
+                $('#select-huyen').append(ele);
+            }
+		});
     });
     $('#select-huyen').on("change", function() {
         let huyen = $("#select-huyen option:selected").val();
-        if (huyen == "-1") {
-            $("#select-xa option").show();
-        } else {
-            $("#select-xa option").hide();
-            $("#select-xa option[huyen-id=" + huyen + "]").show();
-        }
-        $("#select-xa option[value=-1]").show();
-        $("#select-xa option").removeAttr("selected");
+        $.get('/get_xa_api/?huyen='+huyen, function(data, err) {
+            $('#select-xa').find('option').remove();
+            let ele = $('<option></option>').attr("value", -1).text("Tất cả xã");
+            $("#select-xa").append(ele);
+            for (let key in data) {
+                let ele = $('<option></option>').attr("value", key).text(data[key]);
+                $('#select-xa').append(ele);
+            }
+		});
     });
     $('#see-more-note').on("click", function() {
         $('.see-less').hide();
