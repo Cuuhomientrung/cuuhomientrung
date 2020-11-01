@@ -1,0 +1,64 @@
+name,prefix,suffix,long,lat,level,id
+Thành phố Hà Nội,Thành phố,Hà Nội,105.853833,21.028295,1,11
+Thành phố Hồ Chí Minh,Thành phố,Hồ Chí Minh,106.700993,10.776453,1,12
+Thành phố Hải Phòng,Thành phố,Hải Phòng,106.683391,20.864733,1,13
+Thành phố Đà Nẵng,Thành phố,Đà Nẵng,108.223765,16.074526,1,14
+Thành phố Cần Thơ,Thành phố,Cần Thơ,105.787686,10.036579,1,15
+Tỉnh An Giang,Tỉnh,An Giang,105.434333,10.390115,1,16
+Tỉnh Bà Rịa-Vũng Tàu,Tỉnh,Bà Rịa-Vũng Tàu,107.181836,10.487544,1,17
+Tỉnh Bạc Liêu,Tỉnh,Bạc Liêu,105.726686,9.292285,1,18
+Tỉnh Bắc Giang,Tỉnh,Bắc Giang,106.201079,21.276133,1,19
+Tỉnh Bắc Kạn,Tỉnh,Bắc Kạn,105.828279,22.147739,1,20
+Tỉnh Bắc Ninh,Tỉnh,Bắc Ninh,106.075881,21.185622,1,21
+Tỉnh Bến Tre,Tỉnh,Bến Tre,106.373693,10.235982,1,22
+Tỉnh Bình Dương,Tỉnh,Bình Dương,106.653342,10.980828,1,23
+Tỉnh Bình Định,Tỉnh,Bình Định,109.227863,13.769154,1,24
+Tỉnh Bình Phước,Tỉnh,Bình Phước,106.886616,11.534477,1,25
+Tỉnh Bình Thuận,Tỉnh,Bình Thuận,108.101777,10.927212,1,26
+Tỉnh Cà Mau,Tỉnh,Cà Mau,105.151448,9.176582,1,27
+Tỉnh Cao Bằng,Tỉnh,Cao Bằng,106.25782,22.665781,1,28
+Tỉnh Đắk Lắk,Tỉnh,Đắk Lắk,108.042996,12.674075,1,29
+Tỉnh Đắk Nông,Tỉnh,Đắk Nông,107.696149,12.001988,1,30
+Tỉnh Điện Biên,Tỉnh,Điện Biên,103.015497,21.385293,1,31
+Tỉnh Đồng Nai,Tỉnh,Đồng Nai,106.817288,10.945288,1,32
+Tỉnh Đồng Tháp,Tỉnh,Đồng Tháp,105.631758,10.459487,1,33
+Tỉnh Gia Lai,Tỉnh,Gia Lai,108.001433,13.979515,1,34
+Tỉnh Hà Giang,Tỉnh,Hà Giang,104.987305,22.830415,1,35
+Tỉnh Hà Nam,Tỉnh,Hà Nam,105.91289,20.547059,1,36
+Tỉnh Hà Tĩnh,Tỉnh,Hà Tĩnh,105.905507,18.342488,1,37
+Tỉnh Hải Dương,Tỉnh,Hải Dương,106.333568,20.940859,1,38
+Tỉnh Hậu Giang,Tỉnh,Hậu Giang,105.482069,9.796493,1,39
+Tỉnh Hòa Bình,Tỉnh,Hòa Bình,105.334421,20.814826,1,40
+Tỉnh Hưng Yên,Tỉnh,Hưng Yên,106.055104,20.655133,1,41
+Tỉnh Khánh Hòa,Tỉnh,Khánh Hòa,109.196824,12.255425,1,42
+Tỉnh Kiên Giang,Tỉnh,Kiên Giang,105.081072,10.012187,1,43
+Tỉnh Kon Tum,Tỉnh,Kon Tum,108.00691,14.354809,1,44
+Tỉnh Lai Châu,Tỉnh,Lai Châu,103.475896,22.389186,1,45
+Tỉnh Lâm Đồng,Tỉnh,Lâm Đồng,108.443625,11.936482,1,46
+Tỉnh Lạng Sơn,Tỉnh,Lạng Sơn,106.758122,21.846542,1,47
+Tỉnh Lào Cai,Tỉnh,Lào Cai,104.000421,22.447607,1,48
+Tỉnh Long An,Tỉnh,Long An,106.413649,10.540575,1,49
+Tỉnh Nam Định,Tỉnh,Nam Định,106.177378,20.43476,1,50
+Tỉnh Nghệ An,Tỉnh,Nghệ An,105.69294,18.672912,1,51
+Tỉnh Ninh Bình,Tỉnh,Ninh Bình,105.976524,20.258489,1,52
+Tỉnh Ninh Thuận,Tỉnh,Ninh Thuận,108.990617,11.565553,1,53
+Tỉnh Phú Thọ,Tỉnh,Phú Thọ,105.402063,21.322447,1,54
+Tỉnh Phú Yên,Tỉnh,Phú Yên,109.322386,13.095168,1,55
+Tỉnh Quảng Bình,Tỉnh,Quảng Bình,106.623176,17.467275,1,56
+Tỉnh Quảng Nam,Tỉnh,Quảng Nam,108.470757,15.572719,1,57
+Tỉnh Quảng Ngãi,Tỉnh,Quảng Ngãi,108.800266,15.122569,1,58
+Tỉnh Quảng Ninh,Tỉnh,Quảng Ninh,107.123663,20.941641,1,59
+Tỉnh Quảng Trị,Tỉnh,Quảng Trị,107.099317,16.817464,1,60
+Tỉnh Sóc Trăng,Tỉnh,Sóc Trăng,105.971032,9.598759,1,61
+Tỉnh Sơn La,Tỉnh,Sơn La,103.90922,21.32943,1,62
+Tỉnh Tây Ninh,Tỉnh,Tây Ninh,106.093478,11.31421,1,63
+Tỉnh Thái Bình,Tỉnh,Thái Bình,106.331586,20.444563,1,64
+Tỉnh Thái Nguyên,Tỉnh,Thái Nguyên,105.84067,21.595,1,65
+Tỉnh Thanh Hóa,Tỉnh,Thanh Hóa,105.775691,19.80764,1,66
+Tỉnh Thừa Thiên-Huế,Tỉnh,Thừa Thiên-Huế,107.584913,16.46225,1,67
+Tỉnh Tiền Giang,Tỉnh,Tiền Giang,106.363155,10.352936,1,68
+Tỉnh Trà Vinh,Tỉnh,Trà Vinh,106.341325,9.937608,1,69
+Tỉnh Tuyên Quang,Tỉnh,Tuyên Quang,105.217861,21.822301,1,70
+Tỉnh Vĩnh Long,Tỉnh,Vĩnh Long,105.972032,10.254082,1,71
+Tỉnh Vĩnh Phúc,Tỉnh,Vĩnh Phúc,105.603818,21.310698,1,72
+Tỉnh Yên Bái,Tỉnh,Yên Bái,104.911667,21.722287,1,73

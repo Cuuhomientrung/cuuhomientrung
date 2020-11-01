@@ -1,0 +1,68 @@
+old_id,new_id,old_name,new_name
+4,37,Hà Tĩnh,Tỉnh Hà Tĩnh
+2,60,Quảng Trị,Tỉnh Quảng Trị
+6,11,Hà Nội,Thành phố Hà Nội
+8,56,Quảng Bình,Tỉnh Quảng Bình
+9,14,Đà Nẵng,Thành phố Đà Nẵng
+11,65,Thái Nguyên,Tỉnh Thái Nguyên
+17,59,Quảng Ninh,Tỉnh Quảng Ninh
+20,66,Thanh Hoá,Tỉnh Thanh Hóa
+22,57,Quảng Nam,Tỉnh Quảng Nam
+24,15,Cần Thơ,Thành phố Cần Thơ
+60,46,Lâm Đồng,Tỉnh Lâm Đồng
+62,58,Quảng Ngãi,Tỉnh Quảng Ngãi
+63,24,Bình Định,Tỉnh Bình Định
+64,55,Phú Yên,Tỉnh Phú Yên
+65,68,Tiền Giang,Tỉnh Tiền Giang
+66,41,Hưng Yên,Tỉnh Hưng Yên
+67,27,Cà Mau,Tỉnh Cà Mau
+69,50,Nam Định,Tỉnh Nam Định
+70,30,Đắk Nông,Tỉnh Đắk Nông
+71,38,Hải Dương,Tỉnh Hải Dương
+72,49,Long An,Tỉnh Long An
+73,22,Bến Tre,Tỉnh Bến Tre
+74,33,Đồng Tháp,Tỉnh Đồng Tháp
+75,71,Vĩnh Long,Tỉnh Vĩnh Long
+76,43,Kiên Giang,Tỉnh Kiên Giang
+77,69,Trà Vinh,Tỉnh Trà Vinh
+78,61,Sóc Trăng,Tỉnh Sóc Trăng
+79,21,Bắc Ninh,Tỉnh Bắc Ninh
+81,32,Đồng Nai,Tỉnh Đồng Nai
+82,23,Bình Dương,Tỉnh Bình Dương
+83,64,Thái Bình,Tỉnh Thái Bình
+84,51,Nghệ An,Tỉnh Nghệ An
+86,25,Bình Phước,Tỉnh Bình Phước
+87,53,Ninh Thuận,Tỉnh Ninh Thuận
+88,48,Lào Cai,Tỉnh Lào Cai
+89,13,Hải Phòng,Thành phố Hải Phòng
+90,16,An Giang,Tỉnh An Giang
+91,54,Phú Thọ,Tỉnh Phú Thọ
+92,63,Tây Ninh,Tỉnh Tây Ninh
+93,42,Khánh Hòa,Tỉnh Khánh Hòa
+94,40,Hòa Bình,Tỉnh Hòa Bình
+95,70,Tuyên Quang,Tỉnh Tuyên Quang
+96,45,Lai Châu,Tỉnh Lai Châu
+97,39,Hậu Giang,Tỉnh Hậu Giang
+98,47,Lạng Sơn,Tỉnh Lạng Sơn
+99,36,Hà Nam,Tỉnh Hà Nam
+101,28,Cao Bằng,Tỉnh Cao Bằng
+102,62,Sơn La,Tỉnh Sơn La
+103,34,Gia Lai,Tỉnh Gia Lai
+104,19,Bắc Giang,Tỉnh Bắc Giang
+105,52,Ninh Bình,Tỉnh Ninh Bình
+106,26,Bình Thuận,Tỉnh Bình Thuận
+107,44,Kon Tum,Tỉnh Kon Tum
+108,72,Vĩnh Phúc,Tỉnh Vĩnh Phúc
+109,18,Bạc Liêu,Tỉnh Bạc Liêu
+111,31,Điện Biên,Tỉnh Điện Biên
+110,73,Yên Bái,Tỉnh Yên Bái
+112,35,Hà Giang,Tỉnh Hà Giang
+1,67,Thừa Thiên Huế,Tỉnh Thừa Thiên-Huế
+3,12,TP Hồ Chí Minh,Thành phố Hồ Chí Minh
+68,29,Đắc Lắc,Tỉnh Đắk Lắk
+80,17,Vũng Tàu,Tỉnh Bà Rịa-Vũng Tàu
+100,20,Bắc Cạn,Tỉnh Bắc Kạn
+113,null, Chưa rõ,null
+121,56,Lể thủy,Tỉnh Quảng Bình
+125,56,Tuyên Hóa,Tỉnh Quảng Bình
+127,66,thanh hóa,Tỉnh Thanh Hóa

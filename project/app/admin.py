@@ -6,7 +6,7 @@ from django_select2.forms import ModelSelect2Widget
 from rest_framework import routers
 
 from app.settings import TIME_ZONE
-from app.models import TinTuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa,\
+from app.models import TinTuc, TinhNguyenVien, CuuHo, HoDan, NewTinh, NewHuyen, NewXa,\
     TrangThaiHoDan, CUUHO_STATUS, TINHNGUYEN_STATUS
 from app.views import CuuHoViewSet, HoDanViewSet,\
     TinhNguyenVienViewSet, TinhViewSet, HuyenViewSet, XaViewSet, TrangThaiHoDanSet
@@ -104,24 +104,24 @@ class CuuHoLocationForm(ModelForm):
                                                    attrs={'style': 'min-width:250px', 'data-minimum-input-length': 0}
                                                ), required=False)
 
-        self.fields["tinh"] = ModelChoiceField(queryset=Tinh.objects.order_by("name"),
+        self.fields["tinh"] = ModelChoiceField(queryset=NewTinh.objects.order_by("name"),
                                                widget=ModelSelect2Widget(
-                                                   model=Tinh,
+                                                   model=NewTinh,
                                                    search_fields=['name__unaccent__icontains'],
                                                    attrs={'style': 'min-width:250px', 'data-minimum-input-length': 0}
                                                ), required=False)
 
-        self.fields["huyen"] = ModelChoiceField(queryset=Huyen.objects.order_by("name"),
+        self.fields["huyen"] = ModelChoiceField(queryset=NewHuyen.objects.order_by("name"),
                                                 widget=ModelSelect2Widget(
-                                                    model=Huyen,
+                                                    model=NewHuyen,
                                                     search_fields=['name__unaccent__icontains'],
                                                     dependent_fields={'tinh': 'tinh'},
                                                     attrs={'style': 'min-width:250px', 'data-minimum-input-length': 0}
                                                 ), required=False)
 
-        self.fields["xa"] = ModelChoiceField(queryset=Xa.objects.order_by("name"),
+        self.fields["xa"] = ModelChoiceField(queryset=NewXa.objects.order_by("name"),
                                              widget=ModelSelect2Widget(
-                                                 model=Xa,
+                                                 model=NewXa,
                                                  search_fields=['name__unaccent__icontains'],
                                                  dependent_fields={'huyen': 'huyen'},
                                                  attrs={'style': 'min-width:250px', 'data-minimum-input-length': 0}
@@ -211,24 +211,24 @@ class HoDanForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(HoDanForm, self).__init__(*args, **kwargs)
-        self.fields["tinh"] = ModelChoiceField(queryset=Tinh.objects.order_by("name"),
+        self.fields["tinh"] = ModelChoiceField(queryset=NewTinh.objects.order_by("name"),
                                                widget=ModelSelect2Widget(
-                                                   model=Tinh,
+                                                   model=NewTinh,
                                                    search_fields=['name__unaccent__icontains'],
                                                    attrs={'style': 'min-width:250px', 'data-minimum-input-length': 0}
                                                ), required=False)
 
-        self.fields["huyen"] = ModelChoiceField(queryset=Huyen.objects.order_by("name"),
+        self.fields["huyen"] = ModelChoiceField(queryset=NewHuyen.objects.order_by("name"),
                                                 widget=ModelSelect2Widget(
-                                                    model=Huyen,
+                                                    model=NewHuyen,
                                                     search_fields=['name__unaccent__icontains'],
                                                     dependent_fields={'tinh': 'tinh'},
                                                     attrs={'style': 'min-width:250px', 'data-minimum-input-length': 0}
                                                 ), required=False)
 
-        self.fields["xa"] = ModelChoiceField(queryset=Xa.objects.order_by("name"),
+        self.fields["xa"] = ModelChoiceField(queryset=NewXa.objects.order_by("name"),
                                              widget=ModelSelect2Widget(
-                                                 model=Xa,
+                                                 model=NewXa,
                                                  search_fields=['name__unaccent__icontains'],
                                                  dependent_fields={'huyen': 'huyen'},
                                                  attrs={'style': 'min-width:250px', 'data-minimum-input-length': 0}
@@ -458,9 +458,9 @@ admin.site.register(HoDan, HoDanAdmin)
 admin.site.register(CuuHo, CuuHoAdmin)
 admin.site.register(TinhNguyenVien, TinhNguyenVienAdmin)
 
-admin.site.register(Tinh, TinhAdmin)
-admin.site.register(Huyen, HuyenAdmin)
-admin.site.register(Xa, XaAdmin)
+admin.site.register(NewTinh, TinhAdmin)
+admin.site.register(NewHuyen, HuyenAdmin)
+admin.site.register(NewXa, XaAdmin)
 admin.site.register(TrangThaiHoDan, TrangThaiHoDanAdmin)
 # admin.site.register(Thon, ThonAdmin)
 
