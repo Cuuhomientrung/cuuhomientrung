@@ -20,7 +20,7 @@ def migrate_xa_id(apps, schema_editor):
                     hodan.xa_id = new_xa.id
                     flag = False
                     break
-            if flag == False:
+            if flag == True:
                 hodan.xa_id = None
             hodan.save()
                            
@@ -34,7 +34,7 @@ def migrate_xa_id(apps, schema_editor):
                     cuuho.xa_id = new_xa.id
                     flag = False
                     break
-            if flag == False:
+            if flag == True:
                 cuuho.xa_id = None
             cuuho.save()
     
