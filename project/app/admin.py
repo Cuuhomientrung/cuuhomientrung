@@ -11,6 +11,7 @@ from app.models import TinTuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa,\
 from app.views import CuuHoViewSet, HoDanViewSet,\
     TinhNguyenVienViewSet, TinhViewSet, HuyenViewSet, XaViewSet, TrangThaiHoDanSet
 from app.utils.export_to_excel import export_ho_dan_as_excel_action, utc_to_local
+from app.utils.safe_url import make_url_clickable, sanitize_url
 from django.conf.locale.vi import formats as vi_formats
 from django_admin_listfilter_dropdown.filters import ChoiceDropdownFilter, RelatedDropdownFilter
 from django.utils.html import format_html
@@ -65,14 +66,20 @@ class XaAdminFilter(AutocompleteFilter):
 
 
 # Admin classes
+
+class TinTucAdminForm(ModelForm):
+    def clean_url(self):
+        # do something that validates your data
+        return sanitize_url(self.cleaned_data["url"])
+
 class TinTucAdmin(admin.ModelAdmin):
     list_per_page = PAGE_SIZE
     list_display = ('update_time', 'title', 'show_url')
     search_fields = ('title',)
+    form = TinTucAdminForm
 
     def show_url(self, obj):
-        return format_html("<a href='{url}'>{url}</a>", url=obj.url)
-
+        return make_url_clickable(obj.url)
 
 class NguonLucAdmin(admin.ModelAdmin):
     list_display = ('status', 'name', 'location', 'tinh',
