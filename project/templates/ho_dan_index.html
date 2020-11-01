@@ -6,8 +6,8 @@
     <div class="col-sm-3">
       <select class="form-control select" id="select-status">
         <option value="-1"> Tất cả trạng thái </option>
-        {% for id, name in status_dict.items %}
-          <option {% if id|stringformat:"i" == filtered.status %} selected {% endif %} value="{{ id }}">{{ name }}</option>
+        {% for status in list_status %}
+          <option {% if status.id|stringformat:"i" == filtered.status %} selected {% endif %} value="{{ status.id }}">{{ status.name }}</option>
         {% endfor %}
       </select>
     </div>

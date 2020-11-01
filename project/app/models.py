@@ -32,29 +32,6 @@ CUUHO_STATUS = [
     (4, 'Đang nghỉ'),
 ]
 
-HODAN_STATUS = [
-    (0, "Chưa xác minh"),
-    (1, "Cần ứng cứu gấp"),
-    (2, "Không gọi được"),
-    (3, "Đã được cứu"),
-    (4, "Gặp nạn"),
-    (5, "Đã gửi cứu hộ"),
-    (6, "Cần thức ăn"),
-    (7, "Cần thuốc men"),
-    (8, "Đã ổn")
-]
-
-HODAN_STATUS_NEW = [
-    (1, 'Chưa xác minh'),
-    (2, 'Không gọi được'),
-    (3, 'Cần ứng cứu gấp'),
-    (4, 'Đã gửi cứu hộ'),
-    (5, 'Cần thức ăn'),
-    (6, 'Cần thuốc men'),
-    (7, 'Đã an toàn')
-]
-
-
 class Token(BaseTokenClass):
     class Meta:
         abstract = 'rest_framework.authtoken' not in settings.INSTALLED_APPS
