@@ -23,7 +23,8 @@ bash run_create_admin.sh ## Create with username: `user1`
 ## Truy cập trang
 
 ```
-localhost:8087
+docker-compose exec cuuhomientrung-web rs
+# Truy cập http://localhost:8087
 ```
 
 ## Mẹo: Lệnh truy cập vào cửa sổ dòng lệnh của docker
