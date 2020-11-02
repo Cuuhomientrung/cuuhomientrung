@@ -332,3 +332,6 @@ VIEW_CACHE_SETTINS = {
 # Update settings based on deploy env
 for key in VIEW_CACHE_SETTINS:
     VIEW_CACHE_SETTINS[key] *= DEPLOY_ENV_CACHE_MODIFIER
+
+# Always use IPython for shell_plus
+SHELL_PLUS = "ipython"
