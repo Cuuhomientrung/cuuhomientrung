@@ -1,8 +1,8 @@
 import datetime
 import pytz
-from app.settings import TIME_ZONE
-from app.admin import TinhAdmin
-from app.models import Tinh, HoDan, CuuHo, TinhNguyenVien
+from .settings import TIME_ZONE
+from .admin import TinhAdmin
+from .models import Tinh, HoDan, CuuHo, TinhNguyenVien
 from django.db.models import Count
 from django.shortcuts import render
 from django.urls import reverse
