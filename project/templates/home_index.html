@@ -13,20 +13,24 @@
         <div class="card-body">
           <div class="row">
             <div class="col-6">
-              <div class="bg-danger p-3 text-center text-white rounded-lg">
-                <div class="font-size-large">
-                  <a class="text-white text-decoration-none" href="{% url 'home_ho_dan' %}?status=3"> {{ tong_hodan_cap_cuu }} </a>
+              <a href="{% url 'home_ho_dan' %}?status=3" class="link-block">
+                <div class="bg-danger p-3 text-center text-white rounded-lg">
+                  <div class="font-size-large">
+                    <span class="text-white text-decoration-none">{{ tong_hodan_cap_cuu }}</span>
+                  </div>
+                  <p class="m-0">cần cứu hộ gấp</p>
                 </div>
-                <p class="m-0">cần cứu hộ</p>
-              </div>
+              </a>
             </div>
             <div class="col-6">
-              <div class="bg-success p-3 text-center text-white rounded-lg">
-                <div class="font-size-large">
-                    <a class="text-white text-decoration-none" href="{% url 'home_ho_dan' %}?status=7"> {{ tong_hodan_da_duoc_cuu }} </a>
+              <a href="{% url 'home_ho_dan' %}?status=7" class="link-block">
+                <div class="bg-success p-3 text-center text-white rounded-lg">
+                  <div class="font-size-large">
+                       <span class="text-white text-decoration-none"> {{ tong_hodan_da_duoc_cuu }}  </span>
+                  </div>
+                  <p class="m-0">đã được cứu</p>
                 </div>
-                <p class="m-0">đã được cứu</p>
-              </div>
+              </a>
             </div>
           </div>
           <p class="mt-3 mb-0">
@@ -58,14 +62,14 @@
           <a class="ml-auto" href="{% url 'admin:app_cuuho_changelist' %}">Xem tất cả</a>
         </div>
         <div class="card-body">
-          <div class="bg-primary p-3 text-center text-white rounded-lg">
-            <div class="font-size-large">
-              <a class="text-white text-decoration-none" href="{% url 'admin:app_cuuho_changelist' %}?status=1">
-                {{ tong_doi_cuu_ho_san_sang }}
-              </a>
+          <a href="{% url 'admin:app_cuuho_changelist' %}?status=1" class="link-block">
+            <div class="bg-primary p-3 text-center text-white rounded-lg">
+              <div class="font-size-large">
+                  <span class="text-white text-decoration-none">{{ tong_doi_cuu_ho_san_sang }}</span>
+              </div>
+              <p class="m-0">đội cứu hộ</p>
             </div>
-            <p class="m-0">đội cứu hộ sẵn sàng</p>
-          </div>
+          </a>
           <p class="mt-3 mb-0">
             Đăng ký đội cứu hộ để nhận được các yêu cầu mới nhất.
           </p>
