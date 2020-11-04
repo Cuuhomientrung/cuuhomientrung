@@ -3,15 +3,15 @@
 
 {% block content %}
   <div class="row form-row citizen-filter mb-4">
-    <div class="col-sm-3">
-      <select class="form-control select" id="select-status">
+    <div class="col-sm-3 mb-2">
+      <select class="form-control select choices" id="select-status">
         <option value="-1"> Tất cả trạng thái </option>
         {% for status in list_status %}
           <option {% if status.id|stringformat:"i" == filtered.status %} selected {% endif %} value="{{ status.id }}">{{ status.name }}</option>
         {% endfor %}
       </select>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-2 mb-2">
       <select class="form-control select select-searchable" id="select-tinh">
         <option value="-1"> Tất cả tỉnh </option>
         {% for tinh in list_tinh %}
@@ -19,7 +19,7 @@
         {% endfor %}
       </select>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-2 mb-2">
       <select class="form-control select select-searchable" id="select-huyen">
         <option value="-1"> Tất cả huyện </option>
         {% for huyen in list_huyen %}
@@ -29,7 +29,7 @@
         {% endfor %}
       </select>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-2 mb-2">
       <select class="form-control select select-searchable" id="select-xa">
         <option value="-1"> Tất cả xã </option>
         {% for xa in list_xa %}
