@@ -82,12 +82,12 @@
   {% block headers %}{% endblock %}
 </head>
 
-<body class="cuuhomientrung__preloader {% block body_class %}{% endblock %}">
+<body class="{% block body_class %}{% endblock %}">
   <div id="loader">
     <div></div>
   </div>
 
-  <div id="loader__wrapped" class="wrapper">
+  <div class="wrapper">
       <header class="sticky-top">
           <nav class="navbar  navbar-expand-lg navbar-dark bg-dark">
               <div class="container">
