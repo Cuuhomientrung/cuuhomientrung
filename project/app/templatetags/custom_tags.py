@@ -2,6 +2,8 @@ from django import template
 from django.conf import settings
 from django.utils.safestring import mark_safe
 from webpack_loader import utils as webpack_loader_utils
+from django.template.loader import get_template
+from app.admin import TinhAdminFilter, HuyenAdminFilter, XaAdminFilter
 
 register = template.Library()
 
@@ -30,3 +32,16 @@ def render_bundle(bundle_name, extension=None, config='DEFAULT', attrs=''):
     '''
     tags = get_as_tags(bundle_name, extension=extension, config=config, attrs=attrs)
     return mark_safe('\n'.join(tags))
+
+
+@register.simple_tag
+def custom_admin_list_filter(cl, spec):
+    if isinstance(spec, (TinhAdminFilter, HuyenAdminFilter, XaAdminFilter)):
+        spec.template = "admin/app/custom_select_filter.html"
+
+    tpl = get_template(spec.template)
+    return tpl.render({
+        'title': spec.title,
+        'choices': list(spec.choices(cl)),
+        'spec': spec,
+    })
