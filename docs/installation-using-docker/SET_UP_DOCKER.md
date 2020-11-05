@@ -20,6 +20,17 @@ bash run_migrate.sh
 bash run_create_admin.sh ## Create with username: `user1`
 ```
 
+## Build webpack static files
+
+```
+docker-compose exec cuuhomientrung-web npm run build
+```
+or
+```
+docker-compose exec cuuhomientrung-web bash
+npm run build
+```
+
 ## Truy cập trang
 
 ```

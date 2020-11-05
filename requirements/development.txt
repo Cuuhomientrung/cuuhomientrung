@@ -1,0 +1,15 @@
+# DEVELOPMENT ENVIRONMENT REQUIREMENTS
+# =====================================
+
+# Include the base requirements
+-r base.txt
+
+# Code style
+autopep8==1.5.4
+
+# Debug
+django-debug-toolbar==3.1.1
+
+# Shell
+ipython==7.16.1
+
