@@ -49,7 +49,7 @@ def export_ho_dan_as_excel_action(fields=None, exclude=None, header=True):
         for obj in queryset:
             arr = []
             for field in field_names:
-                if field == "status":
+                if field == "status" and obj.status:
                     arr.append(obj.status.name)
                 elif field == "update_time":
                     utc_time = getattr(obj, field)

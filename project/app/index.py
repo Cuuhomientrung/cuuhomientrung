@@ -98,6 +98,7 @@ class IndexView(TemplateView):
             .annotate(da_cuu_count=Count("tinh"))
         )
 
+        ho_dan_da_cuu_by_tinh = [i for i in ho_dan_da_cuu_by_tinh if i["tinh_id"]]
         sorted_da_cuu_by_tinh = sorted(
             ho_dan_da_cuu_by_tinh, key=lambda i: i["tinh_id"]
         )
@@ -126,6 +127,6 @@ class IndexView(TemplateView):
         cuu_ho_tinh = CuuHo.objects.values("tinh__name", "tinh_id").annotate(
             cuu_ho_count=Count("tinh")
         )
-        cuu_ho_tinh = [i for i in cuu_ho_tinh if i["tinh_id"]]        
+        cuu_ho_tinh = [i for i in cuu_ho_tinh if i["tinh_id"]]
         sorted_cuu_ho_by_tinh = sorted(cuu_ho_tinh, key=lambda i: i["tinh_id"])
         return sorted_cuu_ho_by_tinh
