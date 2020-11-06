@@ -19,7 +19,7 @@ from django.conf.urls import url
 from app import ho_dan_views, huong_dan_tnv_views, thong_tin_views
 from django.conf import settings
 from app.admin import router
-from app.index import index
+from app.index import IndexView
 from django.views.decorators.cache import cache_page
 
 _common_cache = cache_page(
@@ -30,7 +30,7 @@ _static_cache = cache_page(
 )
 
 urlpatterns = [
-    path('', _common_cache(index), name="index"),
+    path('', _common_cache(IndexView.as_view()), name="index"),
     path('api/', include(router.urls)),
     # path('api/', rest_admin.site.urls, name="rest_api"),
     path('chaining/', include('smart_selects.urls')),

@@ -55,7 +55,11 @@ CÙNG CHUNG TAY VÌ KHÚC RUỘT MIỀN TRUNG !!!
 1. Cài đặt các thư viện cần thiết (cần cài Python3.6 trở lên và Pip3 trước)
 
 ```
-pip3 install -r requirements.txt
+pip3 install -r requirements/development.txt
+```
+Cài các thư viện để chạy test environment nếu cần thiết (thêm dummy data, chạy unittests)
+```
+pip3 install -r requirements/testing.txt
 ```
 
 ~~2. Thay đổi cấu hình database từ postgresql sang sqlite (để chạy được ở local)~~

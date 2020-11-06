@@ -30,7 +30,8 @@ $ npm -v
 ## 1. Thỏa mãn requirements.txt
 
 ```
-$ pip install -r requirements.txt
+$ pip install -r requirements/development.txt
+$ pip install -r requirements/testing.txt
 ```
 
 ## 2. Thoả mãn package.json

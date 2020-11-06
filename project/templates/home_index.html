@@ -18,7 +18,7 @@
                   <div class="font-size-large">
                     <span class="text-white text-decoration-none">{{ tong_hodan_cap_cuu }}</span>
                   </div>
-                  <p class="m-0">cần cứu hộ</p>
+                  <p class="m-0">cần cứu hộ gấp</p>
                 </div>
               </a>
             </div>
@@ -65,7 +65,7 @@
           <a href="{% url 'admin:app_cuuho_changelist' %}?status=1" class="link-block">
             <div class="bg-primary p-3 text-center text-white rounded-lg">
               <div class="font-size-large">
-                  <span class="text-white text-decoration-none">{{ tong_doi_cuu_ho }}</span>
+                  <span class="text-white text-decoration-none">{{ tong_doi_cuu_ho_san_sang }}</span>
               </div>
               <p class="m-0">đội cứu hộ</p>
             </div>
@@ -113,16 +113,16 @@
                 <th class="text-primary">Số đội</th>
               </thead>
               <tbody>
-                {% for tinh in tinhInfos %}
+                {% for tinh in tinh_infos %}
                 <tr>
                   <td>
-                    <a href="{% url 'home_ho_dan' %}?tinh={{ tinh.id }}">
-                      {{ tinh.name }}
+                    <a href="{{ tinh.url }}">
+                      {{ tinh.tinh__name }}
                     </a>
                   </td>
-                  <td class="text-danger">{{ tinh.total_hodan }}</td>
-                  <td class="text-success">{{ tinh.total_dacuu }}</td>
-                  <td class="text-primary">{{ tinh.total_cuuho }}</td>
+                  <td class="text-danger">{{ tinh.can_cuu_count }}</td>
+                  <td class="text-success">{{ tinh.da_cuu_count }}</td>
+                  <td class="text-primary">{{ tinh.cuu_ho_count }}</td>
                 </tr>
                 {% endfor %}
               </tbody>
