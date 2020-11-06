@@ -371,10 +371,12 @@ class HoDanAdmin(NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.Mod
         # TODO: ho tro trong vong 3 ngay
         # se remove code ngay sau do
         # 23 / 10 / 2020 00:00:00 GMT + 7
-        compare_time = datetime.datetime(
-            2020, 10, 22, 17, 0, 0, tzinfo=datetime.timezone.utc).astimezone(tz=pytz.timezone(TIME_ZONE))
+        #compare_time = datetime.datetime(
+        #    2020, 10, 22, 17, 0, 0, tzinfo=datetime.timezone.utc).astimezone(tz=pytz.timezone(TIME_ZONE))
+        compare_time = int(datetime.datetime.now().strftime("%Y%m%d"))-3
         update_time = utc_to_local(obj.update_time).strftime("%m/%d/%Y %H:%M")
-        if utc_to_local(obj.created_time) >= compare_time:
+        created_time = int(utc_to_local(obj.created_time).strftime("%Y%m%d"))
+        if created_time >= compare_time:
             return format_html('<div class="highlight-red"> {} </div>', update_time)
         else:
             return format_html('<div class="highlight-blue"> {} </div>', update_time)
