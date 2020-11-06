@@ -22,25 +22,67 @@ class IndexView(TemplateView):
         context["tong_hodan_cap_cuu"] = HoDan.objects.filter(status_id=3).count()
         context["tong_doi_cuu_ho_san_sang"] = CuuHo.objects.filter(status=1).count()
         context["tong_tinh_nguyen_vien"] = TinhNguyenVien.objects.count()
-        context["tinh_infos"] = []
+        context["tinh_infos"] = self._get_tinh_info()
+        return context
 
-        hodan_url = reverse("admin:app_hodan_changelist")
+    def _get_tinh_info(self):
         hodan_da_cuu = self._get_ho_dan_da_cuu_by_tinh()
         cuuho_by_tinh = self._get_cuu_ho_by_tinh()
         hodan_can_cuu = self._get_ho_dan_can_cuu_by_tinh()
+        hodan_url = reverse("admin:app_hodan_changelist")
+        tinh_infos = []
 
-        # Các danh sách hộ dân cần cứu và đã cứu, và danh sách cứu hộ đều được sort theo id của tỉnh,
-        # nên thứ tự là giống nhau.
-        for ind, val in enumerate(hodan_can_cuu):
+        # tìm list dài nhất để là target để loop,
+        # 2 list còn lại dùng để so sánh vả update phần tử
+        _list = [hodan_da_cuu, hodan_can_cuu, cuuho_by_tinh]
+        _list_len = [
+            len(hodan_da_cuu),
+            len(hodan_can_cuu),
+            len(cuuho_by_tinh),
+        ]  # same order as _list
+
+        longest = max(_list_len)
+        index = _list_len.index(longest)
+
+        # index của max trong _list_len cũng chính là
+        # index của list dài nhất trong _list
+        target_list = _list[index]
+        _list.remove(target_list)
+
+        # Vì độ dài của các list ko bằng nhau,
+        # nên chọn list dài nhất để loop để không bị thiếu
+        for ind, val in enumerate(target_list):
             info = {
                 "url": f'{hodan_url}?{TinhAdmin.URL_CUSTOM_TAG}={val["tinh_id"]}',
+                "can_cuu_count": 0,
+                "da_cuu_count": 0,
+                "cuu_ho_count": 0
             }
             info.update(val)
-            info.update(hodan_da_cuu[ind])
-            info.update(cuuho_by_tinh[ind])
-            context["tinh_infos"].append(info)
 
-        return context
+            # Lấy dict có id tương ứng ở list thứ nhất
+            info1 = self._get_list_element_by_value(_list[0], val["tinh_id"])
+            if info1:
+                # remove dict này khỏi list để lượt loop tiếp theo ko bị trùng
+                _list[0].remove(info1)
+                info.update(info1)
+
+            # lấy dict có id tương ứng ở list thứ hai
+            info2 = self._get_list_element_by_value(_list[1], val["tinh_id"])
+            if info2:
+                # remove dict này khỏi list để lượt loop tiếp theo ko bị trùng
+                _list[1].remove(info2)
+                info.update(info2)
+
+            tinh_infos.append(info)
+        return tinh_infos
+
+    @staticmethod
+    def _get_list_element_by_value(_list, tinh_id):
+        for _, val in enumerate(_list):
+            if val.get("tinh_id") == tinh_id:
+                return val
+        return None
 
     def _get_ho_dan_can_cuu_by_tinh(self):
         """
