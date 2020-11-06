@@ -126,5 +126,6 @@ class IndexView(TemplateView):
         cuu_ho_tinh = CuuHo.objects.values("tinh__name", "tinh_id").annotate(
             cuu_ho_count=Count("tinh")
         )
+        cuu_ho_tinh = [i for i in cuu_ho_tinh if i["tinh_id"]]        
         sorted_cuu_ho_by_tinh = sorted(cuu_ho_tinh, key=lambda i: i["tinh_id"])
         return sorted_cuu_ho_by_tinh
