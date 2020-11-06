@@ -11,8 +11,12 @@ RUN apt-get install -y --no-install-recommends nodejs && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-ADD requirements.txt .
-RUN pip install -r requirements.txt
+COPY ./requirements/base.txt /code/base.txt
+COPY ./requirements/development.txt /code/development.txt
+COPY ./requirements/testing.txt /code/testing.txt
+
+RUN pip install -r /code/development.txt --no-cache-dir
+RUN pip install -r /code/testing.txt --no-cache-dir
 
 ADD package.json package-lock.json ./
 RUN npm install
@@ -24,8 +28,15 @@ ENV DB_USER cuuhomientrung
 ENV DB_PASSWORD cuuhomientrung
 ENV DB_HOSTNAME localhost
 ENV DB_PORT 5432
+ENV PYTHONUNBUFFERED=1
 
 ADD . /code/
-RUN chmod +x *.sh
+RUN npm run build
 
-CMD ["bash","-c","env > .env && ./run_server.sh"]
+RUN chmod +x *.sh
+# Helpers making development easier
+RUN echo "#!/bin/bash\ncd /code\npython project/manage.py runserver_plus 0.0.0.0:8087" > /usr/bin/rs && \
+    chmod +x /usr/bin/rs
+
+CMD ["bash", "-c", "tail -f /dev/null"]
+EXPOSE 8087/tcp
