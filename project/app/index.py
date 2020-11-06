@@ -67,7 +67,7 @@ class IndexView(TemplateView):
             .values("tinh__name", "tinh_id")
             .annotate(can_cuu_count=Count("tinh"))
         )
-        ho_dan_can_cuu_by_tinh = [i for i in ho_dan_can_cuu_by_tinh if ho_dan_can_cuu_by_tinh["tinh_id"]]
+        ho_dan_can_cuu_by_tinh = [i for i in ho_dan_can_cuu_by_tinh if i["tinh_id"]]
         sorted_can_cuu_by_tinh = sorted(
             ho_dan_can_cuu_by_tinh, key=lambda i: i["tinh_id"]
         )
