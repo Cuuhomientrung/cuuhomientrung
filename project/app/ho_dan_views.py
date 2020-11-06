@@ -108,6 +108,7 @@ def index(request):
     return render(request, 'ho_dan_index.html', {
         'page_obj': page_obj,
         'list_status': get_status(),
+        'ho_dan_total_count': len(list_ho_dan),
         'list_tinh': get_tinh(),
         'list_huyen': get_huyen(tinh) if tinh else [],
         'list_xa': get_xa(huyen) if huyen else [],
