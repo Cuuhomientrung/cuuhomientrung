@@ -2,6 +2,7 @@ from django import template
 from django.conf import settings
 from django.utils.safestring import mark_safe
 from webpack_loader import utils as webpack_loader_utils
+import json
 
 register = template.Library()
 
@@ -30,3 +31,8 @@ def render_bundle(bundle_name, extension=None, config='DEFAULT', attrs=''):
     '''
     tags = get_as_tags(bundle_name, extension=extension, config=config, attrs=attrs)
     return mark_safe('\n'.join(tags))
+
+
+@register.filter(is_safe=True)
+def js(obj):
+    return mark_safe(json.dumps(obj))

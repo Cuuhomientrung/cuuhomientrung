@@ -8,7 +8,7 @@ from django.conf import settings
 from simple_history.signals import (
     post_create_historical_record,
 )
-from django.db.models.signals import post_save
+from .utils.phone_number import export_phone_numbers
 
 RESOURCE_STATUS = [
     (1, 'Sẵn sàng'),
@@ -252,6 +252,7 @@ class HoDan(models.Model):
     )
     phone = models.TextField(blank=True, default='',
                              verbose_name='Điện thoại liên hệ')
+    phone_expored = models.TextField(blank=True, default='',)
     note = models.TextField(blank=True, default='', verbose_name='Ghi chú')
     volunteer = models.ForeignKey(TinhNguyenVien, blank=True, null=True, verbose_name="Tình nguyện viên xác minh", on_delete=models.CASCADE)
     cuuho = models.ForeignKey(CuuHo, null=True, blank= True, verbose_name="Đơn vị cứu hộ tiếp cận", on_delete=models.CASCADE)
@@ -268,6 +269,14 @@ class HoDan(models.Model):
     class Meta:
         verbose_name = 'Hộ dân cần ứng cứu'
         verbose_name_plural = '1. Hộ dân cần ứng cứu'
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        # Craw then export phone number before commit to database
+        self.phone_expored = export_phone_numbers(self.phone)
+
+        # Save as normal
+        super().save(force_insert, force_update, using, update_fields)
 
 
 # TODO: update ip from user

@@ -28,6 +28,7 @@ from app.settings import (
 from admin_auto_filters.filters import AutocompleteFilter
 from django.urls import reverse
 from easy_select2.widgets import Select2
+from .utils.phone_number import PHONE_REGEX
 
 vi_formats.DATETIME_FORMAT = "d/m/y H:i"
 
@@ -351,6 +352,67 @@ class HoDanAdmin(NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.Mod
     actions = [export_ho_dan_as_excel_action()]
     form = HoDanForm
     list_per_page = PAGE_SIZE
+    add_form_template = 'admin/app/hodan/change_form.html'
+    change_form_template = 'admin/app/hodan/change_form.html'
+
+    def pre_check_phone(self, request, form_url='', extra_context=None):
+        from django.http import JsonResponse
+        from .views import HoDanSerializer
+
+        # Build query string
+        phone_numbers = request.GET.get('phone_numbers', '').split(',')
+        current_object_id = request.GET.get('object_id', None)
+        regex = '^.*(%s).*$' % '|'.join(phone_numbers)
+        filter_query = {'phone_expored__iregex': regex}
+        queryset = HoDan.objects.filter(**filter_query)
+        if current_object_id:
+            queryset = queryset.exclude(pk=current_object_id)
+
+        hodans = HoDanSerializer(queryset, many=True)
+        for item in hodans.data:
+            item.update({
+                'view_url': reverse('admin:app_hodan_change', kwargs={
+                    'object_id': item.get('id')
+                }),
+            })
+
+        # Return json data (based on api serializers)
+        return JsonResponse({
+            "success": True,
+            "items": hodans.data,
+            "similar_hodan": list()
+        })
+
+    def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
+        # Append more context
+        context.update({
+            'PHONE_REGEX': PHONE_REGEX
+        })
+        return super().render_change_form(request, context, add, change, form_url, obj)
+
+    def get_urls(self):
+        from django.urls import path
+        from functools import update_wrapper
+
+        urls = super().get_urls()
+        info = self.model._meta.app_label, self.model._meta.model_name
+
+        def wrap(view):
+            def wrapper(*args, **kwargs):
+                return self.admin_site.admin_view(view)(*args, **kwargs)
+            wrapper.model_admin = self
+            return update_wrapper(wrapper, view)
+
+        return [
+            # pre_check_phone url
+            path(
+                'pre_check_phone/',
+                wrap(self.pre_check_phone),
+                name='%s_%s_pre_check_phone' % info
+            ),
+            # Origin urls
+            *urls,
+        ]
 
     def get_queryset(self, request):
         queryset = super(HoDanAdmin, self).get_queryset(request)
