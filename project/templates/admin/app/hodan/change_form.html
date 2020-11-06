@@ -1,0 +1,172 @@
+{% extends "mapbox_location_field/admin_change.html" %}
+{% load js from custom_tags %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+  @keyframes loading {
+    0% {
+      transform-origin: 100% 100%;
+      transform: rotate(0deg);
+    }
+    100% {
+      transform-origin: 100% 100%;
+      transform: rotate(360deg);
+    }
+  }
+  .loading {
+    width: 24px;
+    height: 24px;
+    margin: 0px 5px;
+    padding: 0;
+    position: relative;
+    display: block;
+    float: left;
+  }
+  .loading:before {
+    position: absolute;
+    display: block;
+    content: "";
+    z-index: 12;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #FFF;
+  }
+  .loading:after {
+    position: absolute;
+    display: block;
+    content: "";
+    z-index: 11;
+    width: 12px;
+    height: 12px;
+    border-radius: 200px 0 0;
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0) 0, #459ad7 50%, #459ad7 100%);
+    animation: loading 0.5s linear infinite;
+  }
+  .pre_check_phone_wrapper a {
+    text-decoration: underline;
+  }
+</style>
+{% endblock %}
+
+{% block admin_change_form_document_ready %}
+  {{ block.super }}
+
+  <script>
+    ($ => {
+      function escapeRegex(string) {
+          return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+      }
+
+      function highlightSearch(text, wrapper) {
+          var query = new RegExp(`(${escapeRegex(text)})`, "gim");
+          var e = wrapper.html();
+          var enew = e.replace(/(<span style="color:orange">|<\/span>)/igm, "");
+          wrapper.html(enew);
+          var newe = enew.replace(query, `<span style="color:orange">$1</span>`);
+          wrapper.html(newe);
+      }
+
+      function open_pre_check(element) {
+        element.click(function(event) {
+            event.preventDefault();
+            var left  = ($(window).width()/2)-(900/2),
+                top   = ($(window).height()/2)-(600/2)
+            window.open(
+              `${$(this).attr("href")}?_popup=1`, "popupWindow",
+              `width=600,height=600,scrollbars=yes,top=${top},left=${left}`
+            );
+        });
+      }
+
+      function pre_check_request(input, matches) {
+        const current_object_id = `{{adminform.form.instance.pk|default:""}}`;
+        const spinner = `<span class="loading" ng-show="isLoading"></span>`;
+        const parent = input.closest('.form-row > div');
+        const get_wrapper = () => parent.find('.pre_check_phone_wrapper');
+
+        if (!matches) {
+          if (get_wrapper().length) get_wrapper().html('');
+          return;
+        }
+
+        const phone_numbers = matches.join(',');
+        const pre_check_url = `{% url "admin:app_hodan_pre_check_phone" %}?phone_numbers=${phone_numbers}&object_id=${current_object_id}`;
+
+        $.getJSON(pre_check_url, data => {
+          // Loading animation
+          if (parent.find('.loading').length)
+            parent.find('.loading').remove();
+
+          // Prepare pre check results wrapper
+          if (!get_wrapper().length)
+            parent.append(`<div class="form-row pre_check_phone_wrapper"></div>`);
+
+          // Get similar results
+          let html = '';
+          if (data.items.length) {
+            let links = [`<span>Các số điện thoại đã tồn tại:</span>`];
+            for (let i in data.items) {
+              const item = data.items[i];
+              links.push(
+                `<span>#${item.id} 👉 <a target="_blank" href="${item.view_url}">${item.name}</a> [${item.phone}]<span>`
+              );
+            }
+            html = links.join('<br>');
+          }
+
+          // Show similar results
+          get_wrapper().html(html);
+          highlightSearch(input.val().trim(), get_wrapper());
+          open_pre_check(get_wrapper().find('a'));
+        });
+
+        // Add spinner
+        if (!parent.find('.loading').length) parent.append(spinner)
+      }
+
+      // Debounce Event Handler Function -> phone field
+      function debounce_event_handler(input) {
+        let re;
+
+        try {
+          re = new RegExp({{PHONE_REGEX|js}}, 'gm');
+        } catch (e) {
+          // Stop Debounce if regex string is not valid
+          return;
+        }
+
+        // Get the input box
+        // Init a timeout variable to be used below
+        let timeout = null;
+        // Listen for keystroke events
+        input.on('keyup', function (e) {
+            // get keycode of current keypress event
+            const code = (e.keyCode || e.which);
+            // do nothing if it's an arrow key
+            if(code == 37 || code == 38 || code == 39 || code == 40) {
+                return;
+            }
+
+            // Clear the timeout if it has already been set.
+            // This will prevent the previous task from executing
+            // if it has been less than <MILLISECONDS>
+            clearTimeout(timeout);
+
+            // Make a new timeout set to go off in 1000ms (1 second)
+            timeout = setTimeout(function () {
+              const matches = input.val().toString().match(re);
+              pre_check_request(input, matches);
+            }, 350);
+        });
+      }
+
+      $(document).ready(function () {
+        debounce_event_handler($('input[name="phone"]'));
+      });
+    })(django.jQuery);
+  </script>
+{% endblock %}
