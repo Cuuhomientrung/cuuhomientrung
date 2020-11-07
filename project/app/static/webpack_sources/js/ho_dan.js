@@ -4,7 +4,8 @@ import Choices from 'choices.js'
 
 
 $(document).ready(() => {
-
+    // This code init ho_dan page only!
+    if (!$('#search-button').length) return;
 
     // Init the choices.js instances :
     let choicesOptions = {

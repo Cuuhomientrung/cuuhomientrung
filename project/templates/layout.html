@@ -1,8 +1,5 @@
 {% load render_bundle from custom_tags %}
 {% load static i18n %}
-{% block extrahead %}
-  <link rel="stylesheet" type="text/css" href="{% static 'raw_sources/css/main.css' %}?v={{ REVISION }}">
-{% endblock %}
 
 <!DOCTYPE html>
 <html lang="{{ language }}">
@@ -18,67 +15,7 @@
     <title>Cứu hộ miền Trung</title>
   {% endblock %}
   <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}?v={{ REVISION }}"/>
-  <style>
-      body.cuuhomientrung__preloader {
-        background: #062F58;
-        background-size: auto;
-        box-sizing: border-box;
-        height: 100vh;
-        margin: 0;
-        padding: 0;
-      }
-      body.cuuhomientrung__preloader #loader {
-        box-sizing: border-box;
-        display: block;
-        height: 100vh;
-        width: 100%;
-        margin: 0;
-        background: rgba(0, 0, 0, .75);
-        -webkit-backdrop-filter: saturate(180%) blur(10px);
-                backdrop-filter: saturate(180%) blur(10px);
-        z-index: 100;
-      }
-
-      body #loader__wrapped {
-        display: none;
-        z-index: 99;
-      }
-
-      body.cuuhomientrung__preloader #loader div {
-        border: 8px solid #f3f3f3;
-        border-radius: 50%;
-        border-top: 8px solid #3498db;
-        width: 64px;
-        height: 64px;
-
-        /* animação (troque a velocidade de acordo com os segundos) */
-        -webkit-animation: spin 1s linear infinite;
-        animation: spin 1s linear infinite;
-
-        /* alinhamento centralizado */
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-      }
-
-      @-webkit-keyframes spin {
-        0% {
-          -webkit-transform: rotate(0deg);
-        }
-        100% {
-          -webkit-transform: rotate(360deg);
-        }
-      }
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-  </style>
+  {% render_bundle 'home_page_loader' 'css' %}
   {% block headers %}{% endblock %}
 </head>
 

@@ -4,7 +4,7 @@ const BundleTracker = require("webpack-bundle-tracker");
 const autoprefixer = require("autoprefixer");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const publicPath = process.env.STATIC_URL || "/static/";
 
 const resolve = path.resolve.bind(path, __dirname);
@@ -60,8 +60,16 @@ module.exports = (env, argv) => {
         path: path.join(__dirname, "project"),
         filename: "webpack-stats.json",
       }),
+      new MiniCssExtractPlugin({
+    		filename: "[name]-[hash].css",
+    	}),
       ...(argv.watch ? [new CleanWebpackPlugin()] : []),
       ...(argv.mode === "development" ? [new webpack.SourceMapDevToolPlugin()] : []),
+      ...(argv.mode === "development" ? [new webpack.SourceMapDevToolPlugin({
+        filename: '[file].map[query]',
+        exclude: ['vendor.js'],
+        publicPath: publicPath,
+      })] : []),
     ],
     resolve: {
       extensions: [".js", ".jsx"],
@@ -85,7 +93,12 @@ module.exports = (env, argv) => {
         {
           test: /\.s[ac]ss$/i,
           use: [
-            "style-loader",
+            {
+							loader: MiniCssExtractPlugin.loader,
+							options: {
+								publicPath
+							},
+						},
             "css-loader",
             {
               loader: "sass-loader",
@@ -99,7 +112,6 @@ module.exports = (env, argv) => {
         {
           test: /\.css$/,
           use: [
-            "style-loader",
             "css-loader",
             {
               loader: "resolve-url-loader",
