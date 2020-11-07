@@ -25,11 +25,11 @@ class IndexView(TemplateView):
         context["tinh_infos"] = self._get_tinh_info()
         return context
 
-    def _get_tinh_info(self):
+    def _get_tinh_info(self, limit=10):
         hodan_da_cuu = self._get_ho_dan_da_cuu_by_tinh()
         cuuho_by_tinh = self._get_cuu_ho_by_tinh()
         hodan_can_cuu = self._get_ho_dan_can_cuu_by_tinh()
-        hodan_url = reverse("admin:app_hodan_changelist")
+        hodan_url = reverse("home_ho_dan")
         tinh_infos = []
 
         # tìm list dài nhất để là target để loop,
@@ -75,7 +75,9 @@ class IndexView(TemplateView):
                 info.update(info2)
 
             tinh_infos.append(info)
-        return tinh_infos
+
+        # Limit results
+        return tinh_infos[:limit]
 
     @staticmethod
     def _get_list_element_by_value(_list, tinh_id):
