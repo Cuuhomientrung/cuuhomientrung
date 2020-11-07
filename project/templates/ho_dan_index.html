@@ -68,8 +68,8 @@
               <td class="citizen-td-name"> {{ hodan.name }} </td>
               <td>
                 <div class="mb-2">
-                  <span class="badge {% if hodan.status_emergency %} badge-danger {% else %} badge-info {% endif %}">
-                    {{ hodan.status }}
+                  <span class="badge {% if hodan.status_id in emergency_ids %} badge-danger {% else %} badge-info {% endif %}">
+                    {{ hodan.status__name }}
                   </span>
                 </div>
                 <div class="">
@@ -78,9 +78,9 @@
               </td>
               <td class="citizen-td-counter"> {{ hodan.people_number }} </td>
               <td class="citizen-td-address"> {{ hodan.location }}
-                {% if hodan.xa %}, {{ hodan.xa }} {% endif %}
-                {% if hodan.huyen %}, {{ hodan.huyen }} {% endif %}
-                {% if hodan.tinh %}, {{ hodan.tinh }} {% endif %}
+                {% if hodan.xa__name %}, {{ hodan.xa__name }} {% endif %}
+                {% if hodan.huyen__name %}, {{ hodan.huyen__name }} {% endif %}
+                {% if hodan.tinh__name %}, {{ hodan.tinh__name }} {% endif %}
               </td>
               <td class="citizen-td-phone"> {{ hodan.phone }} </td>
               <td>
@@ -107,8 +107,8 @@
               </h5>
             </div>
             <div class="citizen-meta">
-              <span class="badge {% if hodan.status_emergency %} badge-danger {% else %} badge-info {% endif %}">
-                {{ hodan.status }}
+              <span class="badge {% if hodan.status_id in emergency_ids %} badge-danger {% else %} badge-info {% endif %}">
+                {{ hodan.status__name }}
               </span>
               <div class="citizen-updated-time">
                 <span>Cập nhật: </span>
@@ -130,9 +130,9 @@
                 <div class="citizen-value">
                   {{ hodan.location }}
                   <ul class="citizen-location">
-                    {% if hodan.xa %}, {{ hodan.xa }} {% endif %}
-                    {% if hodan.huyen %}, {{ hodan.huyen }} {% endif %}
-                    {% if hodan.tinh %}, {{ hodan.tinh }} {% endif %}
+                    {% if hodan.xa__name %}, {{ hodan.xa__name }} {% endif %}
+                    {% if hodan.huyen__name %}, {{ hodan.huyen__name }} {% endif %}
+                    {% if hodan.tinh__name %}, {{ hodan.tinh__name }} {% endif %}
                   </ul>
                 </div>
               </div>
@@ -152,8 +152,8 @@
               <div class="citizen-info">
                 <div class="citizen-label"> Đơn vị cứu hộ</div>
                 <div class="citizen-value">
-                  {% if hodan.cuuho %}
-                    {{ hodan.cuuho }}
+                  {% if hodan.cuuho__name %}
+                    {{ hodan.cuuho__name }}
                   {% else %}
                     {{ '_ _ _ _ _' }}
                   {% endif %}
@@ -165,10 +165,10 @@
                 <span>Gửi lúc: </span>
                 <span> {{ hodan.created_time }} </span>
               </div>
-              {% if hodan.volunteer %}
+              {% if hodan.volunteer_id %}
               <div class="citizen-footer-info">
                 <span>Bởi TNV: </span>
-                <span> {{ hodan.volunteer }} </span>
+                <span> {{ hodan.volunteer__name }} </span>
               </div>
               {% endif %}
             </div>

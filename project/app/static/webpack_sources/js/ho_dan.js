@@ -20,7 +20,9 @@ $(document).ready(() => {
         let tinh = parseInt($("#select-tinh option:selected").val());
         let huyen = parseInt($("#select-huyen option:selected").val());
         let xa = parseInt($("#select-xa option:selected").val());
-        let new_url = "/ho_dan?";
+        const url = window.location.pathname.replace(/\/+$/, '');
+
+        let new_url = `${url}/?`;
         if (status >= 0) {
             new_url = new_url + "status=" + status + "&"
         }
@@ -37,7 +39,10 @@ $(document).ready(() => {
     });
     $('#select-tinh').on("change", function() {
         let tinh = $("#select-tinh option:selected").val();
-        $.get('/get_huyen_api/?tinh=' + tinh, function(data, err) {
+        const url = window.location.pathname.replace(/\/+$/, '');
+
+        $.get(`${url}/?tinh=${tinh}`, function(data, err) {
+            // TODO: Handle error
             $('#select-huyen').find('option').remove();
             let ele = $('<option></option>').attr("value", -1).text("Tất cả huyện");
             $("#select-huyen").append(ele);
@@ -66,7 +71,10 @@ $(document).ready(() => {
 
     $('#select-huyen').on("change", function() {
         let huyen = $("#select-huyen option:selected").val();
-        $.get('/get_xa_api/?huyen=' + huyen, function(data, err) {
+        const url = window.location.pathname.replace(/\/+$/, '');
+
+        $.get(`${url}/?huyen=${huyen}`, function(data, err) {
+            // TODO: Handle error
             $('#select-xa').find('option').remove();
             let ele = $('<option></option>').attr("value", -1).text("Tất cả xã");
             $("#select-xa").append(ele);
