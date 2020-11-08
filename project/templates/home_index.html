@@ -146,12 +146,14 @@
           <a class="ml-auto" href="{% url 'admin:app_tinhnguyenvien_changelist' %}">Xem tất cả</a>
         </div>
         <div class="card-body">
-          <div class="bg-primary p-3 text-center text-white rounded-lg">
-            <div class="font-size-large">
-              <a class="text-white text-decoration-none" href="{% url 'admin:app_tinhnguyenvien_changelist' %}"> {{ tong_tinh_nguyen_vien }}</a>
+          <a href="{% url 'admin:app_tinhnguyenvien_changelist' %}" class="link-block">
+            <div class="bg-primary p-3 text-center text-white rounded-lg">
+              <div class="font-size-large">
+                 <span class="text-white text-decoration-none"> {{ tong_tinh_nguyen_vien }} </span>
+              </div>
+              <p class="m-0">tình nguyện viên</p>
             </div>
-            <p class="m-0">tình nguyện viên</p>
-          </div>
+          </a>
           <p class="mt-3 mb-1 font-weight-bold">
             Chú ý: Cần tuyển thêm 500 TNV trực tổng đài
           </p>
