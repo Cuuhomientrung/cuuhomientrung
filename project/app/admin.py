@@ -25,10 +25,12 @@ from simple_history.admin import SimpleHistoryAdmin
 from app.settings import (
     REVISION
 )
-from admin_auto_filters.filters import AutocompleteFilter
+from admin_auto_filters.filters import AutocompleteFilter, AutocompleteSelect
 from django.urls import reverse
 from easy_select2.widgets import Select2
 from .utils.phone_number import PHONE_REGEX
+from django.template.loader import render_to_string
+
 
 vi_formats.DATETIME_FORMAT = "d/m/y H:i"
 
@@ -51,17 +53,70 @@ class StatusAdminFilter(AutocompleteFilter):
     field_name = 'status'
 
 
-class TinhAdminFilter(AutocompleteFilter):
+class CustomAutocompleteSelectWidget(AutocompleteSelect):
+    template_name = 'admin/app/custom_select_option_1.html'
+    option_template_name = 'admin/app/custom_select_option_2.html'
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        return context
+
+    def render(self, name, value, attrs=None, renderer=None):
+        """Render the widget as an HTML string."""
+        context = self.get_context(name, value, attrs)
+        return render_to_string(self.template_name, context)
+
+
+class CustomFilter(AutocompleteFilter):
+    def __init__(self, request, params, model, model_admin):
+        if self.parameter_name is None:
+            self.parameter_name = self.field_name
+            if self.use_pk_exact:
+                self.parameter_name += '__{}__exact'.format(self.field_pk)
+        super().__init__(request, params, model, model_admin)
+
+        if self.rel_model:
+            model = self.rel_model
+
+        remote_field = model._meta.get_field(self.field_name).remote_field
+
+        widget = CustomAutocompleteSelectWidget(remote_field,
+                                    model_admin.admin_site,
+                                    custom_url=self.get_autocomplete_url(request, model_admin),)
+        form_field = self.get_form_field()
+
+        field = form_field(
+            queryset=self.get_queryset_for_field(model, self.field_name),
+            widget=widget,
+            required=False,
+        )
+
+        self._add_media(model_admin, widget)
+
+        attrs = self.widget_attrs.copy()
+        attrs['id'] = 'id-%s-dal-filter' % self.parameter_name
+        if self.is_placeholder_title:
+            # Upper case letter P as dirty hack for bypass django2 widget force placeholder value as empty string ("")
+            attrs['data-Placeholder'] = self.title
+
+        self.rendered_widget = field.widget.render(
+            name=self.parameter_name,
+            value=self.used_parameters.get(self.parameter_name, ''),
+            attrs=attrs
+        )
+
+
+class TinhAdminFilter(CustomFilter):
     title = 'Lọc theo tỉnh'
     field_name = 'tinh'
 
 
-class HuyenAdminFilter(AutocompleteFilter):
+class HuyenAdminFilter(CustomFilter):
     title = 'Lọc theo huyện'
     field_name = 'huyen'
 
 
-class XaAdminFilter(AutocompleteFilter):
+class XaAdminFilter(CustomFilter):
     title = 'Lọc theo xã'
     field_name = 'xa'
 
@@ -111,29 +166,6 @@ class CuuHoLocationForm(ModelForm):
                                                    search_fields=['name__unaccent__icontains'],
                                                    attrs={'style': 'min-width:250px', 'data-minimum-input-length': 0}
                                                ), required=False)
-
-        self.fields["tinh"] = ModelChoiceField(queryset=Tinh.objects.order_by("name"),
-                                               widget=ModelSelect2Widget(
-                                                   model=Tinh,
-                                                   search_fields=['name__unaccent__icontains'],
-                                                   attrs={'style': 'min-width:250px', 'data-minimum-input-length': 0}
-                                               ), required=False)
-
-        self.fields["huyen"] = ModelChoiceField(queryset=Huyen.objects.order_by("name"),
-                                                widget=ModelSelect2Widget(
-                                                    model=Huyen,
-                                                    search_fields=['name__unaccent__icontains'],
-                                                    dependent_fields={'tinh': 'tinh'},
-                                                    attrs={'style': 'min-width:250px', 'data-minimum-input-length': 0}
-                                                ), required=False)
-
-        self.fields["xa"] = ModelChoiceField(queryset=Xa.objects.order_by("name"),
-                                             widget=ModelSelect2Widget(
-                                                 model=Xa,
-                                                 search_fields=['name__unaccent__icontains'],
-                                                 dependent_fields={'huyen': 'huyen'},
-                                                 attrs={'style': 'min-width:250px', 'data-minimum-input-length': 0}
-                                             ), required=False)
 
         self.fields["tinh"].label = "Tỉnh"
         self.fields["tinh"].help_text = "Nhấn vào để chọn tỉnh"
@@ -219,28 +251,6 @@ class HoDanForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(HoDanForm, self).__init__(*args, **kwargs)
-        self.fields["tinh"] = ModelChoiceField(queryset=Tinh.objects.order_by("name"),
-                                               widget=ModelSelect2Widget(
-                                                   model=Tinh,
-                                                   search_fields=['name__unaccent__icontains'],
-                                                   attrs={'style': 'min-width:250px', 'data-minimum-input-length': 0}
-                                               ), required=False)
-
-        self.fields["huyen"] = ModelChoiceField(queryset=Huyen.objects.order_by("name"),
-                                                widget=ModelSelect2Widget(
-                                                    model=Huyen,
-                                                    search_fields=['name__unaccent__icontains'],
-                                                    dependent_fields={'tinh': 'tinh'},
-                                                    attrs={'style': 'min-width:250px', 'data-minimum-input-length': 0}
-                                                ), required=False)
-
-        self.fields["xa"] = ModelChoiceField(queryset=Xa.objects.order_by("name"),
-                                             widget=ModelSelect2Widget(
-                                                 model=Xa,
-                                                 search_fields=['name__unaccent__icontains'],
-                                                 dependent_fields={'huyen': 'huyen'},
-                                                 attrs={'style': 'min-width:250px', 'data-minimum-input-length': 0}
-                                             ), required=False)
 
         self.fields['volunteer'] = ModelChoiceField(queryset=TinhNguyenVien.objects.all(), widget=Select2(), required=False)
         self.fields['cuuho'] = ModelChoiceField(queryset=CuuHo.objects.all(), widget=Select2(), required=False)
