@@ -177,9 +177,9 @@ if DEBUG:
         'debug_toolbar.middleware.DebugToolbarMiddleware', ] + MIDDLEWARE
     INTERNAL_IPS = ['localhost', '127.0.0.1', '*', ]
 
-    def show_toolbar(request):
-        return True
-    SHOW_TOOLBAR_CALLBACK = show_toolbar
+    DEBUG_TOOLBAR_CONFIG = {
+        "SHOW_TOOLBAR_CALLBACK": lambda request: True,
+    }
 
 
 ROOT_URLCONF = 'app.urls'
