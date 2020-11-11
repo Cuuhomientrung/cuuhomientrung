@@ -86,7 +86,6 @@ DATA_XA = [['Phường An Cựu', 'Phường', 'An Cựu', '107.600543', '16.453
 ['Phường Xuân Phú', 'Phường', 'Xuân Phú', '107.601556', '16.462575', '3', '1769795', '323']]
 TTH_ID_FROM_DB = 1
 TTH_ID_FROM_FILE = '67'
-EXISTING_DISTRICT = 'Quảng Điền'
 EXISTING_DISTRICT_ID = 1231
 EXISTING_DISTRICT_ID_IN_FILE = '2371'
 
@@ -103,7 +102,7 @@ def import_missing_districts_and_communes():
     district_ids = []
     commune_dict = {}
     
-    # Get data of districts within Thua Thien Hue 
+    # Get data of districts within Thua Thien Hue
 
     for row in DATA_HUYEN:
         if row[7] == TTH_ID_FROM_FILE and row[6] != EXISTING_DISTRICT_ID_IN_FILE:
@@ -117,21 +116,21 @@ def import_missing_districts_and_communes():
             current_dict.append(row)
             commune_dict[row[7]] = current_dict
    
-    # Import missing districts and communes 
+    # Import missing districts and communes
     for district in district_list:
         huyen, created = Huyen.objects.get_or_create(
             name = district[0],
             tinh_id = TTH_ID_FROM_DB,
             )
-        if created == True:
+        if created:
             for commune in commune_dict[district[6]]:
                 _, _ = Xa.objects.get_or_create(
                     name = commune[0],
                     huyen_id = huyen.id,
                     )
+        else:
+            print("Existed district, skip inserting.")
 
-if __name__ == '__main__':  
+if __name__ == '__main__': 
     import_missing_communes_for_existing_district()
     import_missing_districts_and_communes()
-
-
