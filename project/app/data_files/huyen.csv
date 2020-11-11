@@ -1,0 +1,714 @@
+name,prefix,suffix,long,lat,level,id,tinh_id
+Quận Ba Đình,Quận,Ba Đình,105.814248,21.033916,2,267,11
+Quận 1,Quận,1,106.699014,10.780745,2,268,12
+Quận Dương Kinh,Quận,Dương Kinh,106.711713,20.797317,2,269,13
+Quận Cẩm Lệ,Quận,Cẩm Lệ,108.204199,16.017047,2,270,14
+Quận Bình Thủy,Quận,Bình Thủy,105.754377,10.070942,2,271,15
+Thành phố Long Xuyên,Thành phố,Long Xuyên,105.441,10.3835,2,272,16
+Thành phố Vũng Tàu,Thành phố,Vũng Tàu,107.092,10.3492,2,273,17
+Thành phố Bạc Liêu,Thành phố,Bạc Liêu,105.722,9.28796,2,274,18
+Thành phố Bắc Giang,Thành phố,Bắc Giang,106.192,21.2774,2,275,19
+Thành phố Bắc Kạn,Thành phố,Bắc Kạn,105.836,22.1485,2,276,20
+Thành phố Bắc Ninh,Thành phố,Bắc Ninh,106.071,21.1783,2,277,21
+Thành phố Bến Tre,Thành phố,Bến Tre,106.376,10.236,2,278,22
+Thành phố Thủ Dầu Một,Thành phố,Thủ Dầu Một,106.653,10.979,2,279,23
+Thành phố Quy Nhơn,Thành phố,Quy Nhơn,109.222,13.7754,2,280,24
+Thành phố Đồng Xoài,Thành phố,Đồng Xoài,106.902,11.5374,2,281,25
+Thành phố Phan Thiết,Thành phố,Phan Thiết,108.109,10.9282,2,282,26
+Thành phố Cà Mau,Thành phố,Cà Mau,105.151,9.17629,2,283,27
+Thành phố Cao Bằng,Thành phố,Cao Bằng,106.26,22.6652,2,284,28
+Thành phố Buôn Ma Thuột,Thành phố,Buôn Ma Thuột,108.045,12.68,2,285,29
+Thị xã Gia Nghĩa,Thị xã,Gia Nghĩa,107.687,12.004,2,286,30
+Thành phố Điện Biên Phủ,Thành phố,Điện Biên Phủ,103.015,21.3883,2,287,31
+Thành phố Biên Hòa,Thành phố,Biên Hòa,106.818,10.9463,2,288,32
+Thành phố Cao Lãnh,Thành phố,Cao Lãnh,105.636,10.457,2,289,33
+Thành phố Pleiku,Thành phố,Pleiku,108.014,13.9716,2,290,34
+Thành phố Hà Giang,Thành phố,Hà Giang,104.983,22.8289,2,291,35
+Thành phố Phủ Lý,Thành phố,Phủ Lý,105.914,20.5422,2,292,36
+Thành phố Hà Tĩnh,Thành phố,Hà Tĩnh,105.902,18.3449,2,293,37
+Thành phố Hải Dương,Thành phố,Hải Dương,106.333,20.9396,2,294,38
+Thị xã Ngã Bảy,Thị xã,Ngã Bảy,105.822,9.80981,2,295,39
+Thành phố Hòa Bình,Thành phố,Hòa Bình,105.343,20.8202,2,296,40
+Thành phố Hưng Yên,Thành phố,Hưng Yên,106.057,20.6551,2,297,41
+Thành phố Nha Trang,Thành phố,Nha Trang,109.189,12.2472,2,298,42
+Thành phố Rạch Giá,Thành phố,Rạch Giá,105.084,10.0115,2,299,43
+Thành phố Kon Tum,Thành phố,Kon Tum,107.999,14.3628,2,300,44
+Thành phố Lai Châu,Thành phố,Lai Châu,103.447862,22.398874,2,301,45
+Thành phố Đà Lạt,Thành phố,Đà Lạt,108.436,11.9433,2,302,46
+Thành phố Lạng Sơn,Thành phố,Lạng Sơn,106.759,21.8538,2,303,47
+Thành phố Lào Cai,Thành phố,Lào Cai,103.968,22.4983,2,304,48
+Thành phố Tân An,Thành phố,Tân An,106.413,10.5384,2,305,49
+Thành phố Nam Định,Thành phố,Nam Định,106.175,20.4283,2,306,50
+Thành phố Vinh,Thành phố,Vinh,105.683,18.6666,2,307,51
+Thành phố Ninh Bình,Thành phố,Ninh Bình,105.974,20.258,2,308,52
+Thành phố Phan Rang-Tháp Chàm,Thành phố,Phan Rang-Tháp Chàm,108.991,11.5663,2,309,53
+Thành phố Việt Trì,Thành phố,Việt Trì,105.388,21.3223,2,310,54
+Thành phố Tuy Hòa,Thành phố,Tuy Hòa,109.316,13.0958,2,311,55
+Thành phố Đồng Hới,Thành phố,Đồng Hới,106.622,17.4713,2,312,56
+Thành phố Hội An,Thành phố,Hội An,108.326,15.8849,2,313,57
+Thành phố Quảng Ngãi,Thành phố,Quảng Ngãi,108.804,15.1232,2,314,58
+Thành phố Hạ Long,Thành phố,Hạ Long,107.083,20.9515,2,315,59
+Thành phố Đông Hà,Thành phố,Đông Hà,107.1,16.8164,2,316,60
+Thành phố Sóc Trăng,Thành phố,Sóc Trăng,105.974,9.60433,2,317,61
+Thành phố Sơn La,Thành phố,Sơn La,103.909,21.3336,2,318,62
+Thành phố Tây Ninh,Thành phố,Tây Ninh,106.097,11.3136,2,319,63
+Thành phố Thái Bình,Thành phố,Thái Bình,106.34,20.4474,2,320,64
+Thành phố Thái Nguyên,Thành phố,Thái Nguyên,105.844,21.5942,2,321,65
+Thành phố Thanh Hóa,Thành phố,Thanh Hóa,105.78,19.8074,2,322,66
+Thành phố Huế,Thành phố,Huế,107.595,16.4632,2,323,67
+Thành phố Mỹ Tho,Thành phố,Mỹ Tho,106.367,10.3574,2,324,68
+Thành phố Trà Vinh,Thành phố,Trà Vinh,106.34,9.93775,2,325,69
+Thành phố Tuyên Quang,Thành phố,Tuyên Quang,105.228,21.7766,2,326,70
+Thành phố Vĩnh Long,Thành phố,Vĩnh Long,105.969,10.2559,2,327,71
+Thành phố Vĩnh Yên,Thành phố,Vĩnh Yên,105.593,21.3079,2,328,72
+Thành phố Yên Bái,Thành phố,Yên Bái,104.913,21.7231,2,329,73
+Quận Cầu Giấy,Quận,Cầu Giấy,105.800255,21.031477,2,523,11
+Quận 2,Quận,2,106.749559,10.79187,2,524,12
+Quận Hải An,Quận,Hải An,106.72001,20.83273,2,525,13
+Quận Hải Châu,Quận,Hải Châu,108.223063,16.06196,2,526,14
+Quận Cái Răng,Quận,Cái Răng,105.750535,10.000989,2,527,15
+Thành phố Châu Đốc,Thành phố,Châu Đốc,105.119,10.7112,2,528,16
+Thành phố Bà Rịa,Thành phố,Bà Rịa,107.17,10.494,2,529,17
+Thị xã Giá Rai,Thị xã,Giá Rai,105.458,9.23796,2,530,18
+Huyện Hiệp Hòa,Huyện,Hiệp Hòa,105.979,21.3552,2,531,19
+Huyện Ba Bể,Huyện,Ba Bể,105.73,22.4552,2,532,20
+Huyện Gia Bình,Huyện,Gia Bình,106.171,21.0567,2,533,21
+Huyện Ba Tri,Huyện,Ba Tri,106.594,10.0421,2,534,22
+Thị xã Bến Cát,Thị xã,Bến Cát,106.591,11.1527,2,535,23
+Thị xã An Nhơn,Thị xã,An Nhơn,109.11,13.8862,2,536,24
+Thị xã Bình Long,Thị xã,Bình Long,106.608,11.6511,2,537,25
+Thị xã La Gi,Thị xã,La Gi,107.751,10.6839,2,538,26
+Huyện Cái Nước,Huyện,Cái Nước,105.015,8.94511,2,539,27
+Huyện Bảo Lâm,Huyện,Bảo Lâm,105.493,22.8349,2,540,28
+Thị xã Buôn Hồ,Thị xã,Buôn Hồ,108.265,12.9152,2,541,29
+Huyện Cư Jút,Huyện,Cư Jút,107.894,12.5876,2,542,30
+Thị xã Mường Lay,Thị xã,Mường Lay,103.154105,22.038627,2,543,31
+Thị xã Long Khánh,Thị xã,Long Khánh,107.242,10.9287,2,544,32
+Thành phố Sa Đéc,Thành phố,Sa Đéc,105.767,10.2925,2,545,33
+Thị xã An Khê,Thị xã,An Khê,108.656,13.9526,2,546,34
+Huyện Bắc Mê,Huyện,Bắc Mê,105.312,22.7386,2,547,35
+Huyện Bình Lục,Huyện,Bình Lục,106.008,20.4906,2,548,36
+Thị xã Hồng Lĩnh,Thị xã,Hồng Lĩnh,105.706,18.5293,2,549,37
+Thành phố Chí Linh,Thành phố,Chí Linh,106.389,21.1105,2,550,38
+Thành phố Vị Thanh,Thành phố,Vị Thanh,105.467498,9.780431,2,551,39
+Huyện Cao Phong,Huyện,Cao Phong,105.324,20.7189,2,552,40
+Thị xã Mỹ Hào,Thị xã,Mỹ Hào,106.058,20.9338,2,553,41
+Thành phố Cam Ranh,Thành phố,Cam Ranh,109.146,11.917,2,554,42
+Thành phố Hà Tiên,Thành phố,Hà Tiên,104.488,10.3835,2,555,43
+Huyện Kon Plông,Huyện,Kon Plông,108.289,14.5986,2,556,44
+Huyện Mường Tè,Huyện,Mường Tè,102.802,22.3852,2,557,45
+Thành phố Bảo Lộc,Thành phố,Bảo Lộc,107.809,11.5466,2,558,46
+Huyện Bắc Sơn,Huyện,Bắc Sơn,106.319,21.9001,2,559,47
+Huyện Bắc Hà,Huyện,Bắc Hà,104.292,22.5384,2,560,48
+Thị xã Kiến Tường,Thị xã,Kiến Tường,105.940944,10.775166,2,561,49
+Huyện Giao Thủy,Huyện,Giao Thủy,106.445,20.2839,2,562,50
+Thị xã Cửa Lò,Thị xã,Cửa Lò,105.718,18.8182,2,563,51
+Thành phố Tam Điệp,Thành phố,Tam Điệp,105.914,20.1546,2,564,52
+Huyện Bác Ái,Huyện,Bác Ái,108.926,11.8555,2,565,53
+Thị xã Phú Thọ,Thị xã,Phú Thọ,105.223,21.3993,2,566,54
+Huyện Đông Hòa,Huyện,Đông Hòa,109.332,12.9913,2,567,55
+Thị xã Ba Đồn,Thị xã,Ba Đồn,106.424,17.7537,2,568,56
+Thành phố Tam Kỳ,Thành phố,Tam Kỳ,108.474,15.5772,2,569,57
+Huyện Ba Tơ,Huyện,Ba Tơ,108.733,14.7636,2,570,58
+Thành phố Móng Cái,Thành phố,Móng Cái,107.972,21.5261,2,571,59
+Thị xã Quảng Trị,Thị xã,Quảng Trị,107.191,16.7498,2,572,60
+Thị xã Vĩnh Châu,Thị xã,Vĩnh Châu,105.981,9.3241,2,573,61
+Huyện Bắc Yên,Huyện,Bắc Yên,104.434,21.2444,2,574,62
+Huyện Bến Cầu,Huyện,Bến Cầu,106.18,11.1109,2,575,63
+Huyện Hưng Hà,Huyện,Hưng Hà,106.226,20.5895,2,576,64
+Thành phố Sông Công,Thành phố,Sông Công,105.844,21.4662,2,577,65
+Thị xã Bỉm Sơn,Thị xã,Bỉm Sơn,105.857,20.0792,2,578,66
+Huyện A Lưới,Huyện,A Lưới,107.231,16.2741,2,579,67
+Thị xã Gò Công,Thị xã,Gò Công,106.675,10.361,2,580,68
+Thị xã Duyên Hải,Thị xã,Duyên Hải,106.496,9.63399,2,581,69
+Huyện Chiêm Hóa,Huyện,Chiêm Hóa,105.272,22.1431,2,582,70
+Thị xã Bình Minh,Thị xã,Bình Minh,105.821,10.0676,2,583,71
+Thành phố Phúc Yên,Thành phố,Phúc Yên,105.706,21.2379,2,584,72
+Thị xã Nghĩa Lộ,Thị xã,Nghĩa Lộ,104.509,21.6017,2,585,73
+Quận Hai Bà Trưng,Quận,Hai Bà Trưng,105.849559,21.010229,2,779,11
+Quận 3,Quận,3,106.686465,10.775168,2,780,12
+Quận Hồng Bàng,Quận,Hồng Bàng,106.683753,20.858258,2,781,13
+Quận Liên Chiểu,Quận,Liên Chiểu,108.15877,16.07328,2,782,14
+Quận Ninh Kiều,Quận,Ninh Kiều,105.78634,10.039113,2,783,15
+Thị xã Tân Châu,Thị xã,Tân Châu,105.248,10.7985,2,784,16
+Huyện Châu Đức,Huyện,Châu Đức,107.246,10.6471,2,785,17
+Huyện Hồng Dân,Huyện,Hồng Dân,105.449,9.56044,2,786,18
+Huyện Lạng Giang,Huyện,Lạng Giang,106.259,21.3506,2,787,19
+Huyện Bạch Thông,Huyện,Bạch Thông,105.881,22.2701,2,788,20
+Huyện Lương Tài,Huyện,Lương Tài,106.202,21.0182,2,789,21
+Huyện Bình Đại,Huyện,Bình Đại,106.693,10.1869,2,790,22
+Thị xã Tân Uyên,Thị xã,Tân Uyên,106.798,11.0618,2,791,23
+Huyện An Lão,Huyện,An Lão,108.891,14.6121,2,792,24
+Thị xã Phước Long,Thị xã,Phước Long,106.997,11.8469,2,793,25
+Huyện Bắc Bình,Huyện,Bắc Bình,108.509,11.221,2,794,26
+Huyện Đầm Dơi,Huyện,Đầm Dơi,105.198,8.99363,2,795,27
+Huyện Bảo Lạc,Huyện,Bảo Lạc,105.681,22.9487,2,796,28
+Huyện Buôn Đôn,Huyện,Buôn Đôn,107.894,12.8113,2,797,29
+Huyện Krông Nô,Huyện,Krông Nô,107.862,12.4573,2,798,30
+Huyện Mường Ảng,Huyện,Mường Ảng,103.223,21.5196,2,799,31
+Huyện Cẩm Mỹ,Huyện,Cẩm Mỹ,107.229,10.8156,2,800,32
+Thị xã Hồng Ngự,Thị xã,Hồng Ngự,105.343,10.807,2,801,33
+Thị xã AYun Pa,Thị xã,AYun Pa,108.438,13.4007,2,802,34
+Huyện Bắc Quang,Huyện,Bắc Quang,104.809,22.4144,2,803,35
+Huyện Duy Tiên,Huyện,Duy Tiên,105.988,20.6423,2,804,36
+Thị xã Kỳ Anh,Thị xã,Kỳ Anh,106.3,18.066,2,805,37
+Huyện Kinh Môn,Huyện,Kinh Môn,106.553,20.9903,2,806,38
+Thị xã Long Mỹ,Thị xã,Long Mỹ,105.572,9.67994,2,807,39
+Huyện Kim Bôi,Huyện,Kim Bôi,105.535,20.6742,2,808,40
+Huyện Ân Thi,Huyện,Ân Thi,106.088,20.8129,2,809,41
+Thị xã Ninh Hòa,Thị xã,Ninh Hòa,109.126,12.4914,2,810,42
+Huyện An Biên,Huyện,An Biên,105.065,9.81666,2,811,43
+Huyện Kon Rẫy,Huyện,Kon Rẫy,108.247,14.5075,2,812,44
+Huyện Phong Thổ,Huyện,Phong Thổ,103.292,22.5435,2,813,45
+Huyện Bảo Lâm,Huyện,Bảo Lâm,107.836,11.628,2,814,46
+Huyện Bình Gia,Huyện,Bình Gia,106.367,21.9601,2,815,47
+Huyện Bảo Thắng,Huyện,Bảo Thắng,104.186,22.3203,2,816,48
+Huyện Bến Lức,Huyện,Bến Lức,106.488,10.6382,2,817,49
+Huyện Hải Hậu,Huyện,Hải Hậu,106.295,20.1968,2,818,50
+Thị xã Thái Hòa,Thị xã,Thái Hòa,105.43,19.3219,2,819,51
+Huyện Gia Viễn,Huyện,Gia Viễn,105.837,20.347,2,820,52
+Huyện Ninh Hải,Huyện,Ninh Hải,109.035,11.5918,2,821,53
+Huyện Cẩm Khê,Huyện,Cẩm Khê,105.133,21.4219,2,822,54
+Huyện Đồng Xuân,Huyện,Đồng Xuân,109.107,13.3816,2,823,55
+Huyện Bố Trạch,Huyện,Bố Trạch,106.535,17.5824,2,824,56
+Thị xã Điện Bàn,Thị xã,Điện Bàn,108.255,15.8888,2,825,57
+Huyện Bình Sơn,Huyện,Bình Sơn,108.761,15.2965,2,826,58
+Thành phố Cẩm Phả,Thành phố,Cẩm Phả,107.273,21.0093,2,827,59
+Huyện Cam Lộ,Huyện,Cam Lộ,106.993,16.8071,2,828,60
+Thị xã Ngã Năm,Thị xã,Ngã Năm,105.599,9.56546,2,829,61
+Huyện Mai Sơn,Huyện,Mai Sơn,104.1,21.2013,2,830,62
+Huyện Châu Thành,Huyện,Châu Thành,106.03,11.3119,2,831,63
+Huyện Kiến Xương,Huyện,Kiến Xương,106.443,20.3898,2,832,64
+Thị xã Phổ Yên,Thị xã,Phổ Yên,105.872,21.4143,2,833,65
+Thành phố Sầm Sơn,Thành phố,Sầm Sơn,105.901,19.7369,2,834,66
+Thị xã Hương Thủy,Thị xã,Hương Thủy,107.682,16.4055,2,835,67
+Thị xã Cai Lậy,Thị xã,Cai Lậy,106.121,10.4054,2,836,68
+Huyện Cầu Kè,Huyện,Cầu Kè,106.057,9.87208,2,837,69
+Huyện Hàm Yên,Huyện,Hàm Yên,105.037,22.0682,2,838,70
+Huyện Bình Tân,Huyện,Bình Tân,105.754,10.1014,2,839,71
+Huyện Bình Xuyên,Huyện,Bình Xuyên,105.647,21.2774,2,840,72
+Huyện Lục Yên,Huyện,Lục Yên,104.769,22.112,2,841,73
+Quận Hà Đông,Quận,Hà Đông,105.77101,20.964554,2,1035,11
+Quận 4,Quận,4,106.704633,10.76416,2,1036,12
+Quận Kiến An,Quận,Kiến An,106.62565,20.807423,2,1037,13
+Quận Ngũ Hành Sơn,Quận,Ngũ Hành Sơn,108.253909,16.016464,2,1038,14
+Quận Ô Môn,Quận,Ô Môn,105.622961,10.10928,2,1039,15
+Huyện An Phú,Huyện,An Phú,105.093,10.8142,2,1040,16
+Huyện Côn Đảo,Huyện,Côn Đảo,106.6,8.69696,2,1041,17
+Huyện Hòa Bình,Huyện,Hòa Bình,105.635,9.28444,2,1042,18
+Huyện Lục Nam,Huyện,Lục Nam,106.391,21.3091,2,1043,19
+Huyện Chợ Mới,Huyện,Chợ Mới,105.782,21.8858,2,1044,20
+Huyện Quế Võ,Huyện,Quế Võ,106.152,21.1535,2,1045,21
+Huyện Châu Thành,Huyện,Châu Thành,106.36,10.3094,2,1046,22
+Thành phố Thuận An,Thành phố,Thuận An,106.701,10.9031,2,1047,23
+Huyện Hoài Ân,Huyện,Hoài Ân,108.965,14.3629,2,1048,24
+Huyện Bù Đăng,Huyện,Bù Đăng,107.244,11.8126,2,1049,25
+Huyện Hàm Tân,Huyện,Hàm Tân,107.634,10.842,2,1050,26
+Huyện Năm Căn,Huyện,Năm Căn,104.994,8.75988,2,1051,27
+Huyện Hạ Lang,Huyện,Hạ Lang,106.67,22.6874,2,1052,28
+Huyện Cư Kuin,Huyện,Cư Kuin,108.166,12.5725,2,1053,29
+Huyện Đắk Glong,Huyện,Đắk Glong,107.797,11.9093,2,1054,30
+Huyện Mường Chà,Huyện,Mường Chà,103.091,21.7581,2,1055,31
+Huyện Long Thành,Huyện,Long Thành,106.949,10.7912,2,1056,32
+Huyện Cao Lãnh,Huyện,Cao Lãnh,105.696,10.4449,2,1057,33
+Huyện Chư Păh,Huyện,Chư Păh,107.971,14.1004,2,1058,34
+Huyện Hoàng Su Phì,Huyện,Hoàng Su Phì,104.68,22.7434,2,1059,35
+Huyện Kim Bảng,Huyện,Kim Bảng,105.871,20.5798,2,1060,36
+Huyện Cẩm Xuyên,Huyện,Cẩm Xuyên,105.999,18.2509,2,1061,37
+Huyện Bình Giang,Huyện,Bình Giang,106.155,20.9043,2,1062,38
+Huyện Châu Thành,Huyện,Châu Thành,105.808,9.92124,2,1063,39
+Huyện Kỳ Sơn,Huyện,Kỳ Sơn,105.35,20.8858,2,1064,40
+Huyện Khoái Châu,Huyện,Khoái Châu,105.977,20.8399,2,1065,41
+Huyện Cam Lâm,Huyện,Cam Lâm,109.161,12.0537,2,1066,42
+Huyện An Minh,Huyện,An Minh,104.947,9.61385,2,1067,43
+Huyện Đắk Glei,Huyện,Đắk Glei,107.741,15.0758,2,1068,44
+Huyện Sìn Hồ,Huyện,Sìn Hồ,103.250888,22.35959,2,1069,45
+Huyện Cát Tiên,Huyện,Cát Tiên,107.365,11.5803,2,1070,46
+Huyện Cao Lộc,Huyện,Cao Lộc,106.77,21.8668,2,1071,47
+Huyện Bảo Yên,Huyện,Bảo Yên,104.475,22.2365,2,1072,48
+Huyện Cần Giuộc,Huyện,Cần Giuộc,106.671,10.6086,2,1073,49
+Huyện Mỹ Lộc,Huyện,Mỹ Lộc,106.104,20.4404,2,1074,50
+Thị xã Hoàng Mai,Thị xã,Hoàng Mai,105.710468,19.250552,2,1075,51
+Huyện Hoa Lư,Huyện,Hoa Lư,105.949,20.2983,2,1076,52
+Huyện Ninh Phước,Huyện,Ninh Phước,108.927,11.5251,2,1077,53
+Huyện Hạ Hòa,Huyện,Hạ Hòa,105.004,21.5613,2,1078,54
+Huyện Phú Hòa,Huyện,Phú Hòa,109.209,13.0226,2,1079,55
+Huyện Lệ Thủy,Huyện,Lệ Thủy,106.787,17.2247,2,1080,56
+Huyện Bắc Trà My,Huyện,Bắc Trà My,108.221,15.3405,2,1081,57
+Huyện Minh Long,Huyện,Minh Long,108.703,14.9337,2,1082,58
+Thành phố Uông Bí,Thành phố,Uông Bí,106.772,21.0344,2,1083,59
+Huyện Gio Linh,Huyện,Gio Linh,107.077,16.9268,2,1084,60
+Huyện Cù Lao Dung,Huyện,Cù Lao Dung,106.149,9.66368,2,1085,61
+Huyện Mộc Châu,Huyện,Mộc Châu,104.642,20.8459,2,1086,62
+Huyện Dương Minh Châu,Huyện,Dương Minh Châu,106.226,11.3821,2,1087,63
+Huyện Đông Hưng,Huyện,Đông Hưng,106.355,20.5566,2,1088,64
+Huyện Đại Từ,Huyện,Đại Từ,105.639,21.6322,2,1089,65
+Huyện Bá Thước,Huyện,Bá Thước,105.219,20.3527,2,1090,66
+Thị xã Hương Trà,Thị xã,Hương Trà,107.477,16.5227,2,1091,67
+Huyện Cái Bè,Huyện,Cái Bè,106.033,10.3356,2,1092,68
+Huyện Cầu Ngang,Huyện,Cầu Ngang,106.452,9.79467,2,1093,69
+Huyện Na Hang,Huyện,Na Hang,105.382,22.3495,2,1094,70
+Huyện Long Hồ,Huyện,Long Hồ,106.012,10.1923,2,1095,71
+Huyện Lập Thạch,Huyện,Lập Thạch,105.464,21.4141,2,1096,72
+Huyện Mù Cang Chải,Huyện,Mù Cang Chải,104.089,21.8506,2,1097,73
+Quận Hoàn Kiếm,Quận,Hoàn Kiếm,105.842117,21.02388,2,1291,11
+Quận 5,Quận,5,106.666798,10.75609,2,1292,12
+Quận Lê Chân,Quận,Lê Chân,106.681071,20.849232,2,1293,13
+Quận Sơn Trà,Quận,Sơn Trà,108.232876,16.06084,2,1294,14
+Huyện Cờ Đỏ,Huyện,Cờ Đỏ,105.429617,10.093783,2,1295,15
+Huyện Châu Phú,Huyện,Châu Phú,105.238,10.5747,2,1296,16
+Huyện Long Điền,Huyện,Long Điền,107.213,10.4853,2,1297,17
+Huyện Đông Hải,Huyện,Đông Hải,105.421,9.02447,2,1298,18
+Huyện Lục Ngạn,Huyện,Lục Ngạn,106.566,21.3724,2,1299,19
+Huyện Chợ Đồn,Huyện,Chợ Đồn,105.594,22.1596,2,1300,20
+Huyện Thuận Thành,Huyện,Thuận Thành,106.086,21.0599,2,1301,21
+Huyện Chợ Lách,Huyện,Chợ Lách,106.12,10.2598,2,1302,22
+Thành phố Dĩ An,Thành phố,Dĩ An,106.769,10.9068,2,1303,23
+Huyện Hoài Nhơn,Huyện,Hoài Nhơn,109.017,14.4305,2,1304,24
+Huyện Bù Đốp,Huyện,Bù Đốp,106.802,11.9833,2,1305,25
+Huyện Hàm Thuận Bắc,Huyện,Hàm Thuận Bắc,108.131,11.0725,2,1306,26
+Huyện Ngọc Hiển,Huyện,Ngọc Hiển,104.793,8.63266,2,1307,27
+Huyện Hà Quảng,Huyện,Hà Quảng,106.077,22.9017,2,1308,28
+Huyện Cư M'Gar,Huyện,Cư M'Gar,108.077,12.8177,2,1309,29
+Huyện Đắk Mil,Huyện,Đắk Mil,107.622,12.4487,2,1310,30
+Huyện Mường Nhé,Huyện,Mường Nhé,102.55492,22.149224,2,1311,31
+Huyện Nhơn Trạch,Huyện,Nhơn Trạch,106.885,10.724,2,1312,32
+Huyện Châu Thành,Huyện,Châu Thành,105.87,10.2595,2,1313,33
+Huyện Chư Prông,Huyện,Chư Prông,107.887,13.7562,2,1314,34
+Huyện Mèo Vạc,Huyện,Mèo Vạc,105.41,23.1629,2,1315,35
+Huyện Lý Nhân,Huyện,Lý Nhân,106.03,20.5598,2,1316,36
+Huyện Can Lộc,Huyện,Can Lộc,105.779,18.4511,2,1317,37
+Huyện Cẩm Giàng,Huyện,Cẩm Giàng,106.249,20.9332,2,1318,38
+Huyện Châu Thành A,Huyện,Châu Thành A,105.632,9.9257,2,1319,39
+Huyện Lạc Sơn,Huyện,Lạc Sơn,105.444,20.4641,2,1320,40
+Huyện Kim Động,Huyện,Kim Động,106.059,20.74,2,1321,41
+Huyện Diên Khánh,Huyện,Diên Khánh,109.093,12.2554,2,1322,42
+Huyện Châu Thành,Huyện,Châu Thành,105.16,9.90363,2,1323,43
+Huyện Đắk Hà,Huyện,Đắk Hà,107.924,14.4971,2,1324,44
+Huyện Tân Uyên,Huyện,Tân Uyên,103.755,22.1735,2,1325,45
+Huyện Di Linh,Huyện,Di Linh,108.074,11.5779,2,1326,46
+Huyện Chi Lăng,Huyện,Chi Lăng,106.579,21.6581,2,1327,47
+Huyện Bát Xát,Huyện,Bát Xát,103.89,22.5419,2,1328,48
+Huyện Cần Đước,Huyện,Cần Đước,106.603,10.5063,2,1329,49
+Huyện Nam Trực,Huyện,Nam Trực,106.177,20.3305,2,1330,50
+Huyện Anh Sơn,Huyện,Anh Sơn,105.086,18.9306,2,1331,51
+Huyện Kim Sơn,Huyện,Kim Sơn,106.084,20.0901,2,1332,52
+Huyện Ninh Sơn,Huyện,Ninh Sơn,108.785,11.7761,2,1333,53
+Huyện Lâm Thao,Huyện,Lâm Thao,105.286,21.3189,2,1334,54
+Thị xã Sông Cầu,Thị xã,Sông Cầu,109.221,13.4542,2,1335,55
+Huyện Minh Hóa,Huyện,Minh Hóa,105.969,17.8077,2,1336,56
+Huyện Duy Xuyên,Huyện,Duy Xuyên,108.258,15.8279,2,1337,57
+Huyện Mộ Đức,Huyện,Mộ Đức,108.887,14.9556,2,1338,58
+Thị xã Quảng Yên,Thị xã,Quảng Yên,106.802,20.9389,2,1339,59
+Huyện Hải Lăng,Huyện,Hải Lăng,107.244,16.6907,2,1340,60
+Huyện Kế Sách,Huyện,Kế Sách,105.985,9.76666,2,1341,61
+Huyện Mường La,Huyện,Mường La,104.028,21.5175,2,1342,62
+Huyện Gò Dầu,Huyện,Gò Dầu,106.266,11.0826,2,1343,63
+Huyện Quỳnh Phụ,Huyện,Quỳnh Phụ,106.324,20.6548,2,1344,64
+Huyện Đồng Hỷ,Huyện,Đồng Hỷ,105.845641,21.637295,2,1345,65
+Huyện Cẩm Thủy,Huyện,Cẩm Thủy,105.476,20.2143,2,1346,66
+Huyện Nam Đông,Huyện,Nam Đông,107.719,16.1636,2,1347,67
+Huyện Châu Thành,Huyện,Châu Thành,106.342,10.4468,2,1348,68
+Huyện Càng Long,Huyện,Càng Long,106.206,9.99616,2,1349,69
+Huyện Sơn Dương,Huyện,Sơn Dương,105.401,21.6982,2,1350,70
+Huyện Mang Thít,Huyện,Mang Thít,106.11,10.1738,2,1351,71
+Huyện Tam Dương,Huyện,Tam Dương,105.541,21.3796,2,1352,72
+Huyện Trấn Yên,Huyện,Trấn Yên,104.829,21.7527,2,1353,73
+Quận Hoàng Mai,Quận,Hoàng Mai,105.849063,20.968078,2,1547,11
+Quận 6,Quận,6,106.649469,10.746747,2,1548,12
+Quận Ngô Quyền,Quận,Ngô Quyền,106.693516,20.861622,2,1549,13
+Quận Thanh Khê,Quận,Thanh Khê,108.182212,16.067058,2,1550,14
+Huyện Phong Điền,Huyện,Phong Điền,105.664062,10.000183,2,1551,15
+Huyện Châu Thành,Huyện,Châu Thành,105.389,10.4432,2,1552,16
+Huyện Đất Đỏ,Huyện,Đất Đỏ,107.27,10.488,2,1553,17
+Huyện Phước Long,Huyện,Phước Long,105.46,9.4373,2,1554,18
+Huyện Sơn Động,Huyện,Sơn Động,106.849,21.335,2,1555,19
+Huyện Na Rì,Huyện,Na Rì,106.184,22.2371,2,1556,20
+Huyện Tiên Du,Huyện,Tiên Du,106.019,21.1411,2,1557,21
+Huyện Giồng Trôm,Huyện,Giồng Trôm,106.506,10.1534,2,1558,22
+Huyện Dầu Tiếng,Huyện,Dầu Tiếng,106.367,11.2943,2,1559,23
+Huyện Phù Cát,Huyện,Phù Cát,109.059,14.002,2,1560,24
+Huyện Chơn Thành,Huyện,Chơn Thành,106.616,11.4168,2,1561,25
+Huyện Hàm Thuận Nam,Huyện,Hàm Thuận Nam,107.879,10.8489,2,1562,26
+Huyện Phú Tân,Huyện,Phú Tân,104.811,8.85819,2,1563,27
+Huyện Hòa An,Huyện,Hòa An,106.156,22.7362,2,1564,28
+Huyện Ea H'Leo,Huyện,Ea H'Leo,108.209,13.2054,2,1565,29
+Huyện Đắk R'Lấp,Huyện,Đắk R'Lấp,107.512,11.9967,2,1566,30
+Huyện Điện Biên,Huyện,Điện Biên,103.006168,21.287861,2,1567,31
+Huyện Định Quán,Huyện,Định Quán,107.358,11.2025,2,1568,32
+Huyện Hồng Ngự,Huyện,Hồng Ngự,105.247636,10.813073,2,1569,33
+Huyện Chư Sê,Huyện,Chư Sê,108.076,13.6977,2,1570,34
+Huyện Đồng Văn,Huyện,Đồng Văn,105.363,23.278,2,1571,35
+Huyện Thanh Liêm,Huyện,Thanh Liêm,105.919,20.4993,2,1572,36
+Huyện Hương Khê,Huyện,Hương Khê,105.7,18.175,2,1573,37
+Huyện Gia Lộc,Huyện,Gia Lộc,106.3,20.8683,2,1574,38
+Huyện Phụng Hiệp,Huyện,Phụng Hiệp,105.735,9.77902,2,1575,39
+Huyện Lạc Thủy,Huyện,Lạc Thủy,105.777,20.491,2,1576,40
+Huyện Phù Cừ,Huyện,Phù Cừ,106.178,20.7302,2,1577,41
+Huyện Khánh Sơn,Huyện,Khánh Sơn,108.947,12.0057,2,1578,42
+Huyện Giồng Riềng,Huyện,Giồng Riềng,105.314,9.90944,2,1579,43
+Huyện Đắk Tô,Huyện,Đắk Tô,107.844,14.6483,2,1580,44
+Huyện Tam Đường,Huyện,Tam Đường,103.623,22.3228,2,1581,45
+Huyện Lâm Hà,Huyện,Lâm Hà,108.243,11.7889,2,1582,46
+Huyện Hữu Lũng,Huyện,Hữu Lũng,106.345,21.5059,2,1583,47
+Huyện Mường Khương,Huyện,Mường Khương,104.121,22.7616,2,1584,48
+Huyện Châu Thành,Huyện,Châu Thành,106.467,10.4493,2,1585,49
+Huyện Nghĩa Hưng,Huyện,Nghĩa Hưng,106.181,20.2169,2,1586,50
+Huyện Con Cuông,Huyện,Con Cuông,104.883,19.0507,2,1587,51
+Huyện Nho Quan,Huyện,Nho Quan,105.753,20.3223,2,1588,52
+Huyện Thuận Bắc,Huyện,Thuận Bắc,109.073,11.7504,2,1589,53
+Huyện Đoan Hùng,Huyện,Đoan Hùng,105.185,21.6241,2,1590,54
+Huyện Sông Hinh,Huyện,Sông Hinh,108.897,12.9771,2,1591,55
+Huyện Quảng Ninh,Huyện,Quảng Ninh,106.641,17.404,2,1592,56
+Huyện Hiệp Đức,Huyện,Hiệp Đức,108.114,15.5824,2,1593,57
+Huyện Lý Sơn,Huyện,Lý Sơn,109.112,15.3878,2,1594,58
+Thị xã Đông Triều,Thị xã,Đông Triều,106.514,21.0821,2,1595,59
+Huyện Hướng Hóa,Huyện,Hướng Hóa,106.738,16.6279,2,1596,60
+Huyện Long Phú,Huyện,Long Phú,106.125,9.60868,2,1597,61
+Huyện Phù Yên,Huyện,Phù Yên,104.645,21.2635,2,1598,62
+Huyện Hòa Thành,Huyện,Hòa Thành,106.131,11.2872,2,1599,63
+Huyện Thái Thụy,Huyện,Thái Thụy,106.566,20.5631,2,1600,64
+Huyện Định Hóa,Huyện,Định Hóa,105.642,21.907,2,1601,65
+Huyện Hậu Lộc,Huyện,Hậu Lộc,105.885,19.9141,2,1602,66
+Huyện Phong Điền,Huyện,Phong Điền,107.362,16.5864,2,1603,67
+Huyện Chợ Gạo,Huyện,Chợ Gạo,106.464,10.3498,2,1604,68
+Huyện Châu Thành,Huyện,Châu Thành,106.347,9.87255,2,1605,69
+Huyện Yên Sơn,Huyện,Yên Sơn,105.16407,21.850059,2,1606,70
+Huyện Tam Bình,Huyện,Tam Bình,105.999,10.0466,2,1607,71
+Huyện Tam Đảo,Huyện,Tam Đảo,105.646,21.4563,2,1608,72
+Huyện Trạm Tấu,Huyện,Trạm Tấu,104.379,21.4672,2,1609,73
+Quận Long Biên,Quận,Long Biên,105.889214,21.055625,2,1803,11
+Quận 7,Quận,7,106.736996,10.711971,2,1804,12
+Quận Đồ Sơn,Quận,Đồ Sơn,106.782764,20.715802,2,1805,13
+Huyện Hòa Vang,Huyện,Hòa Vang,108.139168,15.988552,2,1806,14
+Quận Thốt Nốt,Quận,Thốt Nốt,105.531705,10.270768,2,1807,15
+Huyện Chợ Mới,Huyện,Chợ Mới,105.4,10.55,2,1808,16
+Thị xã Phú Mỹ,Thị xã,Phú Mỹ,107.055,10.6053,2,1809,17
+Huyện Vĩnh Lợi,Huyện,Vĩnh Lợi,105.695,9.3537,2,1810,18
+Huyện Tân Yên,Huyện,Tân Yên,106.127,21.3873,2,1811,19
+Huyện Ngân Sơn,Huyện,Ngân Sơn,105.997,22.4311,2,1812,20
+Thị xã Từ Sơn,Thị xã,Từ Sơn,105.955,21.1154,2,1813,21
+Huyện Mỏ Cày Nam,Huyện,Mỏ Cày Nam,106.333,10.1288,2,1814,22
+Huyện Phú Giáo,Huyện,Phú Giáo,106.794,11.2895,2,1815,23
+Huyện Phù Mỹ,Huyện,Phù Mỹ,109.05,14.1716,2,1816,24
+Huyện Lộc Ninh,Huyện,Lộc Ninh,106.591,11.8464,2,1817,25
+Huyện Phú Quý,Huyện,Phú Quý,108.94,10.5475,2,1818,26
+Huyện Thới Bình,Huyện,Thới Bình,105.09,9.34736,2,1819,27
+Huyện Nguyên Bình,Huyện,Nguyên Bình,105.96,22.65,2,1820,28
+Huyện Ea Kar,Huyện,Ea Kar,108.449,12.8091,2,1821,29
+Huyện Đắk Song,Huyện,Đắk Song,107.61,12.255,2,1822,30
+Huyện Điện Biên Đông,Huyện,Điện Biên Đông,103.219,21.2958,2,1823,31
+Huyện Tân Phú,Huyện,Tân Phú,107.437,11.2708,2,1824,32
+Huyện Lấp Vò,Huyện,Lấp Vò,105.521,10.3615,2,1825,33
+Huyện Ia Grai,Huyện,Ia Grai,107.844,13.9619,2,1826,34
+Huyện Quang Bình,Huyện,Quang Bình,104.579,22.4093,2,1827,35
+Huyện Hương Sơn,Huyện,Hương Sơn,105.424,18.5118,2,1829,37
+Huyện Kim Thành,Huyện,Kim Thành,106.511,20.9634,2,1830,38
+Huyện Vị Thủy,Huyện,Vị Thủy,105.534,9.75108,2,1831,39
+Huyện Lương Sơn,Huyện,Lương Sơn,105.526,20.8711,2,1832,40
+Huyện Tiên Lữ,Huyện,Tiên Lữ,106.118,20.7001,2,1833,41
+Huyện Khánh Vĩnh,Huyện,Khánh Vĩnh,108.907,12.281,2,1834,42
+Huyện Gò Quao,Huyện,Gò Quao,105.277,9.7278,2,1835,43
+Huyện Ngọc Hồi,Huyện,Ngọc Hồi,107.687,14.7057,2,1836,44
+Huyện Than Uyên,Huyện,Than Uyên,103.883,21.9513,2,1837,45
+Huyện Lạc Dương,Huyện,Lạc Dương,108.42,12.01,2,1838,46
+Huyện Lộc Bình,Huyện,Lộc Bình,106.92,21.7614,2,1839,47
+Thị xã Sa Pa,Thị xã,Sa Pa,103.845,22.337,2,1840,48
+Huyện Mộc Hóa,Huyện,Mộc Hóa,106.005643,10.690469,2,1841,49
+Huyện Trực Ninh,Huyện,Trực Ninh,106.266,20.3205,2,1842,50
+Huyện Diễn Châu,Huyện,Diễn Châu,105.6,18.9773,2,1843,51
+Huyện Yên Khánh,Huyện,Yên Khánh,106.064,20.1813,2,1844,52
+Huyện Thuận Nam,Huyện,Thuận Nam,108.904,11.415,2,1845,53
+Huyện Phù Ninh,Huyện,Phù Ninh,105.313,21.4071,2,1846,54
+Huyện Sơn Hòa,Huyện,Sơn Hòa,108.975,13.0501,2,1847,55
+Huyện Quảng Trạch,Huyện,Quảng Trạch,106.436059,17.858105,2,1848,56
+Huyện Đại Lộc,Huyện,Đại Lộc,108.114,15.8828,2,1849,57
+Huyện Nghĩa Hành,Huyện,Nghĩa Hành,108.777,15.0462,2,1850,58
+Huyện Ba Chẽ,Huyện,Ba Chẽ,107.283,21.2738,2,1851,59
+Huyện Đa Krông,Huyện,Đa Krông,106.884,16.6869,2,1852,60
+Huyện Mỹ Tú,Huyện,Mỹ Tú,105.813,9.63537,2,1853,61
+Huyện Quỳnh Nhai,Huyện,Quỳnh Nhai,103.623318,21.658478,2,1854,62
+Huyện Tân Biên,Huyện,Tân Biên,106.005,11.5432,2,1855,63
+Huyện Tiền Hải,Huyện,Tiền Hải,106.504,20.4053,2,1856,64
+Huyện Phú Bình,Huyện,Phú Bình,105.979,21.4603,2,1857,65
+Huyện Hà Trung,Huyện,Hà Trung,105.845,19.989,2,1858,66
+Huyện Phú Lộc,Huyện,Phú Lộc,107.861,16.2789,2,1859,67
+Huyện Gò Công Đông,Huyện,Gò Công Đông,106.716,10.3171,2,1860,68
+Huyện Tiểu Cần,Huyện,Tiểu Cần,106.19,9.81371,2,1861,69
+Huyện Lâm Bình,Huyện,Lâm Bình,105.197,22.358,2,1862,70
+Huyện Trà Ôn,Huyện,Trà Ôn,105.921,9.96467,2,1863,71
+Huyện Vĩnh Tường,Huyện,Vĩnh Tường,105.514,21.2169,2,1864,72
+Huyện Văn Chấn,Huyện,Văn Chấn,104.587,21.5644,2,1865,73
+Quận Đống Đa,Quận,Đống Đa,105.828788,21.016354,2,2059,11
+Quận 8,Quận,8,106.666015,10.740566,2,2060,12
+Huyện An Dương,Huyện,An Dương,106.613951,20.862173,2,2061,13
+Huyện Hoàng Sa,Huyện,Hoàng Sa,111.633,16.4679,2,2062,14
+Huyện Vĩnh Thạnh,Huyện,Vĩnh Thạnh,105.415181,10.25005,2,2063,15
+Huyện Phú Tân,Huyện,Phú Tân,105.357,10.5838,2,2064,16
+Huyện Xuyên Mộc,Huyện,Xuyên Mộc,107.399,10.535,2,2065,17
+Huyện Việt Yên,Huyện,Việt Yên,106.101,21.2733,2,2067,19
+Huyện Pác Nặm,Huyện,Pác Nặm,105.672,22.6028,2,2068,20
+Huyện Yên Phong,Huyện,Yên Phong,105.953,21.1969,2,2069,21
+Huyện Thạnh Phú,Huyện,Thạnh Phú,106.517,9.94851,2,2070,22
+Huyện Bàu Bàng,Huyện,Bàu Bàng,106.637552,11.242586,2,2071,23
+Huyện Tây Sơn,Huyện,Tây Sơn,108.919,13.9092,2,2072,24
+Huyện Đồng Phú,Huyện,Đồng Phú,106.87,11.4479,2,2073,25
+Huyện Đức Linh,Huyện,Đức Linh,107.56,11.1857,2,2074,26
+Huyện Trần Văn Thời,Huyện,Trần Văn Thời,104.967,9.07139,2,2075,27
+Huyện Phục Hòa,Huyện,Phục Hòa,106.514,22.5313,2,2076,28
+Huyện Ea Súp,Huyện,Ea Súp,107.885,13.066,2,2077,29
+Huyện Tuy Đức,Huyện,Tuy Đức,107.463,12.212,2,2078,30
+Huyện Tuần Giáo,Huyện,Tuần Giáo,103.422,21.5913,2,2079,31
+Huyện Thống Nhất,Huyện,Thống Nhất,107.142,10.9506,2,2080,32
+Huyện Lai Vung,Huyện,Lai Vung,105.66,10.2872,2,2081,33
+Huyện Ia Pa,Huyện,Ia Pa,108.464,13.5122,2,2082,34
+Huyện Quản Bạ,Huyện,Quản Bạ,104.991,23.0645,2,2083,35
+Huyện Lộc Hà,Huyện,Lộc Hà,105.892,18.4349,2,2085,37
+Huyện Nam Sách,Huyện,Nam Sách,106.336,21.0033,2,2086,38
+Huyện Long Mỹ,Huyện,Long Mỹ,105.464846,9.665223,2,2087,39
+Huyện Mai Châu,Huyện,Mai Châu,105.083,20.6604,2,2088,40
+Huyện Văn Giang,Huyện,Văn Giang,105.942,20.9457,2,2089,41
+Huyện Trường Sa,Huyện,Trường Sa,114.15,9.33105,2,2090,42
+Huyện Hòn Đất,Huyện,Hòn Đất,104.932,10.186,2,2091,43
+Huyện Sa Thầy,Huyện,Sa Thầy,107.794,14.4099,2,2092,44
+Huyện Nậm Nhùn,Huyện,Nậm Nhùn,103.021343,22.144177,2,2093,45
+Huyện Đạ Huoai,Huyện,Đạ Huoai,107.534,11.3851,2,2094,46
+Huyện Đình Lập,Huyện,Đình Lập,107.099,21.5461,2,2095,47
+Huyện Si Ma Cai,Huyện,Si Ma Cai,104.285,22.6995,2,2096,48
+Huyện Đức Hòa,Huyện,Đức Hòa,106.395,10.8945,2,2097,49
+Huyện Vụ Bản,Huyện,Vụ Bản,106.086,20.3335,2,2098,50
+Huyện Hưng Nguyên,Huyện,Hưng Nguyên,105.632,18.6706,2,2099,51
+Huyện Yên Mô,Huyện,Yên Mô,106.007,20.1612,2,2100,52
+Huyện Tân Sơn,Huyện,Tân Sơn,105.065,21.1655,2,2102,54
+Huyện Tây Hòa,Huyện,Tây Hòa,109.24,12.9974,2,2103,55
+Huyện Tuyên Hóa,Huyện,Tuyên Hóa,106.026,17.8842,2,2104,56
+Huyện Nam Giang,Huyện,Nam Giang,107.837,15.7532,2,2105,57
+Huyện Đức Phổ,Huyện,Đức Phổ,108.958,14.8094,2,2106,58
+Huyện Bình Liêu,Huyện,Bình Liêu,107.401,21.527,2,2107,59
+Huyện Cồn Cỏ,Huyện,Cồn Cỏ,107.334,17.159,2,2108,60
+Huyện Mỹ Xuyên,Huyện,Mỹ Xuyên,105.988,9.56049,2,2109,61
+Huyện Sông Mã,Huyện,Sông Mã,103.751,21.0496,2,2110,62
+Huyện Tân Châu,Huyện,Tân Châu,106.162,11.5537,2,2111,63
+Huyện Vũ Thư,Huyện,Vũ Thư,106.29,20.4346,2,2112,64
+Huyện Phú Lương,Huyện,Phú Lương,105.707,21.7271,2,2113,65
+Huyện Hoằng Hóa,Huyện,Hoằng Hóa,105.854,19.858,2,2114,66
+Huyện Phú Vang,Huyện,Phú Vang,107.601,16.5079,2,2115,67
+Huyện Gò Công Tây,Huyện,Gò Công Tây,106.58,10.3438,2,2116,68
+Huyện Trà Cú,Huyện,Trà Cú,106.259,9.69796,2,2117,69
+Huyện Vũng Liêm,Huyện,Vũng Liêm,106.19,10.0844,2,2119,71
+Huyện Yên Lạc,Huyện,Yên Lạc,105.575,21.2351,2,2120,72
+Huyện Văn Yên,Huyện,Văn Yên,104.69,21.8784,2,2121,73
+Quận Tây Hồ,Quận,Tây Hồ,105.810847,21.069508,2,2315,11
+Quận 9,Quận,9,106.770844,10.839899,2,2316,12
+Huyện An Lão,Huyện,An Lão,106.556173,20.82287,2,2317,13
+Huyện Thới Lai,Huyện,Thới Lai,105.565112,10.067858,2,2319,15
+Huyện Thoại Sơn,Huyện,Thoại Sơn,105.268,10.2684,2,2320,16
+Huyện Yên Dũng,Huyện,Yên Dũng,106.248,21.2006,2,2323,19
+Huyện Mỏ Cày Bắc,Huyện,Mỏ Cày Bắc,106.266987,10.177625,2,2326,22
+Huyện Bắc Tân Uyên,Huyện,Bắc Tân Uyên,106.843529,11.149927,2,2327,23
+Huyện Tuy Phước,Huyện,Tuy Phước,109.168,13.8263,2,2328,24
+Huyện Hớn Quản,Huyện,Hớn Quản,106.607,11.576,2,2329,25
+Huyện Tánh Linh,Huyện,Tánh Linh,107.682,11.0834,2,2330,26
+Huyện U Minh,Huyện,U Minh,104.969,9.40921,2,2331,27
+Huyện Quảng Uyên,Huyện,Quảng Uyên,106.442,22.6954,2,2332,28
+Huyện Krông Ana,Huyện,Krông Ana,108.032,12.481,2,2333,29
+Huyện Tủa Chùa,Huyện,Tủa Chùa,103.343431,21.857799,2,2335,31
+Huyện Trảng Bom,Huyện,Trảng Bom,107.006,10.953,2,2336,32
+Huyện Tân Hồng,Huyện,Tân Hồng,105.465,10.8718,2,2337,33
+Huyện KBang,Huyện,KBang,108.6,14.1436,2,2338,34
+Huyện Vị Xuyên,Huyện,Vị Xuyên,104.98,22.6687,2,2339,35
+Huyện Nghi Xuân,Huyện,Nghi Xuân,105.756,18.6618,2,2341,37
+Huyện Ninh Giang,Huyện,Ninh Giang,106.398,20.7312,2,2342,38
+Huyện Đà Bắc,Huyện,Đà Bắc,105.254,20.8784,2,2344,40
+Huyện Văn Lâm,Huyện,Văn Lâm,105.994006,20.976909,2,2345,41
+Huyện Vạn Ninh,Huyện,Vạn Ninh,109.227,12.6996,2,2346,42
+Huyện Kiên Lương,Huyện,Kiên Lương,104.589,10.2423,2,2347,43
+Huyện Tu Mơ Rông,Huyện,Tu Mơ Rông,107.948,14.8235,2,2348,44
+Huyện Đạ Tẻh,Huyện,Đạ Tẻh,107.487,11.5073,2,2350,46
+Huyện Tràng Định,Huyện,Tràng Định,106.469,22.2576,2,2351,47
+Huyện Văn Bàn,Huyện,Văn Bàn,104.254,22.0877,2,2352,48
+Huyện Đức Huệ,Huyện,Đức Huệ,106.308,10.8931,2,2353,49
+Huyện Xuân Trường,Huyện,Xuân Trường,106.334,20.2918,2,2354,50
+Huyện Kỳ Sơn,Huyện,Kỳ Sơn,104.147,19.4008,2,2355,51
+Huyện Tam Nông,Huyện,Tam Nông,105.294,21.2567,2,2358,54
+Huyện Tuy An,Huyện,Tuy An,109.215,13.3073,2,2359,55
+Huyện Nam Trà My,Huyện,Nam Trà My,108.122,15.1484,2,2361,57
+Huyện Sơn Hà,Huyện,Sơn Hà,108.47,15.0417,2,2362,58
+Huyện Hải Hà,Huyện,Hải Hà,107.756,21.4524,2,2363,59
+Huyện Triệu Phong,Huyện,Triệu Phong,107.166,16.7689,2,2364,60
+Huyện Thạnh Trị,Huyện,Thạnh Trị,105.745,9.42974,2,2365,61
+Huyện Sốp Cộp,Huyện,Sốp Cộp,103.603,20.9417,2,2366,62
+Huyện Trảng Bàng,Huyện,Trảng Bàng,106.359,11.0302,2,2367,63
+Huyện Võ Nhai,Huyện,Võ Nhai,106.071,21.7551,2,2369,65
+Huyện Lang Chánh,Huyện,Lang Chánh,105.24,20.1562,2,2370,66
+Huyện Quảng Điền,Huyện,Quảng Điền,107.515,16.5763,2,2371,67
+Huyện Tân Phước,Huyện,Tân Phước,106.195,10.4736,2,2372,68
+Huyện Duyên Hải,Huyện,Duyên Hải,106.440422,9.607133,2,2373,69
+Huyện Sông Lô,Huyện,Sông Lô,105.422,21.418,2,2376,72
+Huyện Yên Bình,Huyện,Yên Bình,104.962,21.7279,2,2377,73
+Quận Thanh Xuân,Quận,Thanh Xuân,105.800098,20.995087,2,2571,11
+Quận 10,Quận,10,106.66669,10.767403,2,2572,12
+Huyện Cát Hải,Huyện,Cát Hải,107.047756,20.731819,2,2573,13
+Huyện Tịnh Biên,Huyện,Tịnh Biên,105.002,10.6195,2,2576,16
+Huyện Yên Thế,Huyện,Yên Thế,106.127,21.4732,2,2579,19
+Huyện Vân Canh,Huyện,Vân Canh,108.998,13.6213,2,2584,24
+Huyện Bù Gia Mập,Huyện,Bù Gia Mập,106.994,11.954,2,2585,25
+Huyện Tuy Phong,Huyện,Tuy Phong,108.725,11.2286,2,2586,26
+Huyện Thạch An,Huyện,Thạch An,106.432,22.4299,2,2588,28
+Huyện Krông Bông,Huyện,Krông Bông,108.335,12.5053,2,2589,29
+Huyện Nậm Pồ,Huyện,Nậm Pồ,102.906612,21.871043,2,2591,31
+Huyện Vĩnh Cửu,Huyện,Vĩnh Cửu,107.035,11.0892,2,2592,32
+Huyện Tam Nông,Huyện,Tam Nông,105.561,10.6709,2,2593,33
+Huyện Kông Chro,Huyện,Kông Chro,108.527,13.7752,2,2594,34
+Huyện Xín Mần,Huyện,Xín Mần,104.461,22.6824,2,2595,35
+Huyện Đức Thọ,Huyện,Đức Thọ,105.586,18.5348,2,2597,37
+Huyện Thanh Hà,Huyện,Thanh Hà,106.427,20.8978,2,2598,38
+Huyện Tân Lạc,Huyện,Tân Lạc,105.278,20.6214,2,2600,40
+Huyện Yên Mỹ,Huyện,Yên Mỹ,106.046,20.8913,2,2601,41
+Huyện Kiên Hải,Huyện,Kiên Hải,104.621,9.79799,2,2603,43
+Huyện Ia H'Drai,Huyện,Ia H'Drai,107.442605,14.304354,2,2604,44
+Huyện Đam Rông,Huyện,Đam Rông,108.134,11.9571,2,2606,46
+Huyện Văn Lãng,Huyện,Văn Lãng,106.614,22.0556,2,2607,47
+Huyện Tân Hưng,Huyện,Tân Hưng,105.668,10.8353,2,2609,49
+Huyện Ý Yên,Huyện,Ý Yên,106.016,20.3252,2,2610,50
+Huyện Nam Đàn,Huyện,Nam Đàn,105.5,18.6969,2,2611,51
+Huyện Thanh Ba,Huyện,Thanh Ba,105.141,21.4987,2,2614,54
+Huyện Đông Giang,Huyện,Đông Giang,107.651,15.9226,2,2617,57
+Huyện Sơn Tây,Huyện,Sơn Tây,108.336,14.9888,2,2618,58
+Huyện Hoành Bồ,Huyện,Hoành Bồ,106.991,21.0272,2,2619,59
+Huyện Vĩnh Linh,Huyện,Vĩnh Linh,107.014,17.0625,2,2620,60
+Huyện Trần Đề,Huyện,Trần Đề,106.025,9.535,2,2621,61
+Huyện Thuận Châu,Huyện,Thuận Châu,103.693,21.4351,2,2622,62
+Huyện Mường Lát,Huyện,Mường Lát,104.602,20.5265,2,2626,66
+Huyện Tân Phú Đông,Huyện,Tân Phú Đông,106.657,10.267,2,2628,68
+Quận Bắc Từ Liêm,Quận,Bắc Từ Liêm,105.753633,21.042075,2,2827,11
+Quận 11,Quận,11,106.645364,10.764567,2,2828,12
+Huyện Kiến Thụy,Huyện,Kiến Thụy,106.669715,20.751368,2,2829,13
+Huyện Tri Tôn,Huyện,Tri Tôn,105.001,10.421,2,2832,16
+Huyện Vĩnh Thạnh,Huyện,Vĩnh Thạnh,108.785,14.1075,2,2840,24
+Huyện Phú Riềng,Huyện,Phú Riềng,106.872966,11.734192,2,2841,25
+Huyện Thông Nông,Huyện,Thông Nông,105.983,22.7854,2,2844,28
+Huyện Krông Búk,Huyện,Krông Búk,108.246777,12.954525,2,2845,29
+Huyện Xuân Lộc,Huyện,Xuân Lộc,107.403,10.9265,2,2848,32
+Huyện Thanh Bình,Huyện,Thanh Bình,105.487,10.5593,2,2849,33
+Huyện Krông Pa,Huyện,Krông Pa,108.689,13.196,2,2850,34
+Huyện Yên Minh,Huyện,Yên Minh,105.142,23.1178,2,2851,35
+Huyện Thạch Hà,Huyện,Thạch Hà,105.863,18.3684,2,2853,37
+Huyện Thanh Miện,Huyện,Thanh Miện,106.245,20.7871,2,2854,38
+Huyện Yên Thủy,Huyện,Yên Thủy,105.624,20.3934,2,2856,40
+Huyện Phú Quốc,Huyện,Phú Quốc,103.959,10.2347,2,2859,43
+Huyện Đơn Dương,Huyện,Đơn Dương,108.496,11.761,2,2862,46
+Huyện Văn Quan,Huyện,Văn Quan,106.539,21.8647,2,2863,47
+Huyện Tân Thạnh,Huyện,Tân Thạnh,106.049,10.6077,2,2865,49
+Huyện Nghi Lộc,Huyện,Nghi Lộc,105.647,18.776,2,2867,51
+Huyện Thanh Sơn,Huyện,Thanh Sơn,105.181,21.2147,2,2870,54
+Huyện Nông Sơn,Huyện,Nông Sơn,108.06,15.719,2,2873,57
+Huyện Sơn Tịnh,Huyện,Sơn Tịnh,108.793907,15.189466,2,2874,58
+Huyện Đầm Hà,Huyện,Đầm Hà,107.589,21.354,2,2875,59
+Huyện Châu Thành,Huyện,Châu Thành,105.903,9.699,2,2877,61
+Huyện Yên Châu,Huyện,Yên Châu,104.3,21.0456,2,2878,62
+Huyện Nga Sơn,Huyện,Nga Sơn,105.971,20.0071,2,2882,66
+Huyện Cai Lậy,Huyện,Cai Lậy,106.11943,10.311483,2,2884,68
+Quận Nam Từ Liêm,Quận,Nam Từ Liêm,105.76713,21.039626,2,3083,11
+Quận 12,Quận,12,106.628283,10.851178,2,3084,12
+Huyện Bạch Long Vĩ,Huyện,Bạch Long Vĩ,107.719,20.1367,2,3085,13
+Huyện Trà Lĩnh,Huyện,Trà Lĩnh,106.324,22.8295,2,3100,28
+Huyện Krông Năng,Huyện,Krông Năng,108.341,12.9519,2,3101,29
+Huyện Tháp Mười,Huyện,Tháp Mười,105.844,10.5249,2,3105,33
+Huyện Mang Yang,Huyện,Mang Yang,108.252,14.0387,2,3106,34
+Huyện Vũ Quang,Huyện,Vũ Quang,105.506,18.3832,2,3109,37
+Huyện Tứ Kỳ,Huyện,Tứ Kỳ,106.406,20.8167,2,3110,38
+Huyện Tân Hiệp,Huyện,Tân Hiệp,105.285,10.1156,2,3115,43
+Huyện Đức Trọng,Huyện,Đức Trọng,108.374,11.7358,2,3118,46
+Huyện Tân Trụ,Huyện,Tân Trụ,106.508,10.5133,2,3121,49
+Huyện Nghĩa Đàn,Huyện,Nghĩa Đàn,105.473,19.375,2,3123,51
+Huyện Thanh Thủy,Huyện,Thanh Thủy,105.284,21.1738,2,3126,54
+Huyện Núi Thành,Huyện,Núi Thành,108.659,15.431,2,3129,57
+Huyện Tây Trà,Huyện,Tây Trà,108.356,15.1673,2,3130,58
+Huyện Cô Tô,Huyện,Cô Tô,107.757,21.0015,2,3131,59
+Huyện Vân Hồ,Huyện,Vân Hồ,104.756417,20.780576,2,3134,62
+Huyện Ngọc Lặc,Huyện,Ngọc Lặc,105.38,20.0808,2,3138,66
+Thị xã Sơn Tây,Thị xã,Sơn Tây,105.506075,21.140651,2,3339,11
+Quận Bình Tân,Quận,Bình Tân,106.614565,10.737011,2,3340,12
+Huyện Thủy Nguyên,Huyện,Thủy Nguyên,106.674979,20.916978,2,3341,13
+Huyện Trùng Khánh,Huyện,Trùng Khánh,106.525,22.8348,2,3356,28
+Huyện Krông Păk,Huyện,Krông Păk,108.302,12.7109,2,3357,29
+Huyện Đắk Đoa,Huyện,Đắk Đoa,108.113,13.9948,2,3362,34
+Huyện Kỳ Anh,Huyện,Kỳ Anh,106.240872,18.15981,2,3365,37
+Huyện U Minh Thượng,Huyện,U Minh Thượng,105.122,9.67428,2,3371,43
+Huyện Thạnh Hóa,Huyện,Thạnh Hóa,106.183,10.6569,2,3377,49
+Huyện Đô Lương,Huyện,Đô Lương,105.308,18.8984,2,3379,51
+Huyện Yên Lập,Huyện,Yên Lập,105.058,21.3478,2,3382,54
+Huyện Phước Sơn,Huyện,Phước Sơn,107.795,15.4435,2,3385,57
+Huyện Tư Nghĩa,Huyện,Tư Nghĩa,108.825,15.0883,2,3386,58
+Huyện Tiên Yên,Huyện,Tiên Yên,107.401,21.3309,2,3387,59
+Huyện Như Thanh,Huyện,Như Thanh,105.579,19.6408,2,3394,66
+Huyện Ba Vì,Huyện,Ba Vì,105.423449,21.199231,2,3595,11
+Quận Bình Thạnh,Quận,Bình Thạnh,106.696283,10.802722,2,3596,12
+Huyện Tiên Lãng,Huyện,Tiên Lãng,106.553475,20.724746,2,3597,13
+Huyện Lắk,Huyện,Lắk,108.177,12.4094,2,3613,29
+Huyện Đắk Pơ,Huyện,Đắk Pơ,108.553,13.9761,2,3618,34
+Huyện Vĩnh Thuận,Huyện,Vĩnh Thuận,105.257,9.50958,2,3627,43
+Huyện Thủ Thừa,Huyện,Thủ Thừa,106.402,10.6022,2,3633,49
+Huyện Quế Phong,Huyện,Quế Phong,104.923,19.6082,2,3635,51
+Huyện Phú Ninh,Huyện,Phú Ninh,108.412,15.5536,2,3641,57
+Huyện Trà Bồng,Huyện,Trà Bồng,108.518,15.256,2,3642,58
+Huyện Vân Đồn,Huyện,Vân Đồn,107.42,21.0687,2,3643,59
+Huyện Như Xuân,Huyện,Như Xuân,105.436,19.6669,2,3650,66
+Huyện Chương Mỹ,Huyện,Chương Mỹ,105.702406,20.923773,2,3851,11
+Quận Gò Vấp,Quận,Gò Vấp,106.668819,10.831332,2,3852,12
+Huyện Vĩnh Bảo,Huyện,Vĩnh Bảo,106.48096,20.690402,2,3853,13
+Huyện M'Đrăk,Huyện,M'Đrăk,108.742,12.7489,2,3869,29
+Huyện Đức Cơ,Huyện,Đức Cơ,107.7,13.8043,2,3874,34
+Huyện Giang Thành,Huyện,Giang Thành,104.691,10.517,2,3883,43
+Huyện Vĩnh Hưng,Huyện,Vĩnh Hưng,105.786,10.8897,2,3889,49
+Huyện Quỳ Châu,Huyện,Quỳ Châu,105.096,19.5511,2,3891,51
+Huyện Quế Sơn,Huyện,Quế Sơn,108.219,15.6741,2,3897,57
+Huyện Nông Cống,Huyện,Nông Cống,105.651,19.6241,2,3906,66
+Huyện Gia Lâm,Huyện,Gia Lâm,105.940797,21.028571,2,4107,11
+Quận Phú Nhuận,Quận,Phú Nhuận,106.675862,10.794719,2,4108,12
+Huyện Phú Thiện,Huyện,Phú Thiện,108.314,13.53,2,4130,34
+Huyện Quỳ Hợp,Huyện,Quỳ Hợp,105.181,19.3256,2,4147,51
+Huyện Tây Giang,Huyện,Tây Giang,107.533,15.938,2,4153,57
+Huyện Đông Sơn,Huyện,Đông Sơn,105.735,19.8194,2,4162,66
+Huyện Hoài Đức,Huyện,Hoài Đức,105.707638,21.066144,2,4363,11
+Quận Tân Bình,Quận,Tân Bình,106.642935,10.798399,2,4364,12
+Huyện Chư Pưh,Huyện,Chư Pưh,108.104,13.587,2,4386,34
+Huyện Quỳnh Lưu,Huyện,Quỳnh Lưu,105.631,19.1467,2,4403,51
+Huyện Thăng Bình,Huyện,Thăng Bình,108.351,15.7378,2,4409,57
+Huyện Quan Hóa,Huyện,Quan Hóa,105.111,20.3776,2,4418,66
+Huyện Mê Linh,Huyện,Mê Linh,105.72021,21.181735,2,4619,11
+Quận Tân Phú,Quận,Tân Phú,106.637821,10.783286,2,4620,12
+Huyện Tân Kỳ,Huyện,Tân Kỳ,105.268,19.0506,2,4659,51
+Huyện Tiên Phước,Huyện,Tiên Phước,108.308,15.4895,2,4665,57
+Huyện Quan Sơn,Huyện,Quan Sơn,104.947,20.2544,2,4674,66
+Huyện Mỹ Đức,Huyện,Mỹ Đức,105.744873,20.686388,2,4875,11
+Quận Thủ Đức,Quận,Thủ Đức,106.768618,10.849363,2,4876,12
+Huyện Thanh Chương,Huyện,Thanh Chương,105.333,18.7826,2,4915,51
+Huyện Quảng Xương,Huyện,Quảng Xương,105.782,19.7324,2,4930,66
+Huyện Đan Phượng,Huyện,Đan Phượng,105.672508,21.083119,2,5131,11
+Huyện Bình Chánh,Huyện,Bình Chánh,106.591476,10.695219,2,5132,12
+Huyện Tương Dương,Huyện,Tương Dương,104.47,19.2638,2,5171,51
+Huyện Thạch Thành,Huyện,Thạch Thành,105.664,20.1279,2,5186,66
+Huyện Đông Anh,Huyện,Đông Anh,105.848758,21.139194,2,5387,11
+Huyện Cần Giờ,Huyện,Cần Giờ,106.964202,10.409951,2,5388,12
+Huyện Yên Thành,Huyện,Yên Thành,105.471,18.9984,2,5427,51
+Huyện Thiệu Hóa,Huyện,Thiệu Hóa,105.679,19.8884,2,5442,66
+Huyện Ứng Hòa,Huyện,Ứng Hòa,105.771352,20.735542,2,5643,11
+Huyện Củ Chi,Huyện,Củ Chi,106.493688,10.972645,2,5644,12
+Huyện Thọ Xuân,Huyện,Thọ Xuân,105.523,19.9295,2,5698,66
+Huyện Phú Xuyên,Huyện,Phú Xuyên,105.912,20.7443,2,5899,11
+Huyện Hóc Môn,Huyện,Hóc Môn,106.595271,10.889608,2,5900,12
+Huyện Thường Xuân,Huyện,Thường Xuân,105.347,19.9035,2,5954,66
+Huyện Phúc Thọ,Huyện,Phúc Thọ,105.545539,21.104216,2,6155,11
+Huyện Nhà Bè,Huyện,Nhà Bè,106.733069,10.673975,2,6156,12
+Huyện Tĩnh Gia,Huyện,Tĩnh Gia,105.777,19.444,2,6210,66
+Huyện Quốc Oai,Huyện,Quốc Oai,105.641004,20.990051,2,6411,11
+Huyện Triệu Sơn,Huyện,Triệu Sơn,105.607,19.8194,2,6466,66
+Huyện Sóc Sơn,Huyện,Sóc Sơn,105.847934,21.257379,2,6667,11
+Huyện Vĩnh Lộc,Huyện,Vĩnh Lộc,105.618,20.0567,2,6722,66
+Huyện Thạch Thất,Huyện,Thạch Thất,105.578375,21.056181,2,6923,11
+Huyện Yên Định,Huyện,Yên Định,105.649,19.973,2,6978,66
+Huyện Thanh Oai,Huyện,Thanh Oai,105.769056,20.852508,2,7179,11
+Huyện Thanh Trì,Huyện,Thanh Trì,105.844471,20.946278,2,7435,11
+Huyện Thường Tín,Huyện,Thường Tín,105.861996,20.868836,2,7691,11
