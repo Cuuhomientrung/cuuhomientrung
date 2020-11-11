@@ -1,9 +1,11 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 
 from smart_selects.db_fields import ChainedForeignKey
 from simple_history.models import HistoricalRecords
 
 from .locations import CustomLocationField
+from .status import Importances, CommunicationStatus
 from ..utils.phone_number import export_phone_numbers
 
 __all__ = ["TrangThaiHoDan", "HoDan"]
@@ -114,6 +116,25 @@ class HoDan(models.Model):
         bases=[
             IPAddressHistoricalModel,
         ],
+    )
+    do_quan_trong = models.TextField(
+        choices=Importances.choices,
+        default=Importances.IMPORTANT,
+        help_text="Mức độ quan trọng",
+        verbose_name="Độ quan trọng"
+    )
+    trang_thai_lien_lac = models.IntegerField(
+        choices=CommunicationStatus.choices,
+        default=CommunicationStatus.UNKNOWN,
+        help_text="Tình trạng liên lạc của hộ dân",
+        verbose_name="Trạng Thái Liên Lạc"
+    )
+    nhu_cau = ArrayField(
+        models.TextField(),
+        blank=True,
+        null=True,
+        help_text="Danh sách nhu cầu cần thiết của hộ dân. Dùng dấu phẩy để ngăn cách các nhu cầu",
+        verbose_name="Danh sách nhu cầu",
     )
 
     def __str__(self):
