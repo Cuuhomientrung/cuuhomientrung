@@ -1,13 +1,12 @@
 import datetime
-import pytz
+
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django_select2.forms import ModelSelect2Widget
 from rest_framework import routers
 
-from app.settings import TIME_ZONE
 from app.models import TinTuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa,\
-    TrangThaiHoDan, CUUHO_STATUS, TINHNGUYEN_STATUS
+    TrangThaiHoDan, RescueStatus, VolunteerStatus
 from app.views import CuuHoViewSet, HoDanViewSet,\
     TinhNguyenVienViewSet, TinhViewSet, HuyenViewSet, XaViewSet, TrangThaiHoDanSet
 from app.utils.export_to_excel import export_ho_dan_as_excel_action, utc_to_local
@@ -280,12 +279,12 @@ class HoDanForm(ModelForm):
 
     @staticmethod
     def label_from_volunteer(obj):
-        status = _display_choices(TINHNGUYEN_STATUS, obj.status)
+        status = _display_choices(VolunteerStatus.choices, obj.status)
         return f"{obj.name} | {obj.phone} | {status}"
 
     @staticmethod
     def label_from_cuuho(obj):
-        status = _display_choices(CUUHO_STATUS, obj.status)
+        status = _display_choices(RescueStatus.choices, obj.status)
         return f"{obj.name} | {obj.phone} | {status}"
 
     volunteer = ModelChoiceField(

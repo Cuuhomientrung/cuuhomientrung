@@ -9,7 +9,9 @@ __all__ = ["TinhNguyenVien"]
 class TinhNguyenVien(models.Model):
     name = models.TextField(blank=True, default="", verbose_name="Họ và tên")
     status = models.IntegerField(
-        choices=VolunteerStatus.choices, default=0, verbose_name="Tình trạng"
+        choices=VolunteerStatus.choices,
+        default=VolunteerStatus.UNVERIFIED,
+        verbose_name="Tình trạng",
     )
     location = models.TextField(blank=True, default="", verbose_name="Địa chỉ")
     phone = models.TextField(blank=True, default="", verbose_name="Điện thoại liên hệ")

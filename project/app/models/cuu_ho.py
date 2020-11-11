@@ -12,7 +12,9 @@ class CuuHo(models.Model):
     update_time = models.DateTimeField(auto_now=True, verbose_name="Cập nhật")
     name = models.TextField(blank=True, default="", verbose_name="Đội cứu hộ")
     status = models.IntegerField(
-        choices=RescueStatus.choices, default=0, verbose_name="Tình trạng"
+        choices=RescueStatus.choices,
+        default=RescueStatus.UNVERIFIED,
+        verbose_name="Tình trạng",
     )
     tinh = models.ForeignKey(
         "app.Tinh",

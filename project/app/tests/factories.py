@@ -50,7 +50,7 @@ class TNVFactory(DjangoModelFactory):
         model = models.TinhNguyenVien
 
     name = fuzzy.FuzzyText(prefix="TNV ")
-    status = fuzzy.FuzzyChoice(choices=get_status_choices(models.TINHNGUYEN_STATUS))
+    status = fuzzy.FuzzyChoice(choices=get_status_choices(models.VolunteerStatus.choices))
     location = fuzzy.FuzzyText(prefix="Địa Chỉ ")
     phone = fuzzy.FuzzyText(chars=string.digits)
     note = fuzzy.FuzzyText(prefix="Ghi Chú ", length=100)
@@ -65,7 +65,7 @@ class CuuHoFactory(DjangoModelFactory):
         model = models.CuuHo
 
     name = fuzzy.FuzzyText(prefix="Đội cứu hộ ")
-    status = fuzzy.FuzzyChoice(choices=get_status_choices(models.CUUHO_STATUS))
+    status = fuzzy.FuzzyChoice(choices=get_status_choices(models.RescueStatus.choices))
     tinh = fuzzy.FuzzyChoice(choices=models.Tinh.objects.all())
     location = fuzzy.FuzzyText(prefix="Phạm vi cứu hộ ")
     phone = fuzzy.FuzzyText(chars=string.digits)
@@ -94,7 +94,7 @@ class NguonLucFactory(DjangoModelFactory):
 
     name = fuzzy.FuzzyText(prefix="Nguồn lực ")
     location = fuzzy.FuzzyText(prefix="Địa Chỉ ")
-    status = fuzzy.FuzzyChoice(choices=get_status_choices(models.RESOURCE_STATUS))
+    status = fuzzy.FuzzyChoice(choices=get_status_choices(models.RescueStatus.choices))
     tinh = fuzzy.FuzzyChoice(choices=models.Tinh.objects.all())
     volunteer = SubFactory(TNVFactory)
 

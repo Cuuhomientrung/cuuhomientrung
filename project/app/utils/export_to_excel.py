@@ -2,7 +2,6 @@
 import io
 import xlsxwriter
 from django.http import HttpResponse
-from app.models import CUUHO_STATUS
 from datetime import datetime, timezone
 import pytz
 
