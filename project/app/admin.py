@@ -213,7 +213,8 @@ class HoDanForm(ModelForm):
                 attrs={'placeholder': 'Ví dụ:\n17:00 23/10: Có người lớn bị cảm cúm.\n20:39 23/10: Đã gọi xác minh bệnh.\n'}
             ),
             'name': TextInput(attrs={'size': 50}),
-            'phone': TextInput(attrs={'size': 50})
+            'phone': TextInput(attrs={'size': 50}),
+            'nhu_cau': Textarea(attrs={'size': 50})
         }
 
     def __init__(self, *args, **kwargs):
@@ -330,10 +331,10 @@ class HoDanAdmin(NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.Mod
     )
     fieldsets = (
         (None, {
-           'fields': ('name', 'phone', 'status')
+           'fields': ('name', 'phone', 'status', 'do_quan_trong')
         }),
         ('Thông tin', {
-            'fields': ('note', 'people_number', 'volunteer', 'cuuho',),
+            'fields': ('note', 'people_number', 'volunteer', 'cuuho', 'trang_thai_lien_lac', 'nhu_cau'),
         }),
         ('Địa điểm', {
             'fields': ('location', 'tinh', 'huyen', 'xa', 'geo_location'),
