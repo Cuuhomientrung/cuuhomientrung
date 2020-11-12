@@ -219,7 +219,8 @@ class HoDan(models.Model):
     people_number = models.PositiveIntegerField(blank=True, null=True, default=1, verbose_name="Số người")
     tinh = models.ForeignKey(
         Tinh, blank=True, null=True, on_delete=models.CASCADE,
-        related_name="hodan_reversed"
+        related_name="hodan_reversed",
+        verbose_name="Tỉnh"
     )
     huyen = ChainedForeignKey(
         Huyen,
@@ -231,7 +232,8 @@ class HoDan(models.Model):
         blank=True,
         null=True,
         related_name="hodan_reversed",
-        on_delete=models.CASCADE)
+        on_delete=models.CASCADE,
+        verbose_name="Huyện")
 
     xa = ChainedForeignKey(
         Xa,
@@ -243,7 +245,8 @@ class HoDan(models.Model):
         blank=True,
         null=True,
         related_name="hodan_reversed",
-        on_delete=models.CASCADE)
+        on_delete=models.CASCADE,
+        verbose_name="Xã")
 
     thon = models.ForeignKey(
         Thon,

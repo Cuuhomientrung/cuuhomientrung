@@ -344,9 +344,9 @@ class HoDanAdmin(NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.Mod
     list_editable = ()
     list_filter = (
         ('status', RelatedDropdownFilter),
-        TinhAdminFilter,
-        HuyenAdminFilter,
-        XaAdminFilter,
+        ('tinh', RelatedDropdownFilter),
+        ('huyen', RelatedDropdownFilter),
+        ('xa', RelatedDropdownFilter),
     )
     search_fields = ('name', 'phone', 'note', 'id')
     actions = [export_ho_dan_as_excel_action()]
@@ -449,7 +449,9 @@ class HoDanAdmin(NumericFilterModelAdmin, MapAdmin, HoDanHistoryAdmin, admin.Mod
         css = {
             'all': (f'/static/css/custom.css?v={REVISION}',)
         }
-
+        js = (
+          '//ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js'  # jquery
+        )
 
 class HoDanCuuHoStatisticBase(admin.ModelAdmin):
     class Meta:

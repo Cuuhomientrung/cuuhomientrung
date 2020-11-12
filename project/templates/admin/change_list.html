@@ -1,5 +1,337 @@
 {% extends "admin/change_list.html" %}
 {% load i18n admin_urls static admin_list %}
+{% block extrahead %}
+
+<script src="/static/admin/js/vendor/jquery/jquery.js"></script>
+<script>
+  //Below is a working jquery init trick to easily integrate jquery-select2 into django without any error
+  var django = {
+    "jQuery": jQuery.noConflict(true)
+  };
+  var jQuery = django.jQuery;
+  var $=jQuery;
+</script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+
+      $.fn.select2.amd.define('select2/i18n/vi',[],function () {
+        // Vietnamese
+        return {
+          errorLoading: function () {
+            return 'Không thể tải được';
+          },
+          inputTooLong: function (args) {
+            var overChars = args.input.length - args.maximum;
+            var message = 'Hãy thử xóa đi ' + overChars + ' ký tự';
+            return message;
+          },
+          inputTooShort: function (args) {
+            var remainingChars = args.minimum - args.input.length;
+            var message = 'Hãy nhập nhiều hơn ' + remainingChars + ' ký tự';
+            return message;
+          },
+          loadingMore: function () {
+            return 'Đang tải thêm danh sách...';
+          },
+          maximumSelected: function (args) {
+            var message = 'Bạn chỉ được chọn ' + args.maximum + ' mục';
+            return message;
+          },
+          noResults: function () {
+            return 'Không tìm thấy kết quả';
+          },
+          searching: function () {
+            return 'Đang tìm kiếm...';
+          }
+        };
+      });
+
+      var params = new URL(location.href).searchParams;
+      var trangthai = params.get('status__id__exact'); //two duplicated underscore _
+      var tinh = params.get('tinh__id__exact');
+      var huyen = params.get('huyen__id__exact');
+      var xa_id = params.get('xa__id__exact');
+      var decoded_hash_value = decodeURI(document.location.hash.split("=")[1]);
+
+      $('ul.admin-filter-Trạngthái li select').select2({
+        language: 'vi',
+        placeholder: 'Tìm nhanh theo trạng thái',
+        cache: true
+      });
+
+      var all_tinh_data = [];
+
+      $('ul.admin-filter-Tỉnh li select').find('option').each(function(){
+        if ($(this).val().includes('&tinh__id__exact=')) {
+          var text_id = $(this).val().split('&tinh__id__exact=')[1].toString().split('&')[0];
+          all_tinh_data.push({
+            id: text_id,
+            text:  $(this).text()
+          });
+        }
+      });
+
+      var tinh_timer = null;
+
+      var tinh_placeholder;
+      if (document.location.hash.includes('tinh__value') && typeof decoded_hash_value == 'string') {
+        tinh_placeholder = decoded_hash_value;
+      } else {
+        tinh_placeholder = 'Tìm nhanh theo tỉnh';
+      }
+
+      $('ul.admin-filter-Tỉnh li select').select2({
+        language: 'vi',
+        placeholder: tinh_placeholder,
+        cache: true,
+        ajax: {
+          delay: 250,
+          transport: function(params, success, failure) {
+            var pageSize = 10;
+            var term = (params.data.term || '').toLowerCase();
+            var page = (params.data.page || 1);
+
+            if (tinh_timer) {
+              clearTimeout(tinh_timer);
+            }
+
+            tinh_timer = setTimeout(function(){
+              tinh_timer = null;
+              var results = all_tinh_data
+              //load all tinh data
+              .filter(function(f){
+                //custom filtering here.
+                return f.text.toString().toLowerCase().includes(term);
+              })
+              .map(function(f){
+                //custom mapping here.
+                return { id: '?tinh__id__exact=' + f.id + '#tinh__value=' + f.text, text: f.text};
+              });
+
+              var paged = results.slice((page -1) * pageSize, page * pageSize);
+
+              var options = {
+                results: paged,
+                pagination: {
+                  more: results.length >= page * pageSize
+                }
+              };
+              success(options);
+            }, params.delay);
+          }
+        }
+      });
+
+      var all_huyen_data = [];
+
+      $.get("/get_huyen_api", function(response) {
+        if (response != '') {
+          $.each(response,function(key, value){
+            all_huyen_data.push({
+              id: key,
+              text:  value
+            });
+          });
+        }
+      });
+
+      var huyen_timer = null;
+
+      var huyen_placeholder;
+      if (document.location.hash.includes('huyen__value') && typeof decoded_hash_value == 'string') {
+        huyen_placeholder = decoded_hash_value;
+      } else {
+        huyen_placeholder = 'Tìm nhanh theo huyện';
+      }
+
+      $('ul.admin-filter-Huyện li select').empty().select2({
+        language: 'vi',
+        placeholder: huyen_placeholder,
+        cache: true,
+        ajax: {
+          delay: 250,
+          transport: function(params, success, failure) {
+            var pageSize = 10;
+            var term = (params.data.term || '').toLowerCase();
+            var page = (params.data.page || 1);
+
+            if (huyen_timer) {
+              clearTimeout(huyen_timer);
+            }
+
+            huyen_timer = setTimeout(function(){
+              huyen_timer = null;
+              var results = all_huyen_data
+              //load all huyen data
+              .filter(function(f){
+                //custom filtering here.
+                return f.text.toString().toLowerCase().includes(term);
+              })
+              .map(function(f){
+                //custom mapping here.
+                return { id: '?huyen__id__exact=' + f.id + '#huyen__value=' + f.text, text: f.text};
+              });
+
+              var paged = results.slice((page -1) * pageSize, page * pageSize);
+
+              var options = {
+                results: paged,
+                pagination: {
+                  more: results.length >= page * pageSize
+                }
+              };
+              success(options);
+            }, params.delay);
+          }
+        }
+      });
+
+      var all_xa_data = [];
+
+      $.get("/get_xa_api", function(response) {
+        if (response != '') {
+          $.each(response,function(key, value){
+            all_xa_data.push({
+              id: key,
+              text:  value
+            });
+          });
+        }
+      });
+
+      var xa_timer = null;
+
+      var xa_placeholder;
+      if (document.location.hash.includes('xa__value') && typeof decoded_hash_value == 'string') {
+        xa_placeholder = decoded_hash_value;
+      } else {
+        xa_placeholder = 'Tìm nhanh theo xã';
+      }
+      
+
+      $('ul.admin-filter-Xã li select').empty().select2({
+        language: 'vi',
+        placeholder: xa_placeholder,
+        cache: true,
+        ajax: {
+          delay: 250,
+          transport: function(params, success, failure) {
+            var pageSize = 10;
+            var term = (params.data.term || '').toLowerCase();
+            var page = (params.data.page || 1);
+
+            if (xa_timer) {
+              clearTimeout(xa_timer);
+            }
+
+            xa_timer = setTimeout(function(){
+              xa_timer = null;
+              var results = all_xa_data
+              //load all xa data
+              .filter(function(f){
+                //custom filtering here.
+                return f.text.toString().toLowerCase().includes(term);
+              })
+              .map(function(f){
+                //custom mapping here.
+                return { id: '?xa__id__exact=' + f.id + '#xa__value=' + f.text, text: f.text};
+              });
+
+              var paged = results.slice((page -1) * pageSize, page * pageSize);
+
+              var options = {
+                results: paged,
+                pagination: {
+                  more: results.length >= page * pageSize
+                }
+              };
+              success(options);
+            }, params.delay);
+          }
+        }
+      });
+
+      if (document.location.href.includes('tinh__id__exact') && !document.location.href.includes('huyen__id__exact') && !document.location.href.includes('xa__id__exact')) {
+        $.get("/get_huyen_api/?tinh="+tinh, function(response) {
+          //console.log(response);
+          if (response != '') {
+            $('ul.admin-filter-Huyện li select').find('option').remove();
+            $('ul.admin-filter-Huyện li select').append('<option value="">Chọn Quận/Huyện/Thị Xã/TP</option>');
+            $.each(response,function(key, value){
+              $('ul.admin-filter-Huyện li select').append('<option value="?tinh__id__exact='+ tinh +'&huyen__id__exact=' + key + '">' + value + '</option>');
+            });
+            $('ul.admin-filter-Huyện li select').select2({
+              language: 'vi',
+              cache: true
+            });
+          }
+        });
+        $('ul.admin-filter-Xã li select').attr('disabled', 'disabled');
+        $('ul.admin-filter-Xã li select:first').html('<option>Chỉ khả dụng khi chọn huyện</option>');
+      }
+
+      if (tinh !== '' && huyen !== '' && document.location.href.includes('&')) {
+        //keep this case to make select2 available for 'huyen' list even when 'xa' is chosen
+        $.get("/get_huyen_api/?tinh="+tinh, function(response) {
+          //console.log(response);
+          if (response != '') {
+            $('ul.admin-filter-Huyện li select').find('option').remove();
+            $.each(response,function(key, value){
+              $('ul.admin-filter-Huyện li select').append('<option value="?tinh__id__exact='+ tinh +'&huyen__id__exact=' + key + '">' + value + '</option>');
+            });
+            $('ul.admin-filter-Huyện li select option[value="?tinh__id__exact='+ tinh +'&huyen__id__exact=' + huyen + '"]').attr("selected", "selected");
+            $('ul.admin-filter-Huyện li select').select2({
+              language: 'vi',
+              cache: true
+            });
+          }
+        });
+      }
+
+      if (huyen !== '' && document.location.href.split('&').length == 2) {
+        $('ul.admin-filter-Xã li select:first').html('<option value="">Chọn Xã/Phường/Thị trấn</option>');
+        $.get("/get_xa_api/?huyen="+huyen, function(response) {
+          //console.log(response);
+          if (response != '') {
+            $('ul.admin-filter-Xã li select').find('option').not(':first').remove();
+            $.each(response,function(key, value){
+              $('ul.admin-filter-Xã li select').append('<option value="?tinh__id__exact='+ tinh +'&huyen__id__exact='+ huyen +'&xa__id__exact=' + key + '">' + value + '</option>');
+            });
+            $('ul.admin-filter-Xã li select').select2({
+              language: 'vi',
+              allowClear: true,
+              cache: true
+            });
+          }
+        });
+      }
+
+      if (tinh !== '' && huyen !== '' && xa_id !== '' && document.location.href.split('&').length == 3) {
+        $.get("/get_xa_api/?huyen="+huyen, function(response) {
+          //console.log(response);
+          if (response != '') {
+            $('ul.admin-filter-Xã li select').find('option').remove();
+            $.each(response,function(key, value){
+              $('ul.admin-filter-Xã li select').append('<option value="?tinh__id__exact='+ tinh +'&huyen__id__exact='+ huyen +'&xa__id__exact=' + key + '">' + value + '</option>');
+            });
+            $('ul.admin-filter-Xã li select option[value="?tinh__id__exact='+ tinh +'&huyen__id__exact='+ huyen +'&xa__id__exact=' + xa_id + '"]').attr("selected", "selected");
+            $('ul.admin-filter-Xã li select').select2({
+              language: 'vi',
+              allowClear: true,
+              cache: true
+            });
+          }
+        });
+      }
+
+    });
+
+  </script>
+  
+{% endblock %}
 
 {% block extrastyle %}
   {{ block.super }}
