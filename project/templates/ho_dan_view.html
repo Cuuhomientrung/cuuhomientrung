@@ -1,0 +1,145 @@
+{% extends "layout.html" %}
+{% load static i18n %}
+
+{% block content %}
+
+  <div class="row form-row citizen-filter mb-4">
+    <div class="col-sm-3 mb-2">
+      <select class="form-control select choices" id="select-status">
+        <option value="-1"> Tất cả trạng thái </option>
+        {% for status in list_status %}
+          <option {% if status.id|stringformat:"i" == filtered.status %} selected {% endif %} value="{{ status.id }}">{{ status.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-sm-2 mb-2">
+      <select class="form-control select select-searchable" id="select-tinh">
+        <option value="-1"> Tất cả tỉnh </option>
+        {% for tinh in list_tinh %}
+        <option {% if tinh.id|stringformat:"i" == filtered.tinh %} selected {% endif %} value="{{ tinh.id }}">{{ tinh.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-sm-2 mb-2">
+      <select class="form-control select select-searchable" id="select-huyen">
+        <option value="-1"> Tất cả huyện </option>
+        {% for huyen in list_huyen %}
+          <option {% if huyen.id|stringformat:"i" == filtered.huyen %} selected {% endif %}
+            tinh-id="{{ huyen.tinh.id }}" value="{{ huyen.id }}">{{ huyen.name }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-sm-2 mb-2">
+      <select class="form-control select select-searchable" id="select-xa">
+        <option value="-1"> Tất cả xã </option>
+        {% for xa in list_xa %}
+          <option {% if xa.id|stringformat:"i" == filtered.xa %} selected {% endif %}
+            huyen-id="{{ xa.huyen.id }}" value="{{ xa.id }}">{{ xa.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-sm-2 ml-auto text-right">
+      <button id="search-map-hodan" class="btn btn-outline-primary btn-filter"> Tìm kiếm </button>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col">
+      Tổng số hộ dân: {{ ho_dan_total_count }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4 mb-4">
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-body">
+                <div class="citizen-item">
+                    <div class="citizen-header">
+                      <h5>
+                        <span id="hodan_id"></span>
+                        <span>-</span>
+                        <span id="hodan_name"></span>
+                      </h5>
+                    </div>
+                    <div class="citizen-meta">
+                      <span id="hodan_status">
+                      </span>
+                      <div class="citizen-updated-time">
+                        <span>Cập nhật: </span>
+                        <span id="hodan_update_time"> </span>
+                      </div>
+                    </div>
+                    <div class="citizen-body">
+                      <div class="citizen-info">
+                        <div class="citizen-label"> Điện thoại </div>
+                        <div class="citizen-value citizen-value--phone">
+                          <a id="hodan_phone">
+                            <i class="la la-phone"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="citizen-info">
+                        <p id="hodan_address">
+                        </p>
+                      </div>
+                      <div class="citizen-info">
+                        <label class="citizen-label"> Số người </label>
+                        <div class="citizen-value">
+                          <span class="citizen-number">
+                            <strong id="hodan_people_number"></strong>
+                            <span>người</span>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="citizen-info">
+                        <div id="hodan_note"></div>
+                      </div>
+                      <div class="citizen-info">
+                        <div class="citizen-label"> Đơn vị cứu hộ</div>
+                        <div class="citizen-value" id="hodan_cuuho">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="citizen-footer">
+                      <div class="citizen-footer-info">
+                        <span>Gửi lúc: </span>
+                        <span id="hodan_created_time"></span>
+                      </div>
+                      <div class="citizen-footer-info">
+                        <span>Bởi TNV: </span>
+                        <span id="hodan_volunteer"></span>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="modal-footer text-right">
+              <button class="btn btn-outline-danger" data-dismiss="modal">Đóng</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-8 mb-8">
+        <div id='map'></div>
+    </div>
+  </div>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+    <style>
+      #map { position: absolute; 
+                  top: 0; 
+           min-height: 600px;
+           height: 800px;
+               bottom: 0;
+                width: 95%; }
+    </style>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
+      type="text/css"
+    />
+{% endblock %}

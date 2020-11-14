@@ -1,0 +1,183 @@
+{% extends "layout.html" %}
+{% load static i18n %}
+
+{% block content %}
+<section class="mb-3">
+    <div class="row">
+        <div class="col-md-8">
+            {% if messages %}
+              {% for message in messages %}
+                  <div class="alert alert-{{ message.tags}}">
+                    {{ message }}
+                  </div>
+              {% endfor%}
+            {% endif %}
+          </div>
+      </div>
+    <div class="row">
+      <div class="col-lg-6 mb-4">
+        <div class="card card-homepage bg-white">
+          <div class="card-header">
+            <h5 class="text-center">Thêm Hộ dân cần cứu hộ</h5>
+            <a class="ml-auto btn btn-outline-primary" href="{% url 'home_ho_dan' %}">
+              <svg width="24" height="20" viewBox="0 0 24 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.25 0.25C1.80499 0.25 1.36998 0.38196 0.999968 0.629193C0.629957 0.876427 0.341569 1.22783 0.171272 1.63896C0.000974894 2.0501 -0.0435826 2.5025 0.0432341 2.93895C0.130051 3.37541 0.344343 3.77632 0.659011 4.09099C0.973679 4.40566 1.37459 4.61995 1.81105 4.70677C2.24751 4.79358 2.69991 4.74903 3.11104 4.57873C3.52217 4.40843 3.87357 4.12004 4.12081 3.75003C4.36804 3.38002 4.5 2.94501 4.5 2.5C4.5 1.90326 4.26295 1.33097 3.84099 0.90901C3.41903 0.487053 2.84674 0.25 2.25 0.25ZM2.25 7.75C1.80499 7.75 1.36998 7.88196 0.999968 8.12919C0.629957 8.37643 0.341569 8.72783 0.171272 9.13896C0.000974894 9.5501 -0.0435826 10.0025 0.0432341 10.439C0.130051 10.8754 0.344343 11.2763 0.659011 11.591C0.973679 11.9057 1.37459 12.12 1.81105 12.2068C2.24751 12.2936 2.69991 12.249 3.11104 12.0787C3.52217 11.9084 3.87357 11.62 4.12081 11.25C4.36804 10.88 4.5 10.445 4.5 10C4.5 9.40326 4.26295 8.83097 3.84099 8.40901C3.41903 7.98705 2.84674 7.75 2.25 7.75ZM2.25 15.25C1.80499 15.25 1.36998 15.382 0.999968 15.6292C0.629957 15.8764 0.341569 16.2278 0.171272 16.639C0.000974894 17.0501 -0.0435826 17.5025 0.0432341 17.939C0.130051 18.3754 0.344343 18.7763 0.659011 19.091C0.973679 19.4057 1.37459 19.62 1.81105 19.7068C2.24751 19.7936 2.69991 19.749 3.11104 19.5787C3.52217 19.4084 3.87357 19.12 4.12081 18.75C4.36804 18.38 4.5 17.945 4.5 17.5C4.5 16.9033 4.26295 16.331 3.84099 15.909C3.41903 15.4871 2.84674 15.25 2.25 15.25ZM23.25 16H8.25C8.05109 16 7.86032 16.079 7.71967 16.2197C7.57902 16.3603 7.5 16.5511 7.5 16.75V18.25C7.5 18.4489 7.57902 18.6397 7.71967 18.7803C7.86032 18.921 8.05109 19 8.25 19H23.25C23.4489 19 23.6397 18.921 23.7803 18.7803C23.921 18.6397 24 18.4489 24 18.25V16.75C24 16.5511 23.921 16.3603 23.7803 16.2197C23.6397 16.079 23.4489 16 23.25 16ZM23.25 1H8.25C8.05109 1 7.86032 1.07902 7.71967 1.21967C7.57902 1.36032 7.5 1.55109 7.5 1.75V3.25C7.5 3.44891 7.57902 3.63968 7.71967 3.78033C7.86032 3.92098 8.05109 4 8.25 4H23.25C23.4489 4 23.6397 3.92098 23.7803 3.78033C23.921 3.63968 24 3.44891 24 3.25V1.75C24 1.55109 23.921 1.36032 23.7803 1.21967C23.6397 1.07902 23.4489 1 23.25 1ZM23.25 8.5H8.25C8.05109 8.5 7.86032 8.57902 7.71967 8.71967C7.57902 8.86032 7.5 9.05109 7.5 9.25V10.75C7.5 10.9489 7.57902 11.1397 7.71967 11.2803C7.86032 11.421 8.05109 11.5 8.25 11.5H23.25C23.4489 11.5 23.6397 11.421 23.7803 11.2803C23.921 11.1397 24 10.9489 24 10.75V9.25C24 9.05109 23.921 8.86032 23.7803 8.71967C23.6397 8.57902 23.4489 8.5 23.25 8.5Z" />
+              </svg>
+            <span class="ml-2">Xem tất cả</span>
+          </a>
+          </div>
+        </br></br>
+           <form method="POST">
+              {% csrf_token %} 
+            <div class="card-body">
+              <div class="form-group row">
+                  <div class="col-sm-10">
+                    <label for="hodan_name">Tiêu Đề</label>
+                    <input type="text" class="form-control" name="hodan_name" id="hodan_name" size="50" placeholder="Tên hộ Dân hoặc tập thể">
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <div class="col-sm-10">
+                      <label for="hodan_phone">Số điện thoại</label>
+                      <input type="text" class="form-control" name="hodan_phone" id="hodan_phone" placeholder="080xxx , 080xxx" size="50">
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <div class="col-sm-6">
+                      <label for="hodan_people">Số người</label>
+                      <input type="number" class="form-control" name="hodan_people" id="hodan_people" size="100">
+                  </div>
+                  <div class="col-sm-6">
+                      <label for="hodan_status">Trạng thái</label>
+                      <select class="form-control select choices" id="hodan_status" name="hodan_status">
+                        {% for status in list_status %}
+                          <option value="{{ status.id }}">{{ status.name }}</option>
+                        {% endfor %}
+                      </select> 
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <div class="col-sm-6">
+                      <label for="hodan_nhucau">Nhu cầu</label>
+                      <select class="form-control select choices" id="hodan_nhucau" name="hodan_nhucau">
+                        {% for need in list_nhucau %}
+                          <option value="{{ need.id }}">{{ need.nhucau_name }}</option>
+                        {% endfor %}
+                      </select> 
+                  </div>
+
+                  <div class="col-sm-6">
+                      <label for="hodan_nhucau_khac">Nhu cầu khác</label>
+                      <textarea type="text" rows="2" class="form-control" name="hodan_nhucau_khac" id="hodan_nhucau_khac" size="50"></textarea>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <div class="col-sm-6">
+                      <label for="hodan_quantrong">Độ quan trọng</label>
+                      <select class="form-control select choices" id="hodan_quantrong" name="hodan_quantrong">
+                        {% for import in list_doquantrong %}
+                          <option value="{{ import.id }}">{{ import.doquantrong_name }}</option>
+                        {% endfor %}
+                      </select> 
+                  </div>
+                  <div class="col-sm-6">
+                      <label for="hodan_lienlac">Trạng thái liên lạc</label>
+                      <select class="form-control select choices" id="hodan_lienlac" name="hodan_lienlac">
+                        {% for status in list_lienlac %}
+                          <option value="{{ status.id }}">{{ status.lienlac_name }}</option>
+                        {% endfor %}
+                      </select> 
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <div class="col-sm-10">
+                      <label for="id_note">Ghi chú</label>
+                      <textarea rows="5" class="form-control" name="hodan_note" id="id_note" placeholder="Ví dụ: 17:30 12/11: Có người lớn bị cảm cúm. 20:39 12/11: đã gọi điện xác minh bệnh." size="50"></textarea>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <div class="col-sm-10">
+                      <label for="hodan_address">Địa chỉ</label>
+                      <input type="text" class="form-control" name="hodan_address" id="hodan_address" placeholder="Chỉ cần nhập địa sau cấp xã(phường)" size="100">
+                  </div>
+                  <input type="text" hidden name="hodan_geo_lat" id="hodan_geo_lat" >
+                  <input type="text" hidden name="hodan_geo_lng" id="hodan_geo_lng" >
+              </div>
+              <label class="col-form-label">Chọn Tỉnh->Huyện->Xã</label>
+              <div class="form-row citizen-filter">
+                  <div class="col-md-4">
+                    <select class="form-control select select-searchable" id="select-tinh" name="hodan_tinh">
+                      <option value="-1"> Chọn tỉnh</option>
+                      {% for tinh in list_tinh %}
+                      <option {% if tinh.id|stringformat:"i" == filtered.tinh %} selected {% endif %} value="{{ tinh.id }}">{{ tinh.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <select class="form-control select select-searchable" id="select-huyen" name="hodan_huyen">
+                      <option value="-1"> Chọn huyện </option>
+                      {% for huyen in list_huyen %}
+                        <option {% if huyen.id|stringformat:"i" == filtered.huyen %} selected {% endif %}
+                          tinh-id="{{ huyen.tinh.id }}" value="{{ huyen.id }}">{{ huyen.name }}
+                        </option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <select class="form-control select select-searchable" id="select-xa" name="hodan_xa">
+                      <option value="-1"> Chọn xã </option>
+                      {% for xa in list_xa %}
+                        <option {% if xa.id|stringformat:"i" == filtered.xa %} selected {% endif %}
+                          huyen-id="{{ xa.huyen.id }}" value="{{ xa.id }}">{{ xa.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+              </div>
+              <br/>
+              <label class="col-form-label">Thông tin tình nguyện viên</label>
+              <div class="form-row citizen-filter">
+                  <div class="col-md-4">
+                      <select class="form-control select select-searchable" id="hodan_tinhnguyenvien" name="hodan_tinhnguyenvien">
+                        <option value="-1">Tình nguyện viên</option>
+                        {% for tinhnguyen in list_tinhnguyenvien %}
+                        <option  value="{{ tinhnguyen.id }}">{{ tinhnguyen.name }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+              </div>
+            </div>
+            <div class="card-footer text-center">
+             
+              <button id="add-hodan"s class="btn btn-primary mr-md-2" type="submit">
+                <span class="ml-2">Thêm hộ dân</span>
+              </button>
+              <button class="btn btn-danger mr-md-2" type="cancel" >
+                <span class="ml-2">Huỷ bỏ</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-lg-6 mb-4">
+          <div id='map'></div>
+      </div>
+    </div>
+  </section>
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+    <style>
+      #map { position: absolute; 
+                  top: 0; 
+           min-height: 600px;
+           max-height: 800px;
+               bottom: 0;
+                width: 95%; }
+    </style>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
+      type="text/css"
+    />
+{% endblock %}

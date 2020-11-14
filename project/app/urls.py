@@ -40,9 +40,28 @@ urlpatterns = [
     path('select2/', include('django_select2.urls')),
 
     url(
-        r'^ho_dan$',
+        r'^hodan/ds_hodan$',
         _common_cache(ho_dan_views.index),
         name='home_ho_dan'
+    ),
+    url(
+        r'^hodan/them',
+        _common_cache(ho_dan_views.add_ho_dan),
+        name='them_ho_dan'
+    ),
+    url(
+        r'^xem_hodan/?$',
+        _common_cache(ho_dan_views.get_ho_dan_detail),
+        name='xem_ho_dan'
+    ),
+    url(
+        r'^hodan/mapview$',
+        _common_cache(ho_dan_views.view_hodan),
+        name='ho_dan_mapview'
+    ),
+    url(
+        r'^get_init_map_api/?$',
+        _common_cache(ho_dan_views.get_init_map_api)
     ),
     url(
         r'^get_huyen_api/?$',

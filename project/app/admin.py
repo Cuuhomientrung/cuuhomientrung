@@ -7,7 +7,7 @@ from rest_framework import routers
 
 from app.settings import TIME_ZONE
 from app.models import TinTuc, TinhNguyenVien, CuuHo, HoDan, Tinh, Huyen, Xa,\
-    TrangThaiHoDan, CUUHO_STATUS, TINHNGUYEN_STATUS
+    TrangThaiHoDan, CUUHO_STATUS, TINHNGUYEN_STATUS , HoDanLienLac, HoDanNhuCau, HoDanDoQuanTrong
 from app.views import CuuHoViewSet, HoDanViewSet,\
     TinhNguyenVienViewSet, TinhViewSet, HuyenViewSet, XaViewSet, TrangThaiHoDanSet
 from app.utils.export_to_excel import export_ho_dan_as_excel_action, utc_to_local
@@ -522,6 +522,24 @@ class TrangThaiHoDanAdmin(admin.ModelAdmin):
         self.list_display = [field.name for field in model._meta.fields if field.name != "id"]
         super(TrangThaiHoDanAdmin, self).__init__(model, admin_site)
 
+class HoDanLienLacAdmin(admin.ModelAdmin):
+
+    def __init__(self, model, admin_site):
+        self.list_display = [field.name for field in model._meta.fields if field.name != "id"]
+        super(HoDanLienLacAdmin, self).__init__(model, admin_site)
+
+class HoDanNhuCauAdmin(admin.ModelAdmin):
+
+    def __init__(self, model, admin_site):
+        self.list_display = [field.name for field in model._meta.fields if field.name != "id"]
+        super(HoDanNhuCauAdmin, self).__init__(model, admin_site)
+
+class HoDanDoQuanTrongAdmin(admin.ModelAdmin):
+
+    def __init__(self, model, admin_site):
+        self.list_display = [field.name for field in model._meta.fields if field.name != "id"]
+        super(HoDanDoQuanTrongAdmin, self).__init__(model, admin_site)
+
 
 admin.site.register(TinTuc, TinTucAdmin)
 # admin.site.register(NguonLuc, NguonLucAdmin)
@@ -533,6 +551,10 @@ admin.site.register(Tinh, TinhAdmin)
 admin.site.register(Huyen, HuyenAdmin)
 admin.site.register(Xa, XaAdmin)
 admin.site.register(TrangThaiHoDan, TrangThaiHoDanAdmin)
+admin.site.register(HoDanLienLac, HoDanLienLacAdmin)
+admin.site.register(HoDanNhuCau, HoDanNhuCauAdmin)
+admin.site.register(HoDanDoQuanTrong, HoDanDoQuanTrongAdmin)
+
 # admin.site.register(Thon, ThonAdmin)
 
 

@@ -5,6 +5,7 @@ from simple_history.models import HistoricalRecords
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token as BaseTokenClass
 from django.conf import settings
+from django.contrib.postgres.fields import HStoreField
 from simple_history.signals import (
     post_create_historical_record,
 )
@@ -30,6 +31,25 @@ CUUHO_STATUS = [
     (5, 'Cần hỗ trợ'),
     (3, 'Đang cứu hộ'),
     (4, 'Đang nghỉ'),
+]
+
+HODAN_LIEN_LAC_STATUS = [
+    (0, 'Không rõ'),
+    (1, 'Liên lạc được'),
+    (2, 'Không liên lạc được'),
+]
+
+HODAN_IMPORTANT_STATUS = [
+    (0, 'Cực kỳ quan trọng'),
+    (1, 'Rất quan trọng'),
+    (2, 'Quan trọng'),
+    (3, 'Ít quan trọng')
+]
+
+HODAN_NEEDS = [
+    (0, 'Cần di chuyển tới nơi an toàn'),
+    (1, 'Cần thức ăn, nước uống'),
+    (2, 'Cần thuốc men'),
 ]
 
 class Token(BaseTokenClass):
@@ -89,14 +109,55 @@ class Thon(models.Model):
 
 class TrangThaiHoDan(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Tên trạng thái")
+    trangthai_sort_index = models.SmallIntegerField( verbose_name="Thứ tự hiển thị")
     created_time = models.DateTimeField(auto_now=True, verbose_name='Ngày tạo')
     update_time = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
+    status = models.BooleanField(default=True,blank=True,null=True,verbose_name='Sử dụng')   #True is used, False is not used
 
     def __str__(self):
         return "%s" % (self.name)
 
     def __unicode__(self):
         return u'%s' % (self.name)
+class HoDanLienLac(models.Model):
+    lienlac_name = models.CharField(max_length=50, verbose_name="Tình Trạng liên lạc")
+    lienlac_sort_index = models.SmallIntegerField( verbose_name="Thứ tự hiển thị")
+    lienlac_created_time = models.DateTimeField(auto_now=True, verbose_name='Ngày tạo')
+    lienlac_last_updated = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
+    lienlac_used_status = models.BooleanField(default=True,blank=True,null=True,verbose_name='Sử dụng')   #True is used, False is not used
+
+    def __str__(self):
+        return "%s" % (self.lienlac_name)
+
+    def __unicode__(self):
+        return u'%s' % (self.lienlac_name)
+
+class HoDanNhuCau(models.Model):
+    nhucau_name = models.CharField(max_length=100, verbose_name="Nhu cầu")
+    nhucau_sort_index = models.SmallIntegerField( verbose_name="Thứ tự hiển thị")
+    nhucau_created_time = models.DateTimeField(auto_now=True, verbose_name='Ngày tạo')
+    nhucau_last_updated = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
+    nhucau_used_status = models.BooleanField(default=True,blank=True,null=True,verbose_name='Sử dụng')   #True is used, False is not used
+
+    def __str__(self):
+        return "%s" % (self.nhucau_name)
+
+    def __unicode__(self):
+        return u'%s' % (self.nhucau_name)
+
+class HoDanDoQuanTrong(models.Model):
+    doquantrong_name = models.CharField(max_length=50, verbose_name="Độ quan trọng")
+    doquantrong_sort_index = models.SmallIntegerField( verbose_name="Thứ tự hiển thị")
+    doquantrong_created_time = models.DateTimeField(auto_now=True, verbose_name='Ngày tạo')
+    doquantrong_last_update_time = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
+    doquantrong_maker_color_code = models.CharField(max_length=18, verbose_name="Mã màu hiển thị cho độ quan trọng")
+    doquantrong_used_status = models.BooleanField(default=True,blank=True,null=True,verbose_name='Trạng thái')   #True is used, False is not used
+
+    def __str__(self):
+        return "%s" % (self.doquantrong_name)
+
+    def __unicode__(self):
+        return u'%s' % (self.doquantrong_name)
 
 
 class TinhNguyenVien(models.Model):
@@ -212,10 +273,14 @@ class IPAddressHistoricalModel(models.Model):
 class HoDan(models.Model):
     name = models.TextField(blank=True, default='', verbose_name="Hộ dân")
     update_time = models.DateTimeField(auto_now=True, verbose_name='Cập nhật')
-    location = models.TextField(blank=True, default='', verbose_name='Địa chỉ')
+    location = models.CharField(blank=True, default='',max_length=200, verbose_name='Địa chỉ')
     status = models.ForeignKey(TrangThaiHoDan, blank=True, null=True, on_delete=models.CASCADE, default=1,
         verbose_name="Trạng thái"
     )
+    trang_thai_lien_lac = models.ForeignKey(HoDanLienLac, blank=True, null=True, on_delete=models.CASCADE, default=3, verbose_name="Tình trạng liên lạc")
+    do_quan_trong = models.ForeignKey(HoDanDoQuanTrong, blank=True, null=True, on_delete=models.CASCADE, default=1, verbose_name="Độ quan trọng")
+    hodan_nhucau  = models.ForeignKey(HoDanNhuCau, blank=True, null=True, on_delete=models.CASCADE, default=1, verbose_name="Nhu cầu")
+    hodan_nhucau_khac = models.TextField(blank=True, default='', verbose_name='Các nhu cầu khác')
     people_number = models.PositiveIntegerField(blank=True, null=True, default=1, verbose_name="Số người")
     tinh = models.ForeignKey(
         Tinh, blank=True, null=True, on_delete=models.CASCADE,
@@ -258,6 +323,7 @@ class HoDan(models.Model):
     cuuho = models.ForeignKey(CuuHo, null=True, blank= True, verbose_name="Đơn vị cứu hộ tiếp cận", on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='Ngày tạo')
     geo_location = CustomLocationField(null=True, blank=True)
+    geo_lat_lon = HStoreField(blank=True,default={'geohash':'','lat':'','lng':''},null=True, verbose_name="Vị trí kinh vĩ độ")     #Extend Hstore for prosgresql by follow this link https://docs.djangoproject.com/en/3.1/ref/contrib/postgres/operations/#create-postgresql-extensions
     history = HistoricalRecords(
         history_change_reason_field=models.TextField(null=True),
         bases=[IPAddressHistoricalModel, ]
