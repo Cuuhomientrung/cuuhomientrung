@@ -74,7 +74,7 @@ def get_location_list(tinhs=['Quảng Bình', 'Quảng Trị', 'Hà Tĩnh', 'Hu�
 class Command(BaseCommand):
     def handle(self, **options):
         """Add du lieu tinh, huyen, xa"""
-        tinh_list = ['Quảng Bình', 'Quảng Trị', 'Huế']
+        tinh_list = ['Thái Nguyên', 'Yên Bái', 'Phú Thọ']
         ds_result = get_location_list()
         for tinh in ds_result:
             tinh_name = tinh['name']

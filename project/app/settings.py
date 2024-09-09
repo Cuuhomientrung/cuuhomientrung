@@ -35,9 +35,9 @@ env = environ.Env(
     CSRF_COOKIE_SECURE=(bool, False),
     SECRET_KEY=(str, 'change_me'),
 )
-env.read_env(
-    os.path.join(BASE_DIR, '..', '.env')
-)
+# env.read_env(
+#     os.path.join(BASE_DIR, '..', '.env')
+# )
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/

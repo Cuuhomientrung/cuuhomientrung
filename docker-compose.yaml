@@ -22,8 +22,8 @@ services:
 
   cuuhomientrung-web:
     container_name: cuuhomientrung-web
-    build: .
     command: tail -F /dev/null
+    build: .
     volumes:
       - .:/code
     environment:
